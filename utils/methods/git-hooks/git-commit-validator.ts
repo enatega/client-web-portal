@@ -9,7 +9,7 @@ if (!pattern.test(commitMsg)) {
   console.error('Format should be: branch - subject - description - version');
   process.exit(1);
 }
-
+console.log({orignal: commitMsg.match(pattern).slice(1)})
 const [branch, subject, description, version] = commitMsg.match(pattern).slice(1);
 
 // Get the last commit message
