@@ -30,7 +30,7 @@ if (lastCommitMsg) {
   if (lastCommitMatch) {
     const [, , lastDescription, lastVersion] = lastCommitMatch.slice(1);
 
-      console.log({lastDescription, lastVersion})
+      console.log({lastDescription, description, lastVersion, version})
     if (description === lastDescription) {
       console.error('Description must be different from the previous commit.');
       process.exit(1);
