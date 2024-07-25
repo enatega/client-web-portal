@@ -1,8 +1,8 @@
-
-const {execSync} = require('child_process')
+const { execSync } = require('child_process');
 
 const commitMsg = execSync('cat .git/COMMIT_EDITMSG').toString().trim();
-const pattern = /^(\w+) - (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|translation|security|changeset) - (.+) - (v\d+)$/;
+const pattern =
+  /^(\w+) - (build|fix|refactor|revert|style|test|translation|security|changeset|config) - (.+) - (v\d+)$/;
 
 if (!pattern.test(commitMsg)) {
   console.error('Invalid commit message format.');
@@ -22,11 +22,12 @@ try {
 }
 
 if (lastCommitMsg) {
-  const lastCommitPattern = /^(\w+) - (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|translation|security|changeset) - (.+) - (v\d+)$/;
+  const lastCommitPattern =
+    /^(\w+) - (build|fix|refactor|revert|style|test|translation|security|changeset|config) - (.+) - (v\d+)$/;
   const lastCommitMatch = lastCommitMsg.match(lastCommitPattern);
 
   if (lastCommitMatch) {
-    const [,, lastDescription, lastVersion] = lastCommitMatch.slice(1);
+    const [, , lastDescription, lastVersion] = lastCommitMatch.slice(1);
 
     if (description === lastDescription) {
       console.error('Description must be different from the previous commit.');
