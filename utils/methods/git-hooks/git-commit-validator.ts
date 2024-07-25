@@ -26,7 +26,7 @@ if (lastCommitMsg) {
   const lastCommitMatch = lastCommitMsg.match(lastCommitPattern);
 
   if (lastCommitMatch) {
-    const [ lastDescription, lastVersion] = lastCommitMatch.slice(1);
+    const [,, lastDescription, lastVersion] = lastCommitMatch.slice(1);
 
     if (description === lastDescription) {
       console.error('Description must be different from the previous commit.');
