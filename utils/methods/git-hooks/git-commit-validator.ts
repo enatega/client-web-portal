@@ -2,9 +2,9 @@
 const {execSync} = require('child_process')
 
 const commitMsg = execSync('cat .git/COMMIT_EDITMSG').toString().trim();
-const pattern: RegExp = /^(\w+) - (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|translation|security|changeset) - (.+) - (v\d+)$/;
+const pattern = /^(\w+) - (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|translation|security|changeset) - (.+) - (v\d+)$/;
 
-if (!pattern.test(commitMsg ?? "")) {
+if (!pattern.test(commitMsg)) {
   console.error('Invalid commit message format.');
   console.error('Format should be: branch - subject - description - version');
   process.exit(1);
