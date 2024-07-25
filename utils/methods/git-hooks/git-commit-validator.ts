@@ -25,6 +25,8 @@ if (lastCommitMsg) {
   const lastCommitPattern = /^(\w+) - (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|translation|security|changeset) - (.+) - (v\d+)$/;
   const lastCommitMatch = lastCommitMsg.match(lastCommitPattern);
 
+  console.log({lastCommitMatch})
+
   if (lastCommitMatch) {
     const [, , lastDescription, lastVersion] = lastCommitMatch.slice(1);
 
