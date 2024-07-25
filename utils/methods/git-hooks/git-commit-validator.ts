@@ -10,7 +10,7 @@ if (!pattern.test(commitMsg ?? "")) {
   process.exit(1);
 }
 
-const [branch, subject, description, version] = commitMsg.match(pattern)?.slice(1);
+const [, , description, version] = commitMsg.match(pattern)?.slice(1);
 
 // Get the last commit messageå
 let lastCommitMsg: string | undefined;
