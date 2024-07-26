@@ -8,17 +8,10 @@
     "ecmaVersion": 2023,
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "tsx": true
     }
   },
-  "overrides": [
-    {
-      "files": ["*.tsx"],
-      "parserOptions": {
-        "project": "./tsconfig.json"
-      }
-    }
-  ],
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     // Custom rules for your project
