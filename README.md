@@ -67,9 +67,6 @@ Use the browser's Lighthouse tool for performance reports.
 
 ---
 
-Feel free to customize this `README.md` based on your project's specific needs and workflows.
-
-
 ```plaintext
 .
 ├── app
@@ -117,3 +114,8 @@ Feel free to customize this `README.md` based on your project's specific needs a
 ├── next.config.js
 ├── package.json
 └── README.md
+
+
+----
+
+Under constant modifications.
