@@ -114,8 +114,8 @@ Use the browser's Lighthouse tool for performance reports.
 ├── next.config.js
 ├── package.json
 └── README.md
+```
 
+### Note
 
-----
-
-Under constant modifications.
+- Under constant modifications.
