@@ -44,13 +44,17 @@ Use the browser's Lighthouse tool for performance reports.
 
 - Contains only routes and layouts.
 
+### `cypress` Folder
+
+- Contains only test cases
+
 ### `lib` Folder
 
 - **hooks Folder**: Custom hooks (e.g., `useAuth`, `useConfiguration`).
-- **hoc Folder**: Higher-order components (e.g., Route Protection HOC, Data Refresh HOC).
-- **services Folder**: Services for different flows, third-party API calls (e.g., Apollo, Geolocation API).
+- **hoc Folder**: Higher-order components (e.g., `Route Protection HOC`, `Data Refresh HOC`).
+- **services Folder**: Services for different flows, third-party API calls (e.g. `Apollo`, `Geolocation API`).
 - **ui Folder**: Reusable components, layouts, and screens.
-- **methods Folder**: Utility methods (e.g., string manipulation).
+- **methods Folder**: Utility methods (e.g. string manipulation).
 - **interfaces Folder**: TypeScript interfaces (prefixed with "I").
 - **constants Folder**: Common constants (strings, headers).
 - **types Folder**: Custom TypeScript types, if necessary.
@@ -58,7 +62,7 @@ Use the browser's Lighthouse tool for performance reports.
 ## Component Guidelines
 
 - Divide complex components into sub-components (e.g., header, body, footer).
-- Recommended code lines per component: 100-200 lines.
+- Recommended code lines per component: `100-200 lines`.
 
 ## Changelog
 
@@ -68,9 +72,22 @@ Use the browser's Lighthouse tool for performance reports.
 ---
 
 ```plaintext
-.
+
+├── .husky
+│   └── git hooks
+├── .vscode
+│   └── IDE configuration
+├── dist
+│   └── built and minifed app.
+├── .npmrc
+│   └── npm configuration
+├── .nvmrc
+│   └── nvm configuration
+├── cypress.config.ts
+│   └── cypress configuration
 ├── app
-│   └── (routes and layouts)
+│   └── routes
+│   └── layouts
 ├── lib
 │   ├── hooks
 │   │   ├── useAuth.ts
@@ -90,24 +107,33 @@ Use the browser's Lighthouse tool for performance reports.
 │   │   ├── layouts
 │   │   └── screens
 │   ├── methods
-│   │   ├── string.sort.ts
-│   │   ├── toSentenceCase.ts
-│   │   └── index.ts
+|   |   |   ├── string
+│   │   |   |   ├── sort.ts
+│   │   |   |   ├── toSentenceCase.ts
+│   │   |   |   ├── index.ts
+|   |   |   ├── regex
+│   │   |   |   ├── email.ts
+│   │   |   |   ├── password.ts
+│   │   |   |   ├── url.ts
+│   │   |   |   ├── index.ts
+|   |   |   └── index. ts
 │   ├── interfaces
 │   │   ├── common
 │   │   │   ├── IParent.ts
 │   │   │   └── index.ts
-│   │   ├── support.interface.ts
+│   │   ├── support.interface (sub-folders if required and index.ts for each)
 │   │   └── index.ts
 │   ├── constants
 │   │   ├── strings
 │   │   │   ├── global.strings.ts
-│   │   │   └── support.strings.ts
+│   │   │   └── support.strings (sub-folders if required and index.ts for each)
+|   |   |   └── index.ts (export all above)
 │   │   ├── headers
 │   │   │   ├── global.headers.ts
-│   │   │   └── support.headers.ts
+│   │   │   └── support.headers (sub-folders if required and index.ts for each)
+|   |   |   └──  index.ts (export all above)
 │   │   └── index.ts
-│   ├── types
+│   ├── types (same as interfaces)
 │   │   └── index.ts
 ├── CHANGELOG.md
 ├── tsconfig.json
