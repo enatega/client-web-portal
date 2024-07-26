@@ -40,6 +40,36 @@ Use the browser's Lighthouse tool for performance reports.
 
 ## Folder Structure
 
+### `app` Folder
+
+- Contains only routes and layouts.
+
+### `lib` Folder
+
+- **hooks Folder**: Custom hooks (e.g., `useAuth`, `useConfiguration`).
+- **hoc Folder**: Higher-order components (e.g., Route Protection HOC, Data Refresh HOC).
+- **services Folder**: Services for different flows, third-party API calls (e.g., Apollo, Geolocation API).
+- **ui Folder**: Reusable components, layouts, and screens.
+- **methods Folder**: Utility methods (e.g., string manipulation).
+- **interfaces Folder**: TypeScript interfaces (prefixed with "I").
+- **constants Folder**: Common constants (strings, headers).
+- **types Folder**: Custom TypeScript types, if necessary.
+
+## Component Guidelines
+
+- Divide complex components into sub-components (e.g., header, body, footer).
+- Recommended code lines per component: 100-200 lines.
+
+## Changelog
+
+- Log code changes in the `CHANGELOG.md` file.
+- Only log merges/pushes to develop/staging/production branches.
+
+---
+
+Feel free to customize this `README.md` based on your project's specific needs and workflows.
+
+
 ```plaintext
 .
 ├── app
