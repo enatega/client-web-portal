@@ -5,8 +5,10 @@ const pattern =
   /^(\w+) - (build|fix|refactor|revert|style|test|translation|security|changeset|config) - (.+) - (v\d+)$/;
 
 if (!pattern.test(commitMsg)) {
-  console.error('Invalid commit message format.');
-  console.error('Format should be: branch - subject - description - version');
+  console.error('Invalid commit type or format.');
+  console.error(
+    'Format should be: branch - subject (must be from the predefined keywords) - description - version'
+  );
   process.exit(1);
 }
 

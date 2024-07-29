@@ -145,6 +145,20 @@ Use the browser's Lighthouse tool for performance reports.
 └── README.md
 ```
 
+### Git
+
+- **Commit Predefined Types**:
+  - build
+  - fix
+  - refactor
+  - revert
+  - style
+  - test
+  - translation
+  - security
+  - changeset
+  - config
+
 ### Note
 
 - Under constant modifications.
