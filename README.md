@@ -53,11 +53,13 @@ Use the browser's Lighthouse tool for performance reports.
 - **hooks Folder**: Custom hooks (e.g., `useAuth`, `useConfiguration`).
 - **hoc Folder**: Higher-order components (e.g., `Route Protection HOC`, `Data Refresh HOC`).
 - **services Folder**: Services for different flows, third-party API calls (e.g. `Apollo`, `Geolocation API`).
+  - create separate sub-folders.
 - **ui Folder**: Reusable components, layouts, and screens.
-- **methods Folder**: Utility methods (e.g. string manipulation).
-- **interfaces Folder**: TypeScript interfaces (prefixed with "I").
-- **constants Folder**: Common constants (strings, headers).
-- **types Folder**: Custom TypeScript types, if necessary.
+- **utils Folder**:
+  - **methods Folder**: Utility methods (e.g. string manipulation).
+  - **interfaces Folder**: TypeScript interfaces (prefixed with "I").
+  - **constants Folder**: Common constants (strings, headers).
+  - **types Folder**: Custom TypeScript types, if necessary.
 
 ## Component Guidelines
 
@@ -95,8 +97,8 @@ Use the browser's Lighthouse tool for performance reports.
 │   │   └── index.ts
 │   ├── hoc
 │   │   ├── withRouteProtection.ts
-│   │   ├── withDataRefresh.ts
-│   │   └── index.ts
+│   │   └── withDataRefresh.ts
+│   │
 │   ├── services
 │   │   ├── support
 │   │   │   ├── support.service.ts
@@ -106,35 +108,36 @@ Use the browser's Lighthouse tool for performance reports.
 │   │   ├── components
 │   │   ├── layouts
 │   │   └── screens
-│   ├── methods
-|   |   |   ├── string
-│   │   |   |   ├── sort.ts
-│   │   |   |   ├── toSentenceCase.ts
-│   │   |   |   ├── index.ts
-|   |   |   ├── regex
-│   │   |   |   ├── email.ts
-│   │   |   |   ├── password.ts
-│   │   |   |   ├── url.ts
-│   │   |   |   ├── index.ts
-|   |   |   └── index. ts
-│   ├── interfaces
-│   │   ├── common
-│   │   │   ├── IParent.ts
-│   │   │   └── index.ts
-│   │   ├── support.interface (sub-folders if required and index.ts for each)
-│   │   └── index.ts
-│   ├── constants
-│   │   ├── strings
-│   │   │   ├── global.strings.ts
-│   │   │   └── support.strings (sub-folders if required and index.ts for each)
-|   |   |   └── index.ts (export all above)
-│   │   ├── headers
-│   │   │   ├── global.headers.ts
-│   │   │   └── support.headers (sub-folders if required and index.ts for each)
-|   |   |   └──  index.ts (export all above)
-│   │   └── index.ts
-│   ├── types (same as interfaces)
-│   │   └── index.ts
+|   ├── utils
+|   │   ├── methods
+|   |   |   |   ├── string
+|   │   │   |   |   ├── sort.ts
+|   │   │   |   |   ├── toSentenceCase.ts
+|   │   │   |   |   ├── index.ts
+|   |   |   |   ├── regex
+|   │   │   |   |   ├── email.ts
+|   │   │   |   |   ├── password.ts
+|   │   │   |   |   ├── url.ts
+|   │   │   |   |   ├── index.ts
+|   |   |   |   └── index. ts
+|   │   ├── interfaces
+|   │   │   ├── common
+|   │   │   │   ├── IParent.ts
+|   │   │   │   └── index.ts
+|   │   │   ├── support.interface (sub-folders if required and index.ts for each)
+|   │   │   └── index.ts
+|   │   ├── constants
+|   │   │   ├── strings
+|   │   │   │   ├── global.strings.ts
+|   │   │   │   └── support.strings (sub-folders if required and index.ts for each)
+|   |   |   |   └── index.ts (export all above)
+|   │   │   ├── headers
+|   │   │   │   ├── global.headers.ts
+|   │   │   │   └── support.headers (sub-folders if required and index.ts for each)
+|   |   |   |   └──  index.ts (export all above)
+|   │   │   └── index.ts
+|   │   ├── types (same as interfaces)
+|   │   │   └── index.ts
 ├── CHANGELOG.md
 ├── tsconfig.json
 ├── next.config.js
