@@ -5,7 +5,6 @@ import { LayoutContext } from '@/lib/context/layout-context';
 import { ILayoutProvider } from '@/lib/utils/interfaces';
 import { AppTopbarRef, LayoutState } from '@/lib/utils/types';
 
-import { usePathname, useSearchParams } from 'next/navigation';
 import { useEventListener, useUnmountEffect } from 'primereact/hooks';
 import { classNames } from 'primereact/utils';
 import React, { useContext, useEffect, useRef } from 'react';
@@ -37,12 +36,12 @@ const Layout = ({ children }: ILayoutProvider) => {
       },
     });
 
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  useEffect(() => {
-    hideMenu();
-    hideProfileMenu();
-  }, [pathname, searchParams]);
+  //const pathname = usePathname();
+  // const searchParams = useSearchParams();
+  // useEffect(() => {
+  //   hideMenu();
+  //   hideProfileMenu();
+  // }, [pathname, searchParams]);
 
   const [
     bindProfileMenuOutsideClickListener,
