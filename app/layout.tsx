@@ -1,10 +1,15 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { PrimeReactProvider } from 'primereact/api';
-import 'primereact/resources/primereact.min.css';
-import 'primereact/resources/themes/saga-green/theme.css';
 
+// Context
 import { LayoutProvider } from '@/lib/context/layout-context';
+
+// Style
+import 'primeicons/primeicons.css'; // Import PrimeIcons CSS
+import 'primereact/resources/primereact.css';
+import 'primereact/resources/themes/lara-light-cyan/theme.css';
+
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -19,10 +24,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const value = {
+    ripple: true,
+  };
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <PrimeReactProvider>
+        <PrimeReactProvider value={value}>
           <LayoutProvider>{children}</LayoutProvider>
         </PrimeReactProvider>
       </body>

@@ -1,3 +1,17 @@
+@layer tailwind-base, primereact, tailwind-utilities;
+
+/* IMPORTANT: In "styled" mode you must add the PrimeReact Theme here. Do NOT include in "unstyled" mode */
+@import 'primereact/resources/themes/lara-light-blue/theme.css'
+  layer(primereact);
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
@@ -12,4 +26,32 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+/* styles/globals.css */
+
+/* Remove focus outline and box-shadow for PrimeReact input components */
+.p-inputtext:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Optionally, add a custom focus style */
+.p-inputtext:focus {
+  outline: none; /* Example: red outline */
+  box-shadow: none; /* Example: red box-shadow */
+}
+
+/* Targeting the PrimeReact dropdown component */
+.p-dropdown {
+  outline: none;
+}
+
+.layout-top-container {
+  height: 10vh;
+}
+
+.layout-main-container {
+  height: 90vh;
+  padding: 5px 30px 0 30px;
 }

@@ -1,5 +1,5 @@
 // Styles
-import MainLayout from '@/lib/ui/layouts/protected/main/';
+import MainLayout from '@/lib/ui/layouts/unprotected/main/';
 
 export default function RootLayout({
   children,

@@ -1,6 +1,6 @@
 import { IGlobalSVGProps } from '../../interfaces/svg';
 
-export default function AppLogo(props: IGlobalSVGProps) {
+export function AppLogo(props: IGlobalSVGProps) {
   return (
     <svg
       width="203"
