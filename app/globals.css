@@ -18,7 +18,24 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Optional: Set box-sizing to border-box globally for consistent sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
+  overflow: hidden;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -28,30 +45,40 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-/* styles/globals.css */
-
-/* Remove focus outline and box-shadow for PrimeReact input components */
-.p-inputtext:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Optionally, add a custom focus style */
-.p-inputtext:focus {
-  outline: none; /* Example: red outline */
-  box-shadow: none; /* Example: red box-shadow */
-}
-
-/* Targeting the PrimeReact dropdown component */
-.p-dropdown {
-  outline: none;
-}
-
+/* Layout */
 .layout-top-container {
   height: 10vh;
 }
 
 .layout-main-container {
   height: 90vh;
-  padding: 5px 30px 0 30px;
+  overflow-y: scroll;
+}
+
+/* OTP Input */
+.p-inputotp {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.p-inputotp-input {
+  width: 70px;
+  height: 70px;
+}
+
+/* Input Text */
+.p-inputtext {
+  height: 2.8rem;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+}
+
+.p-inputtext:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.p-inputtext:focus {
+  outline: none;
+  box-shadow: none;
 }

@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import { AppLogo } from '@/lib/utils/assets/svgs/logo';
 
 // Prime React
-import { Dropdown } from 'primereact/dropdown';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
@@ -26,13 +25,6 @@ const AppTopbar = () => {
   // Hooks
   const router = useRouter();
 
-  const cities = [
-    { name: 'New York', code: 'NY' },
-    { name: 'Rome', code: 'RM' },
-    { name: 'London', code: 'LDN' },
-    { name: 'Istanbul', code: 'IST' },
-    { name: 'Paris', code: 'PRS' },
-  ];
   return (
     <div className={`${classes['layout-topbar']}`}>
       <div>
@@ -41,26 +33,22 @@ const AppTopbar = () => {
             <AppLogo />
           </Link>
 
-          <div>
+          <div className="flex gap-2 items-center">
             <i className="pi pi-map-marker" />
-            <Dropdown
-              value={cities[0]}
-              options={cities}
-              optionLabel="name"
-              placeholder="Select a City"
-              className="border-none outline:none focus:outline-none focus:shadow-none"
-            />
+            <span>New York</span>
+            <i className="pi pi-chevron-down" />
           </div>
         </div>
       </div>
 
-      <div className="w-app-bar-search-width border-2 rounded-3xl">
+      <div className="w-app-bar-search-width">
         <IconField iconPosition="left">
           <InputIcon className="pi pi-search"> </InputIcon>
           <InputText
             v-model="value1"
             placeholder="Search"
-            className="border-none w-full rounded-3xl p-2 pl-10"
+            className="border-none w-full p-2 pl-10"
+            type="search"
           />
         </IconField>
       </div>
@@ -82,7 +70,9 @@ const AppTopbar = () => {
               className="w-full h-full bg-primary-color border-primary-color hover:bg-white hover:text-black"
               label="Sign up"
               rounded={true}
-              onClick={() => {}}
+              onClick={() => {
+                router.push('/sign-up');
+              }}
             />
           </div>
         </div>

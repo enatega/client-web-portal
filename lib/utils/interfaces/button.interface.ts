@@ -1,4 +1,4 @@
-import { IGlobalComponentProps } from './global';
+import { IGlobalComponentProps } from './global.interface';
 
 export interface ICustomButtonProps extends IGlobalComponentProps {
   label: string;
@@ -6,4 +6,5 @@ export interface ICustomButtonProps extends IGlobalComponentProps {
   rounded?: boolean;
   outlined?: boolean;
   icon?: string;
+  type?: 'submit' | 'reset' | 'button';
 }

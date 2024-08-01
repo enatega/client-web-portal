@@ -1,4 +1,4 @@
-import { IGlobalSVGProps } from '../../interfaces/svg';
+import { IGlobalSVGProps } from '../../interfaces/svg.interface';
 
 export function AppLogo(props: IGlobalSVGProps) {
   return (

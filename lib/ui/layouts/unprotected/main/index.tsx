@@ -15,7 +15,9 @@ const Layout = ({ children }: ILayoutProvider) => {
       <div className="layout-top-container">
         <AppTopbar />
       </div>
-      <div className="layout-main-container">{children}</div>
+      <div className="layout-main-container">
+        <div className="h-full">{children}</div>
+      </div>
     </React.Fragment>
   );
 };
