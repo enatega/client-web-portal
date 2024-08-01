@@ -18,7 +18,6 @@ import { InputText } from 'primereact/inputtext';
 import CustomButton from '@/lib/ui/useable-components/button';
 
 // Styles
-
 import classes from './app-bar.module.css';
 
 const AppTopbar = () => {
@@ -41,7 +40,7 @@ const AppTopbar = () => {
         </div>
       </div>
 
-      <div className="w-app-bar-search-width">
+      <div className="w-app-bar-search-width md:w-1/4 mb-4 md:mb-0">
         <IconField iconPosition="left">
           <InputIcon className="pi pi-search"> </InputIcon>
           <InputText
@@ -61,7 +60,7 @@ const AppTopbar = () => {
               label="Login"
               rounded={true}
               onClick={() => {
-                router.push('/login');
+                router.push('/authentication');
               }}
             />
           </div>
@@ -71,7 +70,7 @@ const AppTopbar = () => {
               label="Sign up"
               rounded={true}
               onClick={() => {
-                router.push('/sign-up');
+                router.push('/authentication/sign-up');
               }}
             />
           </div>

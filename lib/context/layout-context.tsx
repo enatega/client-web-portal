@@ -1,11 +1,18 @@
 'use client';
+
+// Core
+import { createContext, useState } from 'react';
+
+// Interface
 import { ILayoutProvider } from '@/lib/utils/interfaces';
+
+// Types
 import {
   LayoutConfig,
   LayoutContextProps,
   LayoutState,
 } from '@/lib/utils/types';
-import { createContext, useState } from 'react';
+
 export const LayoutContext = createContext({} as LayoutContextProps);
 
 export const LayoutProvider = ({ children }: ILayoutProvider) => {
@@ -27,27 +34,6 @@ export const LayoutProvider = ({ children }: ILayoutProvider) => {
     menuHoverActive: false,
   });
 
-  const onMenuToggle = () => {
-    if (isOverlay()) {
-      setLayoutState((prevLayoutState) => ({
-        ...prevLayoutState,
-        overlayMenuActive: !prevLayoutState.overlayMenuActive,
-      }));
-    }
-
-    if (isDesktop()) {
-      setLayoutState((prevLayoutState) => ({
-        ...prevLayoutState,
-        staticMenuDesktopInactive: !prevLayoutState.staticMenuDesktopInactive,
-      }));
-    } else {
-      setLayoutState((prevLayoutState) => ({
-        ...prevLayoutState,
-        staticMenuMobileActive: !prevLayoutState.staticMenuMobileActive,
-      }));
-    }
-  };
-
   const showProfileSidebar = () => {
     setLayoutState((prevLayoutState) => ({
       ...prevLayoutState,
@@ -55,20 +41,11 @@ export const LayoutProvider = ({ children }: ILayoutProvider) => {
     }));
   };
 
-  const isOverlay = () => {
-    return layoutConfig.menuMode === 'overlay';
-  };
-
-  const isDesktop = () => {
-    return window.innerWidth > 991;
-  };
-
   const value: LayoutContextProps = {
     layoutConfig,
     setLayoutConfig,
     layoutState,
     setLayoutState,
-    onMenuToggle,
     showProfileSidebar,
   };
 

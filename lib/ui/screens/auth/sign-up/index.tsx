@@ -1,22 +1,21 @@
 'use client';
 
 import CustomButton from '@/lib/ui/useable-components/button';
-
+import { PasswordErrors } from '@/lib/utils/constants/strings';
 // Formik
-import { Form, Formik } from 'formik';
 
 // Prime React
+
+// Interface
+import { ISignUpForm } from '@/lib/utils/interfaces/forms';
+import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+import { Form, Formik } from 'formik';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 
-// Interface
-import { ISignUpForm } from '@/lib/utils/interfaces/forms';
-
-import { PasswordErrors } from '@/lib/utils/constants/strings';
-import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
@@ -61,10 +60,6 @@ export default function SignupScreen() {
         }
         return true;
       })
-      // .matches(/[a-z]/, 'At least one uppercase letter (a-z)')
-      // .matches(/[A-Z]/, 'At least one uppercase letter (A-Z)')
-      // .matches(/\d/, 'At least one number (0-9)')
-      // .matches(/[@$!%*?&]/, 'At least one special character')
       .required('Required'),
     confirmPassword: Yup.string()
       .nullable()
@@ -73,9 +68,9 @@ export default function SignupScreen() {
   });
 
   return (
-    <div className="h-full w-full flex items-center justify-center">
-      <div className="w-2/6">
-        <Card>
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="h-full xlg:w-1/6 lg:w-2/6 md:w-3/6 sm:w-full">
+        <Card className="w-full">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col mb-2 p-2">
               <span className="text-2xl">Let&apos;s get started!</span>

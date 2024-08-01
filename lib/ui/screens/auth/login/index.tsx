@@ -1,8 +1,17 @@
+'use client';
+
+import { useRouter } from 'next/navigation';
+
+// Components
 import CustomButton from '@/lib/ui/useable-components/button';
+
+// Prime React
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
 
 export default function LoginScreen() {
+  const router = useRouter();
+
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="w-2/6">
@@ -37,20 +46,22 @@ export default function LoginScreen() {
               className="w-full h-12 bg-primary-color text-white border-primary-color hover:bg-white hover:text-primary-color"
               label="Login"
               rounded={true}
+              onClick={() => router.push('/authentication/login')}
             />
 
             <CustomButton
               className="w-full h-full bg-transparent text-black border-secondary-border-color hover:bg-gray-100"
               label="Sign up"
               rounded={true}
+              onClick={() => router.push('/authentication/sign-up')}
             />
           </div>
 
           <div className="mb-2 p-2">
             <span className="text-gray-400 text-sm">
-              By signing up, you agree to our&lsquo;
-              <span className="font-bold">Terms and Conditions</span>
-              and<span className="font-bold">Privacy Policy.</span>
+              By signing up, you agree to our&nbsp;
+              <span className="font-bold">Terms and Conditions&nbsp;</span>
+              and<span className="font-bold">&nbsp;Privacy Policy.</span>
             </span>
           </div>
         </Card>

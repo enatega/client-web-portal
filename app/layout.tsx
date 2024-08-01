@@ -1,5 +1,10 @@
+// Core
 import type { Metadata } from 'next';
+
+// Font
 import { Inter } from 'next/font/google';
+
+// Prime React
 import { PrimeReactProvider } from 'primereact/api';
 
 // Context
@@ -9,7 +14,6 @@ import { LayoutProvider } from '@/lib/context/layout-context';
 import 'primeicons/primeicons.css'; // Import PrimeIcons CSS
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
-
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -30,6 +34,9 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </head>
       <body className={inter.className}>
         <PrimeReactProvider value={value}>
           <LayoutProvider>{children}</LayoutProvider>

@@ -1,1 +1,4 @@
-export interface IGlobalSVGProps {}
+export interface IGlobalSVGProps {
+  height?: string;
+  width?: string;
+}

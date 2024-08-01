@@ -35,7 +35,6 @@ body,
 }
 
 body {
-  overflow: hidden;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -46,13 +45,26 @@ body {
 }
 
 /* Layout */
+
 .layout-top-container {
-  height: 10vh;
+  position: fixed;
+  height: 5rem;
+  z-index: 997;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
 .layout-main-container {
-  height: 90vh;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+  padding: 7rem 2rem 2rem 4rem;
+}
+
+.layout-main {
+  flex: 1 1 auto;
 }
 
 /* OTP Input */

@@ -4,22 +4,6 @@ import React, {
   SetStateAction,
 } from 'react';
 
-/* Breadcrumb Types */
-export interface AppBreadcrumbProps {
-  className?: string;
-}
-
-export interface Breadcrumb {
-  labels?: string[];
-  to?: string;
-}
-
-export interface BreadcrumbItem {
-  label: string;
-  to?: string;
-  items?: BreadcrumbItem[];
-}
-
 /* Context Types */
 export type LayoutState = {
   staticMenuDesktopInactive: boolean;
@@ -44,7 +28,6 @@ export interface LayoutContextProps {
   setLayoutConfig: Dispatch<SetStateAction<LayoutConfig>>;
   layoutState: LayoutState;
   setLayoutState: Dispatch<SetStateAction<LayoutState>>;
-  onMenuToggle: () => void;
   showProfileSidebar: () => void;
 }
 

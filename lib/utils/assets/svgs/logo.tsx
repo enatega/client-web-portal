@@ -1,10 +1,14 @@
 import { IGlobalSVGProps } from '../../interfaces/svg.interface';
 
-export function AppLogo(props: IGlobalSVGProps) {
+export function AppLogo({
+  width = '203',
+  height = '48',
+  ...props
+}: IGlobalSVGProps) {
   return (
     <svg
-      width="203"
-      height="48"
+      width={width}
+      height={height}
       viewBox="0 0 203 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
