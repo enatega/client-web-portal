@@ -53,13 +53,7 @@ export default function LoginEmailPasswordScreen() {
                 }}
                 validateOnChange
               >
-                {({
-                  values,
-                  errors,
-
-                  handleChange,
-                  handleBlur,
-                }) => {
+                {({ values, errors, handleChange }) => {
                   return (
                     <Form>
                       <div className="mb-2">
@@ -74,7 +68,6 @@ export default function LoginEmailPasswordScreen() {
                             position: 'right',
                           }}
                           onChange={handleChange}
-                          onBlur={handleBlur}
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'email',
@@ -99,7 +92,6 @@ export default function LoginEmailPasswordScreen() {
                           }}
                           value={values.password}
                           onChange={handleChange}
-                          onBlur={handleBlur}
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'password',
