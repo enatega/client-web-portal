@@ -1,6 +1,8 @@
 'use client';
 
 import CustomButton from '@/lib/ui/useable-components/button';
+import CusomtTextField from '@/lib/ui/useable-components/input-field';
+import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import { PasswordErrors } from '@/lib/utils/constants/strings';
 // Formik
 
@@ -12,9 +14,6 @@ import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import { Form, Formik } from 'formik';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
-import { InputText } from 'primereact/inputtext';
 
 import { useState } from 'react';
 import * as Yup from 'yup';
@@ -88,25 +87,17 @@ export default function SignupScreen() {
                 }}
                 validateOnChange
               >
-                {({
-                  values,
-                  errors,
-
-                  handleChange,
-                  handleBlur,
-                }) => {
-                  console.log(errors);
-
+                {({ values, errors, handleChange }) => {
                   return (
                     <Form>
                       <div className="mb-2">
-                        <InputText
+                        <CusomtTextField
+                          type="text"
                           className="w-full"
                           placeholder="First Name"
                           name="firstName"
                           value={values.firstName}
                           onChange={handleChange}
-                          onBlur={handleBlur}
                           maxLength={35}
                           style={{
                             borderColor: onErrorMessageMatcher(
@@ -120,13 +111,12 @@ export default function SignupScreen() {
                       </div>
 
                       <div className="mb-2">
-                        <InputText
-                          className="w-full"
+                        <CusomtTextField
+                          type="text"
                           placeholder="Last Name"
                           name="lastName"
                           value={values.lastName}
                           onChange={handleChange}
-                          onBlur={handleBlur}
                           maxLength={35}
                           style={{
                             borderColor: onErrorMessageMatcher(
@@ -140,75 +130,72 @@ export default function SignupScreen() {
                       </div>
 
                       <div className="mb-2">
-                        <IconField iconPosition="right">
-                          <InputIcon className="pi pi-envelope"> </InputIcon>
-                          <InputText
-                            placeholder="Email"
-                            name="email"
-                            className="w-full"
-                            type="email"
-                            maxLength={35}
-                            value={values.email}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'email',
-                                errors?.email
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </IconField>
+                        <CustomIconTextField
+                          type="email"
+                          name="email"
+                          placeholder="Email"
+                          maxLength={35}
+                          iconProperties={{
+                            icon: 'pi pi-envelope',
+                            position: 'right',
+                          }}
+                          value={values.email}
+                          onChange={handleChange}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'email',
+                              errors?.email
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
                       </div>
 
                       <div className="mb-2">
-                        <IconField iconPosition="right">
-                          <InputIcon className="pi pi-eye cursor-pointer" />
-                          <InputText
-                            className="w-full"
-                            placeholder="Password"
-                            name="password"
-                            type="password"
-                            maxLength={20}
-                            value={values.password}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'password',
-                                errors?.password
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </IconField>
+                        <CustomIconTextField
+                          placeholder="Password"
+                          name="password"
+                          type="password"
+                          maxLength={20}
+                          value={values.password}
+                          iconProperties={{
+                            icon: 'pi pi-eye',
+                            position: 'right',
+                          }}
+                          onChange={handleChange}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'password',
+                              errors?.password
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
                       </div>
 
                       <div className="mb-2">
-                        <IconField iconPosition="right">
-                          <InputIcon className="pi pi-eye cursor-pointer" />
-                          <InputText
-                            className="w-full"
-                            placeholder="Confirm Password"
-                            name="confirmPassword"
-                            type="password"
-                            maxLength={20}
-                            value={values.confirmPassword}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'confirmPassword',
-                                errors?.confirmPassword
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </IconField>
+                        <CustomIconTextField
+                          placeholder="Confirm Password"
+                          name="confirmPassword"
+                          type="password"
+                          maxLength={20}
+                          iconProperties={{
+                            icon: 'pi pi-eye',
+                            position: 'right',
+                          }}
+                          value={values.confirmPassword}
+                          onChange={handleChange}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'confirmPassword',
+                              errors?.confirmPassword
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
                       </div>
 
                       <div className="flex flex-col gap-2 mb-2 p-2">

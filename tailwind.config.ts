@@ -22,6 +22,10 @@ const config = {
     },
 
     extend: {
+      transitionProperty: {
+        // Customize or disable transition properties
+        none: 'none',
+      },
       colors: {
         'primary-color': '#5AC12F',
         'secondary-border-color': '#111827',

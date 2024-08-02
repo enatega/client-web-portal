@@ -12,12 +12,12 @@ import { AppLogo } from '@/lib/utils/assets/svgs/logo';
 // Prime React
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
-import { InputText } from 'primereact/inputtext';
 
 // Components
 import CustomButton from '@/lib/ui/useable-components/button';
-
+import CustomInputText from '@/lib/ui/useable-components/input-field';
 // Styles
+
 import classes from './app-bar.module.css';
 
 const AppTopbar = () => {
@@ -43,10 +43,10 @@ const AppTopbar = () => {
       <div className="w-app-bar-search-width md:w-1/4 mb-4 md:mb-0">
         <IconField iconPosition="left">
           <InputIcon className="pi pi-search"> </InputIcon>
-          <InputText
-            v-model="value1"
-            placeholder="Search"
-            className="border-none w-full p-2 pl-10"
+          <CustomInputText
+            className="rounded-full"
+            name="search"
+            placeholder="Search for Restaurants"
             type="search"
           />
         </IconField>

@@ -7,13 +7,11 @@ import { Form, Formik } from 'formik';
 
 // Prime React
 import { Card } from 'primereact/card';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
-import { InputText } from 'primereact/inputtext';
 
 // Interface
 import { ISignUpForm } from '@/lib/utils/interfaces/forms';
 
+import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import { useState } from 'react';
 import * as Yup from 'yup';
@@ -65,51 +63,52 @@ export default function LoginEmailPasswordScreen() {
                   return (
                     <Form>
                       <div className="mb-2">
-                        <IconField iconPosition="right">
-                          <InputIcon className="pi pi-envelope"> </InputIcon>
-                          <InputText
-                            placeholder="Email"
-                            name="email"
-                            className="w-full"
-                            type="email"
-                            maxLength={35}
-                            value={values.email}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'email',
-                                errors?.email
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </IconField>
+                        <CustomIconTextField
+                          placeholder="Email"
+                          name="email"
+                          type="email"
+                          maxLength={35}
+                          value={values.email}
+                          iconProperties={{
+                            icon: 'pi pi-envelope',
+                            position: 'right',
+                          }}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'email',
+                              errors?.email
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
                       </div>
 
                       <div className="mb-2">
-                        <IconField iconPosition="right">
-                          <InputIcon className="pi pi-eye cursor-pointer" />
-                          <InputText
-                            className="w-full"
-                            placeholder="Password"
-                            name="password"
-                            type="password"
-                            maxLength={20}
-                            value={values.password}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'password',
-                                errors?.password
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </IconField>
+                        <CustomIconTextField
+                          className="w-full"
+                          placeholder="Password"
+                          name="password"
+                          type="password"
+                          maxLength={20}
+                          iconProperties={{
+                            icon: 'pi pi-eye',
+                            position: 'right',
+                          }}
+                          value={values.password}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'password',
+                              errors?.password
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
                       </div>
 
                       <CustomButton

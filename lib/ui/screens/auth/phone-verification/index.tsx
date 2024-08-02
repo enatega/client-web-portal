@@ -1,27 +1,26 @@
 import CustomButton from '@/lib/ui/useable-components/button';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
-
+import CustomPhoneTextField from '@/lib/ui/useable-components/phone-input-field';
 import { Card } from 'primereact/card';
 
-export default function EmailVerificationScreen() {
+export default function PhoneVerificationScreen() {
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="w-2/6">
         <Card>
           <div className="flex flex-col mb-2 p-2">
-            <i className="pi pi-envelope" style={{ fontSize: '40px' }} />
-            <span className="text-3xl">What&apos;s your email?</span>
+            <i className="pi pi-mobile mb-4" style={{ fontSize: '50px' }} />
+            <span className="text-3xl">What&apos;s your mobile number?</span>
             <span className="text-gray-400 text-sm">
-              We&apos;ll check if you have an account.
+              We need this to verify and secure your account.
             </span>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <CustomTextField
-              placeholder="Enter your email address"
+          <div className="flex flex-col gap-2">
+            <CustomPhoneTextField
+              name="otp"
               type="text"
-              name="lastName"
-              maxLength={35}
+              mask="(999) 999-9999"
+              placeholder="(999) 999-9999"
             />
 
             <CustomButton

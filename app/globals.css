@@ -78,19 +78,8 @@ body {
   height: 70px;
 }
 
-/* Input Text */
-.p-inputtext {
-  height: 2.8rem;
-  border-radius: 30px;
-  border: 1px solid #ccc;
-}
-
-.p-inputtext:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.p-inputtext:focus {
-  outline: none;
-  box-shadow: none;
+.p-inputotp > .p-inputtext {
+  height: 70px;
+  width: 80px;
+  border-radius: 0;
 }
