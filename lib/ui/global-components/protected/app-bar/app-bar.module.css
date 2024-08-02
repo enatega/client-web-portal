@@ -1,7 +1,7 @@
 .layout-topbar {
   height: 100%;
   width: 100%;
-  padding: 0 2rem;
+  padding: 0 4rem;
   background-color: var(--surface-card);
   display: flex;
   align-items: center;

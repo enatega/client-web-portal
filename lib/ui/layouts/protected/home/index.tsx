@@ -13,7 +13,7 @@ const HomeLayout = ({ children }: ILayoutProvider) => {
       <div className="">
         <HomeHeader />
       </div>
-      <div className="">{children}</div>
+      <div>{children}</div>
     </>
   );
 };
