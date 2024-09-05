@@ -7,46 +7,20 @@ import { createContext, useState } from 'react';
 import { ILayoutProvider } from '@/lib/utils/interfaces';
 
 // Types
-import {
-  LayoutConfig,
-  LayoutContextProps,
-  LayoutState,
-} from '@/lib/utils/types';
+import { LayoutContextProps } from '@/lib/utils/types';
 
 export const LayoutContext = createContext({} as LayoutContextProps);
 
 export const LayoutProvider = ({ children }: ILayoutProvider) => {
-  const [layoutConfig, setLayoutConfig] = useState<LayoutConfig>({
-    ripple: false,
-    inputStyle: 'outlined',
-    menuMode: 'static',
-    colorScheme: 'light',
-    theme: 'lara-light-indigo',
-    scale: 14,
-  });
+  const [isSidebarVisible, setShowSidebar] = useState<boolean>(false);
 
-  const [layoutState, setLayoutState] = useState<LayoutState>({
-    staticMenuDesktopInactive: false,
-    overlayMenuActive: false,
-    profileSidebarVisible: false,
-    configSidebarVisible: false,
-    staticMenuMobileActive: false,
-    menuHoverActive: false,
-  });
-
-  const showProfileSidebar = () => {
-    setLayoutState((prevLayoutState) => ({
-      ...prevLayoutState,
-      profileSidebarVisible: !prevLayoutState.profileSidebarVisible,
-    }));
+  const onShowSidebarHandler = (val?: boolean) => {
+    setShowSidebar((prevState) => (val === undefined ? !prevState : val));
   };
 
   const value: LayoutContextProps = {
-    layoutConfig,
-    setLayoutConfig,
-    layoutState,
-    setLayoutState,
-    showProfileSidebar,
+    isSidebarVisible: isSidebarVisible,
+    showSidebar: onShowSidebarHandler,
   };
 
   return (

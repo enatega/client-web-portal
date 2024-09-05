@@ -3,79 +3,132 @@
 'use client';
 
 // Core
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useContext, useEffect, useRef, useState } from 'react';
 
-// Assets
-import { AppLogo } from '@/lib/utils/assets/svgs/logo';
+// Icons
+import {
+  faBars,
+  faBell,
+  faChevronDown,
+  faCog,
+  faEllipsisV,
+  faGlobe,
+  faMap,
+  faTruck,
+} from '@fortawesome/free-solid-svg-icons';
 
-// Prime React
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
+// UI Components
+import { Avatar } from 'primereact/avatar';
 
-// Components
-import CustomButton from '@/lib/ui/useable-components/button';
-import CustomInputText from '@/lib/ui/useable-components/input-field';
+// Prime Reat
+import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
+
+// Layout
+import { LayoutContext } from '@/lib/context/layout-context';
+
+// Interface/Types
+import { LayoutContextProps } from '@/lib/utils/types';
+
 // Styles
-
 import classes from './app-bar.module.css';
 
 const AppTopbar = () => {
-  // Hooks
-  const router = useRouter();
+  // States
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Ref
+  const containerRef = useRef<HTMLDivElement>(null);
+  // Context
+  const { showSidebar } = useContext<LayoutContextProps>(LayoutContext);
+
+  // Handlers
+  const onDevicePixelRatioChange = () => {
+    setIsMenuOpen(false);
+    showSidebar(false);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    // Check if the clicked target is outside the container
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(event.target as Node)
+    ) {
+      setIsMenuOpen(false); // Close the container or handle the click outside
+    }
+  };
+
+  // Use Effects
+  useEffect(() => {
+    // Listening to mouse down event
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Listen to window resize events
+    window.addEventListener('resize', onDevicePixelRatioChange);
+
+    return () => {
+      // Cleanup listener on component unmount
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('resize', onDevicePixelRatioChange);
+    };
+  }, []);
 
   return (
     <div className={`${classes['layout-topbar']}`}>
-      <div>
-        <div className="flex flex-row items-center gap-6">
-          <Link href="/" className="layout-topbar-log">
-            <AppLogo />
-          </Link>
-
-          <div className="flex gap-2 items-center">
-            <i className="pi pi-map-marker" />
-            <span>New York</span>
-            <i className="pi pi-chevron-down" />
-          </div>
+      <div className="flex items-center gap-x-3">
+        <div className="md:hidden">
+          <button onClick={() => showSidebar()}>
+            <FontAwesomeIcon icon={faBars} />
+          </button>
         </div>
+        <div className="flex items-center bg-black text-white p-2">
+          <span className="text-xl font-bold">H</span>
+        </div>
+        <span className="ml-2 text-lg font-semibold">HEDGE</span>
       </div>
+      <div className="hidden md:flex items-center space-x-6">
+        <TextIconClickable icon={faMap} title="Zone" />
+        <TextIconClickable icon={faTruck} title="Dispatch" />
+        <TextIconClickable icon={faCog} title="Settings" />
+        <TextIconClickable icon={faChevronDown} title="EN" />
 
-      <div className="w-app-bar-search-width md:w-1/4 mb-4 md:mb-0">
-        <IconField iconPosition="left">
-          <InputIcon className="pi pi-search"> </InputIcon>
-          <CustomInputText
-            className="rounded-full"
-            name="search"
-            placeholder="Search for Restaurants"
-            type="search"
+        <FontAwesomeIcon className="cursor-pointer" icon={faBell} />
+        <div className="flex items-center space-x-1">
+          <Avatar
+            label="V"
+            size="normal"
+            style={{ backgroundColor: '#2196F3', color: '#ffffff' }}
+            shape="circle"
           />
-        </IconField>
-      </div>
 
-      <div>
-        <div className="flex">
-          <div className="mr-2 w-custom-button h-custom-button">
-            <CustomButton
-              className="w-full h-full bg-transparent text-black border-secondary-border-color hover:bg-gray-100"
-              label="Login"
-              rounded={true}
-              onClick={() => {
-                router.push('/authentication');
-              }}
-            />
-          </div>
-          <div className="w-custom-button h-custom-button">
-            <CustomButton
-              className="w-full h-full bg-primary-color border-primary-color hover:bg-white hover:text-black"
-              label="Sign up"
-              rounded={true}
-              onClick={() => {
-                router.push('/authentication/sign-up');
-              }}
-            />
-          </div>
+          <FontAwesomeIcon icon={faChevronDown} />
         </div>
       </div>
+      <div className="md:hidden">
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <FontAwesomeIcon icon={faEllipsisV} />
+        </button>
+      </div>
+      {isMenuOpen && (
+        <div
+          className="absolute top-16 right-4 bg-white shadow-lg rounded-lg p-4 z-50"
+          ref={containerRef}
+        >
+          <div className="flex flex-col items-center space-y-4">
+            <Avatar
+              label="V"
+              size="normal"
+              style={{ backgroundColor: '#2196F3', color: '#ffffff' }}
+              shape="circle"
+            />
+            <FontAwesomeIcon icon={faBell} color="gray" />
+
+            <TextIconClickable className="justify-between" icon={faMap} />
+            <TextIconClickable className="justify-between" icon={faTruck} />
+            <TextIconClickable className="justify-between" icon={faCog} />
+            <TextIconClickable className="justify-between" icon={faGlobe} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

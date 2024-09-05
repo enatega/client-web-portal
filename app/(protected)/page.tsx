@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 export default function RootPage() {
   const router = useRouter();
 
-  useEffect(() => router.replace('/discovery'));
+  useEffect(() => router.replace('/dashboard'));
 
   return <></>;
 }

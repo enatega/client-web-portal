@@ -1,0 +1,4 @@
+.header-tab-menu > :global(.p-tabmenu-nav) {
+  border: none !important;
+  border-radius: 0 !important;
+}

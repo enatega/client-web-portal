@@ -24,11 +24,8 @@ export type LayoutConfig = {
 };
 
 export interface LayoutContextProps {
-  layoutConfig: LayoutConfig;
-  setLayoutConfig: Dispatch<SetStateAction<LayoutConfig>>;
-  layoutState: LayoutState;
-  setLayoutState: Dispatch<SetStateAction<LayoutState>>;
-  showProfileSidebar: () => void;
+  isSidebarVisible: boolean;
+  showSidebar: (isOpen?: boolean) => void;
 }
 
 export interface MenuContextProps {

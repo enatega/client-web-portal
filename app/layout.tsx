@@ -11,7 +11,8 @@ import { PrimeReactProvider } from 'primereact/api';
 import { LayoutProvider } from '@/lib/context/layout-context';
 
 // Style
-import 'primeicons/primeicons.css'; // Import PrimeIcons CSS
+
+import { FontawesomeConfig } from '@/lib/config';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './globals.css';
@@ -36,6 +37,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <FontawesomeConfig />
       </head>
       <body className={inter.className}>
         <PrimeReactProvider value={value}>
