@@ -47,8 +47,7 @@ body {
 /* Layout */
 
 .layout-top-container {
-  position: fixed;
-  height: 5rem;
+  height: 8%;
   z-index: 997;
   left: 0;
   top: 0;
@@ -56,13 +55,12 @@ body {
 }
 
 .layout-main-container {
+  height: 92%;
   display: flex;
-
-  padding-top: 5rem; /* Due to height of app bar*/
 }
 
 .layout-main {
-  flex: 1 1 auto;
+  height: 100%;
 }
 
 /* OTP Input */

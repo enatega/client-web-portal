@@ -16,13 +16,15 @@ const Layout = ({ children }: ILayoutProvider) => {
   const { isSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
 
   return (
-    <>
+    <div className="layout-main">
       <div className="layout-top-container">
         <AppTopbar />
       </div>
       <div className="layout-main-container">
         <Sidebar />
-        <div className={`lg:ml-0 md:ml-${isSidebarVisible ? 64 : 0} p-6`}>
+        <div
+          className={`h-full lg:ml-0 md:ml-${isSidebarVisible ? 64 : 0} p-6`}
+        >
           {children}
           <AppFooter />
         </div>
@@ -30,7 +32,7 @@ const Layout = ({ children }: ILayoutProvider) => {
 
       {/* <AppConfig /> */}
       {/* <div className="layout-mask"></div> */}
-    </>
+    </div>
   );
 };
 
