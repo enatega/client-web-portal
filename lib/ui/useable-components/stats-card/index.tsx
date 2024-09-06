@@ -2,7 +2,8 @@
 import { IStatsCardProps } from '@/lib/utils/interfaces';
 
 // Styles
-import classes from './state-card.module.css';
+import { formatCurrency } from '@/lib/utils/methods';
+import classes from './stats-card.module.css';
 
 export default function StatsCard({
   label,
@@ -11,17 +12,19 @@ export default function StatsCard({
 }: IStatsCardProps) {
   return (
     <div className={`${classes['card']}`}>
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-lg font-semibold">{label}</h2>
-          <p className="text-3xl font-bold">{total}</p>
-          <p className="text-green-500 flex items-center">
-            <i className="fas fa-arrow-up mr-1"></i> {description}
-          </p>
+      <div className="flex flex-col justify-between items-start gap-y-2">
+        {/* <h2 className="text-lg font-semibold ">{label}</h2> */}
+        <div className="w-[217px] opacity-70 text-[#202224] text-xl font-medium leading-7">
+          {label}
         </div>
-        <div className="text-2xl text-gray-400">
-          <i className="fas fa-store"></i>
+
+        <div className="w-[217px] text-[#202224] text-4xl font-semibold  leading-10">
+          {formatCurrency(total)}
         </div>
+
+        <span className="text-[#00b69b] text-sm font-medium font-['Inter'] leading-7">
+          {description}
+        </span>
       </div>
     </div>
   );
