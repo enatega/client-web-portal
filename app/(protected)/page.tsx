@@ -14,7 +14,7 @@ export default function RootPage() {
   useEffect(() => {
     setSelectedItem({ screenName: 'Home' });
     router.replace('/home');
-  }, [router, setSelectedItem]);
+  }, []);
 
   return <></>;
 }

@@ -15,7 +15,6 @@ export const SidebarProvider = ({ children }: ILayoutProvider) => {
   const [selectedItem, setSelectedItem] = useState<ISelectedItems | null>(null);
 
   const onSetSelectedItems = (items: ISelectedItems) => {
-    console.log(items);
     setSelectedItem(items);
   };
 
