@@ -3,7 +3,7 @@ import { MenuItem } from 'primereact/menuitem';
 import { MouseEventHandler } from 'react';
 
 export interface IItem extends MenuItem {
-  // label?: string;
+  key?: string;
   icon?: IconDefinition;
   isExpandable?: boolean;
   isParent?: boolean;
@@ -12,7 +12,8 @@ export interface IItem extends MenuItem {
 }
 
 export interface IPanelItem extends IItem {
-  items: IItem[];
+  key: string;
+  items?: IItem[];
 }
 
 export interface IMenuOption {

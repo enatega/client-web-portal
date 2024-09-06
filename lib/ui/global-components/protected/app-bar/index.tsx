@@ -4,7 +4,7 @@
 
 // Core
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 // Icons
 import {
@@ -42,10 +42,10 @@ const AppTopbar = () => {
   const { showSidebar } = useContext<LayoutContextProps>(LayoutContext);
 
   // Handlers
-  const onDevicePixelRatioChange = () => {
+  const onDevicePixelRatioChange = useCallback(() => {
     setIsMenuOpen(false);
     showSidebar(false);
-  };
+  }, [showSidebar]);
 
   const handleClickOutside = (event: MouseEvent) => {
     // Check if the clicked target is outside the container
@@ -70,7 +70,7 @@ const AppTopbar = () => {
       document.removeEventListener('mousedown', handleClickOutside);
       window.removeEventListener('resize', onDevicePixelRatioChange);
     };
-  }, []);
+  }, [onDevicePixelRatioChange]);
 
   return (
     <div className={`${classes['layout-topbar']}`}>
