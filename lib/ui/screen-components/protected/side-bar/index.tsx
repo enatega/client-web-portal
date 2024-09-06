@@ -1,5 +1,5 @@
 // Core
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { ReactNode, useContext, useRef } from 'react';
 
 // Prime React
@@ -9,7 +9,11 @@ import { PanelMenu } from 'primereact/panelmenu';
 import { LayoutContext } from '@/lib/context/layout-context';
 
 // Interface and Types
-import { LayoutContextProps, SidebarContextProps } from '@/lib/utils/types';
+import {
+  ISelectedItems,
+  ISidebarContextProps,
+  LayoutContextProps,
+} from '@/lib/utils/types';
 
 // Icons
 import {
@@ -22,10 +26,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// Style
+// Context
 import { SidebarContext } from '@/lib/context/sidebar-context';
+
+// Interface
 import { IItem, IMenuOption, IPanelItem } from '@/lib/utils/interfaces';
-import Link from 'next/link';
+
+// Styles
 import classes from './side-bar.module.css';
 
 export default function Sidebar() {
@@ -36,10 +43,11 @@ export default function Sidebar() {
   const containerRef = useRef<HTMLDivElement>(null);
   // Router
   const pathname = usePathname();
+  const router = useRouter();
 
   // Context
-  const { setSidebarExpandedItemKeys } =
-    useContext<SidebarContextProps>(SidebarContext);
+  const { selectedItem, setSelectedItem } =
+    useContext<ISidebarContextProps>(SidebarContext);
 
   // Template
   const itemRenderer = (item: IItem, options: IMenuOption): ReactNode => {
@@ -54,7 +62,15 @@ export default function Sidebar() {
     if (item?.route === '/home') console.log({ route: item?.route });
 
     return (
-      <Link href={item?.route ?? '/'}>
+      <div
+        onClick={() => {
+          router.push(item?.route ?? '/');
+
+          setSelectedItem({
+            screenName: item?.label ?? '',
+          } as ISelectedItems);
+        }}
+      >
         <div
           className={`flex justify-between items-center px-2 py-2 cursor-pointer bg-${_container_color} rounded-xl`}
           onClick={options.onClick}
@@ -72,7 +88,7 @@ export default function Sidebar() {
             />
           )}
         </div>
-      </Link>
+      </div>
     );
   };
 
@@ -92,7 +108,17 @@ export default function Sidebar() {
       : '#71717a';
 
     return (
-      <Link key={item.key} href={item?.route ?? '/'}>
+      <div
+        key={item.key}
+        onClick={() => {
+          router.push(item?.route ?? '/');
+
+          setSelectedItem({
+            ...selectedItem,
+            screenName: item?.label ?? '',
+          } as ISelectedItems);
+        }}
+      >
         <div
           className={`flex justify-between items-center px-2 py-2 cursor-pointer bg-${_container_color} rounded-xl`}
         >
@@ -104,7 +130,7 @@ export default function Sidebar() {
             <span className={_color}>{item.label}</span>
           </div>
         </div>
-      </Link>
+      </div>
     );
   };
 
@@ -250,7 +276,6 @@ export default function Sidebar() {
       <PanelMenu
         className={`${classes['custom-panel-menu']} w-full`}
         model={items}
-        onExpandedKeysChange={setSidebarExpandedItemKeys}
       />
     </div>
   );

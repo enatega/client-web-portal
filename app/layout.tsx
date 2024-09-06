@@ -10,10 +10,12 @@ import { PrimeReactProvider } from 'primereact/api';
 // Context
 import { LayoutProvider } from '@/lib/context/layout-context';
 
-// Style
-
+// Configuration
 import { FontawesomeConfig } from '@/lib/config';
+
+// Context
 import { SidebarProvider } from '@/lib/context/sidebar-context';
+
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './globals.css';

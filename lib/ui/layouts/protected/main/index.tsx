@@ -3,9 +3,8 @@
 
 import { LayoutContext } from '@/lib/context/layout-context';
 // Components
-import AppTopbar from '@/lib/ui/global-components/protected/app-bar';
-import AppFooter from '@/lib/ui/global-components/protected/app-footer';
-import Sidebar from '@/lib/ui/global-components/protected/side-bar';
+import AppTopbar from '@/lib/ui/screen-components/protected/app-bar';
+import Sidebar from '@/lib/ui/screen-components/protected/side-bar';
 
 // Interface
 import { ILayoutProvider } from '@/lib/utils/interfaces';
@@ -26,12 +25,8 @@ const Layout = ({ children }: ILayoutProvider) => {
           className={`h-full lg:ml-0 md:ml-${isSidebarVisible ? 64 : 0} p-6`}
         >
           {children}
-          <AppFooter />
         </div>
       </div>
-
-      {/* <AppConfig /> */}
-      {/* <div className="layout-mask"></div> */}
     </div>
   );
 };

@@ -2,7 +2,7 @@
 'use client';
 
 // Components
-import AppTopbar from '@/lib/ui/global-components/unprotected/app-bar';
+import AppTopbar from '@/lib/ui/screen-components/unprotected/app-bar';
 
 // Styles
 import { ILayoutProvider } from '@/lib/utils/interfaces';

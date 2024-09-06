@@ -7,21 +7,21 @@ import { createContext, useState } from 'react';
 import { ILayoutProvider } from '@/lib/utils/interfaces';
 
 // Types
-import { SidebarContextProps } from '@/lib/utils/types';
+import { ISelectedItems, ISidebarContextProps } from '@/lib/utils/types';
 
-export const SidebarContext = createContext({} as SidebarContextProps);
+export const SidebarContext = createContext({} as ISidebarContextProps);
 
 export const SidebarProvider = ({ children }: ILayoutProvider) => {
-  const [expandedKeys, setExpandedKeys] = useState<{}>({});
+  const [selectedItem, setSelectedItem] = useState<ISelectedItems | null>(null);
 
-  const onSetSidebarExpandedItemKeys = (keys: {}) => {
-    console.log(keys);
-    setExpandedKeys(keys);
+  const onSetSelectedItems = (items: ISelectedItems) => {
+    console.log(items);
+    setSelectedItem(items);
   };
 
-  const value: SidebarContextProps = {
-    expandedKeys: expandedKeys,
-    setSidebarExpandedItemKeys: onSetSidebarExpandedItemKeys,
+  const value: ISidebarContextProps = {
+    selectedItem: selectedItem,
+    setSelectedItem: onSetSelectedItems,
   };
 
   return (

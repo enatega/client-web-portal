@@ -1,4 +1,8 @@
-export interface SidebarContextProps {
-  expandedKeys: {};
-  setSidebarExpandedItemKeys: (keys?: {}) => void;
+export interface ISidebarContextProps {
+  selectedItem: ISelectedItems | null;
+  setSelectedItem: (keys: ISelectedItems) => void;
+}
+
+export interface ISelectedItems {
+  screenName: string;
 }
