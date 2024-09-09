@@ -10,8 +10,13 @@ export interface ICustomButtonProps extends IGlobalComponentProps {
   type?: 'submit' | 'reset' | 'button';
 }
 
+interface IIconStyles {
+  color: string;
+}
+
 export interface TextIconClickableProps extends IGlobalComponentProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   icon?: IconProp;
+  iconStyles?: IIconStyles;
   title?: string;
 }

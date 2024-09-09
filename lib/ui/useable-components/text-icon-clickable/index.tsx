@@ -9,12 +9,15 @@ export default function TextIconClickable({
   className,
   icon,
   title = '',
+  iconStyles,
 }: TextIconClickableProps) {
   return (
     <div
       className={`flex items-center space-x-2 cursor-pointer p-ripple ${className}`}
     >
-      {icon && <FontAwesomeIcon icon={icon} color="gray" />}
+      {icon && (
+        <FontAwesomeIcon icon={icon} color={iconStyles?.color ?? 'gray'} />
+      )}
       <span className={classes['label']}>{title}</span>
       <Ripple />
     </div>

@@ -13,6 +13,8 @@
 }
 
 :root {
+  --sb-item-primary-color: #b1c748;
+  --sb-item-secondary-color: #d8e3a3;
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
@@ -57,6 +59,7 @@ body {
 .layout-main-container {
   height: 92%;
   display: flex;
+  overflow: hidden;
 }
 
 .layout-main {
@@ -238,4 +241,12 @@ body {
   background-color: #333;
   color: #fff;
   cursor: pointer;
+}
+
+/* Card */
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background-color: white;
 }

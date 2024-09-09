@@ -53,13 +53,11 @@ export default function Sidebar() {
   const itemRenderer = (item: IItem, options: IMenuOption): ReactNode => {
     const _container_color = pathname.includes(item?.route ?? '')
       ? item.isParent
-        ? 'sb-item-primary-color'
-        : 'sb-item-secondary-color'
+        ? 'var(--sb-item-primary-color)' //'sb-item-primary-color'
+        : 'var(--sb-item-secondary-color)' //'sb-item-secondary-color'
       : '#fff';
 
     const _color = pathname.includes(item?.route ?? '') ? 'white' : '';
-
-    if (item?.route === '/home') console.log({ route: item?.route });
 
     return (
       <div
@@ -72,7 +70,8 @@ export default function Sidebar() {
         }}
       >
         <div
-          className={`flex justify-between items-center px-2 py-2 cursor-pointer bg-${_container_color} rounded-xl`}
+          className="flex justify-between items-center px-2 py-2 cursor-pointer rounded-xl"
+          style={{ backgroundColor: _container_color }}
           onClick={options.onClick}
         >
           <div className="flex items-center gap-x-2 text-sm">
@@ -95,8 +94,8 @@ export default function Sidebar() {
   const staticItemRenderer = (item: IPanelItem): ReactNode => {
     const _container_color = pathname.includes(item?.route ?? '')
       ? item.isParent
-        ? 'sb-item-primary-color'
-        : 'sb-item-secondary-color'
+        ? 'var(--sb-item-primary-color)' //'sb-item-primary-color'
+        : 'var(--sb-item-secondary-color)' //'sb-item-secondary-color'
       : '#fff';
 
     const _color = pathname.includes(item?.route ?? '')
@@ -120,7 +119,8 @@ export default function Sidebar() {
         }}
       >
         <div
-          className={`flex justify-between items-center px-2 py-2 cursor-pointer bg-${_container_color} rounded-xl`}
+          className="flex justify-between items-center px-2 py-2 cursor-pointer rounded-xl"
+          style={{ backgroundColor: _container_color }}
         >
           <div className="flex items-center gap-x-2 text-sm">
             {item.icon && (

@@ -5,5 +5,6 @@ export interface IStatsCardProps extends IGlobalComponentProps {
   label: string;
   total: number;
   description: string;
-  icon?: IconDefinition;
+  route: string;
+  icon: IconDefinition;
 }

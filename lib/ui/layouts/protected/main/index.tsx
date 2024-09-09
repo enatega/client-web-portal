@@ -22,7 +22,7 @@ const Layout = ({ children }: ILayoutProvider) => {
       <div className="layout-main-container">
         <Sidebar />
         <div
-          className={`w-full h-full lg:ml-0 md:ml-${isSidebarVisible ? 64 : 0} p-6`}
+          className={`w-full h-full lg:ml-45 md:ml-${isSidebarVisible ? 64 : 20}  overflow-auto`}
         >
           {children}
         </div>
