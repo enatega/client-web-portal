@@ -4,14 +4,14 @@
 import { createContext, useState } from 'react';
 
 // Interface
-import { ILayoutProvider } from '@/lib/utils/interfaces';
+import { IProvider } from '@/lib/utils/interfaces';
 
 // Types
 import { LayoutContextProps } from '@/lib/utils/types';
 
 export const LayoutContext = createContext({} as LayoutContextProps);
 
-export const LayoutProvider = ({ children }: ILayoutProvider) => {
+export const LayoutProvider = ({ children }: IProvider) => {
   const [isSidebarVisible, setShowSidebar] = useState<boolean>(false);
 
   const onShowSidebarHandler = (val?: boolean) => {

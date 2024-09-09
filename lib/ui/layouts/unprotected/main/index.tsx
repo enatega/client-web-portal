@@ -5,9 +5,9 @@
 import AppTopbar from '@/lib/ui/screen-components/unprotected/app-bar';
 
 // Styles
-import { ILayoutProvider } from '@/lib/utils/interfaces';
+import { IProvider } from '@/lib/utils/interfaces';
 
-const Layout = ({ children }: ILayoutProvider) => {
+const Layout = ({ children }: IProvider) => {
   return (
     <div className="layout-container">
       <div className="layout-top-container">

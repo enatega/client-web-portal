@@ -1,20 +1,26 @@
 'use client';
 
+import { VendorContext } from '@/lib/context/vendor-context';
+import VendorAddForm from '@/lib/ui/screen-components/protected/vendor/add-form';
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
 import RestaurantCard from '@/lib/ui/useable-components/resturant-card';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import VendorCard from '@/lib/ui/useable-components/vendor-card';
 import { options } from '@/lib/utils/constants';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 export default function VendorsScreen() {
-  //
+  // States
   const [selectedVendorFilter, setSelectedVendorFilter] = useState<string>(
     options[1]
   );
   const [selectedRestaurantFilter, setSelectedResturantFilter] =
     useState<string>(options[1]);
+
+  // Context
+  const { vendorFormVisible, onSetVendorFormVisible } =
+    useContext(VendorContext);
 
   return (
     <div className="flex flex-col">
@@ -85,6 +91,11 @@ export default function VendorsScreen() {
           </div>
         </div>
       </div>
+
+      <VendorAddForm
+        visible={vendorFormVisible}
+        setVisibility={onSetVendorFormVisible}
+      />
     </div>
   );
 }

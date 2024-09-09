@@ -4,9 +4,9 @@
 // Components
 
 // Interface
-import { ILayoutProvider } from '@/lib/utils/interfaces';
+import { IProvider } from '@/lib/utils/interfaces';
 
-const HomeLayout = ({ children }: ILayoutProvider) => {
+const HomeLayout = ({ children }: IProvider) => {
   return <div className="h-full overflow-auto">{children}</div>;
 };
 

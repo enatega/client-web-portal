@@ -1,7 +1,7 @@
 'use client';
 
 import { SidebarContext } from '@/lib/context/sidebar-context';
-import { ISidebarContextProps } from '@/lib/utils/types';
+import { ISidebarContextProps } from '@/lib/utils/interfaces';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 

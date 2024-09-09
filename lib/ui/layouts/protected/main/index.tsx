@@ -7,11 +7,11 @@ import AppTopbar from '@/lib/ui/screen-components/protected/app-bar';
 import Sidebar from '@/lib/ui/screen-components/protected/side-bar';
 
 // Interface
-import { ILayoutProvider } from '@/lib/utils/interfaces';
-import { LayoutContextProps } from '@/lib/utils/types';
+import { IProvider, LayoutContextProps } from '@/lib/utils/interfaces';
+
 import { useContext } from 'react';
 
-const Layout = ({ children }: ILayoutProvider) => {
+const Layout = ({ children }: IProvider) => {
   const { isSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
 
   return (
@@ -22,7 +22,7 @@ const Layout = ({ children }: ILayoutProvider) => {
       <div className="layout-main-container">
         <Sidebar />
         <div
-          className={`w-full h-full lg:ml-45 md:ml-${isSidebarVisible ? 64 : 20}  overflow-auto`}
+          className={`w-full h-full lg:ml-45 md:ml-${isSidebarVisible ? 64 : 20}`}
         >
           {children}
         </div>

@@ -4,14 +4,14 @@
 import { createContext, useState } from 'react';
 
 // Interface
-import { ILayoutProvider } from '@/lib/utils/interfaces';
+import { IProvider } from '@/lib/utils/interfaces';
 
 // Types
-import { ISelectedItems, ISidebarContextProps } from '@/lib/utils/types';
+import { ISelectedItems, ISidebarContextProps } from '@/lib/utils/interfaces';
 
 export const SidebarContext = createContext({} as ISidebarContextProps);
 
-export const SidebarProvider = ({ children }: ILayoutProvider) => {
+export const SidebarProvider = ({ children }: IProvider) => {
   const [selectedItem, setSelectedItem] = useState<ISelectedItems | null>(null);
 
   const onSetSelectedItems = (items: ISelectedItems) => {

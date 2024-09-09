@@ -14,7 +14,7 @@ export default function VendorCard({ index }: IVendorCardProps) {
         alt="User avatar"
         className="rounded-full mr-3"
       />
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col gap-y-1">
         <div className={`font-bold text-${selected ? 'white' : 'black'}`}>
           Cody fisher
         </div>
