@@ -7,7 +7,7 @@ import { createContext, useState } from 'react';
 import { IProvider } from '@/lib/utils/interfaces';
 
 // Types
-import { LayoutContextProps } from '@/lib/utils/types';
+import { LayoutContextProps } from '@/lib/utils/interfaces';
 
 export const LayoutContext = createContext({} as LayoutContextProps);
 
