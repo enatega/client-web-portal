@@ -1,3 +1,4 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { InputMaskChangeEvent } from 'primereact/inputmask';
 import { CSSProperties } from 'react';
 import { IGlobalComponentProps } from './global.interface';
@@ -15,7 +16,7 @@ interface IGlobalTextFieldProps extends IGlobalComponentProps {
 // Extra
 interface IIconProperties {
   position: 'left' | 'right';
-  icon: string;
+  icon: IconDefinition;
 }
 
 // Fields

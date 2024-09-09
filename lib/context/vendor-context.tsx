@@ -14,6 +14,7 @@ export const VendorProvider = ({ children }: IProvider) => {
   const [vendorFormVisible, setVendorFormVisible] = useState<boolean>(false);
 
   const onSetVendorFormVisible = (status: boolean) => {
+    console.log('onSetVendor Called');
     setVendorFormVisible(status);
   };
 

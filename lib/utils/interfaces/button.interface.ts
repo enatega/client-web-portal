@@ -15,7 +15,7 @@ interface IIconStyles {
 }
 
 export interface TextIconClickableProps extends IGlobalComponentProps {
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
   icon?: IconProp;
   iconStyles?: IIconStyles;
   title?: string;

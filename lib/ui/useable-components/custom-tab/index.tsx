@@ -6,7 +6,7 @@ const CustomTab = ({
   setSelectedTab,
 }: ICustomTabProps) => {
   return (
-    <div className="flex space-x-2 p-1 bg-gray-100 rounded-lg">
+    <div className="w-fit flex space-x-2 p-1 bg-gray-100 rounded-lg">
       {options.map((option) => (
         <div
           key={String(option)}

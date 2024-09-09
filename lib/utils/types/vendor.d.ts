@@ -4,3 +4,5 @@ export type TVendorFormPosition =
   | 'left'
   | 'right'
   | undefined;
+
+export type TVendorMobileTabs = 'vendors' | 'restaurants';

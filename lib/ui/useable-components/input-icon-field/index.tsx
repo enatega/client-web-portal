@@ -1,9 +1,12 @@
 // Interfaces
 import { IIconTextFieldProps } from '@/lib/utils/interfaces';
-import { IconField } from 'primereact/iconfield';
-import { InputIcon } from 'primereact/inputicon';
+
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Prime React
+import { IconField } from 'primereact/iconfield';
+import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
 
 // Styles
@@ -11,15 +14,25 @@ import { InputText } from 'primereact/inputtext';
 export default function CustomIconTextField({
   className,
   iconProperties: { icon, position },
+  placeholder,
   ...props
 }: IIconTextFieldProps) {
   return (
     <IconField iconPosition={position}>
-      <InputIcon className={`${icon} cursor-pointer`} />
-      <InputText
-        className={`w-full focus:outline-none focus:shadow-none border-inherit ${className}`}
-        {...props}
-      />
+      <InputIcon>
+        <FontAwesomeIcon icon={icon} className="mt-3" />
+      </InputIcon>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="username" className="text-sm font-[500]">
+          {placeholder}
+        </label>
+        <InputText
+          className={`w-full h-11 border px-2 focus:outline-none focus:shadow-none border-inherit ${className}`}
+          // placeholder={placeholder}
+          {...props}
+        />
+      </div>
     </IconField>
   );
 }

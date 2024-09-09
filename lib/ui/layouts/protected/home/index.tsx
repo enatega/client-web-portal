@@ -7,7 +7,7 @@
 import { IProvider } from '@/lib/utils/interfaces';
 
 const HomeLayout = ({ children }: IProvider) => {
-  return <div className="h-full overflow-auto">{children}</div>;
+  return <div className="h-full">{children}</div>;
 };
 
 export default HomeLayout;
