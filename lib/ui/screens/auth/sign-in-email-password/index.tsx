@@ -13,6 +13,7 @@ import { ISignUpForm } from '@/lib/utils/interfaces/forms';
 
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
@@ -64,7 +65,7 @@ export default function LoginEmailPasswordScreen() {
                           maxLength={35}
                           value={values.email}
                           iconProperties={{
-                            icon: 'pi pi-envelope',
+                            icon: faEnvelope,
                             position: 'right',
                           }}
                           onChange={handleChange}
