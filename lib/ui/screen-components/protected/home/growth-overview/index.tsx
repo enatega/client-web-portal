@@ -113,7 +113,7 @@ export default function GrowthOverView() {
     <div className={`w-full pb-2`}>
       <h2 className="text-lg font-semibold">Growth Overview</h2>
       <p className="text-gray-500">Tracking Growth Over the Year</p>
-      <div className="mt-4 bg-yellow-300">
+      <div className="mt-4">
         <Chart type="line" data={chartData} options={chartOptions} />
       </div>
     </div>

@@ -28,7 +28,7 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { LayoutContext } from '@/lib/context/layout-context';
 
 // Interface/Types
-import { LayoutContextProps } from '@/lib/utils/types';
+import { LayoutContextProps } from '@/lib/utils/interfaces';
 
 // Styles
 import classes from './app-bar.module.css';
