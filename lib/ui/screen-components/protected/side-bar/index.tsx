@@ -13,7 +13,7 @@ import {
   ISelectedItems,
   ISidebarContextProps,
   LayoutContextProps,
-} from '@/lib/utils/types';
+} from '@/lib/utils/interfaces';
 
 // Icons
 import {
