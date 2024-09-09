@@ -11,6 +11,7 @@ import { PasswordErrors } from '@/lib/utils/constants/strings';
 // Interface
 import { ISignUpForm } from '@/lib/utils/interfaces/forms';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from 'formik';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
@@ -136,7 +137,7 @@ export default function SignupScreen() {
                           placeholder="Email"
                           maxLength={35}
                           iconProperties={{
-                            icon: 'pi pi-envelope',
+                            icon: faEnvelope,
                             position: 'right',
                           }}
                           value={values.email}
@@ -160,7 +161,7 @@ export default function SignupScreen() {
                           maxLength={20}
                           value={values.password}
                           iconProperties={{
-                            icon: 'pi pi-eye',
+                            icon: faEye,
                             position: 'right',
                           }}
                           onChange={handleChange}
@@ -182,7 +183,7 @@ export default function SignupScreen() {
                           type="password"
                           maxLength={20}
                           iconProperties={{
-                            icon: 'pi pi-eye',
+                            icon: faEye,
                             position: 'right',
                           }}
                           value={values.confirmPassword}
