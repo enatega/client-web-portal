@@ -88,6 +88,7 @@ export default function LoginEmailPasswordScreen() {
                           name="password"
                           type="password"
                           maxLength={20}
+                          showLabel={false}
                           iconProperties={{
                             icon: faEye,
                             position: 'right',
