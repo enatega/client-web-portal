@@ -21,6 +21,7 @@ export default function PhoneVerificationScreen() {
               type="text"
               mask="(999) 999-9999"
               placeholder="(999) 999-9999"
+              showLabel={false}
             />
 
             <CustomButton
