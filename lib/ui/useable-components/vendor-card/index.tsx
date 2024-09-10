@@ -17,12 +17,12 @@ export default function VendorCard({ index }: IVendorCardProps) {
       />
       <div className="flex-1 flex flex-col gap-y-1">
         <TextComponent
-          className={`card-h1 text-${selected ? 'white' : 'black'}`}
+          className={`card-h2 text-${selected ? 'white' : 'black'}`}
           text="Cody fisher"
         />
 
         <TextComponent
-          className={`card-h2 text-${selected ? 'white' : 'black'}`}
+          className={`card-h3 text-${selected ? 'white' : 'black'}`}
           text="cody.fisher@example.com"
         />
 

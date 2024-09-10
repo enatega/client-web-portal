@@ -12,7 +12,7 @@ import { LayoutContextProps } from '@/lib/utils/interfaces';
 export const LayoutContext = createContext({} as LayoutContextProps);
 
 export const LayoutProvider = ({ children }: IProvider) => {
-  const [isSidebarVisible, setShowSidebar] = useState<boolean>(false);
+  const [isSidebarVisible, setShowSidebar] = useState<boolean>(true);
 
   const onShowSidebarHandler = (val?: boolean) => {
     setShowSidebar((prevState) => (val === undefined ? !prevState : val));

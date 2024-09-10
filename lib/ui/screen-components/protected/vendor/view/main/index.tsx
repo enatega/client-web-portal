@@ -60,7 +60,7 @@ export default function VendorMain({
         </div>
 
         {/* Vendors content */}
-        <div className="p-2 pb-16">
+        <div className="pb-16">
           {Array(8)
             .fill(0)
             .map((_, i) => (

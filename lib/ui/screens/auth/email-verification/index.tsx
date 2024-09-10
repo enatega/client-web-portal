@@ -22,6 +22,7 @@ export default function EmailVerificationScreen() {
               type="text"
               name="lastName"
               maxLength={35}
+              showLabel={true}
             />
 
             <CustomButton

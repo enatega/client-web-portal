@@ -1,9 +1,18 @@
 import { IRestaurantCardProps } from '@/lib/utils/interfaces';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+import CustomButton from '../button';
 import TextComponent from '../text-field';
 
 export default function RestaurantCard({ index }: IRestaurantCardProps) {
+  const [isChecked, setIsChecked] = useState(false);
+
+  // Handle checkbox change
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked); // Toggle the state
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md border-2 border-[#F4F4F5] flex flex-col">
       <div className="flex items-center mb-4 rounded-t-lg bg-gray-200 p-4">
@@ -22,15 +31,18 @@ export default function RestaurantCard({ index }: IRestaurantCardProps) {
         </div>
         <label className="ml-2 flex items-center cursor-pointer flex-shrink-0">
           <div className="relative">
-            <input
-              type="checkbox"
-              className="sr-only"
-              defaultChecked={index % 3 === 0}
-            />
-            <div className="block bg-gray-200 w-10 h-6 rounded-full"></div>
-            <div
-              className={`dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition ${index % 3 === 0 ? 'transform translate-x-full bg-green-500' : ''}`}
-            ></div>
+            <div className="flex items-center space-x-2">
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="sr-only peer"
+                  checked={isChecked}
+                  onChange={handleCheckboxChange}
+                />
+                <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:bg-primary-color"></div>
+                <div className="absolute left-0.5 top-0.5 bg-white w-5 h-5 rounded-full transition-transform peer-checked:translate-x-5"></div>
+              </label>
+            </div>
           </div>
         </label>
       </div>
@@ -42,10 +54,11 @@ export default function RestaurantCard({ index }: IRestaurantCardProps) {
           text="Name Address 13th Street 47 W 13th St, New York"
         />
       </div>
-      <div className="px-4 mt-auto">
-        <button className="bg-[#EBEDE6] text-black px-4 py-2 rounded-lg w-full mb-4">
-          View details
-        </button>
+      <div className="px-4 mb-2">
+        <CustomButton
+          className="w-full h-10 bg-[#EBEDE6] text-black "
+          label="View Details"
+        />
       </div>
     </div>
   );

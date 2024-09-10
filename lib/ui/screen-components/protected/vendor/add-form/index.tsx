@@ -106,6 +106,7 @@ export default function VendorAddForm({
                           maxLength={35}
                           value={values.vendorName}
                           onChange={handleChange}
+                          showLabel={true}
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'email',
@@ -122,6 +123,7 @@ export default function VendorAddForm({
                           name="vendorEmail"
                           placeholder="Email"
                           maxLength={35}
+                          showLabel={true}
                           iconProperties={{
                             icon: faEnvelope,
                             position: 'right',
@@ -146,6 +148,7 @@ export default function VendorAddForm({
                           type="password"
                           maxLength={20}
                           value={values.vendorPassword}
+                          showLabel={true}
                           iconProperties={{
                             icon: faEye,
                             position: 'right',
@@ -168,6 +171,7 @@ export default function VendorAddForm({
                           name="vendorConfirmPassword"
                           type="password"
                           maxLength={20}
+                          showLabel={true}
                           iconProperties={{
                             icon: faEye,
                             position: 'right',
