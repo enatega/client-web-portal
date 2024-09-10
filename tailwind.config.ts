@@ -27,8 +27,6 @@ const config = {
         none: 'none',
       },
       colors: {
-        'sb-item-primary-color': '#b1c748',
-        'sb-item-secondary-color': '#d8e3a3',
         'primary-color': '#5AC12F',
         'secondary-border-color': '#111827',
       },
@@ -38,6 +36,12 @@ const config = {
       },
       height: {
         'custom-button': '45px',
+      },
+      fontSize: {
+        'heading-1': '20px',
+        'card-h1': '16px',
+        'card-h2': '',
+        'btn-h': '',
       },
     },
   },

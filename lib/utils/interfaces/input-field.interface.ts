@@ -10,6 +10,7 @@ interface IGlobalTextFieldProps extends IGlobalComponentProps {
   name: string;
   maxLength?: number;
   value?: string;
+  showLabel: boolean;
   style?: CSSProperties;
 }
 

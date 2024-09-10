@@ -9,17 +9,20 @@ import { InputText } from 'primereact/inputtext';
 export default function CustomTextField({
   className,
   placeholder,
+  showLabel,
   ...props
 }: ITextFieldProps) {
   return (
-    <div className="flex flex-col gap-2">
-      <label htmlFor="username" className="text-sm font-[500]">
-        {placeholder}
-      </label>
+    <div className={`w-full sm:w-60 flex flex-col justify-center gap-2`}>
+      {showLabel && (
+        <label htmlFor="username" className="text-xs font-[500]">
+          {placeholder}
+        </label>
+      )}
 
       <InputText
-        className={`w-full h-11 border px-2 border-gray-300 focus:outline-none focus:shadow-none ${className}`}
-        // placeholder={placeholder}
+        className={`w-full h-10 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none ${className}`}
+        placeholder={placeholder}
         {...props}
       />
     </div>

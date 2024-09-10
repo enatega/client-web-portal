@@ -1,7 +1,9 @@
 // UI Components
 import { VendorContext } from '@/lib/context/vendor-context';
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
 import RestaurantCard from '@/lib/ui/useable-components/resturant-card';
+import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import VendorCard from '@/lib/ui/useable-components/vendor-card';
 import { options } from '@/lib/utils/constants';
@@ -31,9 +33,9 @@ export default function VendorMain({
         {/* Mobile-only header for Vendors section */}
         <div className="sm:hidden p-3 border-b">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold">Vendors</h1>
+            <TextComponent className="heading-1" text="Vendors" />
             <TextIconClickable
-              className="w-auto h-12 px-4 bg-black text-white border-gray-300 hover:bg-white rounded hover:text-black hover:border-2 hover:border-black"
+              className="sm:w-auto  bg-black text-white border-gray-300 rounded"
               icon={faAdd}
               iconStyles={{ color: 'white' }}
               title="Add Vendor"
@@ -41,16 +43,18 @@ export default function VendorMain({
             />
           </div>
           <div className="flex flex-col space-y-4">
-            <input
+            <CustomTextField
               type="text"
-              placeholder="Filter tasks..."
-              className="border border-gray-300 rounded px-4 py-2 w-full"
+              name="vendorFilter"
+              maxLength={35}
+              placeholder="Search Vendors"
+              showLabel={false}
             />
+
             <CustomTab
               options={options}
               selectedTab={selectedVendorFilter}
               setSelectedTab={setSelectedVendorFilter}
-              className="w-full"
             />
           </div>
         </div>
@@ -71,44 +75,32 @@ export default function VendorMain({
         }`}
       >
         {/* Header for Restaurants section */}
-        <div className="p-3 border-b">
+        <div className="pt-3 pb-2  border-b">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold">Restaurants</h1>
+            <TextComponent className="heading-1" text="Restaurants" />
             <TextIconClickable
-              className="w-auto h-12 px-4 bg-black text-white border-gray-300 hover:bg-white rounded hover:text-black hover:border-2 hover:border-black"
+              className="sm:w-auto  bg-black text-white border-gray-300 rounded"
               icon={faAdd}
               iconStyles={{ color: 'white' }}
               title="Add Restaurant"
             />
           </div>
           <div className="flex flex-col sm:flex-row items-start md:items-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <input
+            <CustomTextField
               type="text"
-              placeholder="Filter tasks..."
-              className="border border-gray-300 rounded px-4 py-2 w-full sm:w-auto"
+              name="restaurantFilter"
+              maxLength={35}
+              placeholder="Search Restaurants"
+              showLabel={false}
             />
             <CustomTab
               options={options}
               selectedTab={selectedRestaurantFilter}
               setSelectedTab={setSelectedResturantFilter}
-              className="w-full sm:w-auto"
             />
           </div>
-          {/* <div className="flex flex-col md:flex-row  space-y-4">
-            <input
-              type="text"
-              placeholder="Search"
-              className="border border-gray-300 rounded px-4 py-2 w-1/3"
-            />
-            <CustomTab
-              options={options}
-              selectedTab={selectedRestaurantFilter}
-              setSelectedTab={setSelectedResturantFilter}
-            />
-          </div> */}
         </div>
 
-        {/* Restaurants content */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-16 pt-2">
           {Array(12)
             .fill(0)

@@ -1,5 +1,7 @@
 import { VendorContext } from '@/lib/context/vendor-context';
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
+import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { options } from '@/lib/utils/constants';
 import { IVendorHeaderComponentsProps } from '@/lib/utils/interfaces';
@@ -16,22 +18,26 @@ export default function VendorHeader({
   return (
     <div className="w-full border-b p-3 flex-shrink-0 sm:block hidden">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold mb-4 sm:mb-0">Vendors</h1>
+        <TextComponent className="heading-1" text="Vendors" />
 
         <TextIconClickable
-          className="w-full sm:w-auto h-12 px-4 bg-black text-white border-gray-300 hover:bg-white rounded hover:text-black hover:border-2 hover:border-black"
+          className="sm:w-auto bg-black text-white border-gray-300 rounded"
           icon={faAdd}
           iconStyles={{ color: 'white' }}
           title="Add Vendor"
           onClick={() => onSetVendorFormVisible(true)}
         />
       </div>
-      <div className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
-        <input
+
+      <div className="w-fit flex flex-colm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <CustomTextField
           type="text"
-          placeholder="Filter tasks..."
-          className="border border-gray-300 rounded px-4 py-2 w-full sm:w-auto"
+          name="vendorFilter"
+          maxLength={35}
+          placeholder="Search Vendors"
+          showLabel={false}
         />
+
         <CustomTab
           options={options}
           selectedTab={selectedVendorFilter}
