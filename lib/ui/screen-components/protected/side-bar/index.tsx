@@ -8,12 +8,10 @@ import {
 } from '@/lib/utils/interfaces';
 import {
   faCog,
-  faEllipsisV,
   faHome,
   faSliders,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'react';
 import SidebarItem from './side-bar-item';
 
@@ -23,33 +21,12 @@ function Sidebar({ children }: IGlobalComponentProps) {
   return (
     <div className="relative">
       <aside
-        className={`box-border h-screen transition-all ${isSidebarVisible ? 'w-5/6 sm:w-64' : 'w-0 sm:hidden'}`}
+        className={`box-border h-screen transition-all ${isSidebarVisible ? 'w-4/5 sm:w-64' : 'w-0 sm:hidden'}`}
       >
         <nav
-          className={`pt-2 flex h-full flex-col border-r bg-white shadow-sm ${isSidebarVisible ? '' : 'hidden'}`}
+          className={`pt-2 flex h-full  flex-col border-r bg-white shadow-sm ${isSidebarVisible ? '' : 'hidden'}`}
         >
           <ul className="flex-1 px-3">{children}</ul>
-
-          <div className="flex border-t p-3">
-            <img
-              src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true&name=Mark+Ruffalo"
-              alt=""
-              className="h-10 w-10 rounded-md"
-            />
-            <div
-              className={`
-                flex items-center justify-between
-                overflow-hidden transition-all ${isSidebarVisible ? 'ml-3 w-52' : 'w-0'}
-            `}
-            >
-              <div className="leading-4">
-                <h4 className="font-semibold">Mark Ruffalo</h4>
-                <span className="text-xs text-gray-600">mark@gmail.com</span>
-              </div>
-              {/* <EllipsisVerticalIcon className="h-6 w-6" /> */}
-              <FontAwesomeIcon icon={faEllipsisV} className="h-6 w-6" />
-            </div>
-          </div>
         </nav>
       </aside>
     </div>

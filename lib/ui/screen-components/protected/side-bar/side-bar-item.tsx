@@ -70,15 +70,10 @@ export default function SidebarItem({
     : '[#71717A]';
 
   const text_color = pathname.includes(route ?? '') ? 'white' : '[#71717A]';
-
   const isActive = pathname.includes(route ?? '');
 
-  if (route === '/general/vendors') {
-    console.log({ bg_color });
-  }
-
   return (
-    <div className="flex flex-col mt-2">
+    <div className={`flex flex-col mt-[0.4rem]`}>
       <li>
         <button
           className={`
@@ -88,7 +83,7 @@ export default function SidebarItem({
          py-2  transition-colors
          ${
            isActive && !subMenu
-             ? ``
+             ? `bg-${isClickable ? bg_color : ''} text-${isClickable ? text_color : ''}`
              : `bg-${bg_color} text-${text_color} hover:bg-secondary-color`
          }
          ${!expanded && 'hidden sm:flex'}
