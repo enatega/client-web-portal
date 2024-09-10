@@ -1,5 +1,3 @@
-'use client';
-
 // Core
 
 import { LayoutContext } from '@/lib/context/layout-context';
@@ -153,61 +151,6 @@ export default function MakeSidebar() {
         },
       ],
     },
-    // {
-    //   icon: faHome,
-    //   text: 'My Website',
-    //   active: true,
-    // },
-    // {
-    //   icon: faHome,
-    //   text: 'Home',
-    //   active: true,
-    // },
-    // {
-    //   icon: faUser,
-    //   text: 'General',
-    //   subMenu: [
-    //     {
-    //       text: 'Vendor',
-    //     },
-    //     {
-    //       text: 'Restaurants',
-    //     },
-    //     {
-    //       text: 'Riders',
-    //     },
-    //     {
-    //       text: 'Users',
-    //     },
-    //   ],
-    // },
-    // {
-    //   icon: faUser,
-    //   text: 'Management',
-    //   subMenu: [
-    //     {
-    //       text: 'Configuration',
-    //     },
-    //     {
-    //       text: 'Coupons',
-    //     },
-    //     {
-    //       text: 'Cuisines',
-    //     },
-    //     {
-    //       text: 'Tipping',
-    //     },
-    //     {
-    //       text: 'Commission Rate',
-    //     },
-    //     {
-    //       text: 'Withdraw Request',
-    //     },
-    //     {
-    //       text: 'Notification',
-    //     },
-    //   ],
-    // },
   ];
 
   // Desktop Sidebar
@@ -219,18 +162,3 @@ export default function MakeSidebar() {
     </Sidebar>
   );
 }
-
-/*  return (
-    <div
-      id="my-screen"
-      className={`flex flex-col bg-white overflow-auto w-64 h-full p-4 border-r fixed lg:relative z-50 transform ${isSidebarVisible ? 'translate-x-0' : '-translate-x-full md:translate-x-0'} transition-transform duration-300 ease-in-out`}
-      ref={containerRef}
-    >
-      {static_items.map(staticItemRenderer)}
-
-      <PanelMenu
-        className={`${classes['custom-panel-menu']} w-full`}
-        model={items}
-      />
-    </div>
-  ); */

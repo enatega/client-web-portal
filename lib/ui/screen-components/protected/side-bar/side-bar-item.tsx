@@ -10,7 +10,7 @@ import classes from './side-bar.module.css';
 interface SubMenuItemProps extends Omit<ISidebarMenuItem, 'expanded'> {
   expanded?: never;
   subMenu?: never;
-  active?: boolean;
+  active: boolean;
 }
 
 // This component is used to render the sub-menu items when hovered
@@ -82,12 +82,13 @@ export default function SidebarItem({
       <li>
         <button
           className={`
-         group relative flex w-full cursor-pointer
+    
+         group relative  flex w-full cursor-pointer
          items-center rounded-md px-3
-         py-2 transition-colors
+         py-2  transition-colors
          ${
            isActive && !subMenu
-             ? `text-${text_color} bg-${bg_color}`
+             ? ``
              : `bg-${bg_color} text-${text_color} hover:bg-secondary-color`
          }
          ${!expanded && 'hidden sm:flex'}
@@ -144,23 +145,26 @@ export default function SidebarItem({
           )}
         </button>
       </li>
-      {subMenu && (
-        <div className="relative pl-6">
-          <div className="absolute left-[1.35rem] top-0 bottom-0 w-px bg-gray-300"></div>
-          <ul
-            className={`${classes['sub-menu']}`}
-            style={{ height: subMenuHeight }}
-          >
-            {expanded &&
-              subMenu.map((item, index) => (
-                <li key={index} className="relative">
-                  <div className="absolute left-[-0.8rem] top-1/2 -translate-y-1/2 w-3 h-3 bg-green-500 rounded-full border-2 border-white z-10"></div>
-                  <SidebarItem {...item} expanded={expanded} />
-                </li>
-              ))}
-          </ul>
-        </div>
-      )}
+      <ul
+        className={`${classes['sub-menu']} pl-6 relative`}
+        style={{ height: subMenuHeight }}
+      >
+        <div className="absolute left-6 top-0 bottom-0 w-px bg-gray-300"></div>
+
+        {expanded &&
+          subMenu?.map((item, index) => {
+            const isActive = pathname.includes(item.route ?? '');
+
+            return (
+              <li key={index} className="relative">
+                {isActive && (
+                  <div className="absolute -left-[0.26rem] top-1/2 w-2 h-2 bg-green-500 rounded-full transform -translate-y-1/2 z-10"></div>
+                )}
+                <SidebarItem {...item} expanded={expanded} />
+              </li>
+            );
+          })}
+      </ul>
     </div>
   );
 }

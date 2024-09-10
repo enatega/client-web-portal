@@ -68,6 +68,7 @@ export default function LoginEmailPasswordScreen() {
                             icon: faEnvelope,
                             position: 'right',
                           }}
+                          showLabel={false}
                           onChange={handleChange}
                           style={{
                             borderColor: onErrorMessageMatcher(
