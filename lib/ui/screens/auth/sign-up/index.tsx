@@ -100,6 +100,7 @@ export default function SignupScreen() {
                           value={values.firstName}
                           onChange={handleChange}
                           maxLength={35}
+                          showLabel={false}
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'firstName',
@@ -119,6 +120,7 @@ export default function SignupScreen() {
                           value={values.lastName}
                           onChange={handleChange}
                           maxLength={35}
+                          showLabel={false}
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'lastName',
@@ -140,6 +142,7 @@ export default function SignupScreen() {
                             icon: faEnvelope,
                             position: 'right',
                           }}
+                          showLabel={false}
                           value={values.email}
                           onChange={handleChange}
                           style={{
@@ -164,6 +167,7 @@ export default function SignupScreen() {
                             icon: faEye,
                             position: 'right',
                           }}
+                          showLabel={false}
                           onChange={handleChange}
                           style={{
                             borderColor: onErrorMessageMatcher(
@@ -186,6 +190,7 @@ export default function SignupScreen() {
                             icon: faEye,
                             position: 'right',
                           }}
+                          showLabel={false}
                           value={values.confirmPassword}
                           onChange={handleChange}
                           style={{
