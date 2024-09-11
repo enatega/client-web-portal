@@ -1,22 +1,9 @@
 import { Column } from 'primereact/column';
 import { DataTable } from 'primereact/datatable';
-import React from 'react';
 import classes from './table.module.css';
+import { DataTableProps } from '@/lib/utils/types/table';
 
-type ColumnConfig<T> = {
-  propertyName: keyof T;
-  headerName: string;
-  body?: (rowData: T) => React.ReactNode;
-};
-
-type DataTableProps<T> = {
-  data: T[];
-  selectedData: T[];
-  setSelectedData: React.Dispatch<React.SetStateAction<T[]>>;
-  columns: ColumnConfig<T>[];
-};
-
-const Table = <T extends { id: number }>({
+const Table = <T extends { id: number | string }>({
   data,
   selectedData,
   setSelectedData,
@@ -43,7 +30,7 @@ const Table = <T extends { id: number }>({
       {columns.map((col, index) => (
         <Column
           key={index}
-          field={col.propertyName as string}
+          field={col.propertyName}
           header={col.headerName}
           body={col.body}
         />

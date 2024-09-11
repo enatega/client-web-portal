@@ -40,6 +40,7 @@ const config = {
       },
       fontSize: {
         'heading-1': '20px',
+        'heading-2': '36px',
         'card-h1': '16px',
         'card-h2': '',
         'btn-h': '',

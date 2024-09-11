@@ -12,3 +12,13 @@ export interface IRidersAddFormComponentProps extends IGlobalComponentProps {
   isAddRiderVisible: boolean;
   setIsAddRiderVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export type Rider = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  zone: string;
+  available: boolean;
+};
