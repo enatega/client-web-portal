@@ -12,6 +12,8 @@ export interface IVendorAddFormComponentProps extends IGlobalComponentProps {
 export interface IVendorContextProps {
   vendorFormVisible: boolean;
   onSetVendorFormVisible: (status: boolean) => void;
+  vendorId: number | null;
+  onSetVendorId: (val: number) => void;
 }
 
 export interface IVendorHeaderComponentsProps extends IGlobalComponentProps {

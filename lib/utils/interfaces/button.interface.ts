@@ -8,6 +8,8 @@ export interface ICustomButtonProps extends IGlobalComponentProps {
   outlined?: boolean;
   icon?: string;
   type?: 'submit' | 'reset' | 'button';
+  disabled?: boolean;
+  loading?: boolean;
 }
 
 interface IIconStyles {

@@ -1,5 +1,6 @@
 'use client';
 
+import RestaurantAddForm from '@/lib/ui/screen-components/protected/restaurant/forms/add-form';
 import VendorAddForm from '@/lib/ui/screen-components/protected/vendor/add-form';
 import VendorHeader from '@/lib/ui/screen-components/protected/vendor/view/header';
 import VendorMain from '@/lib/ui/screen-components/protected/vendor/view/main';
@@ -40,6 +41,7 @@ export default function VendorsScreen() {
       />
 
       <VendorAddForm />
+      <RestaurantAddForm />
     </div>
   );
 }

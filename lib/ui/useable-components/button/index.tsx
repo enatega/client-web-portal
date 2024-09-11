@@ -9,14 +9,12 @@ import classes from './button.module.css';
 export default function CustomButton({
   className,
   label,
-  onClick,
   ...props
 }: ICustomButtonProps) {
   return (
     <Button
       className={`${classes['btn-custom']} ${className}`}
       label={label}
-      onClick={onClick}
       {...props}
     ></Button>
   );

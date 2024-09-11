@@ -1,4 +1,5 @@
 import { IRestaurantCardProps } from '@/lib/utils/interfaces';
+import { onUseLocalStorage } from '@/lib/utils/methods';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/navigation';
@@ -63,7 +64,10 @@ export default function RestaurantCard({ index }: IRestaurantCardProps) {
         <CustomButton
           className="w-full h-10 bg-[#EBEDE6] text-black "
           label="View Details"
-          onClick={() => router.push(`/admin/restaurant/`)}
+          onClick={() => {
+            onUseLocalStorage('save', 'restaurantId', index.toString());
+            router.push(`/admin/restaurant/`);
+          }}
         />
       </div>
     </div>
