@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/types/app/(unprotected)/layout.tss",
-    ".next/types/app/(protected)/layout.tss"
+    ".next/types/app/(protected)/layout.tss",
+    "lib/context/query-context.tsx"
   ],
   "exclude": ["cypress.config.ts", "cypress", "node_modules"]
 }
