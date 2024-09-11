@@ -1,3 +1,4 @@
+'use client';
 // Layout
 import SuperAdminLayout from '@/lib/ui/layouts/protected/super-admin';
 

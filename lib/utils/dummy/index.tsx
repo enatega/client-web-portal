@@ -37,6 +37,37 @@ export const dummyStatsData: IStatsCardProps[] = [
   },
 ];
 
+export const dummyOrderStatsData: IStatsCardProps[] = [
+  {
+    label: 'Total Orders',
+    total: 40987,
+    description: '8.5% up from yesterday',
+
+    route: '/general/users',
+  },
+  {
+    label: 'COD Orders',
+    total: 7689,
+    description: '2.4% up from yesterday',
+
+    route: '#',
+  },
+  {
+    label: 'Total Sales',
+    total: 20689,
+    description: '6.1% down from yesterday',
+
+    route: '#',
+  },
+  {
+    label: 'COD Sales',
+    total: 12689,
+    description: '1.9% up from yesterday',
+
+    route: '#',
+  },
+];
+
 export const generateRandomUserCounts = () => {
   const randomNumbers = new Set();
 

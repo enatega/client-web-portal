@@ -1,3 +1,5 @@
+'use client';
+
 // Layout
 import GlobalLayout from '@/lib/ui/layouts/protected/global';
 

@@ -74,7 +74,7 @@ export default function SidebarItem({
 
   return (
     <div className={`flex flex-col mt-[0.4rem]`}>
-      <li>
+      <div>
         <button
           className={`
     
@@ -139,7 +139,7 @@ export default function SidebarItem({
             </div>
           )}
         </button>
-      </li>
+      </div>
       <ul
         className={`${classes['sub-menu']} pl-6 relative`}
         style={{ height: subMenuHeight }}

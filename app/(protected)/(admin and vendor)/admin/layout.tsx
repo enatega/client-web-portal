@@ -1,3 +1,5 @@
+'use client';
+
 // Layout
 import RestaurantLayout from '@/lib/ui/layouts/protected/restaurant';
 
