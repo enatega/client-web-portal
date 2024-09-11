@@ -12,6 +12,7 @@ export interface ISidebarMenuItem {
   route?: string;
   expanded?: boolean;
   subMenu?: ISidebarMenuItem[] | null;
+  isLastItem?: boolean;
 }
 
 export interface IMenuOption {

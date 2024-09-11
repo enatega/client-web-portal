@@ -1,12 +1,17 @@
 import { IRestaurantCardProps } from '@/lib/utils/interfaces';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import CustomButton from '../button';
 import TextComponent from '../text-field';
 
 export default function RestaurantCard({ index }: IRestaurantCardProps) {
+  // States
   const [isChecked, setIsChecked] = useState(false);
+
+  // Hooks
+  const router = useRouter();
 
   // Handle checkbox change
   const handleCheckboxChange = () => {
@@ -58,6 +63,7 @@ export default function RestaurantCard({ index }: IRestaurantCardProps) {
         <CustomButton
           className="w-full h-10 bg-[#EBEDE6] text-black "
           label="View Details"
+          onClick={() => router.push(`/admin/restaurant/`)}
         />
       </div>
     </div>

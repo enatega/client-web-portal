@@ -31,6 +31,8 @@ export type LayoutConfig = {
 export interface LayoutContextProps {
   isSidebarVisible: boolean;
   showSidebar: (isOpen?: boolean) => void;
+  isAdminSidebarVisible: boolean;
+  showAdminSidebar: (isOpen?: boolean) => void;
 }
 
 export interface MenuContextProps {
