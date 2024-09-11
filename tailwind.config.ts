@@ -27,9 +27,8 @@ const config = {
         none: 'none',
       },
       colors: {
-        'sb-item-primary-color': '#b1c748',
-        'sb-item-secondary-color': '#d8e3a3',
-        'primary-color': '#5AC12F',
+        'primary-color': '#b1c748',
+        'secondary-color': '#d8e3a3',
         'secondary-border-color': '#111827',
       },
       width: {
@@ -38,6 +37,13 @@ const config = {
       },
       height: {
         'custom-button': '45px',
+      },
+      fontSize: {
+        'heading-1': '20px',
+        'heading-2': '36px',
+        'card-h1': '16px',
+        'card-h2': '',
+        'btn-h': '',
       },
     },
   },

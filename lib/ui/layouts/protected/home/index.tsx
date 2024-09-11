@@ -1,24 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-import { SidebarContext } from '@/lib/context/sidebar-context';
 // Components
 
 // Interface
-import { ILayoutProvider } from '@/lib/utils/interfaces';
-import { ISidebarContextProps } from '@/lib/utils/types';
-import { useContext } from 'react';
+import { IProvider } from '@/lib/utils/interfaces';
 
-const HomeLayout = ({ children }: ILayoutProvider) => {
-  // Context
-  const { selectedItem } = useContext<ISidebarContextProps>(SidebarContext);
-
-  return (
-    <div>
-      <div>{selectedItem?.screenName}</div>
-      {children}
-    </div>
-  );
+const HomeLayout = ({ children }: IProvider) => {
+  return <div className="h-full">{children}</div>;
 };
 
 export default HomeLayout;

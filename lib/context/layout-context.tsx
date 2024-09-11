@@ -4,23 +4,30 @@
 import { createContext, useState } from 'react';
 
 // Interface
-import { ILayoutProvider } from '@/lib/utils/interfaces';
+import { IProvider } from '@/lib/utils/interfaces';
 
 // Types
-import { LayoutContextProps } from '@/lib/utils/types';
+import { LayoutContextProps } from '@/lib/utils/interfaces';
 
 export const LayoutContext = createContext({} as LayoutContextProps);
 
-export const LayoutProvider = ({ children }: ILayoutProvider) => {
-  const [isSidebarVisible, setShowSidebar] = useState<boolean>(false);
+export const LayoutProvider = ({ children }: IProvider) => {
+  const [isSidebarVisible, setShowSidebar] = useState<boolean>(true);
+  const [isAdminSidebarVisible, setAdminShowSidebar] = useState<boolean>(true);
 
   const onShowSidebarHandler = (val?: boolean) => {
     setShowSidebar((prevState) => (val === undefined ? !prevState : val));
   };
 
+  const onShowAdminSidebarHandler = (val?: boolean) => {
+    setAdminShowSidebar((prevState) => (val === undefined ? !prevState : val));
+  };
+
   const value: LayoutContextProps = {
     isSidebarVisible: isSidebarVisible,
     showSidebar: onShowSidebarHandler,
+    isAdminSidebarVisible,
+    showAdminSidebar: onShowAdminSidebarHandler,
   };
 
   return (

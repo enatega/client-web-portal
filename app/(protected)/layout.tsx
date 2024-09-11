@@ -1,10 +1,12 @@
+'use client';
+
 // Layout
-import ProtectedMainLayout from '@/lib/ui/layouts/protected/main/';
+import GlobalLayout from '@/lib/ui/layouts/protected/global';
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <ProtectedMainLayout>{children}</ProtectedMainLayout>;
+  return <GlobalLayout>{children}</GlobalLayout>;
 }

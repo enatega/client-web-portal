@@ -13,6 +13,7 @@ import { ISignUpForm } from '@/lib/utils/interfaces/forms';
 
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import * as Yup from 'yup';
 
@@ -64,9 +65,10 @@ export default function LoginEmailPasswordScreen() {
                           maxLength={35}
                           value={values.email}
                           iconProperties={{
-                            icon: 'pi pi-envelope',
+                            icon: faEnvelope,
                             position: 'right',
                           }}
+                          showLabel={false}
                           onChange={handleChange}
                           style={{
                             borderColor: onErrorMessageMatcher(
@@ -86,8 +88,9 @@ export default function LoginEmailPasswordScreen() {
                           name="password"
                           type="password"
                           maxLength={20}
+                          showLabel={false}
                           iconProperties={{
-                            icon: 'pi pi-eye',
+                            icon: faEye,
                             position: 'right',
                           }}
                           value={values.password}

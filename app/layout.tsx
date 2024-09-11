@@ -16,6 +16,7 @@ import { FontawesomeConfig } from '@/lib/config';
 // Context
 import { SidebarProvider } from '@/lib/context/sidebar-context';
 
+import { VendorProvider } from '@/lib/context/vendor-context';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './globals.css';
@@ -45,7 +46,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <PrimeReactProvider value={value}>
           <LayoutProvider>
-            <SidebarProvider>{children}</SidebarProvider>
+            <SidebarProvider>
+              <VendorProvider>{children}</VendorProvider>
+            </SidebarProvider>
           </LayoutProvider>
         </PrimeReactProvider>
       </body>
