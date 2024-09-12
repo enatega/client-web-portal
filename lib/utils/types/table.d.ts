@@ -1,3 +1,11 @@
+import { FilterMatchMode } from 'primereact/api';
+
+export type FilterType = {
+  [key: string]: {
+    value: string | null;
+    matchMode: FilterMatchMode;
+  };
+};
 export type ColumnConfig<T> = {
   propertyName: string;
   headerName: string;
@@ -10,5 +18,5 @@ export type DataTableProps<T> = {
   selectedData: T[];
   setSelectedData: React.Dispatch<React.SetStateAction<T[]>>;
   columns: ColumnConfig<T>[];
-  filters: any;
+  filters?: FilterType;
 };

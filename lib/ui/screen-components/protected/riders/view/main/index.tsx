@@ -69,11 +69,14 @@ export default function RidersMain({
 
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    name: { value: null, matchMode: FilterMatchMode.STARTS_WITH },
+    global: { value: '' as string | null, matchMode: FilterMatchMode.CONTAINS },
+    name: {
+      value: '' as string | null,
+      matchMode: FilterMatchMode.STARTS_WITH,
+    },
   });
 
-  const onGlobalFilterChange = (e: any) => {
+  const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     let _filters = { ...filters };
     _filters['global'].value = value;

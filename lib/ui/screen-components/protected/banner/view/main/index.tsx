@@ -67,7 +67,7 @@ export default function BannersMain({
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState<string>('');
   const overlayPanelRef = useRef<OverlayPanel>(null);
-  const onGlobalFilterChange = (e: any) => {
+  const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setGlobalFilterValue(e.target.value);
   };
 
