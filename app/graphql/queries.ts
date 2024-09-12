@@ -11,7 +11,8 @@ export const getCoupons = gql`
   }
 `;
 
-export const getCuisines = `query Cuisines{
+export const getCuisines = gql`
+  query Cuisines {
     cuisines {
       _id
       name
@@ -19,9 +20,11 @@ export const getCuisines = `query Cuisines{
       image
       shopType
     }
-  }`;
+  }
+`;
 
-export const getBanners = `query Banners{
+export const getBanners = gql`
+  query Banners {
     banners {
       _id
       title
@@ -31,35 +34,44 @@ export const getBanners = `query Banners{
       file
       parameters
     }
-  }`;
-export const getBannerActions = `query BannerActions{
+  }
+`;
+export const getBannerActions = gql`
+  query BannerActions {
     bannerActions
-  }`;
+  }
+`;
 
-export const getTipping = `query Tips{
+export const getTipping = gql`
+  query Tips {
     tips {
       _id
       tipVariations
       enabled
     }
-  }`;
+  }
+`;
 
-export const getAddons = `query Addons{
-    addons{
-    _id
-    title
-    description
-    options{
+export const getAddons = gql`
+  query Addons {
+    addons {
       _id
       title
       description
-      price
+      options {
+        _id
+        title
+        description
+        price
+      }
+      quantityMinimum
+      quantityMaximum
     }
-    quantityMinimum
-    quantityMaximum
-  }}`;
+  }
+`;
 
-export const getOptions = `query Options{
+export const getOptions = gql`
+  query Options {
     options {
       _id
       title
@@ -67,65 +79,74 @@ export const getOptions = `query Options{
       price
     }
   }
-  `;
-export const getPaymentStatuses = `query{
+`;
+export const getPaymentStatuses = gql`
+  query {
     getPaymentStatuses
-  }`;
-
-export const restaurantByOwner = `query RestaurantByOwner($id:String){
-  restaurantByOwner(id:$id){
-  _id
-  email
-  userType
-  restaurants{
-    _id
-    orderId
-    orderPrefix
-    name
-    slug
-    image
-    address
-    username
-    password
-    location{coordinates}
-    shopType
-    }
   }
-}`;
-
-export const restaurantList = `query RestaurantList{
-  restaurantList{
-    _id
-    name
-    address
-  }
-}`;
-
-export const restaurants = `query Restaurants{
-  restaurants{
-    _id
-    name
-    image
-    orderPrefix
-    slug
-    address
-    deliveryTime
-    minimumOrder
-    isActive
-    commissionRate
-    tax
-    owner{
-      _id
-      email
-    }
-    shopType
-  }
-}
 `;
 
-export const getRestaurantProfile = `query Restaurant($id:String){
-      restaurant(id:$id)
-      {
+export const restaurantByOwner = gql`
+  query RestaurantByOwner($id: String) {
+    restaurantByOwner(id: $id) {
+      _id
+      email
+      userType
+      restaurants {
+        _id
+        orderId
+        orderPrefix
+        name
+        slug
+        image
+        address
+        username
+        password
+        location {
+          coordinates
+        }
+        shopType
+      }
+    }
+  }
+`;
+
+export const restaurantList = gql`
+  query RestaurantList {
+    restaurantList {
+      _id
+      name
+      address
+    }
+  }
+`;
+
+export const restaurants = gql`
+  query Restaurants {
+    restaurants {
+      _id
+      name
+      image
+      orderPrefix
+      slug
+      address
+      deliveryTime
+      minimumOrder
+      isActive
+      commissionRate
+      tax
+      owner {
+        _id
+        email
+      }
+      shopType
+    }
+  }
+`;
+
+export const getRestaurantProfile = gql`
+  query Restaurant($id: String) {
+    restaurant(id: $id) {
       _id
       orderId
       orderPrefix
@@ -134,8 +155,10 @@ export const getRestaurantProfile = `query Restaurant($id:String){
       image
       logo
       address
-      location{coordinates}
-      deliveryBounds{
+      location {
+        coordinates
+      }
+      deliveryBounds {
         coordinates
       }
       username
@@ -145,24 +168,26 @@ export const getRestaurantProfile = `query Restaurant($id:String){
       tax
       isAvailable
       stripeDetailsSubmitted
-      openingTimes{
+      openingTimes {
         day
-        times{
+        times {
           startTime
           endTime
         }
       }
-      owner{
+      owner {
         _id
         email
       }
       shopType
       cuisines
     }
-}`;
+  }
+`;
 
-export const getRestaurantDetail = `query Restaurant($id:String){
-      restaurant(id:$id){
+export const getRestaurantDetail = gql`
+  query Restaurant($id: String) {
+    restaurant(id: $id) {
       _id
       orderId
       orderPrefix
@@ -170,18 +195,20 @@ export const getRestaurantDetail = `query Restaurant($id:String){
       name
       image
       address
-      location{coordinates}
+      location {
+        coordinates
+      }
       deliveryTime
       minimumOrder
       tax
-      categories{
+      categories {
         _id
         title
-        foods{
+        foods {
           _id
           title
           description
-          variations{
+          variations {
             _id
             title
             price
@@ -192,13 +219,13 @@ export const getRestaurantDetail = `query Restaurant($id:String){
           isActive
         }
       }
-      options{
+      options {
         _id
         title
         description
         price
       }
-      addons{
+      addons {
         _id
         options
         title
@@ -208,96 +235,111 @@ export const getRestaurantDetail = `query Restaurant($id:String){
       }
       shopType
     }
-}`;
-
-export const getOffers = `query Offers{
-  offers{
-    _id
-    name
-    tag
-    restaurants{
-      _id
-      name
-    }
   }
-}`;
-
-export const getSections = `query Sections{
-  sections{
-    _id
-    name
-    enabled
-    restaurants{
-      _id
-      name
-    }
-  }
-}`;
-
-export const pageCount = `
-query PageCount($restaurant:String!){
-  pageCount(restaurant:$restaurant)
-}
 `;
-export const getUsers = `query{
-    users{
+
+export const getOffers = gql`
+  query Offers {
+    offers {
+      _id
+      name
+      tag
+      restaurants {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+export const getSections = gql`
+  query Sections {
+    sections {
+      _id
+      name
+      enabled
+      restaurants {
+        _id
+        name
+      }
+    }
+  }
+`;
+
+export const pageCount = gql`
+  query PageCount($restaurant: String!) {
+    pageCount(restaurant: $restaurant)
+  }
+`;
+export const getUsers = gql`
+  query {
+    users {
       _id
       name
       email
       phone
-      addresses{
-        location{coordinates}
+      addresses {
+        location {
+          coordinates
+        }
         deliveryAddress
       }
     }
-  }`;
+  }
+`;
 
-export const getRiders = `query{
-    riders{
+export const getRiders = gql`
+  query {
+    riders {
       _id
       name
       username
       password
       phone
       available
-      zone{
+      zone {
         _id
         title
       }
     }
-  }`;
+  }
+`;
 
-export const getAvailableRiders = `query{
-    availableRiders{
+export const getAvailableRiders = gql`
+  query {
+    availableRiders {
       _id
       name
       username
       phone
       available
-      zone{
+      zone {
         _id
       }
     }
-  }`;
+  }
+`;
 
-export const withdrawRequestQuery = `query GetWithdrawRequests($offset:Int){
-      getAllWithdrawRequests(offset:$offset){
-          success
-          message
-          data{
-            _id
-            requestId
-            requestAmount
-            requestTime
-            rider{
-              _id
-              name
-              currentWalletAmount
-            }
-            status
-          }
-          pagination{
-            total
-          }
+export const withdrawRequestQuery = gql`
+  query GetWithdrawRequests($offset: Int) {
+    getAllWithdrawRequests(offset: $offset) {
+      success
+      message
+      data {
+        _id
+        requestId
+        requestAmount
+        requestTime
+        rider {
+          _id
+          name
+          currentWalletAmount
+        }
+        status
       }
-  }`;
+      pagination {
+        total
+      }
+    }
+  }
+`;

@@ -11,7 +11,7 @@ export type DataTableProps<T> = {
   columns: ColumnConfig<T>[];
 };
 
-const columns = [
+export const columns = [
   {
     headerName: 'ID',
     propertyName: 'id',

@@ -143,3 +143,13 @@ body {
   font-weight: 400; /* equivalent to font-normal */
   line-height: 1.5rem; /* equivalent to leading-6 */
 }
+
+/* Scroll Bar  */
+::-webkit-scrollbar {
+  width: 7px;
+  background: rgba(177, 177, 177, 0.171);
+}
+::-webkit-scrollbar-thumb {
+  background: #4747479a;
+  border-radius: 7px;
+}

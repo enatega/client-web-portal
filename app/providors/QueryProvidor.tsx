@@ -1,30 +1,50 @@
 'use client';
-import { QueryContext } from '@/lib/context/query-context.jsx';
+import { QueryContext } from '@/lib/context/query-context';
 import { gql, QueryResult, useQuery } from '@apollo/client';
-import { ReactNode, useEffect, useState } from 'react';
-import { getCoupons } from '../graphql/queries.js';
+import { ReactNode } from 'react';
+import { getCoupons, getCuisines } from '../graphql/queries';
+
+//queries
+const GET_COUPONS = gql`
+  ${getCoupons}
+`;
+const GET_CUISINES = gql`
+  ${getCuisines}
+`;
 
 export default function QueryProvidor({ children }: { children: ReactNode }) {
-  const [coupons, setCoupons] = useState<any>({});
-  const GET_COUPONS = gql`
-    ${getCoupons}
-  `;
-  async function fetchCoupons() {
-    try {
-      const { data, loading }: QueryResult = useQuery(GET_COUPONS);
-      console.log({ data: await data.json() });
-      setCoupons({
-        data,
-        loading,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  useEffect(() => {
-    fetchCoupons();
-  }, []);
+  //coupons query
+  const {
+    data: couponsData,
+    loading: couponsLoading,
+    error: couponsError,
+  }: QueryResult = useQuery(GET_COUPONS);
+
+  const coupons = {
+    data: couponsData ? couponsData.coupons : [],
+    loading: couponsLoading,
+    error: couponsError,
+  };
+
+  //cuisines query
+  const {
+    data: cusininesData,
+    loading: cuisinesLoading,
+    error: cuisinesError,
+  }: QueryResult = useQuery(GET_CUISINES);
+
+  const cuisines = {
+    data: cusininesData ? cusininesData.cuisines : [],
+    loading: cuisinesLoading,
+    error: cuisinesError,
+  };
+
+  //errors
+  if (couponsError || cuisinesError)
+    console.log({ couponsError, cuisinesError });
   return (
-    <QueryContext.Provider value={coupons}>{children}</QueryContext.Provider>
+    <QueryContext.Provider value={{ coupons, cuisines }}>
+      {children}
+    </QueryContext.Provider>
   );
 }

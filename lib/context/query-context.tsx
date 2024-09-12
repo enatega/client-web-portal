@@ -1,7 +1,3 @@
-'use client';
 import { createContext } from 'react';
-export const QueryContext = createContext<any>({
-  data: [],
-  loading: false,
-  error: undefined,
-});
+//query param type to be resolved later
+export const QueryContext = createContext<any>(undefined);

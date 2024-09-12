@@ -1,6 +1,8 @@
 'use client';
 
 // Core
+import QueryProvidor from '@/app/providors/QueryProvidor';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { createContext, useState } from 'react';
 
 // Interface
@@ -29,8 +31,15 @@ export const LayoutProvider = ({ children }: IProvider) => {
     isAdminSidebarVisible,
     showAdminSidebar: onShowAdminSidebarHandler,
   };
-
+  const client = new ApolloClient({
+    uri: `${process.env.NEXT_PUBLIC_BASE_URL}/graphql`,
+    cache: new InMemoryCache(),
+  });
   return (
-    <LayoutContext.Provider value={value}>{children}</LayoutContext.Provider>
+    <LayoutContext.Provider value={value}>
+      <ApolloProvider client={client}>
+        <QueryProvidor>{children}</QueryProvidor>
+      </ApolloProvider>
+    </LayoutContext.Provider>
   );
 };
