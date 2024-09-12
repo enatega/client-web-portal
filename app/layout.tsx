@@ -46,8 +46,8 @@ export default function RootLayout({
         <FontawesomeConfig />
       </head>
       <body className={inter.className}>
-        {/* <ApolloProvider client={null}> */}
         <PrimeReactProvider value={value}>
+          {/* <ApolloProvider client={ApolloClientConfig}> */}
           <LayoutProvider>
             <SidebarProvider>
               <VendorProvider>
@@ -55,8 +55,8 @@ export default function RootLayout({
               </VendorProvider>
             </SidebarProvider>
           </LayoutProvider>
+          {/* </ApolloProvider> */}
         </PrimeReactProvider>
-        {/* </ApolloProvider> */}
       </body>
     </html>
   );

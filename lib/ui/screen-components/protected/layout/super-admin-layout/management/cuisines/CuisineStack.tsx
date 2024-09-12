@@ -1,7 +1,6 @@
 import { CuisineType } from '@/app/types/global-types';
 
 export default function CuisineStack({ cuisine }: { cuisine: CuisineType }) {
-  console.log(cuisine.image);
   return (
     <tr className="flex w-full justify-between items-center text-start p-3">
       <td className="min-w-auto max-w-32">

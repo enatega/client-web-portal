@@ -1,6 +1,11 @@
-import { QueryState } from '@/app/types/global-types';
-export default function CuisineTable({ cuisines }: { cuisines: QueryState }) {
-  console.log({ cuisines });
+import { CuisineType } from '@/app/types/global-types';
+import { IGetCuisinesData } from '@/lib/utils/interfaces/cuisine.interface';
+import CuisineStack from './CuisineStack';
+export default function CuisineTable({
+  data,
+}: {
+  data: IGetCuisinesData | undefined;
+}) {
   return (
     <table className="flex flex-col mx-auto w-[95%] gap-1 my-1">
       <thead>
@@ -15,9 +20,9 @@ export default function CuisineTable({ cuisines }: { cuisines: QueryState }) {
         </tr>
       </thead>
       <tbody>
-        {/* {cuisines.data.map((cuisine:CuisineType) => {
+        {data?.cuisines.map((cuisine: CuisineType) => {
           return <CuisineStack cuisine={cuisine} key={cuisine?._id} />;
-        })} */}
+        })}
       </tbody>
     </table>
   );
