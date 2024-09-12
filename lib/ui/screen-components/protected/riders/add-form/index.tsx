@@ -7,12 +7,11 @@ import { IVendorForm } from '@/lib/utils/interfaces/forms';
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+import { IRidersAddFormComponentProps } from '@/lib/utils/interfaces/rider.interface';
 import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { IRidersAddFormComponentProps } from '@/lib/utils/interfaces/rider.interface';
 
 const initialValues: IVendorForm = {
   vendorName: '',
@@ -92,7 +91,7 @@ export default function RiderAddForm({
                 }}
                 validateOnChange
               >
-                {({ values, errors, handleChange }) => {
+                {({ values, handleChange }) => {
                   return (
                     <Form>
                       <div className="mb-2">
@@ -104,14 +103,14 @@ export default function RiderAddForm({
                           value={values.vendorName}
                           onChange={handleChange}
                           showLabel={true}
-                          style={{
-                            borderColor: onErrorMessageMatcher(
-                              'email',
-                              errors?.vendorName
-                            )
-                              ? 'red'
-                              : '',
-                          }}
+                          // style={{
+                          //   borderColor: onErrorMessageMatcher(
+                          //     'email',
+                          //     errors?.vendorName
+                          //   )
+                          //     ? 'red'
+                          //     : '',
+                          // }}
                         />
                       </div>
                       <div className="mb-2">
@@ -125,16 +124,16 @@ export default function RiderAddForm({
                             icon: faEnvelope,
                             position: 'right',
                           }}
-                          value={values.vendorEmail}
-                          onChange={handleChange}
-                          style={{
-                            borderColor: onErrorMessageMatcher(
-                              'email',
-                              errors?.vendorEmail
-                            )
-                              ? 'red'
-                              : '',
-                          }}
+                          // value={values.vendorEmail}
+                          // onChange={handleChange}
+                          // style={{
+                          //   borderColor: onErrorMessageMatcher(
+                          //     'email',
+                          //     errors?.vendorEmail
+                          //   )
+                          //     ? 'red'
+                          //     : '',
+                          // }}
                         />
                       </div>
 
@@ -150,15 +149,15 @@ export default function RiderAddForm({
                             icon: faEye,
                             position: 'right',
                           }}
-                          onChange={handleChange}
-                          style={{
-                            borderColor: onErrorMessageMatcher(
-                              'password',
-                              errors?.vendorPassword
-                            )
-                              ? 'red'
-                              : '',
-                          }}
+                          // onChange={handleChange}
+                          // style={{
+                          //   borderColor: onErrorMessageMatcher(
+                          //     'password',
+                          //     errors?.vendorPassword
+                          //   )
+                          //     ? 'red'
+                          //     : '',
+                          // }}
                         />
                       </div>
 
@@ -175,14 +174,14 @@ export default function RiderAddForm({
                           }}
                           value={values.vendorConfirmPassword ?? ''}
                           onChange={handleChange}
-                          style={{
-                            borderColor: onErrorMessageMatcher(
-                              'confirmPassword',
-                              errors?.vendorConfirmPassword
-                            )
-                              ? 'red'
-                              : '',
-                          }}
+                          // style={{
+                          //   borderColor: onErrorMessageMatcher(
+                          //     'confirmPassword',
+                          //     errors?.vendorConfirmPassword
+                          //   )
+                          //     ? 'red'
+                          //     : '',
+                          // }}
                         />
                       </div>
 

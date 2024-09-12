@@ -6,8 +6,8 @@ export interface IVendorErrors {
   confirmPassword: string[];
 }
 export interface IVendorForm {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+  vendorName: string;
+  vendorEmail: string;
+  vendorPassword: string;
+  vendorConfirmPassword: string;
 }
