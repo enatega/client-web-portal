@@ -1,7 +1,10 @@
-import { Column } from 'primereact/column';
-import { DataTable } from 'primereact/datatable';
-import classes from './table.module.css';
 import { DataTableProps } from '@/lib/utils/types/table';
+import { Column } from 'primereact/column';
+import {
+  DataTable,
+  DataTableSelectionMultipleChangeEvent,
+} from 'primereact/datatable';
+import classes from './table.module.css';
 
 const Table = <T extends { id: number | string }>({
   data,
@@ -9,7 +12,9 @@ const Table = <T extends { id: number | string }>({
   setSelectedData,
   columns,
 }: DataTableProps<T>) => {
-  const handleSelectionChange = (e: any) => {
+  const handleSelectionChange = (
+    e: DataTableSelectionMultipleChangeEvent<T[]>
+  ) => {
     setSelectedData(e.value);
   };
 

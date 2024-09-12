@@ -3,7 +3,7 @@ import { InputSwitch } from 'primereact/inputswitch';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function CouponStack({ coupon }: { coupon: CouponType }) {
-  function toggleCouponState() {}
+  // function toggleCouponState() {}
   return (
     <tr className="flex w-full justify-between items-center text-start p-3">
       <td className="min-w-auto max-w-32">

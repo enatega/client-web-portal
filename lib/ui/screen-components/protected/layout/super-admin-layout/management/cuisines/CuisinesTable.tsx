@@ -1,5 +1,4 @@
 import { QueryState } from '@/app/types/global-types';
-import CuisineStack from './CuisineStack';
 export default function CuisineTable({ cuisines }: { cuisines: QueryState }) {
   return (
     <table className="flex flex-col mx-auto w-[95%] gap-1 my-1">
@@ -15,9 +14,9 @@ export default function CuisineTable({ cuisines }: { cuisines: QueryState }) {
         </tr>
       </thead>
       <tbody>
-        {cuisines.data.map((cuisine: any) => {
+        {/* {cuisines.data.map((cuisine:CuisineType) => {
           return <CuisineStack cuisine={cuisine} key={cuisine?._id} />;
-        })}
+        })} */}
       </tbody>
     </table>
   );

@@ -1,6 +1,10 @@
-import { QueryState } from '@/app/types/global-types';
-import CouponStack from './CouponStack';
-export default function CouponTable({ coupons }: { coupons: QueryState }) {
+import { CouponsData } from '@/app/types/global-types';
+export default function CouponTable({
+  coupons,
+}: {
+  coupons: CouponsData[] | undefined;
+}) {
+  console.log({ coupons });
   return (
     <table className="flex flex-col mx-auto w-[95%] gap-1 my-1">
       <thead>
@@ -15,9 +19,9 @@ export default function CouponTable({ coupons }: { coupons: QueryState }) {
         </tr>
       </thead>
       <tbody>
-        {coupons.data.map((coupon: any) => {
+        {/* {coupons.data.map((coupon: any) => {
           return <CouponStack coupon={coupon} key={coupon?._id} />;
-        })}
+        })} */}
       </tbody>
     </table>
   );

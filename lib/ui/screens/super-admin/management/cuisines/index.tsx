@@ -1,7 +1,7 @@
 import { QueryContext } from '@/lib/context/query-context';
 import Loader from '@/lib/ui/screen-components/loader/Loader';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
-import GlobalButton from '@/lib/ui/useable-components/global-button/button';
+import GlobalButton from '@/lib/ui/useable-components/global-buttons/button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import { QueryResult } from '@apollo/client';
 import { useContext } from 'react';
