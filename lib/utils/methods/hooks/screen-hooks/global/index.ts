@@ -13,19 +13,17 @@ export const useLazyQueryGlobal = <
   query: DocumentNode,
   lazyQueryHookOptions: LazyQueryHookOptions<TData, TVariables>
 ) => {
-  try {
-    const [executeLazyQuery, { data, loading }]: LazyQueryResultTuple<
-      TData,
-      TVariables
-    > = useLazyQuery<TData, TVariables>(query, lazyQueryHookOptions);
-    console.log({ executeLazyQuery, data, loading });
+  const [executeLazyQuery, { data, loading }]: LazyQueryResultTuple<
+    TData,
+    TVariables
+  > = useLazyQuery<TData, TVariables>(query, lazyQueryHookOptions);
+  if (data) {
     return {
       executeLazyQuery,
       data,
       loading,
     };
-  } catch (error) {
-    console.log(error);
+  } else {
     return {
       executeLazyQuery: () => {},
       data: undefined,
