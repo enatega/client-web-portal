@@ -4,8 +4,6 @@ import { ITextFieldProps } from '@/lib/utils/interfaces';
 // Prime React
 import { InputText } from 'primereact/inputtext';
 
-// Styles
-
 export default function CustomTextField({
   className,
   placeholder,

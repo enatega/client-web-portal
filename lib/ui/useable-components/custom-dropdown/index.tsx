@@ -1,7 +1,10 @@
+// Interface
 import { IDropdownComponentProps } from '@/lib/utils/interfaces';
+
+// Prime React
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 
-export const CustomDropdownComponent = ({
+const CustomDropdownComponent = ({
   name,
   placeholder,
   options,
@@ -39,3 +42,5 @@ export const CustomDropdownComponent = ({
     </div>
   );
 };
+
+export default CustomDropdownComponent;

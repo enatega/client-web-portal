@@ -3,7 +3,6 @@
 'use client';
 
 // Core
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 // Icons
@@ -21,8 +20,11 @@ import {
 // UI Components
 import { Avatar } from 'primereact/avatar';
 
-// Prime Reat
+// Prime React
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
+
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Layout
 import { LayoutContext } from '@/lib/context/layout-context';
@@ -30,9 +32,13 @@ import { LayoutContext } from '@/lib/context/layout-context';
 // Interface/Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';
 
-// Styles
+// Constants
 import { APP_NAME } from '@/lib/utils/constants/strings/global';
+
+// Methods
 import { toTextCase } from '@/lib/utils/methods';
+
+// Styles
 import classes from './app-bar.module.css';
 
 const AppTopbar = () => {

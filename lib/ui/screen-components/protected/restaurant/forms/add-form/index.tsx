@@ -1,24 +1,39 @@
+// Core
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { Form, Formik } from 'formik';
+import { useContext } from 'react';
+
 // Prime React
 import { Sidebar } from 'primereact/sidebar';
 
 // Interface and Types
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
-import { useContext } from 'react';
 
+// Core
 import { RestaurantContext } from '@/lib/context/restaurant-context';
+
+// Component
 import CustomButton from '@/lib/ui/useable-components/button';
-import { CustomDropdownComponent } from '@/lib/ui/useable-components/custom-dropdown';
-import { CustomMultiSelectComponent } from '@/lib/ui/useable-components/custom-multi-select';
+import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
+import CustomMultiSelectComponent from '@/lib/ui/useable-components/custom-multi-select';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
+
+// Constants
 import { RestaurantErrors } from '@/lib/utils/constants';
+
+// Dummy
 import { dummyCountriesData } from '@/lib/utils/dummy';
-import { IRestaurantForm } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
+
+// Interface
+import { IRestaurantForm } from '@/lib/utils/interfaces';
+
+// Methods
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+
+// Schemas
 import { RestaurantSchema } from '@/lib/utils/schema/restaurant';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { Form, Formik } from 'formik';
 
 const initialValues: IRestaurantForm = {
   name: '',

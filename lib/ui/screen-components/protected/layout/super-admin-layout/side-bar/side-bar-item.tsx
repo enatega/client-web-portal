@@ -1,17 +1,16 @@
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// Core
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { ISidebarMenuItem } from '@/lib/utils/interfaces';
-import { usePathname, useRouter } from 'next/navigation';
-import classes from './side-bar.module.css';
+// Icons
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-// We're assuming that the sub-menu items will not have further sub-menu items therefore, it cannot be expanded
-interface SubMenuItemProps extends Omit<ISidebarMenuItem, 'expanded'> {
-  expanded?: never;
-  subMenu?: never;
-  active: boolean;
-}
+// Interface & Types
+import { ISidebarMenuItem, SubMenuItemProps } from '@/lib/utils/interfaces';
+
+// Styles
+import classes from './side-bar.module.css';
 
 // This component is used to render the sub-menu items when hovered
 function HoveredSubMenuItem({ icon, text, active }: SubMenuItemProps) {

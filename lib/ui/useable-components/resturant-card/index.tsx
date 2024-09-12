@@ -1,9 +1,18 @@
-import { IRestaurantCardProps } from '@/lib/utils/interfaces';
-import { onUseLocalStorage } from '@/lib/utils/methods';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+// Core
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
+// Interface
+import { IRestaurantCardProps } from '@/lib/utils/interfaces';
+
+// Methods
+import { onUseLocalStorage } from '@/lib/utils/methods';
+
+// Icons
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+
+// Componetn
 import CustomButton from '../button';
 import TextComponent from '../text-field';
 

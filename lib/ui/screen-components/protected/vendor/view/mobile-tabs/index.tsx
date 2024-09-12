@@ -1,3 +1,4 @@
+// Interface
 import { IVendorMobileTabsComponentProps } from '@/lib/utils/interfaces';
 
 export default function VendorMobilesTabs({

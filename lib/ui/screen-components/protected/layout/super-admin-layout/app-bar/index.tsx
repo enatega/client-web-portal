@@ -30,10 +30,12 @@ import { LayoutContext } from '@/lib/context/layout-context';
 // Interface/Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';
 
-// Styles
-import { DISPATCH, LANGUAGE, ZONE } from '@/lib/utils/constants';
-import { APP_NAME } from '@/lib/utils/constants/strings/global';
+import { APP_NAME, DISPATCH, LANGUAGE, ZONE } from '@/lib/utils/constants';
+
+// Methods
 import { toTextCase } from '@/lib/utils/methods';
+
+// Styles
 import classes from './app-bar.module.css';
 
 const AppTopbar = () => {

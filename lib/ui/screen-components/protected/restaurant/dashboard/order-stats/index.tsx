@@ -1,5 +1,10 @@
+// Component
 import StatsCard from '@/lib/ui/useable-components/stats-card';
+
+// Dummy
 import { dummyOrderStatsData } from '@/lib/utils/dummy';
+
+// Interface & Types
 import { IStatsCardProps } from '@/lib/utils/interfaces';
 
 export default function UserStats() {

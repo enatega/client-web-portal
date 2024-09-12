@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+// Core
+import { useContext } from 'react';
+
+// Context
 import { LayoutContext } from '@/lib/context/layout-context';
+
 // Components
 import AdminAppTopbar from '@/lib/ui/screen-components/protected/layout/restaurant-layout/app-bar';
 import AdminSidebar from '@/lib/ui/screen-components/protected/layout/restaurant-layout/side-bar';
@@ -9,9 +14,8 @@ import AdminSidebar from '@/lib/ui/screen-components/protected/layout/restaurant
 // Interface
 import { IProvider, LayoutContextProps } from '@/lib/utils/interfaces';
 
-import { useContext } from 'react';
-
 const AdminLayout = ({ children }: IProvider) => {
+  // Context
   const { isAdminSidebarVisible } =
     useContext<LayoutContextProps>(LayoutContext);
 
