@@ -1,9 +1,10 @@
 import * as Yup from 'yup';
 import { PasswordErrors } from '../constants';
+import { IDropdownSelectItem } from '../interfaces';
 
-export const VendorSchema = Yup.object().shape({
+export const RestaurantSchema = Yup.object().shape({
   name: Yup.string().min(2).max(35).required('Required'),
-  email: Yup.string().email('Invalid email').required('Required'),
+  username: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string()
     .min(6, PasswordErrors[0])
     .max(20)
@@ -38,5 +39,15 @@ export const VendorSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .nullable()
     .oneOf([Yup.ref('password'), null], 'Password must match')
+    .required('Required'),
+
+  address: Yup.string().min(2).max(35).required('Required'),
+  deliveryTime: Yup.string().min(2).max(35).required('Required'),
+  minOrder: Yup.string().min(2).max(35).required('Required'),
+  salesTax: Yup.string().min(2).max(35).required('Required'),
+  shopType: Yup.mixed<IDropdownSelectItem>().required('Required'),
+  cuisines: Yup.array()
+    .of(Yup.mixed<IDropdownSelectItem>())
+    .min(1)
     .required('Required'),
 });

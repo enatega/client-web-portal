@@ -18,6 +18,7 @@ interface IGlobalTextFieldProps extends IGlobalComponentProps {
 interface IIconProperties {
   position: 'left' | 'right';
   icon: IconDefinition;
+  style?: CSSProperties;
 }
 
 // Fields
@@ -33,4 +34,10 @@ export interface IIconTextFieldProps extends IGlobalTextFieldProps {
 export interface IPhoneTextFieldProps extends IGlobalTextFieldProps {
   mask: string;
   onChange?: (event: InputMaskChangeEvent) => void;
+}
+
+export interface IPasswordTextFieldProps
+  extends Omit<IGlobalTextFieldProps, 'type'> {
+  iconProperties: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }

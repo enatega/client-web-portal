@@ -4,7 +4,7 @@ import {
   faUsers,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
-import { IStatsCardProps } from '../interfaces';
+import { IDropdownSelectItem, IStatsCardProps } from '../interfaces';
 
 export const dummyStatsData: IStatsCardProps[] = [
   {
@@ -66,6 +66,19 @@ export const dummyOrderStatsData: IStatsCardProps[] = [
 
     route: '#',
   },
+];
+
+export const dummyCountriesData: IDropdownSelectItem[] = [
+  { label: 'Australia', code: 'AU' },
+  { label: 'Brazil', code: 'BR' },
+  { label: 'China', code: 'CN' },
+  { label: 'Egypt', code: 'EG' },
+  { label: 'France', code: 'FR' },
+  { label: 'Germany', code: 'DE' },
+  { label: 'India', code: 'IN' },
+  { label: 'Japan', code: 'JP' },
+  { label: 'Spain', code: 'ES' },
+  { label: 'United States', code: 'US' },
 ];
 
 export const generateRandomUserCounts = () => {

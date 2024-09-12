@@ -10,13 +10,13 @@ import { useContext } from 'react';
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import { PasswordErrors } from '@/lib/utils/constants';
+import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
+import { PasswordErrors, VendorErrors } from '@/lib/utils/constants';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import { VendorSchema } from '@/lib/utils/schema';
 import {
   faCheck,
   faEnvelope,
-  faEye,
   faLock,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
@@ -24,10 +24,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Formik } from 'formik';
 
 const initialValues: IVendorForm = {
-  vendorName: '',
-  vendorEmail: '',
-  vendorPassword: '',
-  vendorConfirmPassword: '',
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 export default function VendorAddForm({
@@ -72,20 +72,21 @@ export default function VendorAddForm({
 
                   return (
                     <Form onSubmit={handleSubmit}>
-                      <div className="space-y-4">
+                      <div className="space-y-3">
                         <div>
                           <CustomTextField
                             type="text"
-                            name="vendorName"
+                            name="name"
                             placeholder="Name"
                             maxLength={35}
-                            value={values.vendorName}
+                            value={values.name}
                             onChange={handleChange}
                             showLabel={true}
                             style={{
                               borderColor: onErrorMessageMatcher(
-                                'email',
-                                errors?.vendorName
+                                'name',
+                                errors?.name,
+                                VendorErrors
                               )
                                 ? 'red'
                                 : '',
@@ -95,20 +96,22 @@ export default function VendorAddForm({
                         <div>
                           <CustomIconTextField
                             type="email"
-                            name="vendorEmail"
+                            name="email"
                             placeholder="Email"
                             maxLength={35}
                             showLabel={true}
                             iconProperties={{
                               icon: faEnvelope,
                               position: 'right',
+                              style: { marginTop: '1px' },
                             }}
-                            value={values.vendorEmail}
+                            value={values.email}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'email',
-                                errors?.vendorEmail
+                                errors?.email,
+                                VendorErrors
                               )
                                 ? 'red'
                                 : '',
@@ -117,22 +120,21 @@ export default function VendorAddForm({
                         </div>
 
                         <div>
-                          <CustomIconTextField
+                          <CustomPasswordTextField
                             placeholder="Password"
-                            name="vendorPassword"
-                            type="password"
+                            name="password"
                             maxLength={20}
-                            value={values.vendorPassword}
+                            value={values.password}
                             showLabel={true}
                             iconProperties={{
-                              icon: faEye,
                               position: 'right',
                             }}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'password',
-                                errors?.vendorPassword
+                                errors?.password,
+                                VendorErrors
                               )
                                 ? 'red'
                                 : '',
@@ -141,22 +143,21 @@ export default function VendorAddForm({
                         </div>
 
                         <div>
-                          <CustomIconTextField
+                          <CustomPasswordTextField
                             placeholder="Confirm Password"
-                            name="vendorConfirmPassword"
-                            type="password"
+                            name="confirmPassword"
                             maxLength={20}
                             showLabel={true}
                             iconProperties={{
-                              icon: faEye,
                               position: 'right',
                             }}
-                            value={values.vendorConfirmPassword ?? ''}
+                            value={values.confirmPassword ?? ''}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
-                                errors?.vendorConfirmPassword
+                                errors?.confirmPassword,
+                                VendorErrors
                               )
                                 ? 'red'
                                 : '',
@@ -171,7 +172,7 @@ export default function VendorAddForm({
                           </div>
 
                           {PasswordErrors.map((pmessage, index) => {
-                            const password = values.vendorPassword || '';
+                            const password = values.password || '';
 
                             let isResolved = false;
                             switch (index) {
@@ -194,10 +195,9 @@ export default function VendorAddForm({
                                 break;
                               case 5: // At least one special character
                                 isResolved =
-                                  values.vendorPassword !== '' &&
-                                  values.vendorConfirmPassword !== '' &&
-                                  values.vendorPassword ===
-                                    values.vendorConfirmPassword;
+                                  values.password !== '' &&
+                                  values.confirmPassword !== '' &&
+                                  values.password === values.confirmPassword;
                                 break;
                             }
 
