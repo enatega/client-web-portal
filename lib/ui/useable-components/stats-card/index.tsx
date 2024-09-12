@@ -1,10 +1,12 @@
+// Core
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
+
 // Interface
 import { IStatsCardProps } from '@/lib/utils/interfaces';
 
-// Styles
+// Methods
 import { formatCurrency } from '@/lib/utils/methods';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Link from 'next/link';
 
 export default function StatsCard({
   label,

@@ -1,23 +1,30 @@
 'use client';
 
+// Core
+import { Form, Formik } from 'formik';
+import { useState } from 'react';
+import * as Yup from 'yup';
+
+// Components
 import CustomButton from '@/lib/ui/useable-components/button';
 import CusomtTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import { PasswordErrors } from '@/lib/utils/constants/strings';
-// Formik
+
+// Icons
+import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
 
 // Prime React
-
-// Interface
-import { ISignUpForm } from '@/lib/utils/interfaces/forms';
-import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
-import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
-import { Form, Formik } from 'formik';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
 
-import { useState } from 'react';
-import * as Yup from 'yup';
+// Methods
+import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+
+// Contants
+import { PasswordErrors, SignUpErrors } from '@/lib/utils/constants';
+
+// Interface
+import { ISignUpForm } from '@/lib/utils/interfaces/forms';
 
 const initialValues: ISignUpForm = {
   firstName: '',
@@ -104,7 +111,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'firstName',
-                              errors?.firstName
+                              errors?.firstName,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -124,7 +132,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'lastName',
-                              errors?.lastName
+                              errors?.lastName,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -148,7 +157,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'email',
-                              errors?.email
+                              errors?.email,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -172,7 +182,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'password',
-                              errors?.password
+                              errors?.password,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -196,7 +207,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'confirmPassword',
-                              errors?.confirmPassword
+                              errors?.confirmPassword,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',

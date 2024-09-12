@@ -1,13 +1,17 @@
 'use client';
 
+// Core
+import { useState } from 'react';
+
 // Interfaces
-import { CountryCodes } from '@/lib/utils/constants/country-codes';
 import { IPhoneTextFieldProps } from '@/lib/utils/interfaces';
+
+// Constants
+import { CountryCodes } from '@/lib/utils/constants/country-codes';
 
 // Prime React
 import { Dropdown } from 'primereact/dropdown';
 import { InputMask } from 'primereact/inputmask';
-import { useState } from 'react';
 
 // Styles
 import classes from './phone-input-field.module.css';
@@ -19,7 +23,7 @@ export default function CustomPhoneTextField({
   const [selectedCity, setSelectedCity] = useState(null);
 
   return (
-    <div className="p-inputgroup gap-2 h-11">
+    <div className="p-inputgroup gap-2 h-9">
       <Dropdown
         className={`${classes.dropdown} focus:outline-none focus:shadow-none rounded-sm text:sm`}
         options={CountryCodes}

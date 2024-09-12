@@ -1,12 +1,20 @@
 'use client';
 
+// Core
+import { useState } from 'react';
+
+// Component
+import RestaurantAddForm from '@/lib/ui/screen-components/protected/restaurant/forms/add-form';
 import VendorAddForm from '@/lib/ui/screen-components/protected/vendor/add-form';
 import VendorHeader from '@/lib/ui/screen-components/protected/vendor/view/header';
 import VendorMain from '@/lib/ui/screen-components/protected/vendor/view/main';
 import VendorMobilesTabs from '@/lib/ui/screen-components/protected/vendor/view/mobile-tabs';
+
+// Constants
 import { options } from '@/lib/utils/constants';
+
+// Interface & Type
 import { TVendorMobileTabs } from '@/lib/utils/types';
-import { useState } from 'react';
 
 export default function VendorsScreen() {
   // States
@@ -16,8 +24,6 @@ export default function VendorsScreen() {
   const [selectedRestaurantFilter, setSelectedResturantFilter] =
     useState<string>(options[1]);
   const [activeTab, setActiveTab] = useState<TVendorMobileTabs>('vendors');
-
-  // Context
 
   return (
     <div className="flex flex-col h-screen">
@@ -40,6 +46,7 @@ export default function VendorsScreen() {
       />
 
       <VendorAddForm />
+      <RestaurantAddForm />
     </div>
   );
 }

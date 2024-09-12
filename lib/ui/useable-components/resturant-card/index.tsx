@@ -1,8 +1,18 @@
-import { IRestaurantCardProps } from '@/lib/utils/interfaces';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+// Core
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
+// Interface
+import { IRestaurantCardProps } from '@/lib/utils/interfaces';
+
+// Methods
+import { onUseLocalStorage } from '@/lib/utils/methods';
+
+// Icons
+import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+
+// Componetn
 import CustomButton from '../button';
 import TextComponent from '../text-field';
 
@@ -63,7 +73,10 @@ export default function RestaurantCard({ index }: IRestaurantCardProps) {
         <CustomButton
           className="w-full h-10 bg-[#EBEDE6] text-black "
           label="View Details"
-          onClick={() => router.push(`/admin/restaurant/`)}
+          onClick={() => {
+            onUseLocalStorage('save', 'restaurantId', index.toString());
+            router.push(`/admin/restaurant/`);
+          }}
         />
       </div>
     </div>

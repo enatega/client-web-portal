@@ -1,76 +1,54 @@
+// Core
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Form, Formik } from 'formik';
+import { useContext } from 'react';
+
 // Prime React
 import { Sidebar } from 'primereact/sidebar';
 
-// Interface and Types
+// Context
 import { VendorContext } from '@/lib/context/vendor-context';
+
+// Interface and Types
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
 import { IVendorForm } from '@/lib/utils/interfaces/forms';
-import { useContext } from 'react';
 
+// Constants
+import { PasswordErrors, VendorErrors } from '@/lib/utils/constants';
+
+// Components
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
+import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
+
+// Methods
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
-import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
-import { Form, Formik } from 'formik';
-import { useState } from 'react';
-import * as Yup from 'yup';
+
+// Schema
+import { VendorSchema } from '@/lib/utils/schema';
+
+// Icons
+import {
+  faCheck,
+  faEnvelope,
+  faLock,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 
 const initialValues: IVendorForm = {
-  vendorName: '',
-  vendorEmail: '',
-  vendorPassword: '',
-  vendorConfirmPassword: '',
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
 };
 
 export default function VendorAddForm({
   position = 'right',
 }: IVendorAddFormComponentProps) {
+  // Context
   const { vendorFormVisible, onSetVendorFormVisible } =
     useContext(VendorContext);
-
-  // Prime React
-
-  // Interface and Types
-
-  const [account] = useState<IVendorForm>(initialValues);
-
-  const SignupSchema = Yup.object().shape({
-    firstName: Yup.string().min(2).max(35).required('Required'),
-    vendorName: Yup.string().min(2).max(35).required('Required'),
-    vendorEmail: Yup.string().email('Invalid email').required('Required'),
-    vendorPassword: Yup.string()
-      .min(6, 'At least 6 characters')
-      .max(20)
-      .test('complexity', function (value: string | undefined) {
-        const errors: string[] = [];
-
-        if (!value) return this.createError({});
-
-        if (!/[a-z]/.test(value)) {
-          errors.push('At least one lowercase letter (a-z)');
-        }
-        if (!/[A-Z]/.test(value)) {
-          errors.push('At least one uppercase letter (A-Z)');
-        }
-        if (!/\d/.test(value)) {
-          errors.push('At least one number (0-9)');
-        }
-        if (!/[@$!%*?&]/.test(value)) {
-          errors.push('At least one special character');
-        }
-
-        if (errors.length) {
-          return this.createError({ message: errors.join(', ') });
-        }
-        return true;
-      })
-      .required('Required'),
-    vendorConfirmPassword: Yup.string()
-      .nullable()
-      .oneOf([Yup.ref('password'), null], 'Password must match')
-      .required('Required'),
-  });
 
   return (
     <Sidebar
@@ -80,7 +58,7 @@ export default function VendorAddForm({
       className="w-full sm:w-[450px]"
     >
       <div className="w-full h-full flex items-center justify-start">
-        <div className="h-full">
+        <div className="h-full w-full">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col mb-2">
               <span className="text-lg">Add Vendor</span>
@@ -88,114 +66,184 @@ export default function VendorAddForm({
 
             <div>
               <Formik
-                initialValues={account}
-                validationSchema={SignupSchema}
-                onSubmit={(e) => {
-                  console.log(e);
+                initialValues={initialValues}
+                validationSchema={VendorSchema}
+                onSubmit={async (values) => {
+                  await new Promise((r) => setTimeout(r, 500));
+                  alert(JSON.stringify(values, null, 2));
                 }}
                 validateOnChange
               >
-                {({ values, errors, handleChange }) => {
+                {({
+                  values,
+                  errors,
+                  handleChange,
+                  handleSubmit,
+                  isSubmitting,
+                }) => {
+                  console.log({ errors });
+
                   return (
-                    <Form>
-                      <div className="mb-2">
-                        <CustomTextField
-                          type="text"
-                          name="vendorName"
-                          placeholder="Name"
-                          maxLength={35}
-                          value={values.vendorName}
-                          onChange={handleChange}
-                          showLabel={true}
-                          style={{
-                            borderColor: onErrorMessageMatcher(
-                              'email',
-                              errors?.vendorName
-                            )
-                              ? 'red'
-                              : '',
-                          }}
-                        />
-                      </div>
-                      <div className="mb-2">
-                        <CustomIconTextField
-                          type="email"
-                          name="vendorEmail"
-                          placeholder="Email"
-                          maxLength={35}
-                          showLabel={true}
-                          iconProperties={{
-                            icon: faEnvelope,
-                            position: 'right',
-                          }}
-                          value={values.vendorEmail}
-                          onChange={handleChange}
-                          style={{
-                            borderColor: onErrorMessageMatcher(
-                              'email',
-                              errors?.vendorEmail
-                            )
-                              ? 'red'
-                              : '',
-                          }}
-                        />
-                      </div>
+                    <Form onSubmit={handleSubmit}>
+                      <div className="space-y-3">
+                        <div>
+                          <CustomTextField
+                            type="text"
+                            name="name"
+                            placeholder="Name"
+                            maxLength={35}
+                            value={values.name}
+                            onChange={handleChange}
+                            showLabel={true}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'name',
+                                errors?.name,
+                                VendorErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <CustomIconTextField
+                            type="email"
+                            name="email"
+                            placeholder="Email"
+                            maxLength={35}
+                            showLabel={true}
+                            iconProperties={{
+                              icon: faEnvelope,
+                              position: 'right',
+                              style: { marginTop: '1px' },
+                            }}
+                            value={values.email}
+                            onChange={handleChange}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'email',
+                                errors?.email,
+                                VendorErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
+                          />
+                        </div>
 
-                      <div className="mb-2">
-                        <CustomIconTextField
-                          placeholder="Password"
-                          name="vendorPassword"
-                          type="password"
-                          maxLength={20}
-                          value={values.vendorPassword}
-                          showLabel={true}
-                          iconProperties={{
-                            icon: faEye,
-                            position: 'right',
-                          }}
-                          onChange={handleChange}
-                          style={{
-                            borderColor: onErrorMessageMatcher(
-                              'password',
-                              errors?.vendorPassword
-                            )
-                              ? 'red'
-                              : '',
-                          }}
-                        />
-                      </div>
+                        <div>
+                          <CustomPasswordTextField
+                            placeholder="Password"
+                            name="password"
+                            maxLength={20}
+                            value={values.password}
+                            showLabel={true}
+                            iconProperties={{
+                              position: 'right',
+                            }}
+                            onChange={handleChange}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'password',
+                                errors?.password,
+                                VendorErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
+                          />
+                        </div>
 
-                      <div className="mb-2">
-                        <CustomIconTextField
-                          placeholder="Confirm Password"
-                          name="vendorConfirmPassword"
-                          type="password"
-                          maxLength={20}
-                          showLabel={true}
-                          iconProperties={{
-                            icon: faEye,
-                            position: 'right',
-                          }}
-                          value={values.vendorConfirmPassword ?? ''}
-                          onChange={handleChange}
-                          style={{
-                            borderColor: onErrorMessageMatcher(
-                              'confirmPassword',
-                              errors?.vendorConfirmPassword
-                            )
-                              ? 'red'
-                              : '',
-                          }}
-                        />
-                      </div>
+                        <div>
+                          <CustomPasswordTextField
+                            placeholder="Confirm Password"
+                            name="confirmPassword"
+                            maxLength={20}
+                            showLabel={true}
+                            iconProperties={{
+                              position: 'right',
+                            }}
+                            value={values.confirmPassword ?? ''}
+                            onChange={handleChange}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'confirmPassword',
+                                errors?.confirmPassword,
+                                VendorErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
+                          />
+                        </div>
 
-                      <CustomButton
-                        className="w-full h-12 bg-transparent text-black border-gray-300 hover:bg-whit px-32"
-                        label="Add"
-                        rounded={true}
-                        icon="pi pi-google"
-                        type="submit"
-                      />
+                        <div className="flex flex-col items-start justify-start gap-2 mb-2 p-2">
+                          <div className="w-full border-b pb-2">
+                            <FontAwesomeIcon icon={faLock} className="mr-2" />
+                            <b>Password Strength</b>
+                          </div>
+
+                          {PasswordErrors.map((pmessage, index) => {
+                            const password = values.password || '';
+
+                            let isResolved = false;
+                            switch (index) {
+                              case 0: // At least 6 characters
+                                isResolved = password.length >= 6;
+                                break;
+                              case 1: // At least one lowercase letter
+                                isResolved = /[a-z]/.test(password);
+                                break;
+                              case 2: // At least one uppercase letter
+                                isResolved = /[A-Z]/.test(password);
+                                break;
+                              case 3: // At least one number
+                                isResolved = /[0-9]/.test(password);
+                                break;
+                              case 4: // At least one special character
+                                isResolved = /[!@#$%^&*(),.?":{}|<>]/.test(
+                                  password
+                                );
+                                break;
+                              case 5: // At least one special character
+                                isResolved =
+                                  values.password !== '' &&
+                                  values.confirmPassword !== '' &&
+                                  values.password === values.confirmPassword;
+                                break;
+                            }
+
+                            const className = isResolved
+                              ? 'text-green-500'
+                              : 'text-gray-500';
+
+                            return (
+                              <div
+                                key={index}
+                                className={`${className} text-sm`}
+                              >
+                                <FontAwesomeIcon
+                                  icon={isResolved ? faCheck : faTimes}
+                                  className="mr-2"
+                                />
+                                <span>{pmessage}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        <div className="flex justify-end mt-4">
+                          <CustomButton
+                            className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                            label="Add"
+                            type="submit"
+                            loading={isSubmitting}
+
+                            // onClick={() => {}}
+                          />
+                        </div>
+                      </div>
                     </Form>
                   );
                 }}

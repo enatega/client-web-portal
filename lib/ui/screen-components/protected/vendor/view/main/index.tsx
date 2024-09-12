@@ -1,17 +1,26 @@
+// Core
+import { useContext } from 'react';
+
 // UI Components
-import { VendorContext } from '@/lib/context/vendor-context';
+import { RestaurantContext } from '@/lib/context/restaurant-context';
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import RestaurantCard from '@/lib/ui/useable-components/resturant-card';
 import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import VendorCard from '@/lib/ui/useable-components/vendor-card';
-import { options } from '@/lib/utils/constants';
+
+// Context
+import { VendorContext } from '@/lib/context/vendor-context';
+
+// Interface
 import { IVendorMainComponentProps } from '@/lib/utils/interfaces';
+
+// Constants
+import { options } from '@/lib/utils/constants';
 
 // Icons
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
 
 export default function VendorMain({
   activeTab,
@@ -22,6 +31,7 @@ export default function VendorMain({
 }: IVendorMainComponentProps) {
   // Context
   const { onSetVendorFormVisible } = useContext(VendorContext);
+  const { onSetRestaurantFormVisible } = useContext(RestaurantContext);
 
   return (
     <div className="flex flex-col sm:flex-row flex-grow overflow-hidden">
@@ -31,7 +41,7 @@ export default function VendorMain({
         }`}
       >
         {/* Mobile-only header for Vendors section */}
-        <div className="sm:hidden p-3 border-b">
+        <div className="sm:hidden mt-3 p-3 border-b">
           <div className="flex justify-between items-center mb-4">
             <TextComponent className="heading-1" text="Vendors" />
             <TextIconClickable
@@ -83,16 +93,19 @@ export default function VendorMain({
               icon={faAdd}
               iconStyles={{ color: 'white' }}
               title="Add Restaurant"
+              onClick={() => onSetRestaurantFormVisible(true)}
             />
           </div>
           <div className="flex flex-col sm:flex-row items-start md:items-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <CustomTextField
-              type="text"
-              name="restaurantFilter"
-              maxLength={35}
-              placeholder="Search Restaurants"
-              showLabel={false}
-            />
+            <div className="w-full sm:w-60">
+              <CustomTextField
+                type="text"
+                name="restaurantFilter"
+                maxLength={35}
+                placeholder="Search Restaurants"
+                showLabel={false}
+              />
+            </div>
             <CustomTab
               options={options}
               selectedTab={selectedRestaurantFilter}

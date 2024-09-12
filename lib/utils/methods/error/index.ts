@@ -1,10 +1,8 @@
-import { SignUpErrors } from '@/lib/utils/constants/strings';
-import { TSignupErrorFields } from '../../types/sign-up-error-fields';
-
-export const onErrorMessageMatcher = (
-  type: TSignupErrorFields,
-  message: string | undefined
-) => {
+export const onErrorMessageMatcher = <T extends string>(
+  type: T | undefined,
+  message: string | undefined,
+  errorMessages: Record<T, string[]>
+): boolean => {
   if (!type) return true;
-  return SignUpErrors[type].some((emessage) => emessage === message);
+  return errorMessages[type]?.some((emessage) => emessage === message) ?? false;
 };

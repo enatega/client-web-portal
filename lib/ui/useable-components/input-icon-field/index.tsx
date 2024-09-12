@@ -13,23 +13,26 @@ import { InputText } from 'primereact/inputtext';
 
 export default function CustomIconTextField({
   className,
-  iconProperties: { icon, position },
+  iconProperties: { icon, position, style },
   placeholder,
+  showLabel,
   ...props
 }: IIconTextFieldProps) {
   return (
     <IconField iconPosition={position}>
-      <InputIcon>
-        <FontAwesomeIcon icon={icon} className="mt-3" />
+      <InputIcon style={style}>
+        <FontAwesomeIcon icon={icon} />
       </InputIcon>
 
-      <div className="flex flex-col gap-2">
-        <label htmlFor="username" className="text-sm font-[500]">
-          {placeholder}
-        </label>
+      <div className="flex flex-col gap-y-1">
+        {showLabel && (
+          <label htmlFor="username" className="text-sm font-[500]">
+            {placeholder}
+          </label>
+        )}
         <InputText
-          className={`w-full h-11 border px-2 focus:outline-none focus:shadow-none border-inherit ${className}`}
-          // placeholder={placeholder}
+          className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
+          placeholder={placeholder}
           {...props}
         />
       </div>

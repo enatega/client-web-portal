@@ -4,7 +4,7 @@
 // Components
 import AppTopbar from '@/lib/ui/screen-components/unprotected/app-bar';
 
-// Styles
+// Interface & Types
 import { IProvider } from '@/lib/utils/interfaces';
 
 const Layout = ({ children }: IProvider) => {

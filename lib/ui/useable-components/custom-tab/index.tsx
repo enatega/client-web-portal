@@ -1,3 +1,4 @@
+// Interface
 import { ICustomTabProps } from '@/lib/utils/interfaces';
 
 const CustomTab = ({

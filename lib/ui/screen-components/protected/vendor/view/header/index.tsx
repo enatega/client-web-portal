@@ -1,12 +1,21 @@
+// Core
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { useContext } from 'react';
+
+// Context
 import { VendorContext } from '@/lib/context/vendor-context';
+
+// Components
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
-import { options } from '@/lib/utils/constants';
+
+// Interface
 import { IVendorHeaderComponentsProps } from '@/lib/utils/interfaces';
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
+
+// Constants
+import { options } from '@/lib/utils/constants';
 
 export default function VendorHeader({
   selectedVendorFilter,
@@ -30,14 +39,15 @@ export default function VendorHeader({
       </div>
 
       <div className="w-fit flex flex-colm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
-        <CustomTextField
-          type="text"
-          name="vendorFilter"
-          maxLength={35}
-          placeholder="Search Vendors"
-          showLabel={false}
-        />
-
+        <div className="w-60">
+          <CustomTextField
+            type="text"
+            name="vendorFilter"
+            maxLength={35}
+            placeholder="Search Vendors"
+            showLabel={false}
+          />
+        </div>
         <CustomTab
           options={options}
           selectedTab={selectedVendorFilter}

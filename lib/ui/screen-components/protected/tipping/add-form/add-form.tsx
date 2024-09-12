@@ -1,7 +1,6 @@
 'use client';
 import CustomButton from '@/lib/ui/useable-components/button';
 import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
-import { onErrorMessageMatcher } from '@/lib/utils/methods';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
@@ -27,7 +26,7 @@ const TippingAddForm = () => {
           }}
           validateOnChange
         >
-          {({ values, errors, handleChange }) => {
+          {({ values, handleChange }) => {
             return (
               <Form className="grid grid-cols-4 gap-3 items-end">
                 <CustomNumberTextField
@@ -42,11 +41,11 @@ const TippingAddForm = () => {
                     icon: faEnvelope,
                     position: 'right',
                   }}
-                  style={{
-                    borderColor: onErrorMessageMatcher('email', errors?.tip1)
-                      ? 'red'
-                      : '',
-                  }}
+                  // style={{
+                  //   borderColor: onErrorMessageMatcher('email', errors?.tip1)
+                  //     ? 'red'
+                  //     : '',
+                  // }}
                 />
                 <CustomNumberTextField
                   type="email"
@@ -60,11 +59,11 @@ const TippingAddForm = () => {
                   }}
                   value={values.tip2}
                   onChange={handleChange}
-                  style={{
-                    borderColor: onErrorMessageMatcher('email', errors?.tip2)
-                      ? 'red'
-                      : '',
-                  }}
+                  // style={{
+                  //   borderColor: onErrorMessageMatcher('email', errors?.tip2)
+                  //     ? 'red'
+                  //     : '',
+                  // }}
                 />
                 <CustomNumberTextField
                   type="email"
@@ -78,11 +77,11 @@ const TippingAddForm = () => {
                   }}
                   value={values.tip2}
                   onChange={handleChange}
-                  style={{
-                    borderColor: onErrorMessageMatcher('email', errors?.tip2)
-                      ? 'red'
-                      : '',
-                  }}
+                  // style={{
+                  //   borderColor: onErrorMessageMatcher('email', errors?.tip2)
+                  //     ? 'red'
+                  //     : '',
+                  // }}
                 />
 
                 <CustomButton
