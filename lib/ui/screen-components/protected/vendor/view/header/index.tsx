@@ -1,12 +1,21 @@
+// Core
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { useContext } from 'react';
+
+// Context
 import { VendorContext } from '@/lib/context/vendor-context';
+
+// Components
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
-import { options } from '@/lib/utils/constants';
+
+// Interface
 import { IVendorHeaderComponentsProps } from '@/lib/utils/interfaces';
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
+
+// Constants
+import { options } from '@/lib/utils/constants';
 
 export default function VendorHeader({
   selectedVendorFilter,

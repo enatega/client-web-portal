@@ -1,9 +1,20 @@
-import { VendorContext } from '@/lib/context/vendor-context';
-import { IVendorCardProps } from '@/lib/utils/interfaces';
-import { onUseLocalStorage } from '@/lib/utils/methods';
-import { faEllipsisV, faShop } from '@fortawesome/free-solid-svg-icons';
+// Core
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'react';
+
+// Context
+import { VendorContext } from '@/lib/context/vendor-context';
+
+// Interface
+import { IVendorCardProps } from '@/lib/utils/interfaces';
+
+// Methods
+import { onUseLocalStorage } from '@/lib/utils/methods';
+
+// Icons
+import { faEllipsisV, faShop } from '@fortawesome/free-solid-svg-icons';
+
+// Component
 import RippleComponent from '../ripple';
 import TextComponent from '../text-field';
 

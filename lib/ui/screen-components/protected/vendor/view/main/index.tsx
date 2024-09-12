@@ -1,18 +1,26 @@
+// Core
+import { useContext } from 'react';
+
 // UI Components
 import { RestaurantContext } from '@/lib/context/restaurant-context';
-import { VendorContext } from '@/lib/context/vendor-context';
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import RestaurantCard from '@/lib/ui/useable-components/resturant-card';
 import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import VendorCard from '@/lib/ui/useable-components/vendor-card';
-import { options } from '@/lib/utils/constants';
+
+// Context
+import { VendorContext } from '@/lib/context/vendor-context';
+
+// Interface
 import { IVendorMainComponentProps } from '@/lib/utils/interfaces';
+
+// Constants
+import { options } from '@/lib/utils/constants';
 
 // Icons
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
 
 export default function VendorMain({
   activeTab,

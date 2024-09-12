@@ -1,27 +1,40 @@
+// Core
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Form, Formik } from 'formik';
+import { useContext } from 'react';
+
 // Prime React
 import { Sidebar } from 'primereact/sidebar';
 
-// Interface and Types
+// Context
 import { VendorContext } from '@/lib/context/vendor-context';
+
+// Interface and Types
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
 import { IVendorForm } from '@/lib/utils/interfaces/forms';
-import { useContext } from 'react';
 
+// Constants
+import { PasswordErrors, VendorErrors } from '@/lib/utils/constants';
+
+// Components
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
-import { PasswordErrors, VendorErrors } from '@/lib/utils/constants';
+
+// Methods
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+
+// Schema
 import { VendorSchema } from '@/lib/utils/schema';
+
+// Icons
 import {
   faCheck,
   faEnvelope,
   faLock,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Form, Formik } from 'formik';
 
 const initialValues: IVendorForm = {
   name: '',

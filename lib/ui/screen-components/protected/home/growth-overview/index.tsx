@@ -1,11 +1,11 @@
+// Core
 import { useEffect, useState } from 'react';
 
+// Prime React
 import { Chart } from 'primereact/chart';
 
 // Dummy
 import { generateRandomUserCounts } from '@/lib/utils/dummy';
-
-// Styles
 
 export default function GrowthOverView() {
   // States

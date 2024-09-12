@@ -1,13 +1,17 @@
 'use client';
 
+// Core
+import { useState } from 'react';
+
 // Interfaces
-import { CountryCodes } from '@/lib/utils/constants/country-codes';
 import { IPhoneTextFieldProps } from '@/lib/utils/interfaces';
+
+// Constants
+import { CountryCodes } from '@/lib/utils/constants/country-codes';
 
 // Prime React
 import { Dropdown } from 'primereact/dropdown';
 import { InputMask } from 'primereact/inputmask';
-import { useState } from 'react';
 
 // Styles
 import classes from './phone-input-field.module.css';

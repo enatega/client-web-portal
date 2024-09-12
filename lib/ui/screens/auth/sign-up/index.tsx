@@ -1,23 +1,30 @@
 'use client';
 
+// Core
+import { Form, Formik } from 'formik';
+import { useState } from 'react';
+import * as Yup from 'yup';
+
+// Components
 import CustomButton from '@/lib/ui/useable-components/button';
 import CusomtTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import { PasswordErrors, SignUpErrors } from '@/lib/utils/constants/strings';
-// Formik
+
+// Icons
+import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
 
 // Prime React
-
-// Interface
-import { ISignUpForm } from '@/lib/utils/interfaces/forms';
-import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
-import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
-import { Form, Formik } from 'formik';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
 
-import { useState } from 'react';
-import * as Yup from 'yup';
+// Methods
+import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+
+// Contants
+import { PasswordErrors, SignUpErrors } from '@/lib/utils/constants';
+
+// Interface
+import { ISignUpForm } from '@/lib/utils/interfaces/forms';
 
 const initialValues: ISignUpForm = {
   firstName: '',

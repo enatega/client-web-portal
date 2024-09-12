@@ -19,3 +19,9 @@ export interface IMenuOption {
   active?: boolean;
   onClick: MouseEventHandler<HTMLDivElement> | undefined;
 }
+
+export interface SubMenuItemProps extends Omit<ISidebarMenuItem, 'expanded'> {
+  expanded?: never;
+  subMenu?: never;
+  active: boolean;
+}

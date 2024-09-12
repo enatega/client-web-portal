@@ -1,8 +1,10 @@
-import { TextIconClickableProps } from '@/lib/utils/interfaces';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Ripple } from 'primereact/ripple';
 
-// Styles
+//
+import { TextIconClickableProps } from '@/lib/utils/interfaces';
+
+// Prime React
+import { Ripple } from 'primereact/ripple';
 
 export default function TextIconClickable({
   className,

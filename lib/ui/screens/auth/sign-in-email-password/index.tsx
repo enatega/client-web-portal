@@ -1,6 +1,8 @@
 'use client';
 
-import CustomButton from '@/lib/ui/useable-components/button';
+// Core
+import { useState } from 'react';
+import * as Yup from 'yup';
 
 // Formik
 import { Form, Formik } from 'formik';
@@ -11,12 +13,18 @@ import { Card } from 'primereact/card';
 // Interface
 import { ISignUpForm } from '@/lib/utils/interfaces/forms';
 
+// Component
+import CustomButton from '@/lib/ui/useable-components/button';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
+
+// Constants
 import { SignUpErrors } from '@/lib/utils/constants';
+
+// Methods
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+
+// Icons
 import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import * as Yup from 'yup';
 
 const initialValues: ISignUpForm = {
   firstName: '',
