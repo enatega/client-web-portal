@@ -15,21 +15,23 @@ export default function CustomIconTextField({
   className,
   iconProperties: { icon, position },
   placeholder,
+  showLabel,
   ...props
 }: IIconTextFieldProps) {
   return (
     <IconField iconPosition={position}>
       <InputIcon>
-        <FontAwesomeIcon icon={icon} className="mt-3" />
+        <FontAwesomeIcon icon={icon} className="mt-4" />
       </InputIcon>
 
       <div className="flex flex-col gap-2">
-        <label htmlFor="username" className="text-sm font-[500]">
-          {placeholder}
-        </label>
+        {showLabel && (
+          <label htmlFor="username" className="text-sm font-[500]">
+            {placeholder}
+          </label>
+        )}
         <InputText
-          className={`w-full h-11 border px-2 focus:outline-none focus:shadow-none border-inherit ${className}`}
-          // placeholder={placeholder}
+          className={`w-full h-10 border px-2 focus:outline-none focus:shadow-none border-inherit ${className}`}
           {...props}
         />
       </div>

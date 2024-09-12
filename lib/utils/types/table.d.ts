@@ -5,44 +5,10 @@ export type ColumnConfig<T> = {
 };
 
 export type DataTableProps<T> = {
+  header?: React.ReactNode;
   data: T[];
   selectedData: T[];
   setSelectedData: React.Dispatch<React.SetStateAction<T[]>>;
   columns: ColumnConfig<T>[];
+  filters: any;
 };
-
-const columns = [
-  {
-    headerName: 'ID',
-    propertyName: 'id',
-  },
-  {
-    headerName: 'Name',
-    propertyName: 'name',
-  },
-  {
-    headerName: 'Email',
-    propertyName: 'email',
-  },
-  {
-    headerName: 'Password',
-    propertyName: 'password',
-  },
-  {
-    headerName: 'Phone',
-    propertyName: 'phone',
-  },
-  {
-    headerName: 'Zone',
-    propertyName: 'zone',
-  },
-  {
-    headerName: 'Available',
-    propertyName: 'available',
-    body: toggleComponent,
-  },
-  {
-    headerName: '',
-    propertyName: 'available',
-  },
-];

@@ -2,17 +2,15 @@
 import { Sidebar } from 'primereact/sidebar';
 
 // Interface and Types
-import { VendorContext } from '@/lib/context/vendor-context';
-import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
-import { IVendorForm } from '@/lib/utils/interfaces/forms';
-import { useContext } from 'react';
+import { IRiderForm } from '@/lib/utils/interfaces/forms';
 
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import { PasswordErrors } from '@/lib/utils/constants';
+import { IRidersAddFormComponentProps } from '@/lib/utils/interfaces/rider.interface';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
-import { VendorSchema } from '@/lib/utils/schema';
+import { RiderSchema } from '@/lib/utils/schema/rider';
 import {
   faCheck,
   faEnvelope,
@@ -23,38 +21,38 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Formik } from 'formik';
 
-const initialValues: IVendorForm = {
-  vendorName: '',
-  vendorEmail: '',
-  vendorPassword: '',
-  vendorConfirmPassword: '',
+const initialValues: IRiderForm = {
+  riderName: '',
+  riderEmail: '',
+  riderPassword: '',
+  riderConfirmPassword: '',
+  riderPhoneNumber: '',
+  riderZone: '',
 };
 
-export default function VendorAddForm({
+export default function BannerAddForm({
   position = 'right',
-}: IVendorAddFormComponentProps) {
-  // Context
-  const { vendorFormVisible, onSetVendorFormVisible } =
-    useContext(VendorContext);
-
+  setIsAddRiderVisible,
+  isAddRiderVisible,
+}: IRidersAddFormComponentProps) {
   return (
     <Sidebar
-      visible={vendorFormVisible}
+      visible={isAddRiderVisible}
       position={position}
-      onHide={() => onSetVendorFormVisible(false)}
+      onHide={() => setIsAddRiderVisible(false)}
       className="w-full sm:w-[450px]"
     >
       <div className="w-full h-full flex items-center justify-start">
         <div className="h-full w-full">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col mb-2">
-              <span className="text-lg">Add Vendor</span>
+              <span className="text-lg">Add Rider</span>
             </div>
 
             <div>
               <Formik
                 initialValues={initialValues}
-                validationSchema={VendorSchema}
+                validationSchema={RiderSchema}
                 onSubmit={async (values) => {
                   await new Promise((r) => setTimeout(r, 500));
                   alert(JSON.stringify(values, null, 2));
@@ -76,16 +74,16 @@ export default function VendorAddForm({
                         <div>
                           <CustomTextField
                             type="text"
-                            name="vendorName"
+                            name="riderName"
                             placeholder="Name"
                             maxLength={35}
-                            value={values.vendorName}
+                            value={values.riderName}
                             onChange={handleChange}
                             showLabel={true}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'email',
-                                errors?.vendorName
+                                errors?.riderName
                               )
                                 ? 'red'
                                 : '',
@@ -95,7 +93,7 @@ export default function VendorAddForm({
                         <div>
                           <CustomIconTextField
                             type="email"
-                            name="vendorEmail"
+                            name="riderEmail"
                             placeholder="Email"
                             maxLength={35}
                             showLabel={true}
@@ -103,12 +101,12 @@ export default function VendorAddForm({
                               icon: faEnvelope,
                               position: 'right',
                             }}
-                            value={values.vendorEmail}
+                            value={values.riderEmail}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'email',
-                                errors?.vendorEmail
+                                errors?.riderEmail
                               )
                                 ? 'red'
                                 : '',
@@ -119,10 +117,10 @@ export default function VendorAddForm({
                         <div>
                           <CustomIconTextField
                             placeholder="Password"
-                            name="vendorPassword"
+                            name="riderPassword"
                             type="password"
                             maxLength={20}
-                            value={values.vendorPassword}
+                            value={values.riderPassword}
                             showLabel={true}
                             iconProperties={{
                               icon: faEye,
@@ -132,7 +130,7 @@ export default function VendorAddForm({
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'password',
-                                errors?.vendorPassword
+                                errors?.riderPassword
                               )
                                 ? 'red'
                                 : '',
@@ -143,7 +141,7 @@ export default function VendorAddForm({
                         <div>
                           <CustomIconTextField
                             placeholder="Confirm Password"
-                            name="vendorConfirmPassword"
+                            name="riderConfirmPassword"
                             type="password"
                             maxLength={20}
                             showLabel={true}
@@ -151,12 +149,12 @@ export default function VendorAddForm({
                               icon: faEye,
                               position: 'right',
                             }}
-                            value={values.vendorConfirmPassword ?? ''}
+                            value={values.riderConfirmPassword ?? ''}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
-                                errors?.vendorConfirmPassword
+                                errors?.riderConfirmPassword
                               )
                                 ? 'red'
                                 : '',
@@ -171,7 +169,7 @@ export default function VendorAddForm({
                           </div>
 
                           {PasswordErrors.map((pmessage, index) => {
-                            const password = values.vendorPassword || '';
+                            const password = values.riderPassword || '';
 
                             let isResolved = false;
                             switch (index) {
@@ -194,10 +192,10 @@ export default function VendorAddForm({
                                 break;
                               case 5: // At least one special character
                                 isResolved =
-                                  values.vendorPassword !== '' &&
-                                  values.vendorConfirmPassword !== '' &&
-                                  values.vendorPassword ===
-                                    values.vendorConfirmPassword;
+                                  values.riderPassword !== '' &&
+                                  values.riderConfirmPassword !== '' &&
+                                  values.riderPassword ===
+                                    values.riderConfirmPassword;
                                 break;
                             }
 

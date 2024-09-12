@@ -34,3 +34,7 @@ export interface IPhoneTextFieldProps extends IGlobalTextFieldProps {
   mask: string;
   onChange?: (event: InputMaskChangeEvent) => void;
 }
+
+export interface ICustomNumberTextFieldProps extends IGlobalTextFieldProps {
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}

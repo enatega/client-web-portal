@@ -5,6 +5,7 @@ export * from './input-field.interface';
 export * from './layout.interface';
 export * from './panel-menu.interface';
 export * from './restaurant.interface';
+export * from './ripple.interface';
 export * from './sidebar.interface';
 export * from './stat-card.interface';
 export * from './tabs.interface';

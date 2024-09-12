@@ -24,6 +24,10 @@
   border-color: #5ac12f !important;
 }
 
+.table :global(.p-datatable-header) {
+  background-color: transparent !important; /* Or any color you want */
+}
+
 .dialog {
   height: 100vh;
 }
