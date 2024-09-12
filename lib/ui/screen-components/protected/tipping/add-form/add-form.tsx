@@ -1,12 +1,11 @@
 'use client';
+import CustomButton from '@/lib/ui/useable-components/button';
 import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
 import { onErrorMessageMatcher } from '@/lib/utils/methods';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 import CustomNumberTextField from '../custom-input';
-import CustomButton from '@/lib/ui/useable-components/button';
-import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
 
 const TippingAddForm = () => {
   const initialValues: ITippingsForm = {

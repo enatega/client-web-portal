@@ -1,8 +1,5 @@
 import Table from '@/lib/ui/useable-components/table';
-import {
-  IRidersMainComponentsProps,
-  Rider,
-} from '@/lib/utils/interfaces/rider.interface';
+import { Rider } from '@/lib/utils/interfaces/rider.interface';
 import { useState } from 'react';
 
 const Toggle = (product: Rider) => {
@@ -61,10 +58,10 @@ const COLUMNS = [
     propertyName: 'available',
   },
 ];
-
-export default function RidersMain({}: IRidersMainComponentsProps) {
+// IRidersMainComponentsProps
+export default function RidersMain() {
   const [selectedProducts, setSelectedProducts] = useState<Rider[]>([]);
-  let [data, setData] = useState<Rider[]>([
+  let data: Rider[] = [
     {
       id: 1,
       name: 'Hamza',
@@ -83,8 +80,7 @@ export default function RidersMain({}: IRidersMainComponentsProps) {
       zone: 'Asia',
       available: true,
     },
-  ]);
-
+  ];
   return (
     <div className="p-2 pt-5">
       <Table

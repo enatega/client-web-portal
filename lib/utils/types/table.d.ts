@@ -39,7 +39,7 @@ export const columns = [
   {
     headerName: 'Available',
     propertyName: 'available',
-    body: toggleComponent,
+    // body: toggleComponent,
   },
   {
     headerName: '',
