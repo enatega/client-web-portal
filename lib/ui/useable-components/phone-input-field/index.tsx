@@ -19,7 +19,7 @@ export default function CustomPhoneTextField({
   const [selectedCity, setSelectedCity] = useState(null);
 
   return (
-    <div className="p-inputgroup gap-2 h-11">
+    <div className="p-inputgroup gap-2 h-9">
       <Dropdown
         className={`${classes.dropdown} focus:outline-none focus:shadow-none rounded-sm text:sm`}
         options={CountryCodes}

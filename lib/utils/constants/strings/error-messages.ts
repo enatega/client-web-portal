@@ -1,4 +1,5 @@
-import { ISignFormErrors } from '../../interfaces/forms';
+import { ISignFormErrors, IVendorErrors } from '../../interfaces/forms';
+import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -15,4 +16,24 @@ export const SignUpErrors: ISignFormErrors = {
   email: ['Required', 'Invalid email'],
   password: ['Required', ...PasswordErrors],
   confirmPassword: ['Required', 'Password must match'],
+};
+
+export const VendorErrors: IVendorErrors = {
+  name: ['Required'],
+  email: ['Required', 'Invalid email'],
+  password: ['Required', ...PasswordErrors],
+  confirmPassword: ['Required', 'Password must match'],
+};
+
+export const RestaurantErrors: IRestaurantFormErrors = {
+  name: ['Required'],
+  username: ['Required', 'Invalid email'],
+  password: ['Required', ...PasswordErrors],
+  confirmPassword: ['Required', 'Password must match'],
+  address: ['Required'],
+  deliveryTime: ['Required'],
+  minOrder: ['Required'],
+  salesTax: ['Required'],
+  shopType: ['Required'],
+  cuisines: ['Required'],
 };

@@ -1,27 +1,35 @@
 // Interfaces
-import { IIconTextFieldProps } from '@/lib/utils/interfaces';
-
-// Icons
+import { IPasswordTextFieldProps } from '@/lib/utils/interfaces';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-// Prime React
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
+import { useState } from 'react';
+
+// Prime React
 
 // Styles
 
-export default function CustomIconTextField({
+export default function CustomPasswordTextField({
   className,
-  iconProperties: { icon, position, style },
+  iconProperties: { icon, position },
   placeholder,
   showLabel,
   ...props
-}: IIconTextFieldProps) {
+}: IPasswordTextFieldProps) {
+  // States
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const _icon = icon ? icon : isVisible ? faEyeSlash : faEye;
+
   return (
     <IconField iconPosition={position}>
-      <InputIcon style={style}>
-        <FontAwesomeIcon icon={icon} />
+      <InputIcon
+        className="cursor-pointer"
+        onClick={() => setIsVisible((prevState) => !prevState)}
+      >
+        <FontAwesomeIcon icon={_icon} className=" cursor-pointer mt-3" />
       </InputIcon>
 
       <div className="flex flex-col gap-y-1">
@@ -31,6 +39,7 @@ export default function CustomIconTextField({
           </label>
         )}
         <InputText
+          type={isVisible ? 'text' : 'password'}
           className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
           placeholder={placeholder}
           {...props}

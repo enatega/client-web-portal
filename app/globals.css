@@ -66,6 +66,7 @@ body {
   height: 100%;
 }
 
+/* ------------- Prime React ------------- */
 /* OTP Input */
 .p-inputotp {
   display: flex;
@@ -82,6 +83,49 @@ body {
   width: 80px;
   border-radius: 0;
 }
+
+.p-multiselect {
+  box-shadow: none;
+}
+
+.p-multiselect-token {
+  background-color: var(--secondary-color);
+  color: white; /* optional: change the text color to white for better contrast */
+}
+
+.p-multiselect-filter-container {
+  display: flex;
+  align-items: center;
+}
+.p-multiselect-filter {
+  height: 35px;
+  border: 1px solid lightgray;
+  padding-left: 10px;
+  box-shadow: none;
+}
+
+.p-multiselect-select-all > .p-checkbox > .p-checkbox-box {
+  border: 1px solid lightgray;
+  /* background-color: var(--secondary-color); */
+}
+
+.p-multiselect-item > .p-multiselect-checkbox > .p-checkbox > .p-checkbox-box {
+  border: 1px solid lightgray;
+  /* background-color: var(--secondary-color); */
+}
+
+.p-dropdown {
+  box-shadow: none !important;
+}
+
+.p-dropdown-filter {
+  height: 35px;
+  border: 1px solid lightgray;
+  padding-left: 10px;
+  box-shadow: none;
+}
+
+/* ------------------------ */
 
 .buttons {
   display: flex;
