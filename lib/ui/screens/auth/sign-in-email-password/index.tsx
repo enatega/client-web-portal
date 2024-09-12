@@ -12,6 +12,7 @@ import { Card } from 'primereact/card';
 import { ISignUpForm } from '@/lib/utils/interfaces/forms';
 
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
+import { SignUpErrors } from '@/lib/utils/constants';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
@@ -73,7 +74,8 @@ export default function LoginEmailPasswordScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'email',
-                              errors?.email
+                              errors?.email,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -98,7 +100,8 @@ export default function LoginEmailPasswordScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'password',
-                              errors?.password
+                              errors?.password,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',

@@ -3,7 +3,7 @@
 import CustomButton from '@/lib/ui/useable-components/button';
 import CusomtTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import { PasswordErrors } from '@/lib/utils/constants/strings';
+import { PasswordErrors, SignUpErrors } from '@/lib/utils/constants/strings';
 // Formik
 
 // Prime React
@@ -104,7 +104,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'firstName',
-                              errors?.firstName
+                              errors?.firstName,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -124,7 +125,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'lastName',
-                              errors?.lastName
+                              errors?.lastName,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -148,7 +150,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'email',
-                              errors?.email
+                              errors?.email,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -172,7 +175,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'password',
-                              errors?.password
+                              errors?.password,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
@@ -196,7 +200,8 @@ export default function SignupScreen() {
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'confirmPassword',
-                              errors?.confirmPassword
+                              errors?.confirmPassword,
+                              SignUpErrors
                             )
                               ? 'red'
                               : '',
