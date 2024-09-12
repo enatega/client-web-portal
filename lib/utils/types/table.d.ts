@@ -2,7 +2,7 @@ import { FilterMatchMode } from 'primereact/api';
 
 export type FilterType = {
   [key: string]: {
-    value: string | null;
+    value: string | string[] | null;
     matchMode: FilterMatchMode;
   };
 };
