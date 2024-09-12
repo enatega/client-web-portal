@@ -7,7 +7,7 @@ import { IRiderForm } from '@/lib/utils/interfaces/forms';
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import { PasswordErrors } from '@/lib/utils/constants';
+import { PasswordErrors, RiderErrors } from '@/lib/utils/constants';
 import { IRidersAddFormComponentProps } from '@/lib/utils/interfaces/rider.interface';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import { RiderSchema } from '@/lib/utils/schema/rider';
@@ -83,7 +83,8 @@ export default function RiderAddForm({
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'email',
-                                errors?.riderName
+                                errors?.riderName,
+                                RiderErrors
                               )
                                 ? 'red'
                                 : '',
@@ -106,7 +107,8 @@ export default function RiderAddForm({
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'email',
-                                errors?.riderEmail
+                                errors?.riderEmail,
+                                RiderErrors
                               )
                                 ? 'red'
                                 : '',
@@ -130,7 +132,8 @@ export default function RiderAddForm({
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'password',
-                                errors?.riderPassword
+                                errors?.riderPassword,
+                                RiderErrors
                               )
                                 ? 'red'
                                 : '',
@@ -154,7 +157,8 @@ export default function RiderAddForm({
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
-                                errors?.riderConfirmPassword
+                                errors?.riderConfirmPassword,
+                                RiderErrors
                               )
                                 ? 'red'
                                 : '',

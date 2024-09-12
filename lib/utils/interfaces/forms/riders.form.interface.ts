@@ -6,3 +6,10 @@ export interface IRiderForm {
   riderPhoneNumber: string;
   riderZone: string;
 }
+
+export interface IRiderErrors {
+  name: string[];
+  email: string[];
+  password: string[];
+  confirmPassword: string[];
+}
