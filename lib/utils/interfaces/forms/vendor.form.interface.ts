@@ -11,3 +11,9 @@ export interface IVendorForm {
   vendorPassword: string;
   vendorConfirmPassword: string;
 }
+export interface IRiderForm {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}

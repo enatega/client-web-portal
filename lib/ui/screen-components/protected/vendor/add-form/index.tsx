@@ -11,7 +11,7 @@ import { VendorContext } from '@/lib/context/vendor-context';
 
 // Interface and Types
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
-import { IVendorForm } from '@/lib/utils/interfaces/forms';
+import { IRiderForm } from '@/lib/utils/interfaces/forms';
 
 // Constants
 import { PasswordErrors, VendorErrors } from '@/lib/utils/constants';
@@ -36,7 +36,7 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
-const initialValues: IVendorForm = {
+const initialValues: IRiderForm = {
   name: '',
   email: '',
   password: '',
