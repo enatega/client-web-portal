@@ -12,15 +12,21 @@ export const VendorContext = createContext({} as IVendorContextProps);
 
 export const VendorProvider = ({ children }: IProvider) => {
   const [vendorFormVisible, setVendorFormVisible] = useState<boolean>(false);
+  const [vendorId, setVendorId] = useState<number | null>(null);
 
   const onSetVendorFormVisible = (status: boolean) => {
-    console.log('onSetVendor Called');
     setVendorFormVisible(status);
+  };
+
+  const onSetVendorId = (val: number) => {
+    setVendorId(val);
   };
 
   const value: IVendorContextProps = {
     vendorFormVisible,
     onSetVendorFormVisible,
+    vendorId,
+    onSetVendorId,
   };
 
   return (

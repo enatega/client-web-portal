@@ -13,9 +13,9 @@ export default function CustomTextField({
   ...props
 }: ITextFieldProps) {
   return (
-    <div className={`w-full sm:w-60 flex flex-col justify-center gap-2`}>
+    <div className={`w-full flex flex-col justify-center gap-2`}>
       {showLabel && (
-        <label htmlFor="username" className="text-xs font-[500]">
+        <label htmlFor="username" className="text-sm font-[500]">
           {placeholder}
         </label>
       )}

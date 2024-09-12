@@ -30,14 +30,15 @@ export default function VendorHeader({
       </div>
 
       <div className="w-fit flex flex-colm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
-        <CustomTextField
-          type="text"
-          name="vendorFilter"
-          maxLength={35}
-          placeholder="Search Vendors"
-          showLabel={false}
-        />
-
+        <div className="w-60">
+          <CustomTextField
+            type="text"
+            name="vendorFilter"
+            maxLength={35}
+            placeholder="Search Vendors"
+            showLabel={false}
+          />
+        </div>
         <CustomTab
           options={options}
           selectedTab={selectedVendorFilter}
