@@ -1,4 +1,3 @@
-'use client';
 // Screens
 import TippingScreen from '@/lib/ui/screens/super-admin/management/tippings';
 

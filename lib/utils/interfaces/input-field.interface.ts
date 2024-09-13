@@ -36,6 +36,10 @@ export interface IPhoneTextFieldProps extends IGlobalTextFieldProps {
   onChange?: (event: InputMaskChangeEvent) => void;
 }
 
+export interface ICustomNumberTextFieldProps extends IGlobalTextFieldProps {
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
 export interface IPasswordTextFieldProps
   extends Omit<IGlobalTextFieldProps, 'type'> {
   iconProperties: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
