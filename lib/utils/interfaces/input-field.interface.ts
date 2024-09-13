@@ -57,3 +57,7 @@ export interface IPasswordTextFieldProps
   iconProperties: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+export interface ICustomNumberTextFieldProps extends IGlobalTextFieldProps {
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
