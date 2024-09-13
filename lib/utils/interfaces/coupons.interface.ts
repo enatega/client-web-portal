@@ -1,4 +1,4 @@
-export interface ICouponType {
+export interface ICoupon {
   discount: number;
   enabled: boolean;
   title: string;
@@ -15,6 +15,6 @@ export interface ICouponsData {
   }[];
 }
 export interface IGetCouponsData {
-  coupons: ICouponType[];
+  coupons: ICoupon[];
 }
 export interface IGetCouponsVariables {}

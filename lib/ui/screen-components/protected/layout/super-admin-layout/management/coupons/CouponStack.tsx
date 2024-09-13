@@ -1,8 +1,8 @@
-import { CouponType } from '@/app/types/global-types';
+import { ICoupon } from '@/lib/utils/interfaces/coupons.interface';
 import { InputSwitch } from 'primereact/inputswitch';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 
-export default function CouponStack({ coupon }: { coupon: CouponType }) {
+export default function CouponStack({ coupon }: { coupon: ICoupon }) {
   // function toggleCouponState() {}
   return (
     <tr className="flex w-full justify-between items-center text-start p-3">

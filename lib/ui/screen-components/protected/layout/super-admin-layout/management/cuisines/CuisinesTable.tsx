@@ -1,5 +1,5 @@
 import {
-  ICuisineType,
+  ICuisine,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
 import CuisineStack from './CuisineStack';
@@ -24,7 +24,7 @@ export default function CuisineTable({
         </tr>
       </thead>
       <tbody>
-        {data?.cuisines.map((cuisine: ICuisineType) => {
+        {data?.cuisines.map((cuisine: ICuisine) => {
           return <CuisineStack cuisine={cuisine} key={cuisine?._id} />;
         })}
         {!loading && !data?.cuisines && (

@@ -18,7 +18,7 @@ import { IoIosAddCircleOutline } from 'react-icons/io';
 export default function CuisinesScreen() {
   const [visible, setVisible] = useState(false);
 
-  //query
+  //get query
   const GET_CUISINES = gql`
     ${getCuisines}
   `;

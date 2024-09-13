@@ -1,4 +1,4 @@
-export interface ICuisineType {
+export interface ICuisine {
   description: string;
   image: string;
   name: string;
@@ -17,7 +17,7 @@ export interface ICuisinesData {
   }[];
 }
 export interface IGetCuisinesData {
-  cuisines: ICuisineType[];
+  cuisines: ICuisine[];
 }
 
 export interface IGetCuisinesVariables {}

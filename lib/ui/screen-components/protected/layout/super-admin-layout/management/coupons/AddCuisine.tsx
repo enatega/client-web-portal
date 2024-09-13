@@ -1,3 +1,5 @@
+import { createCuisine } from '@/lib/api/graphql/mutants';
+import { gql, useMutation } from '@apollo/client';
 import { Button } from 'primereact/button';
 import { FloatLabel } from 'primereact/floatlabel';
 import { InputText } from 'primereact/inputtext';
@@ -11,6 +13,7 @@ export default function AddCuisine() {
     description: '',
     shopType: '',
   });
+
   // handle form change
   const handleFormChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -21,11 +24,25 @@ export default function AddCuisine() {
       [name]: value,
     }));
   };
+  //queries
+  const CREATE_CUISINE_QUERY = gql`
+    ${createCuisine}
+  `;
+  // create mutation
+  const [CreateCuisine, { data, loading, error }] =
+    useMutation(CREATE_CUISINE_QUERY);
+  console.log({ CreateCuisine, data, loading, error });
+  //handle create form submit
+  const handleFormSubmit = () => {};
 
   return (
     <div className="flex flex-col gap-4">
       <h2 className="font-bold mb-12 text-xl">Add Cuisine</h2>
-      <form action="" className="flex flex-col gap-12">
+      <form
+        action=""
+        className="flex flex-col gap-12"
+        onSubmit={handleFormSubmit}
+      >
         <FloatLabel>
           <InputText
             value={formData.name}

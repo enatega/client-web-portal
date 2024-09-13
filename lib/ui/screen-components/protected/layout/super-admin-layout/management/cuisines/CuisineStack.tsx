@@ -1,6 +1,6 @@
-import { ICuisineType } from '@/lib/utils/interfaces/cuisine.interface';
+import { ICuisine } from '@/lib/utils/interfaces/cuisine.interface';
 
-export default function CuisineStack({ cuisine }: { cuisine: ICuisineType }) {
+export default function CuisineStack({ cuisine }: { cuisine: ICuisine }) {
   console.log({ imgCuisine: cuisine?.image });
   return (
     <tr className="flex w-full justify-between items-center text-sm p-3 text-left">
