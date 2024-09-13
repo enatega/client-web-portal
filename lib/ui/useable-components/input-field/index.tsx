@@ -19,7 +19,7 @@ export default function CustomTextField({
       )}
 
       <InputText
-        className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none ${className}`}
+        className={`w-full h-11 border px-2 text-sm border-gray-300 rounded-lg focus:outline-none focus:shadow-none ${className}`}
         placeholder={placeholder}
         {...props}
       />

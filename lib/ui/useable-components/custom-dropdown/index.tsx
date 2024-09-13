@@ -11,6 +11,7 @@ const CustomDropdownComponent = ({
   selectedItem,
   setSelectedItem,
   showLabel,
+  ...props
 }: IDropdownComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
     return (
@@ -38,6 +39,7 @@ const CustomDropdownComponent = ({
         className="w-full md:w-20rem h-11 p-0 m-0 border text-sm align-middle border-gray-300 focus:outline-none focus:shadow-none p-dropdown-no-box-shadow"
         panelClassName="border-gray-200 border-2"
         filter={true}
+        {...props}
       />
     </div>
   );
