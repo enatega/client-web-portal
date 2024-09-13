@@ -1,9 +1,7 @@
-import Toggle from '@/lib/ui/useable-components/toggle';
-import {
-  IActionMenuProps,
-  IRiderDataComponentProps,
-} from '../interfaces/rider.interface';
 import ActionMenu from '@/lib/ui/useable-components/action-menu';
+import Toggle from '@/lib/ui/useable-components/toggle';
+import { IActionMenuProps } from '../interfaces/action-menu.interface';
+import { IRiderDataComponentProps } from '../interfaces/rider.interface';
 
 export const RIDER_TABLE_COLUMNS = ({
   menuItems,
