@@ -39,4 +39,5 @@ export const RiderSchema = Yup.object().shape({
     .nullable()
     .oneOf([Yup.ref('vendorPassword'), null], 'Password must match')
     .required('Required'),
+  riderZone: Yup.string().nullable().required('Required'),
 });

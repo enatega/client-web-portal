@@ -18,26 +18,38 @@ import classes from './phone-input-field.module.css';
 
 export default function CustomPhoneTextField({
   className,
+  style,
+  showLabel,
+  placeholder = '',
   ...props
 }: IPhoneTextFieldProps) {
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedCity, setSelectedCity] = useState('+44');
 
   return (
-    <div className="p-inputgroup gap-2 h-9">
-      <Dropdown
-        className={`${classes.dropdown} focus:outline-none focus:shadow-none rounded-sm text:sm`}
-        options={CountryCodes}
-        //value={CountryCodes[0].value}
-        editable
-        value={selectedCity}
-        optionLabel="label"
-        virtualScrollerOptions={{ itemSize: 30 }}
-        onChange={(e) => setSelectedCity(e.value)}
-      />
-      <InputMask
-        className={`w-5/6 md:w-14rem border border-gray-300 rounded-sm focus:outline-none focus:shadow-none ${className}`}
-        {...props}
-      />
+    <div className="relative w-full flex flex-col justify-center gap-y-1">
+      {showLabel && (
+        <label htmlFor="username" className="text-sm font-[500]">
+          {placeholder}
+        </label>
+      )}
+      <div
+        style={style}
+        className={`flex items-center border border-gray-300 rounded-md overflow-hidden ${className}`}
+      >
+        <Dropdown
+          className={`bg-gray-200 border-r border-gray-300 p-2 rounded-l-sm focus:outline-none ${classes.dropdown}`}
+          options={CountryCodes}
+          value={selectedCity}
+          optionLabel="label"
+          virtualScrollerOptions={{ itemSize: 30 }}
+          onChange={(e) => setSelectedCity(e.value)}
+        />
+        <InputMask
+          className="flex-1 p-2 border-none rounded-r-sm focus:outline-none"
+          placeholder={placeholder}
+          {...props}
+        />
+      </div>
     </div>
   );
 }

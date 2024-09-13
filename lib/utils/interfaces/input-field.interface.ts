@@ -34,6 +34,7 @@ export interface IIconTextFieldProps extends IGlobalTextFieldProps {
 
 export interface IPhoneTextFieldProps extends IGlobalTextFieldProps {
   mask: string;
+  showLabel: boolean;
   onChange?: (event: InputMaskChangeEvent) => void;
 }
 

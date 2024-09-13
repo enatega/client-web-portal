@@ -15,7 +15,7 @@ export interface IRidersAddFormComponentProps extends IGlobalComponentProps {
   setIsAddRiderVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export type IRiderToggleComponentProps = {
+export interface IRiderDataComponentProps extends IGlobalComponentProps {
   id: number;
   name: string;
   email: string;
@@ -23,4 +23,10 @@ export type IRiderToggleComponentProps = {
   phone: string;
   zone: string;
   available: boolean;
-};
+}
+
+export interface IRiderHeaderProps extends IGlobalComponentProps {
+  setIsAddRiderVisible: (visible: boolean) => void;
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
