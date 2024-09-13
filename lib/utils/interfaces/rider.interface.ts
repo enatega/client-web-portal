@@ -1,4 +1,3 @@
-import { MenuItemCommandEvent } from 'primereact/menuitem';
 import { TSideBarFormPosition } from '../types/sidebar';
 import { IGlobalComponentProps } from './global.interface';
 
