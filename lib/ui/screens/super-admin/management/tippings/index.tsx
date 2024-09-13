@@ -1,11 +1,6 @@
-import TippingAddForm from '@/lib/ui/screen-components/protected/tipping/add-form/add-form';
-import HeaderText from '@/lib/ui/useable-components/header-text';
+// Screens
+import TippingScreen from '@/lib/ui/screens/super-admin/management/tippings';
 
-export default function TippingScreen() {
-  return (
-    <div className="py-9 px-6">
-      <HeaderText className="heading" text="Tipping" />
-      <TippingAddForm />
-    </div>
-  );
+export default function TippingPage() {
+  return <TippingScreen />;
 }

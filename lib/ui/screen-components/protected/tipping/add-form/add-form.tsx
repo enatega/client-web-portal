@@ -1,9 +1,8 @@
 'use client';
 import CustomButton from '@/lib/ui/useable-components/button';
-import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { ITippingsForm } from '@/lib/utils/interfaces';
+import { TippingSchema } from '@/lib/utils/schema/tipping';
 import { Form, Formik } from 'formik';
-import { useState } from 'react';
 import CustomNumberTextField from '../custom-input';
 
 const TippingAddForm = () => {
@@ -13,79 +12,58 @@ const TippingAddForm = () => {
     tip3: '',
   };
 
-  const [account] = useState<ITippingsForm>(initialValues);
-
   return (
     <div className="py-14 px-8 rounded bg-[#F4F4F5] mt-11">
       <div>
         <Formik
-          initialValues={account}
-          // validationSchema={SignupSchema}
+          initialValues={initialValues}
+          validationSchema={TippingSchema}
           onSubmit={(e) => {
             console.log(e);
           }}
           validateOnChange
         >
-          {({ values, handleChange }) => {
+          {({ values, errors, touched, handleChange }) => {
             return (
-              <Form className="grid grid-cols-4 gap-3 items-end">
+              <Form className="grid grid-cols-2 gap-3 items-end sm:grid-cols-4">
                 <CustomNumberTextField
-                  type="text"
-                  name="tip2"
+                  type="number"
+                  name="tip1"
                   placeholder="Tip 1 e.g 10"
                   maxLength={35}
                   value={values.tip1}
                   onChange={handleChange}
                   showLabel={true}
-                  iconProperties={{
-                    icon: faEnvelope,
-                    position: 'right',
+                  style={{
+                    borderColor: errors?.tip1 && touched.tip1 ? 'red' : '',
                   }}
-                  // style={{
-                  //   borderColor: onErrorMessageMatcher('email', errors?.tip1)
-                  //     ? 'red'
-                  //     : '',
-                  // }}
                 />
                 <CustomNumberTextField
-                  type="email"
+                  type="number"
                   name="tip2"
                   placeholder="Tip 2 e.g 20"
                   maxLength={35}
                   showLabel={true}
-                  iconProperties={{
-                    icon: faEnvelope,
-                    position: 'right',
-                  }}
                   value={values.tip2}
                   onChange={handleChange}
-                  // style={{
-                  //   borderColor: onErrorMessageMatcher('email', errors?.tip2)
-                  //     ? 'red'
-                  //     : '',
-                  // }}
+                  style={{
+                    borderColor: errors.tip2 && touched.tip2 ? 'red' : '',
+                  }}
                 />
                 <CustomNumberTextField
-                  type="email"
-                  name="tip2"
+                  type="number"
+                  name="tip3"
                   placeholder="Tip 2 e.g 20"
                   maxLength={35}
                   showLabel={true}
-                  iconProperties={{
-                    icon: faEnvelope,
-                    position: 'right',
-                  }}
-                  value={values.tip2}
+                  value={values.tip3}
                   onChange={handleChange}
-                  // style={{
-                  //   borderColor: onErrorMessageMatcher('email', errors?.tip2)
-                  //     ? 'red'
-                  //     : '',
-                  // }}
+                  style={{
+                    borderColor: errors.tip3 && touched.tip3 ? 'red' : '',
+                  }}
                 />
-
                 <CustomButton
-                  className="h-12  text-white border-gray-300 bg-[black] px-28"
+                  className="h-12 text-white border-gray-300 bg-[black]"
                   label="Add"
                   rounded={true}
                   icon="pi pi-google"

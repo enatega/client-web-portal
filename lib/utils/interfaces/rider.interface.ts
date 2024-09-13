@@ -5,7 +5,9 @@ export interface IRidersHeaderComponentsProps extends IGlobalComponentProps {
   setIsAddRiderVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface IRidersMainComponentsProps extends IGlobalComponentProps {}
+export interface IRidersMainComponentsProps extends IGlobalComponentProps {
+  setIsAddRiderVisible: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 export interface IRidersAddFormComponentProps extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
@@ -13,7 +15,7 @@ export interface IRidersAddFormComponentProps extends IGlobalComponentProps {
   setIsAddRiderVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export type Rider = {
+export type IRiderToggleComponentProps = {
   id: number;
   name: string;
   email: string;
