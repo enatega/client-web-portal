@@ -222,3 +222,16 @@ body {
 .p-column-title {
   font-size: 15px;
 }
+.p-inputmask.p-inputtext.p-component::placeholder,
+.p-dropdown-label.p-inputtext.p-placeholder {
+  color: #adacac;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.p-inputmask.p-inputtext.p-component.p-filled,
+.p-inputmask.p-inputtext.p-component.p-filled:focus,
+.p-inputmask.p-inputtext.p-component.p-filled:active {
+  outline: none;
+  box-shadow: none;
+}

@@ -1,16 +1,10 @@
+// Core
+import { Form, Formik } from 'formik';
+
 // Prime React
 import { Sidebar } from 'primereact/sidebar';
 
-// Interface and Types
-import { IRiderForm } from '@/lib/utils/interfaces/forms';
-
-import CustomButton from '@/lib/ui/useable-components/button';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
-import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import { PasswordErrors, RiderErrors } from '@/lib/utils/constants';
-import { IRidersAddFormComponentProps } from '@/lib/utils/interfaces/rider.interface';
-import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
-import { RiderSchema } from '@/lib/utils/schema/rider';
+// FontAwesome
 import {
   faCheck,
   faEnvelope,
@@ -19,7 +13,22 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Form, Formik } from 'formik';
+
+// Interface and Types
+import { IRiderForm } from '@/lib/utils/interfaces/forms';
+import { IRidersAddFormComponentProps } from '@/lib/utils/interfaces/rider.interface';
+
+// Components
+import CustomButton from '@/lib/ui/useable-components/button';
+import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
+import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
+import CustomPhoneTextField from '@/lib/ui/useable-components/phone-input-field';
+
+// Utilities and Constants
+import { PasswordErrors, RiderErrors } from '@/lib/utils/constants';
+import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+import { RiderSchema } from '@/lib/utils/schema/rider';
 
 const initialValues: IRiderForm = {
   riderName: '',
@@ -27,7 +36,7 @@ const initialValues: IRiderForm = {
   riderPassword: '',
   riderConfirmPassword: '',
   riderPhoneNumber: '',
-  riderZone: '',
+  riderZone: null,
 };
 
 export default function RiderAddForm({
@@ -65,6 +74,7 @@ export default function RiderAddForm({
                   handleChange,
                   handleSubmit,
                   isSubmitting,
+                  setFieldValue,
                 }) => {
                   console.log({ errors });
 
@@ -161,6 +171,47 @@ export default function RiderAddForm({
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
                                 errors?.riderConfirmPassword,
+                                RiderErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
+                          />
+                        </div>
+
+                        <div>
+                          <CustomDropdownComponent
+                            placeholder="Zone"
+                            options={[{ label: 'Asia', code: 'As' }]}
+                            showLabel={true}
+                            name="riderZone"
+                            selectedItem={values.riderZone}
+                            setSelectedItem={setFieldValue}
+                            className={`${
+                              onErrorMessageMatcher(
+                                'confirmPassword',
+                                errors?.riderZone,
+                                RiderErrors
+                              )
+                                ? 'border-red-500'
+                                : 'border-gray-300'
+                            } w-full md:w-20rem h-11 p-0 m-0 border text-sm align-middle  focus:outline-none focus:shadow-none p-dropdown-no-box-shadow`}
+                          />
+                        </div>
+                        <div>
+                          <CustomPhoneTextField
+                            type="text"
+                            name="riderPhoneNumber"
+                            placeholder="Phone Number"
+                            maxLength={35}
+                            showLabel
+                            value={values.riderPhoneNumber}
+                            onChange={handleChange}
+                            mask="(999) 999-9999"
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'confirmPassword',
+                                errors?.riderPhoneNumber,
                                 RiderErrors
                               )
                                 ? 'red'
