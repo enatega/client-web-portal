@@ -1,9 +1,17 @@
 'use client';
-import CustomButton from '@/lib/ui/useable-components/button';
+
+// Interface and Types
 import { ITippingsForm } from '@/lib/utils/interfaces';
+
+// Schema
 import { TippingSchema } from '@/lib/utils/schema/tipping';
-import { Form, Formik } from 'formik';
+
+// Components
+import CustomButton from '@/lib/ui/useable-components/button';
 import CustomNumberTextField from '../custom-input';
+
+//Formik
+import { Form, Formik } from 'formik';
 
 const TippingAddForm = () => {
   const initialValues: ITippingsForm = {
