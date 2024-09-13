@@ -2,7 +2,7 @@ const { execSync } = require('child_process');
 
 const commitMsg = execSync('cat .git/COMMIT_EDITMSG').toString().trim();
 const pattern =
-  /^(\w+) - (build|fix|refactor|revert|style|test|translation|security|changeset|config) - (.+) - (v\d+)$/;
+  /^(\w+) - (build|fix|refactor|revert|pull|style|test|translation|security|changeset|config) - (.+) - (v\d+)$/;
 
 if (!pattern.test(commitMsg)) {
   console.error('Invalid commit type or format.');

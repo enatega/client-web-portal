@@ -27,7 +27,7 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Layout
-import { LayoutContext } from '@/lib/context/layout-context';
+import { LayoutContext } from '@/lib/context/layout.context';
 
 // Interface/Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';

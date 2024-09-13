@@ -3,7 +3,7 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 
 // Context
-import { VendorContext } from '@/lib/context/vendor-context';
+import { VendorContext } from '@/lib/context/vendor.context';
 
 // Components
 import CustomTab from '@/lib/ui/useable-components/custom-tab';

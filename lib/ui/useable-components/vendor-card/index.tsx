@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext } from 'react';
 
 // Context
-import { VendorContext } from '@/lib/context/vendor-context';
+import { VendorContext } from '@/lib/context/vendor.context';
 
 // Interface
 import { IVendorCardProps } from '@/lib/utils/interfaces';

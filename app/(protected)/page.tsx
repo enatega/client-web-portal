@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 
 // Context
-import { SidebarContext } from '@/lib/context/sidebar-context';
+import { SidebarContext } from '@/lib/context/sidebar.context';
 
 // Interface & Types
 import { ISidebarContextProps } from '@/lib/utils/interfaces';

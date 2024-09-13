@@ -10,7 +10,7 @@ import { Sidebar } from 'primereact/sidebar';
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
 
 // Core
-import { RestaurantContext } from '@/lib/context/restaurant-context';
+import { RestaurantContext } from '@/lib/context/restaurant.context';
 
 // Component
 import CustomButton from '@/lib/ui/useable-components/button';
