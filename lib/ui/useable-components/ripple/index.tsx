@@ -1,4 +1,7 @@
+// Interface
 import { IRippleComponentProps } from '@/lib/utils/interfaces';
+
+// Prime React
 import { Ripple } from 'primereact/ripple';
 
 const RippleEffect = ({

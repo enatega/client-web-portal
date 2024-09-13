@@ -1,25 +1,36 @@
 // Core
+import { useContext, useEffect, useState } from 'react';
 
+// Context
 import { LayoutContext } from '@/lib/context/layout-context';
+
+// Interface & Types
 import {
   IGlobalComponentProps,
   ISidebarMenuItem,
   LayoutContextProps,
 } from '@/lib/utils/interfaces';
+
+// Icons
 import {
   faArrowLeft,
   faCog,
   faHome,
   faSliders,
 } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useEffect, useState } from 'react';
+
+// Components
 import SidebarItem from './side-bar-item';
 
 function AdminSidebar({ children }: IGlobalComponentProps) {
+  // Context
   const { isAdminSidebarVisible } =
     useContext<LayoutContextProps>(LayoutContext);
+
+  // States
   const [width, setWidth] = useState(isAdminSidebarVisible ? '16rem' : '0');
 
+  // Effects
   useEffect(() => {
     setWidth(isAdminSidebarVisible ? '16rem' : '0');
   }, [isAdminSidebarVisible]);

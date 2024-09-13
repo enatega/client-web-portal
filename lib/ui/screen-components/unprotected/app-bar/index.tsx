@@ -8,12 +8,7 @@ import Link from 'next/link';
 // Assets
 import { AppLogo } from '@/lib/utils/assets/svgs/logo';
 
-// Prime React
-
-// Components
-
 // Styles
-
 import classes from './app-bar.module.css';
 
 const AppTopbar = () => {

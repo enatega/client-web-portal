@@ -1,6 +1,7 @@
 // Interfaces
 import { ICustomButtonProps } from '@/lib/utils/interfaces';
 
+// Prime React
 import { Button } from 'primereact/button';
 
 // Styles

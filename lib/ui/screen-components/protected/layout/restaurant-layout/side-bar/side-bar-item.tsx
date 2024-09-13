@@ -1,19 +1,17 @@
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// Core
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { ISidebarMenuItem } from '@/lib/utils/interfaces';
-import { usePathname, useRouter } from 'next/navigation';
+// Icons
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+// Interface & Types
+import { ISidebarMenuItem, SubMenuItemProps } from '@/lib/utils/interfaces';
+
+// Styles
 import classes from './side-bar.module.css';
 
-// We're assuming that the sub-menu items will not have further sub-menu items therefore, it cannot be expanded
-interface SubMenuItemProps extends Omit<ISidebarMenuItem, 'expanded'> {
-  expanded?: never;
-  subMenu?: never;
-  active: boolean;
-}
-
-// This component is used to render the sub-menu items when hovered
 function HoveredSubMenuItem({ icon, text, active }: SubMenuItemProps) {
   return (
     <div
@@ -57,12 +55,12 @@ export default function SidebarItem({
     }
   }, [expanded]);
 
+  // Constants
   // Calculate the height of the sub-menu assuming each item is 40px tall
   const subMenuHeight = expandSubMenu
     ? `${((subMenu?.length || 0) * 40 + (subMenu! && 15)).toString()}px`
     : 0;
 
-  // Defaults
   const bg_color = pathname.includes(route ?? '')
     ? isParent
       ? 'primary-color'

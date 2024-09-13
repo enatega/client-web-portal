@@ -1,6 +1,11 @@
+// Components
 import StatsCard from '@/lib/ui/useable-components/stats-card';
-import { dummyStatsData } from '@/lib/utils/dummy';
+
+// Interface & Types
 import { IStatsCardProps } from '@/lib/utils/interfaces';
+
+// Dummy Data
+import { dummyStatsData } from '@/lib/utils/dummy';
 
 export default function UserStats() {
   const renderStatsCard = (data: IStatsCardProps, index: number) => (

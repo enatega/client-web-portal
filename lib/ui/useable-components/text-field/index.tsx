@@ -1,3 +1,4 @@
+// Interface
 import { ITextComponentProps } from '@/lib/utils/interfaces';
 import { twMerge } from 'tailwind-merge';
 

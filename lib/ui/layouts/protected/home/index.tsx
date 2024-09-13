@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-// Components
-
 // Interface
 import { IProvider } from '@/lib/utils/interfaces';
 

@@ -1,11 +1,17 @@
-// Interfaces
-import { IPasswordTextFieldProps } from '@/lib/utils/interfaces';
-import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+// Core
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from 'react';
+
+// Prime React
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
-import { useState } from 'react';
+
+// Icons
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
+// Interfaces
+import { IPasswordTextFieldProps } from '@/lib/utils/interfaces';
 
 // Prime React
 

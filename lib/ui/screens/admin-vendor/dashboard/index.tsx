@@ -1,5 +1,6 @@
 'use client';
 
+// Component
 import GrowthOverView from '@/lib/ui/screen-components/protected/restaurant/dashboard/growth-overview';
 import OrderStats from '@/lib/ui/screen-components/protected/restaurant/dashboard/order-stats';
 

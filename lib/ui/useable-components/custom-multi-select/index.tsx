@@ -1,7 +1,10 @@
+// Interface
 import { IMultiSelectComponentProps } from '@/lib/utils/interfaces';
+
+// Prime React
 import { MultiSelect, MultiSelectChangeEvent } from 'primereact/multiselect';
 
-export const CustomMultiSelectComponent = ({
+const CustomMultiSelectComponent = ({
   name,
   placeholder,
   options,
@@ -53,3 +56,5 @@ export const CustomMultiSelectComponent = ({
     </div>
   );
 };
+
+export default CustomMultiSelectComponent;

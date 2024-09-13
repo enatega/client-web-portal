@@ -1,7 +1,9 @@
+// Prime React
+import { Card } from 'primereact/card';
+
+// Components
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
-
-import { Card } from 'primereact/card';
 
 export default function EmailVerificationScreen() {
   return (
