@@ -1,10 +1,18 @@
 'use client';
+
+// Interface and Types
 import {
   ICustomNumberTextFieldProps,
   ITippingsForm,
 } from '@/lib/utils/interfaces';
+
+// Hooks
 import { useFormikContext } from 'formik';
+
+// Components
 import { InputText } from 'primereact/inputtext';
+
+// Styles
 import classes from './cusom-input.module.css';
 
 export default function CustomNumberTextField({
@@ -14,15 +22,15 @@ export default function CustomNumberTextField({
   value,
   ...props
 }: ICustomNumberTextFieldProps) {
+  //Formik
   const { setFieldValue } = useFormikContext<ITippingsForm>();
-  const currentValue = value;
 
   const handleIncrease = () => {
-    setFieldValue(name, (parseFloat(currentValue as string) || 0) + 1);
+    setFieldValue(name, (parseFloat(value as string) || 0) + 1);
   };
 
   const handleDecrease = () => {
-    setFieldValue(name, (parseFloat(currentValue as string) || 0) - 1);
+    setFieldValue(name, (parseFloat(value as string) || 0) - 1);
   };
 
   return (
@@ -43,7 +51,7 @@ export default function CustomNumberTextField({
         <InputText
           className={`${classes.numberInput} w-full h-11 border px-8 text-center focus:outline-none focus:shadow-none border-inherit ${className}`}
           name={name}
-          value={currentValue}
+          value={value}
           {...props}
         />
 

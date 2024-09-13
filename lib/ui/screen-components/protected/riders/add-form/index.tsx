@@ -101,6 +101,7 @@ export default function RiderAddForm({
                             iconProperties={{
                               icon: faEnvelope,
                               position: 'right',
+                              style: { marginTop: '1px' },
                             }}
                             value={values.riderEmail}
                             onChange={handleChange}
@@ -127,6 +128,7 @@ export default function RiderAddForm({
                             iconProperties={{
                               icon: faEye,
                               position: 'right',
+                              style: { marginTop: '1px' },
                             }}
                             onChange={handleChange}
                             style={{
@@ -151,6 +153,7 @@ export default function RiderAddForm({
                             iconProperties={{
                               icon: faEye,
                               position: 'right',
+                              style: { marginTop: '1px' },
                             }}
                             value={values.riderConfirmPassword ?? ''}
                             onChange={handleChange}
