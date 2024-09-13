@@ -35,5 +35,5 @@ export const RestaurantErrors: IRestaurantFormErrors = {
   minOrder: ['Required'],
   salesTax: ['Required'],
   shopType: ['Required'],
-  cuisines: ['Required'],
+  cuisines: ['Required', 'Cuisines field must have at least 1 items'],
 };

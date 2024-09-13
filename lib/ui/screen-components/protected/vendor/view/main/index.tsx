@@ -2,7 +2,7 @@
 import { useContext } from 'react';
 
 // UI Components
-import { RestaurantContext } from '@/lib/context/restaurant-context';
+import { RestaurantContext } from '@/lib/context/restaurant.context';
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import RestaurantCard from '@/lib/ui/useable-components/resturant-card';
@@ -11,7 +11,7 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import VendorCard from '@/lib/ui/useable-components/vendor-card';
 
 // Context
-import { VendorContext } from '@/lib/context/vendor-context';
+import { VendorContext } from '@/lib/context/vendor.context';
 
 // Interface
 import { IVendorMainComponentProps } from '@/lib/utils/interfaces';

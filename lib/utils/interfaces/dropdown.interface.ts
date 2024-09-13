@@ -1,6 +1,11 @@
+import { CSSProperties } from 'react';
 import { IDropdownSelectItem, IGlobalComponentProps } from './global.interface';
 
-export interface IMultiSelectComponentProps extends IGlobalComponentProps {
+interface ISelectionComponentProps extends IGlobalComponentProps {
+  style?: CSSProperties;
+}
+
+export interface IMultiSelectComponentProps extends ISelectionComponentProps {
   name: string;
   optionLabel?: string;
   optionValue?: string;
@@ -11,7 +16,7 @@ export interface IMultiSelectComponentProps extends IGlobalComponentProps {
   options: IDropdownSelectItem[];
 }
 
-export interface IDropdownComponentProps extends IGlobalComponentProps {
+export interface IDropdownComponentProps extends ISelectionComponentProps {
   name: string;
   optionLabel?: string;
   optionValue?: string;

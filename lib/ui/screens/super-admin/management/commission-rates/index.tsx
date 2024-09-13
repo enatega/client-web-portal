@@ -1,3 +1,9 @@
+import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+
 export default function CommissionRateScreen() {
-  return <div>CommissionRateScreen</div>;
+  return (
+    <div>
+      <ComingSoon />
+    </div>
+  );
 }

@@ -5,7 +5,7 @@
 import { useContext } from 'react';
 
 // Context
-import { LayoutContext } from '@/lib/context/layout-context';
+import { LayoutContext } from '@/lib/context/layout.context';
 
 // Components
 import AppTopbar from '@/lib/ui/screen-components/protected/layout/super-admin-layout/app-bar';

@@ -10,7 +10,7 @@ import { Sidebar } from 'primereact/sidebar';
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
 
 // Core
-import { RestaurantContext } from '@/lib/context/restaurant-context';
+import { RestaurantContext } from '@/lib/context/restaurant.context';
 
 // Component
 import CustomButton from '@/lib/ui/useable-components/button';
@@ -33,6 +33,7 @@ import { IRestaurantForm } from '@/lib/utils/interfaces';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 
 // Schemas
+import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 import { RestaurantSchema } from '@/lib/utils/schema/restaurant';
 
 const initialValues: IRestaurantForm = {
@@ -87,6 +88,8 @@ export default function RestaurantAddForm({
                   isSubmitting,
                   setFieldValue,
                 }) => {
+                  console.log(errors, values);
+
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-3 mb-2">
@@ -226,14 +229,14 @@ export default function RestaurantAddForm({
                         </div>
 
                         <div>
-                          <CustomTextField
+                          <CustomNumberField
+                            min={1}
+                            max={99999}
                             placeholder="Min Order"
                             name="minOrder"
-                            type="number"
-                            maxLength={20}
                             showLabel={true}
-                            value={values.minOrder.toString()}
-                            onChange={handleChange}
+                            value={values.minOrder}
+                            onChange={setFieldValue}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'minOrder',
@@ -246,14 +249,18 @@ export default function RestaurantAddForm({
                           />
                         </div>
                         <div>
-                          <CustomTextField
+                          <CustomNumberField
+                            prefix="%"
+                            min={0}
+                            max={100}
                             placeholder="Sales Tax"
+                            minFractionDigits={2}
+                            maxFractionDigits={5}
                             name="salesTax"
-                            type="text"
                             maxLength={20}
                             showLabel={true}
-                            value={values.salesTax.toString() ?? ''}
-                            onChange={handleChange}
+                            value={values.salesTax}
+                            onChange={setFieldValue}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
@@ -273,6 +280,15 @@ export default function RestaurantAddForm({
                             setSelectedItem={setFieldValue}
                             options={dummyCountriesData}
                             showLabel={true}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'shopType',
+                                errors?.shopType,
+                                RestaurantErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
                           />
                         </div>
 
@@ -284,6 +300,15 @@ export default function RestaurantAddForm({
                             selectedItems={values.cuisines}
                             setSelectedItems={setFieldValue}
                             showLabel={true}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'cuisines',
+                                errors?.cuisines as string,
+                                RestaurantErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
                           />
                         </div>
 

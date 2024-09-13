@@ -1,3 +1,9 @@
+import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+
 export default function WithdrawRequestScreen() {
-  return <div>WithdrawRequestScreen</div>;
+  return (
+    <div>
+      <ComingSoon />
+    </div>
+  );
 }

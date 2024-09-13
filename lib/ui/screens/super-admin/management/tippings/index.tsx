@@ -1,3 +1,4 @@
+//Components
 import TippingAddForm from '@/lib/ui/screen-components/protected/tipping/add-form/add-form';
 import HeaderText from '@/lib/ui/useable-components/header-text';
 

@@ -84,6 +84,8 @@ body {
   border-radius: 0;
 }
 
+/* Dropdown */
+
 .p-multiselect {
   box-shadow: none;
 }
@@ -125,6 +127,28 @@ body {
   box-shadow: none;
 }
 
+.p-dropdown-label {
+  font-size: 0.875rem /* 14px */;
+  line-height: 1.25rem /* 20px */;
+}
+/* Input Number */
+.p-inputnumber {
+  box-shadow: none;
+  outline: none;
+  border-radius: 0.5rem;
+}
+
+.p-inputnumber-input {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  border-radius: 0;
+  padding-left: 10px;
+  border-radius: 0.5rem;
+  box-shadow: none;
+  outline: none;
+}
 /* ------------------------ */
 
 .buttons {
@@ -196,4 +220,56 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #050505dc;
   border-radius: 7px;
+}
+
+.p-datatable-table .p-checkbox-box {
+  border: 1px solid !important;
+}
+
+.p-datatable-table tbody {
+  border: 1px solid #ededed;
+}
+
+.p-datatable-table tbody tr {
+  border-bottom: 1px solid #ededed;
+}
+
+.p-paginator-bottom {
+  border: 1px solid #ededed !important;
+}
+
+.p-datatable-table tr.p-highlight {
+  background-color: black !important;
+  color: white;
+}
+
+.p-datatable-table .p-checkbox.p-highlight .p-checkbox-box {
+  background-color: #5ac12f !important;
+  border-color: #5ac12f !important;
+}
+
+.p-selectable-row td {
+  padding: 13px 15px; /* Adjust as needed */
+  font-size: 14px;
+}
+
+.p-datatable-header {
+  background-color: transparent;
+}
+
+.p-column-title {
+  font-size: 15px;
+}
+.p-inputmask.p-inputtext.p-component::placeholder,
+.p-dropdown-label.p-inputtext.p-placeholder {
+  color: #adacac;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.p-inputmask.p-inputtext.p-component.p-filled,
+.p-inputmask.p-inputtext.p-component.p-filled:focus,
+.p-inputmask.p-inputtext.p-component.p-filled:active {
+  outline: none;
+  box-shadow: none;
 }

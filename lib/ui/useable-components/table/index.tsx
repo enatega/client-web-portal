@@ -1,17 +1,25 @@
-import { DataTableProps } from '@/lib/utils/types/table';
+// Interface and Types
+import {
+  IDataTableProps,
+  ITableExtends,
+} from '@/lib/utils/interfaces/table.interface';
+
+// Prime React
 import { Column } from 'primereact/column';
 import {
   DataTable,
   DataTableSelectionMultipleChangeEvent,
 } from 'primereact/datatable';
-import classes from './table.module.css';
 
-const Table = <T extends { id: number | string }>({
+const Table = <T extends ITableExtends>({
+  header,
   data,
   selectedData,
   setSelectedData,
   columns,
-}: DataTableProps<T>) => {
+  filters,
+}: IDataTableProps<T>) => {
+  //For checkbox selection of column
   const handleSelectionChange = (
     e: DataTableSelectionMultipleChangeEvent<T[]>
   ) => {
@@ -20,16 +28,18 @@ const Table = <T extends { id: number | string }>({
 
   return (
     <DataTable
+      header={header}
       paginator
       rows={5}
       rowsPerPageOptions={[5, 10, 25, 50]}
       value={data}
+      size={'normal'}
       selection={selectedData}
       onSelectionChange={handleSelectionChange}
       dataKey="id"
       tableStyle={{ minWidth: '50rem' }}
-      className={`${classes.table}`}
       selectionMode="multiple"
+      filters={filters}
     >
       <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
       {columns.map((col, index) => (

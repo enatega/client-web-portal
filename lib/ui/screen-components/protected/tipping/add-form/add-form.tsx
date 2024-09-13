@@ -1,13 +1,21 @@
 'use client';
+
+// Interface and Types
+// import { ITippingsForm } from '@/lib/utils/interfaces';
+
+// Schema
+
+// Components
 import CustomButton from '@/lib/ui/useable-components/button';
+// import CustomNumberTextField from '../custom-input';
+
+//Formik
 import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
-import CustomNumberTextField from '../custom-input';
 
 const TippingAddForm = () => {
-  const initialValues: ITippingsForm = {
+  const initialValues = {
     tip1: '',
     tip2: '',
     tip3: '',
@@ -27,9 +35,10 @@ const TippingAddForm = () => {
           validateOnChange
         >
           {({ values, handleChange }) => {
+            console.log({ values, handleChange });
             return (
               <Form className="grid grid-cols-4 gap-3 items-end">
-                <CustomNumberTextField
+                {/* <CustomNumberTextField
                   type="text"
                   name="tip2"
                   placeholder="Tip 1 e.g 10"
@@ -46,8 +55,8 @@ const TippingAddForm = () => {
                   //     ? 'red'
                   //     : '',
                   // }}
-                />
-                <CustomNumberTextField
+                /> */}
+                {/* <CustomNumberTextField
                   type="email"
                   name="tip2"
                   placeholder="Tip 2 e.g 20"
@@ -64,8 +73,8 @@ const TippingAddForm = () => {
                   //     ? 'red'
                   //     : '',
                   // }}
-                />
-                <CustomNumberTextField
+                /> */}
+                {/* <CustomNumberTextField
                   type="email"
                   name="tip2"
                   placeholder="Tip 2 e.g 20"
@@ -82,7 +91,7 @@ const TippingAddForm = () => {
                   //     ? 'red'
                   //     : '',
                   // }}
-                />
+                /> */}
 
                 <CustomButton
                   className="h-12  text-white border-gray-300 bg-[black] px-28"
