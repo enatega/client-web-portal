@@ -1,10 +1,13 @@
-import { CouponsData } from '@/app/types/global-types';
+import {
+  ICouponType,
+  IGetCouponsData,
+} from '@/lib/utils/interfaces/coupons.interface';
+import CouponStack from './CouponStack';
 export default function CouponTable({
-  coupons,
+  data,
 }: {
-  coupons: CouponsData[] | undefined;
+  data: IGetCouponsData | undefined;
 }) {
-  console.log({ coupons });
   return (
     <table className="flex flex-col mx-auto w-[95%] gap-1 my-1">
       <thead>
@@ -19,9 +22,9 @@ export default function CouponTable({
         </tr>
       </thead>
       <tbody>
-        {/* {coupons.data.map((coupon: any) => {
+        {data?.coupons.map((coupon: ICouponType) => {
           return <CouponStack coupon={coupon} key={coupon?._id} />;
-        })} */}
+        })}
       </tbody>
     </table>
   );

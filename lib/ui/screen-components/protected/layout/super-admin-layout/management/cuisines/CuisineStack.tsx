@@ -1,31 +1,22 @@
-import { CuisineType } from '@/app/types/global-types';
+import { ICuisineType } from '@/lib/utils/interfaces/cuisine.interface';
 
-export default function CuisineStack({ cuisine }: { cuisine: CuisineType }) {
+export default function CuisineStack({ cuisine }: { cuisine: ICuisineType }) {
+  console.log({ imgCuisine: cuisine?.image });
   return (
-    <tr className="flex w-full justify-between items-center text-start p-3">
-      <td className="min-w-auto max-w-32">
-        <span className="w-12 h-12 rounded-lg overflow-hidden justify-self-start self-center">
-          {/* <Image
-            src={cuisine?.image}
-            alt={cuisine?.description}
-            width={100}
-            height={100}
-          /> */}
+    <tr className="flex w-full justify-between items-center text-sm p-3 text-left">
+      <td className="min-w-auto max-w-32 text-left flex gap-1">
+        <input type="checkbox" name="selectOne" className="mr-3" />
+        <div className="w-12 h-12 rounded-lg overflow-hidden justify-self-start self-center">
           <img
-            src={
-              'https://res.cloudinary.com/do1ia4vzf/image/upload/v1714642819/food/z1m0vq7yeurkznbypmm9.jpg'
-            }
+            src="https://res.cloudinary.com/do1ia4vzf/image/upload/v1714642876/food/zm3dg3hoxfarudgbqyzg.jpg"
             alt={cuisine?.description}
             className="w-full object-cover"
           />
-        </span>
+        </div>
       </td>
-      <td className="min-w-auto max-w-32">
-        <input type="checkbox" name="selectOne" className="mr-3" />
-        {cuisine?.name}
-      </td>
-      <td className="min-w-auto max-w-32">{cuisine?.shopType}</td>
-      <td className="min-w-auto max-w-32">{cuisine?.description}</td>
+      <td className="min-w-auto max-w-32 text-left">{cuisine?.name}</td>
+      <td className="min-w-auto max-w-32 text-left">{cuisine?.shopType}</td>
+      <td className="min-w-auto max-w-32 text-left">{cuisine?.description}</td>
     </tr>
   );
 }

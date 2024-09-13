@@ -1,11 +1,3 @@
-import { FilterMatchMode } from 'primereact/api';
-
-export type FilterType = {
-  [key: string]: {
-    value: string | string[] | null;
-    matchMode: FilterMatchMode;
-  };
-};
 export type ColumnConfig<T> = {
   propertyName: string;
   headerName: string;
@@ -13,10 +5,44 @@ export type ColumnConfig<T> = {
 };
 
 export type DataTableProps<T> = {
-  header?: React.ReactNode;
   data: T[];
   selectedData: T[];
   setSelectedData: React.Dispatch<React.SetStateAction<T[]>>;
   columns: ColumnConfig<T>[];
-  filters?: FilterType;
 };
+
+export const columns = [
+  {
+    headerName: 'ID',
+    propertyName: 'id',
+  },
+  {
+    headerName: 'Name',
+    propertyName: 'name',
+  },
+  {
+    headerName: 'Email',
+    propertyName: 'email',
+  },
+  {
+    headerName: 'Password',
+    propertyName: 'password',
+  },
+  {
+    headerName: 'Phone',
+    propertyName: 'phone',
+  },
+  {
+    headerName: 'Zone',
+    propertyName: 'zone',
+  },
+  {
+    headerName: 'Available',
+    propertyName: 'available',
+    // body: toggleComponent,
+  },
+  {
+    headerName: '',
+    propertyName: 'available',
+  },
+];

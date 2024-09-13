@@ -1,5 +1,3 @@
-import { CouponType } from '@/app/types/global-types';
-
 export interface ICouponType {
   discount: number;
   enabled: boolean;
@@ -17,5 +15,6 @@ export interface ICouponsData {
   }[];
 }
 export interface IGetCouponsData {
-  cuisines: CouponType[];
+  coupons: ICouponType[];
 }
+export interface IGetCouponsVariables {}

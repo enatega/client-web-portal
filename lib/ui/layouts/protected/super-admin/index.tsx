@@ -25,7 +25,7 @@ const Layout = ({ children }: IProvider) => {
       <div className="layout-main-container">
         <Sidebar />
         <div
-          className={`w-full h-full lg:ml-45 md:ml-${isSidebarVisible ? 64 : 20}`}
+          className={`w-full h-auto overflow-y-auto lg:ml-45 md:ml-${isSidebarVisible ? 64 : 20}`}
         >
           {children}
         </div>

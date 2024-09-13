@@ -7,12 +7,10 @@ import {
 import classes from './table.module.css';
 
 const Table = <T extends { id: number | string }>({
-  header,
   data,
   selectedData,
   setSelectedData,
   columns,
-  filters,
 }: DataTableProps<T>) => {
   const handleSelectionChange = (
     e: DataTableSelectionMultipleChangeEvent<T[]>
@@ -24,7 +22,6 @@ const Table = <T extends { id: number | string }>({
     <DataTable
       paginator
       rows={5}
-      header={header}
       rowsPerPageOptions={[5, 10, 25, 50]}
       value={data}
       selection={selectedData}
@@ -33,7 +30,6 @@ const Table = <T extends { id: number | string }>({
       tableStyle={{ minWidth: '50rem' }}
       className={`${classes.table}`}
       selectionMode="multiple"
-      filters={filters} // Apply filters here
     >
       <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
       {columns.map((col, index) => (

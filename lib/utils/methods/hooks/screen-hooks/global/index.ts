@@ -17,17 +17,11 @@ export const useLazyQueryGlobal = <
     TData,
     TVariables
   > = useLazyQuery<TData, TVariables>(query, lazyQueryHookOptions);
-  if (data) {
-    return {
-      executeLazyQuery,
-      data,
-      loading,
-    };
-  } else {
-    return {
-      executeLazyQuery: () => {},
-      data: undefined,
-      loading: false,
-    };
-  }
+  console.log({ executeLazyQuery, data, loading });
+
+  return {
+    executeLazyQuery,
+    data,
+    loading,
+  };
 };

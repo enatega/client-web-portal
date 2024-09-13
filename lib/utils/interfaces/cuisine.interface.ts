@@ -1,5 +1,3 @@
-import { CuisineType } from '@/app/types/global-types';
-
 export interface ICuisineType {
   description: string;
   image: string;
@@ -19,9 +17,7 @@ export interface ICuisinesData {
   }[];
 }
 export interface IGetCuisinesData {
-  cuisines: CuisineType[];
+  cuisines: ICuisineType[];
 }
 
-export interface IGetCuisinesVariables {
-  onError: () => {};
-}
+export interface IGetCuisinesVariables {}

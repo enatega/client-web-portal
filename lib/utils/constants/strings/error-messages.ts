@@ -1,8 +1,4 @@
-import {
-  IRiderErrors,
-  ISignFormErrors,
-  IVendorErrors,
-} from '../../interfaces/forms';
+import { ISignFormErrors, IVendorErrors } from '../../interfaces/forms';
 import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
 
 export const PasswordErrors = [
@@ -40,11 +36,4 @@ export const RestaurantErrors: IRestaurantFormErrors = {
   salesTax: ['Required'],
   shopType: ['Required'],
   cuisines: ['Required'],
-};
-
-export const RiderErrors: IRiderErrors = {
-  name: ['Required'],
-  email: ['Required', 'Invalid email'],
-  password: ['Required', ...PasswordErrors],
-  confirmPassword: ['Required', 'Password must match'],
 };
