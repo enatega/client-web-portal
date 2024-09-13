@@ -1,3 +1,5 @@
+import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+
 export default function CouponsScreen() {
-  return <div>CouponsScreen</div>;
+  return <ComingSoon />;
 }

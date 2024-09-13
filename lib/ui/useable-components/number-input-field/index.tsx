@@ -1,15 +1,16 @@
 // Interfaces
-import { ITextFieldProps } from '@/lib/utils/interfaces';
+import { INumberTextFieldProps } from '@/lib/utils/interfaces';
+import { InputNumber } from 'primereact/inputnumber';
 
 // Prime React
-import { InputText } from 'primereact/inputtext';
 
-export default function CustomTextField({
+export default function CustomNumberField({
   className,
   placeholder,
   showLabel,
+  onChange,
   ...props
-}: ITextFieldProps) {
+}: INumberTextFieldProps) {
   return (
     <div className={`w-full flex flex-col justify-center gap-y-1`}>
       {showLabel && (
@@ -18,9 +19,10 @@ export default function CustomTextField({
         </label>
       )}
 
-      <InputText
-        className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none ${className}`}
+      <InputNumber
+        className={`w-full h-11 border text-sm border-gray-300 rounded-lg focus:outline-none focus:shadow-none ${className}`}
         placeholder={placeholder}
+        onChange={(e) => onChange(props.name, e.value)}
         {...props}
       />
     </div>

@@ -1,3 +1,5 @@
+import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+
 export default function CuisinesScreen() {
-  return <div>CuisinesScreen</div>;
+  return <ComingSoon />;
 }
