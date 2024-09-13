@@ -1,4 +1,5 @@
 export * from './button.interface';
+export * from './configuration.interface';
 export * from './dropdown.interface';
 export * from './forms';
 export * from './global.interface';

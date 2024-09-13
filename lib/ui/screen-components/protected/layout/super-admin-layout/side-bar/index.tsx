@@ -1,6 +1,6 @@
 // Core
 
-import { LayoutContext } from '@/lib/context/layout-context';
+import { LayoutContext } from '@/lib/context/layout.context';
 import {
   IGlobalComponentProps,
   ISidebarMenuItem,

@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 
 // Context
-import { LayoutContext } from '@/lib/context/layout-context';
+import { LayoutContext } from '@/lib/context/layout.context';
 
 // Interface & Types
 import {

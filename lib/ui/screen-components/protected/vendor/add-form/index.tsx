@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { Sidebar } from 'primereact/sidebar';
 
 // Context
-import { VendorContext } from '@/lib/context/vendor-context';
+import { VendorContext } from '@/lib/context/vendor.context';
 
 // Interface and Types
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
