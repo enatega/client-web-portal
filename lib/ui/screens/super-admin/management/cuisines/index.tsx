@@ -9,10 +9,11 @@ import {
   IGetCuisinesData,
   IGetCuisinesVariables,
 } from '@/lib/utils/interfaces/cuisine.interface';
-import { useLazyQueryGlobal } from '@/lib/utils/methods/hooks/screen-hooks/global';
+import { useLazyQueryGlobal } from '@/lib/utils/methods/hooks/screen-hooks/global/useLazyQuery.hook';
 import { gql } from '@apollo/client';
 import { Sidebar } from 'primereact/sidebar';
-import { useEffect, useState } from 'react';
+import { Toast } from 'primereact/toast';
+import { useEffect, useRef, useState } from 'react';
 import { IoIosAddCircleOutline } from 'react-icons/io';
 
 export default function CuisinesScreen() {
@@ -29,14 +30,17 @@ export default function CuisinesScreen() {
   useEffect(() => {
     executeLazyQuery();
   }, []);
+  //toast ref
+  const toast = useRef<Toast>(null);
   return (
     <div className="flex flex-col items-center w-full">
+      <Toast ref={toast} position="top-left" />
       <Sidebar
         visible={visible}
         onHide={() => setVisible(false)}
         position="right"
       >
-        <AddCuisine />
+        <AddCuisine setVisible={setVisible} toast={toast} />
       </Sidebar>
       <div className="flex justify-between items-center px-5 w-full">
         <HeaderText text="Cuisines" className="mx-5" />

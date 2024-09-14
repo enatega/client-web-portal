@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface ICoupon {
   discount: number;
   enabled: boolean;
@@ -18,3 +20,9 @@ export interface IGetCouponsData {
   coupons: ICoupon[];
 }
 export interface IGetCouponsVariables {}
+
+export interface ICouponsStakProps {
+  coupon: ICoupon;
+  setSelectedData: Dispatch<SetStateAction<ICoupon[]>>;
+  selectedData: ICoupon[];
+}

@@ -1,12 +1,27 @@
+'use client';
 import { createCuisine } from '@/lib/api/graphql/mutants';
 import { gql, useMutation } from '@apollo/client';
 import { Button } from 'primereact/button';
-import { FloatLabel } from 'primereact/floatlabel';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { ChangeEvent, useState } from 'react';
+import { Toast } from 'primereact/toast';
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  RefObject,
+  SetStateAction,
+  useState,
+} from 'react';
+import { CgSpinner } from 'react-icons/cg';
 
-export default function AddCuisine() {
+export default function AddCuisine({
+  setVisible,
+  toast,
+}: {
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  toast: RefObject<Toast>;
+}) {
   //form data
   const [formData, setFormData] = useState({
     name: '',
@@ -33,7 +48,29 @@ export default function AddCuisine() {
     useMutation(CREATE_CUISINE_QUERY);
   console.log({ CreateCuisine, data, loading, error });
   //handle create form submit
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    const response = await CreateCuisine({
+      variables: { cuisineInput: formData },
+    });
+    if (response && response.errors) {
+      alert('An error occured please try again');
+      toast?.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: error?.message || response.errors[0]?.message,
+        life: 2000,
+      });
+    } else if (!loading && !error && !response?.errors?.length) {
+      setVisible(false);
+      toast?.current?.show({
+        severity: 'success',
+        summary: 'Sucess',
+        detail: 'Cuisine was added successfully!',
+        life: 2000,
+      });
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -43,7 +80,10 @@ export default function AddCuisine() {
         className="flex flex-col gap-12"
         onSubmit={handleFormSubmit}
       >
-        <FloatLabel>
+        <div className="flex flex-col gap-2">
+          <label className="font-bold" htmlFor="name">
+            Cuisine Name
+          </label>
           <InputText
             value={formData.name}
             onChange={handleFormChange}
@@ -51,11 +91,11 @@ export default function AddCuisine() {
             id="name"
             className="w-full py-2 px-1 text-sm"
           />
-          <label className="font-bold" htmlFor="name">
-            Cuisine Name
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="font-bold" htmlFor="description">
+            Description
           </label>
-        </FloatLabel>
-        <FloatLabel>
           <InputTextarea
             value={formData.description}
             onChange={handleFormChange}
@@ -64,10 +104,7 @@ export default function AddCuisine() {
             className="w-full text-sm"
             rows={5}
           />
-          <label className="font-bold" htmlFor="description">
-            Description
-          </label>
-        </FloatLabel>
+        </div>
         <div className="flex flex-col gap-2">
           <label className="font-bold" htmlFor="shoptType">
             Shop Type
@@ -84,8 +121,19 @@ export default function AddCuisine() {
             <option value="Bakery">Bakery</option>
           </select>
         </div>
-        <Button className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]">
-          Add
+        <Button
+          type="submit"
+          className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]"
+        >
+          {loading ? (
+            <CgSpinner
+              color="white"
+              size={25}
+              className="animate-spin self-center items-center"
+            />
+          ) : (
+            'Add'
+          )}
         </Button>
       </form>
     </div>

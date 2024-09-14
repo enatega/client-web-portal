@@ -17,7 +17,6 @@ export const useLazyQueryGlobal = <
     TData,
     TVariables
   > = useLazyQuery<TData, TVariables>(query, lazyQueryHookOptions);
-  console.log({ executeLazyQuery, data, loading });
 
   return {
     executeLazyQuery,

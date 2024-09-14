@@ -1,7 +1,14 @@
 import Table from '@/lib/ui/useable-components/table';
-import { Rider } from '@/lib/utils/interfaces/rider.interface';
 import { useState } from 'react';
-
+interface Rider {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  zone: string;
+  available: boolean;
+}
 const Toggle = (product: Rider) => {
   return (
     <label className="ml-2 flex items-center cursor-pointer flex-shrink-0">
@@ -61,7 +68,7 @@ const COLUMNS = [
 // IRidersMainComponentsProps
 export default function RidersMain() {
   const [selectedProducts, setSelectedProducts] = useState<Rider[]>([]);
-  let data: Rider[] = [
+  let data = [
     {
       id: 1,
       name: 'Hamza',

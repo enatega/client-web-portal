@@ -36,7 +36,12 @@ export interface IQueryResult<T, V> {
   data: T | null;
   error: Error | null;
   loading: boolean;
-  fetch: (variables?: V) => void; // for useLazyQuery
+  fetch: (variables?: V) => void;
   isError: boolean;
   isSuccess: boolean;
+}
+export interface ITableColumn<T> {
+  field?: string;
+  header?: string;
+  body?: (data: T) => JSX.Element;
 }
