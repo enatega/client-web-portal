@@ -13,7 +13,6 @@ interface IGenericTableProps<T extends { _id: string }> {
   onSelectionChange?: (selectedItems: T[]) => void;
   loading: boolean;
 }
-
 const GenericTable = <T extends { _id: string }>({
   data,
   columns,
@@ -21,6 +20,7 @@ const GenericTable = <T extends { _id: string }>({
   onSelectionChange,
   loading,
 }: IGenericTableProps<T>) => {
+  if (loading) return <Loader />;
   return (
     <DataTable
       value={data}
@@ -34,21 +34,20 @@ const GenericTable = <T extends { _id: string }>({
       selectionMode="multiple"
       className="w-full"
     >
-      <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} />
-      {loading ? (
-        <Loader />
-      ) : (
-        columns.map((col, index) => (
-          <Column
-            key={index}
-            field={col.field as string}
-            header={col.header}
-            body={col.body}
-          />
-        ))
-      )}
+      <Column
+        selectionMode="multiple"
+        headerStyle={{ width: '3rem' }}
+        rowEditor={false}
+      />
+      {columns.map((col, index) => (
+        <Column
+          key={index}
+          field={col.field as string}
+          header={col.header}
+          body={col.body}
+        />
+      ))}
     </DataTable>
   );
 };
-
 export default GenericTable;

@@ -1,4 +1,5 @@
 import { IGlobalButtonProps } from '@/lib/utils/interfaces';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'primereact/button';
 export default function GlobalButton({
   Icon,
@@ -11,7 +12,7 @@ export default function GlobalButton({
       onClick={() => setVisible(true)}
     >
       <span>
-        <Icon size={20} color="white" />
+        <FontAwesomeIcon icon={Icon} size="1x" color="white" />
       </span>
       <span className="text-white">{title}</span>
     </Button>

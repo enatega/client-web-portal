@@ -1,13 +1,14 @@
 import IEditDeleteInterface from '@/lib/utils/interfaces/edit-delete.interface';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useRef } from 'react';
-import { BiEdit } from 'react-icons/bi';
-import { MdDelete } from 'react-icons/md';
 
-export default function EditDeletePopup({
+export default function EditDeletePopup<T extends { _id: string }>({
   setIsEditing,
   setIsDeleting,
   setIsEditDeletePopupOpen,
-}: IEditDeleteInterface) {
+  data,
+}: IEditDeleteInterface<T>) {
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -16,9 +17,14 @@ export default function EditDeletePopup({
         popupRef.current &&
         !popupRef.current.contains(event.target as Node)
       ) {
-        setIsEditing(false);
-        setIsDeleting(false);
-        setIsEditDeletePopupOpen({ bool: false, id: '' });
+        setIsDeleting({
+          _id: '',
+          bool: false,
+        });
+        setIsEditDeletePopupOpen({
+          bool: false,
+          _id: '',
+        });
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -30,18 +36,38 @@ export default function EditDeletePopup({
   return (
     <div
       ref={popupRef}
-      className="flex flex-col gap-2 p-3 rounded-lg sticky right-0 bg-white shadow-xl border-gray-400 border"
+      className="flex flex-col gap-2 p-3 rounded-lg right-0 bg-white shadow-xl border-gray-400 border w-8 sticky h-16 items-center justify-center"
     >
-      <BiEdit
+      <FontAwesomeIcon
         color="blue"
-        size={20}
-        onClick={() => setIsEditing(true)}
+        icon={faEdit}
+        width={15}
+        onClick={() => {
+          setIsEditing({
+            bool: true,
+            data: data,
+          });
+          setIsEditDeletePopupOpen({
+            _id: '',
+            bool: false,
+          });
+        }}
         className="cursor-pointer"
       />
-      <MdDelete
+      <FontAwesomeIcon
         color="red"
-        size={20}
-        onClick={() => setIsDeleting(true)}
+        width={15}
+        icon={faTrash}
+        onClick={() => {
+          setIsDeleting({
+            _id: data?._id,
+            bool: true,
+          });
+          setIsEditDeletePopupOpen({
+            _id: '',
+            bool: false,
+          });
+        }}
         className="cursor-pointer"
       />
     </div>

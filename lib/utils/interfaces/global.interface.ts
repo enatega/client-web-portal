@@ -1,6 +1,6 @@
 import { ApolloError } from '@apollo/client';
-import { Dispatch, SetStateAction } from 'react';
-import { IconType } from 'react-icons';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { ICouponsData } from './coupons.interface';
 import { ICuisinesData } from './cuisine.interface';
 
@@ -23,12 +23,9 @@ export interface QueryState {
   loading: boolean;
   error?: ApolloError;
 }
-export interface GlobalButtonPropsType {
-  Icon: IconType;
-  title: string;
-}
+
 export interface IGlobalButtonProps {
-  Icon: IconType;
+  Icon: IconDefinition;
   title: string;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
@@ -43,5 +40,5 @@ export interface IQueryResult<T, V> {
 export interface ITableColumn<T> {
   field?: string;
   header?: string;
-  body?: (data: T) => JSX.Element;
+  body?: (data: T) => ReactNode;
 }

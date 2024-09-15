@@ -1,6 +1,8 @@
 'use client';
 import { createCuisine } from '@/lib/api/graphql/mutants';
 import { gql, useMutation } from '@apollo/client';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -13,7 +15,6 @@ import {
   SetStateAction,
   useState,
 } from 'react';
-import { CgSpinner } from 'react-icons/cg';
 
 export default function AddCuisine({
   setVisible,
@@ -44,42 +45,63 @@ export default function AddCuisine({
     ${createCuisine}
   `;
   // create mutation
-  const [CreateCuisine, { data, loading, error }] =
-    useMutation(CREATE_CUISINE_QUERY);
-  console.log({ CreateCuisine, data, loading, error });
-  //handle create form submit
+  const [CreateCuisine, { loading, error }] = useMutation(CREATE_CUISINE_QUERY);
+
+  //handle form submit
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const response = await CreateCuisine({
-      variables: { cuisineInput: formData },
-    });
-    if (response && response.errors) {
-      alert('An error occured please try again');
+
+    try {
+      if (!formData.name) {
+        return toast.current?.show({
+          severity: 'warn',
+          summary: 'Warning',
+          detail: 'Name Field cannot be empty',
+          life: 2000,
+        });
+      } else if (!formData.description) {
+        return toast.current?.show({
+          severity: 'warn',
+          summary: 'Warning',
+          detail: 'Description cannot be empty',
+          life: 2000,
+        });
+      } else if (!formData.shopType) {
+        return toast.current?.show({
+          severity: 'warn',
+          summary: 'Warning',
+          detail: 'Shop Type cannot be empty',
+          life: 2000,
+        });
+      }
+      const response = await CreateCuisine({
+        variables: { cuisineInput: formData },
+      });
+      if (response) {
+        setVisible(false);
+        toast?.current?.show({
+          severity: 'success',
+          summary: 'Sucess',
+          detail: 'Cuisine was added successfully!',
+          life: 2000,
+        });
+      }
+    } catch (err) {
+      setVisible(true);
       toast?.current?.show({
         severity: 'error',
         summary: 'Error',
-        detail: error?.message || response.errors[0]?.message,
+        detail: error?.message,
         life: 2000,
       });
-    } else if (!loading && !error && !response?.errors?.length) {
-      setVisible(false);
-      toast?.current?.show({
-        severity: 'success',
-        summary: 'Sucess',
-        detail: 'Cuisine was added successfully!',
-        life: 2000,
-      });
+      return console.log(err);
     }
   };
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="font-bold mb-12 text-xl">Add Cuisine</h2>
-      <form
-        action=""
-        className="flex flex-col gap-12"
-        onSubmit={handleFormSubmit}
-      >
+      <h2 className="font-bold mb-3 text-xl">Add Cuisine</h2>
+      <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
         <div className="flex flex-col gap-2">
           <label className="font-bold" htmlFor="name">
             Cuisine Name
@@ -116,6 +138,7 @@ export default function AddCuisine({
             value={formData.shopType}
             className="w-full outline-none py-2 px-1 text-sm"
           >
+            <option value="">Select</option>
             <option value="Restaurant">Restaurant</option>
             <option value="Hotel">Hotel</option>
             <option value="Bakery">Bakery</option>
@@ -126,9 +149,9 @@ export default function AddCuisine({
           className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]"
         >
           {loading ? (
-            <CgSpinner
+            <FontAwesomeIcon
               color="white"
-              size={25}
+              icon={faSpinner}
               className="animate-spin self-center items-center"
             />
           ) : (

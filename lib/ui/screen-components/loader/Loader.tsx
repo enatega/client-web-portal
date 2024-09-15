@@ -1,11 +1,12 @@
-import { CgSpinner } from 'react-icons/cg';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 export default function Loader() {
   return (
     <div className="flex m-auto justify-center items-center">
-      <CgSpinner
-        color="green"
-        size={35}
+      <FontAwesomeIcon
+        icon={faSpinner}
         className="animate-spin self-center items-center mt-[20%]"
+        color="green"
       />
     </div>
   );

@@ -4,6 +4,7 @@ export * from './addons';
 export * from './banners';
 export * from './coupons';
 export * from './cuisines';
+export * from './notifications';
 export * from './options';
 export * from './taxations';
 export * from './tippings';
@@ -712,18 +713,6 @@ export const updateTimings = gql`
         }
       }
     }
-  }
-`;
-
-export const sendNotificationUser = gql`
-  mutation SendNotificationUser(
-    $notificationTitle: String
-    $notificationBody: String!
-  ) {
-    sendNotificationUser(
-      notificationTitle: $notificationTitle
-      notificationBody: $notificationBody
-    )
   }
 `;
 export const updateCommission = gql`
