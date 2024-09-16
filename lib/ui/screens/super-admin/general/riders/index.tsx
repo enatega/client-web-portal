@@ -22,16 +22,15 @@ export default function RidersScreen() {
   const [isAddRiderVisible, setIsAddRiderVisible] = useState(false);
 
   // Query
-  const { refetch, loading, data } = useQueryGQL(
-    GET_RIDERS,
-    {}
-  ) as IQueryResult<IRidersDataResponse | undefined, undefined>;
+  const { refetch, data } = useQueryGQL(GET_RIDERS, {}) as IQueryResult<
+    IRidersDataResponse | undefined,
+    undefined
+  >;
 
   return (
     <div className="px-6">
       <RidersMain
         refetch={refetch}
-        loading={loading}
         data={data}
         setIsAddRiderVisible={setIsAddRiderVisible}
       />
