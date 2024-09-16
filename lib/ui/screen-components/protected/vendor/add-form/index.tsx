@@ -1,5 +1,4 @@
 // Core
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Form, Formik } from 'formik';
 import { useContext } from 'react';
 
@@ -14,7 +13,7 @@ import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
 import { IVendorForm } from '@/lib/utils/interfaces/forms';
 
 // Constants
-import { PasswordErrors, VendorErrors } from '@/lib/utils/constants';
+import { VendorErrors } from '@/lib/utils/constants';
 
 // Components
 import CustomButton from '@/lib/ui/useable-components/button';
@@ -30,12 +29,7 @@ import { VendorSchema } from '@/lib/utils/schema';
 
 // Icons
 import { ToastContext } from '@/lib/context/toast.context';
-import {
-  faCheck,
-  faEnvelope,
-  faLock,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const initialValues: IVendorForm = {
   name: '',
@@ -147,9 +141,6 @@ export default function VendorAddForm({
                             maxLength={20}
                             value={values.password}
                             showLabel={true}
-                            iconProperties={{
-                              position: 'right',
-                            }}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
@@ -169,11 +160,9 @@ export default function VendorAddForm({
                             name="confirmPassword"
                             maxLength={20}
                             showLabel={true}
-                            iconProperties={{
-                              position: 'right',
-                            }}
                             value={values.confirmPassword ?? ''}
                             onChange={handleChange}
+                            feedback={false}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
@@ -186,69 +175,12 @@ export default function VendorAddForm({
                           />
                         </div>
 
-                        <div className="flex flex-col items-start justify-start gap-2 mb-2 p-2">
-                          <div className="w-full border-b pb-2">
-                            <FontAwesomeIcon icon={faLock} className="mr-2" />
-                            <b>Password Strength</b>
-                          </div>
-
-                          {PasswordErrors.map((pmessage, index) => {
-                            const password = values.password || '';
-
-                            let isResolved = false;
-                            switch (index) {
-                              case 0: // At least 6 characters
-                                isResolved = password.length >= 6;
-                                break;
-                              case 1: // At least one lowercase letter
-                                isResolved = /[a-z]/.test(password);
-                                break;
-                              case 2: // At least one uppercase letter
-                                isResolved = /[A-Z]/.test(password);
-                                break;
-                              case 3: // At least one number
-                                isResolved = /[0-9]/.test(password);
-                                break;
-                              case 4: // At least one special character
-                                isResolved = /[!@#$%^&*(),.?":{}|<>]/.test(
-                                  password
-                                );
-                                break;
-                              case 5: // At least one special character
-                                isResolved =
-                                  values.password !== '' &&
-                                  values.confirmPassword !== '' &&
-                                  values.password === values.confirmPassword;
-                                break;
-                            }
-
-                            const className = isResolved
-                              ? 'text-green-500'
-                              : 'text-gray-500';
-
-                            return (
-                              <div
-                                key={index}
-                                className={`${className} text-sm`}
-                              >
-                                <FontAwesomeIcon
-                                  icon={isResolved ? faCheck : faTimes}
-                                  className="mr-2"
-                                />
-                                <span>{pmessage}</span>
-                              </div>
-                            );
-                          })}
-                        </div>
-
                         <div className="flex justify-end mt-4">
                           <CustomButton
                             className="w-fit h-10 bg-black text-white border-gray-300 px-8"
                             label="Add"
                             type="submit"
                             loading={isSubmitting}
-
-                            // onClick={() => {}}
                           />
                         </div>
                       </div>

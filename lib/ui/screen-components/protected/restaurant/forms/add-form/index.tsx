@@ -147,9 +147,6 @@ export default function RestaurantAddForm({
                             maxLength={20}
                             value={values.password}
                             showLabel={true}
-                            iconProperties={{
-                              position: 'right',
-                            }}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
@@ -169,11 +166,9 @@ export default function RestaurantAddForm({
                             name="confirmPassword"
                             maxLength={20}
                             showLabel={true}
-                            iconProperties={{
-                              position: 'right',
-                            }}
                             value={values.confirmPassword ?? ''}
                             onChange={handleChange}
+                            feedback={false}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
