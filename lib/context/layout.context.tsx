@@ -9,7 +9,9 @@ import { IProvider } from '@/lib/utils/interfaces';
 // Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';
 
-export const LayoutContext = createContext({} as LayoutContextProps);
+export const LayoutContext = createContext<LayoutContextProps>(
+  {} as LayoutContextProps
+);
 
 export const LayoutProvider = ({ children }: IProvider) => {
   const [isSidebarVisible, setShowSidebar] = useState<boolean>(true);

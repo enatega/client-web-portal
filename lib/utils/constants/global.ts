@@ -1,6 +1,34 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client';
+import {
+  faCheck,
+  faExclamationTriangle,
+  faInfoCircle,
+  faXmarkCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import { ISeverityStyles } from '../interfaces';
 
-export const ApolloClientConfig = new ApolloClient({
-  uri: `${process.env.NEXT_PUBLIC_BASE_URL}/graphql`,
-  cache: new InMemoryCache(),
-});
+export const SEVERITY_STYLES: ISeverityStyles = {
+  error: {
+    bgColor: '#FFC5C5',
+    textColor: '#FF0000',
+    icon: faXmarkCircle,
+    iconBg: '#FFC5C5',
+  },
+  success: {
+    bgColor: '#C6F7D0',
+    textColor: '#34C759',
+    icon: faCheck,
+    iconBg: '#C6F7D0',
+  },
+  info: {
+    bgColor: '#B2E2FC',
+    textColor: '#2196F3',
+    icon: faInfoCircle,
+    iconBg: '#B2E2FC',
+  },
+  warn: {
+    bgColor: '#F7DC6F',
+    textColor: '#F7DC6F',
+    icon: faExclamationTriangle,
+    iconBg: '#F7DC6F',
+  },
+};

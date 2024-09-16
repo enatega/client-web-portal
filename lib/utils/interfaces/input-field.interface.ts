@@ -55,7 +55,8 @@ export interface INumberTextFieldProps
 
 export interface IPasswordTextFieldProps
   extends Omit<IGlobalTextFieldProps, 'type'> {
-  iconProperties: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
+  feedback?: boolean;
+  iconProperties?: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

@@ -66,6 +66,46 @@ body {
   height: 100%;
 }
 
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Card */
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background-color: white;
+}
+
+/* Text Component */
+.custom-text {
+  font-feature-settings:
+    'liga' off,
+    'clig' off;
+}
+
+.heading-1 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 40px;
+}
+
+.card-h1 {
+  font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 3%;
+  font-weight: 700;
+}
+
+.card-h2 {
+  font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 3%;
+  font-weight: 400;
+}
+
 /* ------------- Prime React ------------- */
 /* OTP Input */
 .p-inputotp {
@@ -131,6 +171,7 @@ body {
   font-size: 0.875rem /* 14px */;
   line-height: 1.25rem /* 20px */;
 }
+
 /* Input Number */
 .p-inputnumber {
   box-shadow: none;
@@ -222,6 +263,17 @@ body {
   border-radius: 7px;
 }
 
+/* Scroll Bar  */
+::-webkit-scrollbar {
+  width: 7px;
+  background: rgba(177, 177, 177, 0.171);
+}
+::-webkit-scrollbar-thumb {
+  background: #050505dc;
+  border-radius: 7px;
+}
+
+/* Data Table */
 .p-datatable-table .p-checkbox-box {
   border: 1px solid !important;
 }
@@ -260,6 +312,8 @@ body {
 .p-column-title {
   font-size: 15px;
 }
+
+/* Input Mask */
 .p-inputmask.p-inputtext.p-component::placeholder,
 .p-dropdown-label.p-inputtext.p-placeholder {
   color: #adacac;
@@ -272,8 +326,4 @@ body {
 .p-inputmask.p-inputtext.p-component.p-filled:active {
   outline: none;
   box-shadow: none;
-}
-/* input switch prime react  */
-.p-inputswitch-slider {
-  background-color: #5ac12f !important;
 }
