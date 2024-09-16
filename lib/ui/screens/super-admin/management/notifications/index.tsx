@@ -1,3 +1,5 @@
+import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+
 export default function NotificationsScreen() {
-  return <div>NotificationsScreen</div>;
+  return <ComingSoon />;
 }

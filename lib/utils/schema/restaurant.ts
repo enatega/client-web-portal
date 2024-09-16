@@ -43,11 +43,11 @@ export const RestaurantSchema = Yup.object().shape({
 
   address: Yup.string().min(2).max(35).required('Required'),
   deliveryTime: Yup.string().min(2).max(35).required('Required'),
-  minOrder: Yup.string().min(2).max(35).required('Required'),
-  salesTax: Yup.string().min(2).max(35).required('Required'),
+  minOrder: Yup.number().required('Required'),
+  salesTax: Yup.number().required('Required'),
   shopType: Yup.mixed<IDropdownSelectItem>().required('Required'),
   cuisines: Yup.array()
     .of(Yup.mixed<IDropdownSelectItem>())
-    .min(1)
+    .min(1, 'Cuisines field must have at least 1 items')
     .required('Required'),
 });

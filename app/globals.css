@@ -84,6 +84,8 @@ body {
   border-radius: 0;
 }
 
+/* Dropdown */
+
 .p-multiselect {
   box-shadow: none;
 }
@@ -125,6 +127,28 @@ body {
   box-shadow: none;
 }
 
+.p-dropdown-label {
+  font-size: 0.875rem /* 14px */;
+  line-height: 1.25rem /* 20px */;
+}
+/* Input Number */
+.p-inputnumber {
+  box-shadow: none;
+  outline: none;
+  border-radius: 0.5rem;
+}
+
+.p-inputnumber-input {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  border-radius: 0;
+  padding-left: 10px;
+  border-radius: 0.5rem;
+  box-shadow: none;
+  outline: none;
+}
 /* ------------------------ */
 
 .buttons {

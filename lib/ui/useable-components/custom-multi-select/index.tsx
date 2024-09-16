@@ -11,6 +11,7 @@ const CustomMultiSelectComponent = ({
   selectedItems,
   setSelectedItems,
   showLabel,
+  ...props
 }: IMultiSelectComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
     return (
@@ -52,6 +53,7 @@ const CustomMultiSelectComponent = ({
         panelClassName="border-gray-200 border-2"
         display="chip"
         filter={true}
+        {...props}
       />
     </div>
   );

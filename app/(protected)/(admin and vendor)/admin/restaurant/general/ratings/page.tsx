@@ -1,5 +1,7 @@
 'use client';
 
+import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+
 export default function RatingsPage() {
-  return <div>RatingsPage</div>;
+  return <ComingSoon />;
 }

@@ -1,6 +1,6 @@
-import { IGlobalProps } from './global.interface';
+import { IProvider } from './layout.interface';
 
-export interface IConfigurationContextProps extends IGlobalProps {}
+export interface IConfigurationProviderProps extends IProvider {}
 
 export interface IConfiguration {
   webClientID?: string;

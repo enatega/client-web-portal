@@ -6,9 +6,9 @@ import { createContext, useState } from 'react';
 // Interface
 import { IProvider, IVendorContextProps } from '@/lib/utils/interfaces';
 
-// Types
-
-export const VendorContext = createContext({} as IVendorContextProps);
+export const VendorContext = createContext<IVendorContextProps>(
+  {} as IVendorContextProps
+);
 
 export const VendorProvider = ({ children }: IProvider) => {
   const [vendorFormVisible, setVendorFormVisible] = useState<boolean>(false);
