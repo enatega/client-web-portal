@@ -29,6 +29,7 @@ import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import { VendorSchema } from '@/lib/utils/schema';
 
 // Icons
+import { ToastContext } from '@/lib/context/toast.context';
 import {
   faCheck,
   faEnvelope,
@@ -49,6 +50,8 @@ export default function VendorAddForm({
   // Context
   const { vendorFormVisible, onSetVendorFormVisible } =
     useContext(VendorContext);
+
+  const { showToast } = useContext(ToastContext);
 
   return (
     <Sidebar
@@ -71,6 +74,13 @@ export default function VendorAddForm({
                 onSubmit={async (values) => {
                   await new Promise((r) => setTimeout(r, 500));
                   alert(JSON.stringify(values, null, 2));
+
+                  showToast({
+                    type: 'error',
+                    title: 'New Vendor',
+                    message: 'Vendor has been added successfully',
+                    duration: 3000,
+                  });
                 }}
                 validateOnChange
               >
@@ -81,8 +91,6 @@ export default function VendorAddForm({
                   handleSubmit,
                   isSubmitting,
                 }) => {
-                  console.log({ errors });
-
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-3">

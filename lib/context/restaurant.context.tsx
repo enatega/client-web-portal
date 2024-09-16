@@ -8,7 +8,9 @@ import { IProvider, IRestaurantContextProps } from '@/lib/utils/interfaces';
 
 // Types
 
-export const RestaurantContext = createContext({} as IRestaurantContextProps);
+export const RestaurantContext = createContext<IRestaurantContextProps>(
+  {} as IRestaurantContextProps
+);
 
 export const RestaurantProvider = ({ children }: IProvider) => {
   const [restaurantFormVisible, setRestaurantFormVisible] =
