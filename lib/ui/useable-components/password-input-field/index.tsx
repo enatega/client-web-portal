@@ -20,14 +20,14 @@ export default function CustomPasswordTextField({
   ...props
 }: IPasswordTextFieldProps) {
   return (
-    <div className="flex flex-col gap-y-1">
+    <div className="flex flex-col gap-y-1 rounded-lg">
       {showLabel && (
         <label htmlFor="username" className="text-sm font-[500]">
           {placeholder}
         </label>
       )}
       <Password
-        className={`w-full h-11 border rounded-md text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
+        className={`w-full h-11 border rounded-lg text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
         placeholder={placeholder}
         toggleMask
         feedback={feedback}
