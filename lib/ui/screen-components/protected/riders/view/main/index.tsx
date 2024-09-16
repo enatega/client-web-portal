@@ -18,7 +18,7 @@ import RiderHeader from '../header';
 import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants/data.table.columns';
 
 export default function RidersMain({
-  refetch,
+  // refetch,
   data,
   setIsAddRiderVisible,
 }: IRidersMainComponentsProps) {
