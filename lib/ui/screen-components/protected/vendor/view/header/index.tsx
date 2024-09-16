@@ -34,7 +34,9 @@ export default function VendorHeader({
           icon={faAdd}
           iconStyles={{ color: 'white' }}
           title="Add Vendor"
-          onClick={() => onSetVendorFormVisible(true)}
+          onClick={() => {
+            onSetVendorFormVisible(true);
+          }}
         />
       </div>
 

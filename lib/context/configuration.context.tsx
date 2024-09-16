@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 // Interfaces
 import {
   IConfiguration,
-  IConfigurationContextProps,
+  IConfigurationProviderProps,
   IQueryResult,
 } from '@/lib/utils/interfaces';
 
@@ -35,7 +35,7 @@ export const ConfigurationContext = React.createContext<
   twilioEnabled: '',
 });
 
-export const ConfigurationProvider: React.FC<IConfigurationContextProps> = ({
+export const ConfigurationProvider: React.FC<IConfigurationProviderProps> = ({
   children,
 }) => {
   const [configuration, setConfiguration] = useState<

@@ -4,12 +4,18 @@
 import { createContext, useState } from 'react';
 
 // Interface
-import { IProvider } from '@/lib/utils/interfaces';
+import {
+  IProvider,
+  ISelectedItems,
+  ISidebarContextProps,
+} from '@/lib/utils/interfaces';
 
 // Types
-import { ISelectedItems, ISidebarContextProps } from '@/lib/utils/interfaces';
+import {} from '@/lib/utils/interfaces';
 
-export const SidebarContext = createContext({} as ISidebarContextProps);
+export const SidebarContext = createContext<ISidebarContextProps>(
+  {} as ISidebarContextProps
+);
 
 export const SidebarProvider = ({ children }: IProvider) => {
   const [selectedItem, setSelectedItem] = useState<ISelectedItems | null>(null);
