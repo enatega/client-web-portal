@@ -15,7 +15,7 @@ import CustomButton from '@/lib/ui/useable-components/button';
 import CustomNumberTextField from '../custom-input';
 
 // Formik
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
 
 // GraphQL
 import {
@@ -25,6 +25,11 @@ import {
 } from '@/lib/api/graphql/mutation';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { gql, useMutation } from '@apollo/client';
+
+//Toast
+import useToast from '@/lib/hooks/useToast';
+
+//Hooks
 
 const CREATE_TIPPING = gql`
   ${createTipping}
@@ -45,25 +50,59 @@ const TippingAddForm = () => {
     tip3: '',
   };
 
+  // Hooks
+  const { showToast } = useToast();
+
+  // Query
   const { refetch, loading, data } = useQueryGQL(
     GET_TIPPING,
     {}
   ) as IQueryResult<ITippingResponse | undefined, undefined>;
 
+  // Mutation
   const mutation = data && data.tips._id ? EDIT_TIPPING : CREATE_TIPPING;
+  const [mutate, { loading: mutationLoading }] = useMutation(mutation);
 
-  const [mutate, { loading: mutationLoading }] = useMutation(mutation, {
-    refetchQueries: [{ query: GET_TIPPING }],
-    onCompleted: (res) => {
-      //TODO: showToast
-      console.log(res);
-      refetch();
-    },
-    onError: (error) => {
-      //TODO: showToast
-      console.error('Error creating tipping:', error);
-    },
-  });
+  //Form Submission
+  const handleSubmit = (
+    values: ITippingsForm,
+    { resetForm }: FormikHelpers<ITippingsForm>
+  ) => {
+    if (data) {
+      mutate({
+        variables: {
+          tippingInput: {
+            _id: data.tips._id,
+            tipVariations: [values.tip1, values.tip2, values.tip3],
+            enabled: true,
+          },
+        },
+        onCompleted: () => {
+          showToast({
+            type: 'success',
+            title: 'Success!',
+            message: 'Tipping updated',
+            duration: 3000,
+          });
+          resetForm();
+        },
+        onError: (error) => {
+          let message = '';
+          try {
+            message = error.graphQLErrors[0].message;
+          } catch (err) {
+            message = 'ActionFailedTryAgain';
+          }
+          showToast({
+            type: 'error',
+            title: 'Error!',
+            message,
+            duration: 3000,
+          });
+        },
+      });
+    }
+  };
 
   return (
     <div className="py-14 px-8 rounded bg-[#F4F4F5] mt-11">
@@ -71,24 +110,7 @@ const TippingAddForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={TippingSchema}
-          onSubmit={(values: ITippingsForm) => {
-            const tipVariations = [
-              Number(values.tip1),
-              Number(values.tip2),
-              Number(values.tip3),
-            ];
-            if (data) {
-              mutate({
-                variables: {
-                  tippingInput: {
-                    _id: data.tips._id,
-                    tipVariations,
-                    enabled: true,
-                  },
-                },
-              });
-            }
-          }}
+          onSubmit={handleSubmit}
           validateOnChange
         >
           {({ values, errors, touched, handleChange }) => (
