@@ -85,6 +85,7 @@ const TippingAddForm = () => {
             duration: 3000,
           });
           resetForm();
+          refetch();
         },
         onError: (error) => {
           let message = '';
