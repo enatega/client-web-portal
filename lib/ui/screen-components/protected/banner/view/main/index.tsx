@@ -35,7 +35,7 @@ export default function BannersMain({
   >([]);
   const [data] = useState<IBannerToggleComponentProps[]>([
     {
-      id: 1,
+      _id: 'oaids',
       image:
         'https://plus.unsplash.com/premium_photo-1661953124283-76d0a8436b87?q=80&w=2688&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       title: 'dummy@gmail.com',
@@ -44,7 +44,7 @@ export default function BannersMain({
       action: 'Open Modal',
     },
     {
-      id: 2,
+      _id: 'jai',
       image:
         'https://plus.unsplash.com/premium_photo-1661953124283-76d0a8436b87?q=80&w=2688&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       title: 'dummy2@gmail.com',
@@ -53,7 +53,7 @@ export default function BannersMain({
       action: 'Navigate',
     },
     {
-      id: 3,
+      _id: 'ask',
       image:
         'https://plus.unsplash.com/premium_photo-1661953124283-76d0a8436b87?q=80&w=2688&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       title: 'dummy2@gmail.com',
