@@ -273,3 +273,7 @@ body {
   outline: none;
   box-shadow: none;
 }
+/* input switch prime react  */
+.p-inputswitch-slider {
+  background-color: #5ac12f !important;
+}

@@ -7,6 +7,7 @@ export default function Loader() {
         icon={faSpinner}
         className="animate-spin self-center items-center mt-[20%]"
         color="green"
+        size="3x"
       />
     </div>
   );

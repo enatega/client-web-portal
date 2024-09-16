@@ -1,3 +1,4 @@
+import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import { ITableColumn } from '@/lib/utils/interfaces';
 import {
   ICoupon,
@@ -17,6 +18,31 @@ export default function CouponTable({
   data: IGetCouponsData | undefined;
   loading: boolean;
 }) {
+  const [isEditing, setIsEditing] = useState<{
+    bool: boolean;
+    data: ICoupon;
+  }>({
+    bool: false,
+    data: {
+      discount: 0,
+      enabled: false,
+      title: '',
+      __typename: '',
+      _id: '',
+    },
+  });
+  const [isDeleting, setIsDeleting] = useState<{ _id: string; bool: boolean }>({
+    _id: '',
+    bool: false,
+  });
+  console.log({ isEditing, isDeleting });
+  const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<{
+    _id: string;
+    bool: boolean;
+  }>({
+    _id: '',
+    bool: false,
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [sortedData, setSortedData] = useState<ICoupon[]>([]);
   const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
@@ -47,9 +73,30 @@ export default function CouponTable({
       header: 'Status',
       field: 'enabled',
       body: (rowData: ICoupon) => (
-        <div className="flex gap-2 items-center justify-start">
-          <InputSwitch checked={rowData.enabled} />
-          <FontAwesomeIcon icon={faEllipsisVertical} width={12} />
+        <div className="flex gap-2 items-center w-full justify-between">
+          <InputSwitch
+            checked={rowData.enabled}
+            className="justify-self-start "
+          />
+          {isEditPopupOpen._id === rowData._id && isEditPopupOpen.bool ? (
+            <EditDeletePopup
+              setIsDeleting={setIsDeleting}
+              setIsEditing={setIsEditing}
+              setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
+              data={rowData}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faEllipsisVertical}
+              className="hover:scale-105 p-1"
+              onClick={() =>
+                setIsEditDeletePopupOpen({
+                  _id: rowData._id,
+                  bool: true,
+                })
+              }
+            />
+          )}
         </div>
       ),
     },
