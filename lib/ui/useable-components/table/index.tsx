@@ -18,6 +18,7 @@ const Table = <T extends ITableExtends>({
   setSelectedData,
   columns,
   filters,
+  size = 'small',
 }: IDataTableProps<T>) => {
   //For checkbox selection of column
   const handleSelectionChange = (
@@ -33,7 +34,7 @@ const Table = <T extends ITableExtends>({
       header={header}
       rowsPerPageOptions={[5, 10, 25, 50]}
       value={data}
-      size={'normal'}
+      size={size}
       selection={selectedData}
       onSelectionChange={handleSelectionChange}
       dataKey="id"

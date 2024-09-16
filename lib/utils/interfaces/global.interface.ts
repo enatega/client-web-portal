@@ -11,11 +11,20 @@ export interface IDropdownSelectItem {
   code: string;
 }
 
-export interface IQueryResult<T, V> {
+export interface ILazyQueryResult<T, V> {
   data: T | null;
   error: Error | null;
   loading: boolean;
   fetch: (variables?: V) => void; // for useLazyQuery
+  isError: boolean;
+  isSuccess: boolean;
+}
+
+export interface IQueryResult<T, V> {
+  data: T | null;
+  error: Error | null;
+  loading: boolean;
+  refetch: (variables?: V) => void; // for useQuery
   isError: boolean;
   isSuccess: boolean;
 }

@@ -21,6 +21,7 @@ export interface IDataTableProps<T> extends IGlobalComponentProps {
   setSelectedData: React.Dispatch<React.SetStateAction<T[]>>;
   columns: IColumnConfig<T>[];
   filters?: IFilterType;
+  size?: 'small' | 'normal' | 'large';
 }
 
 export interface ITableExtends extends IGlobalComponentProps {

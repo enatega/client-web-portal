@@ -211,8 +211,7 @@ body {
 }
 
 .p-selectable-row td {
-  padding: 13px 15px; /* Adjust as needed */
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .p-datatable-header {
@@ -220,8 +219,9 @@ body {
 }
 
 .p-column-title {
-  font-size: 15px;
+  font-size: 14px;
 }
+
 .p-inputmask.p-inputtext.p-component::placeholder,
 .p-dropdown-label.p-inputtext.p-placeholder {
   color: #adacac;
@@ -234,4 +234,18 @@ body {
 .p-inputmask.p-inputtext.p-component.p-filled:active {
   outline: none;
   box-shadow: none;
+}
+
+.p-paginator {
+  padding: 0;
+}
+
+.p-datatable-header .p-component::placeholder {
+  font-size: 14px; /* Adjust the font size as needed */
+  color: #888; /* Optional: Change the placeholder text color */
+  font-weight: 500;
+}
+.p-datatable-header .p-component {
+  font-size: 14px; /* Adjust the font size as needed */
+  font-weight: 500;
 }

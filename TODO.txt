@@ -1,3 +1,9 @@
 Hamza
-1. Shift tipping input to generic components
-2. Refactor banner ui code
+1. TODO: Shift tipping input to generic components NAME =TippingInput
+2. TODO: Refactor banner ui code
+3. TODO: CustomDropdown add style props in add rider 
+
+4. TODO: Make Columns Of Table a components
+5. TODO: Name handlers in functions also Refs,States
+
+6. Look for direct imports change them to alias

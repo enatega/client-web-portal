@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react';
 import {
   IConfiguration,
   IConfigurationContextProps,
-  IQueryResult,
+  ILazyQueryResult,
 } from '@/lib/utils/interfaces';
 
 // API
@@ -46,7 +46,7 @@ export const ConfigurationProvider: React.FC<IConfigurationContextProps> = ({
   const { fetch, loading, error, data } = useLazyQueryQL(GET_CONFIGURATION, {
     fetchPolicy: 'network-only',
     debounceMs: 300,
-  }) as IQueryResult<IConfiguration | undefined, undefined>;
+  }) as ILazyQueryResult<IConfiguration | undefined, undefined>;
 
   // Handlers
   const onFetchConfiguration = async () => {

@@ -9,3 +9,12 @@ export interface ITippingErrors {
   tip2?: string[];
   tip3?: string[];
 }
+
+export interface ITippingResponse {
+  tips: {
+    __typename: 'Tipping';
+    _id: string;
+    tipVariations: number[];
+    enabled: boolean;
+  };
+}
