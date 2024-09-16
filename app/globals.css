@@ -275,4 +275,6 @@ body {
   border: none;
   outline: none;
   box-shadow: none;
+
+  border-radius: 0.5rem;
 }
