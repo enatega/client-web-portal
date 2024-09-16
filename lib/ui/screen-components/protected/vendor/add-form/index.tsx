@@ -76,7 +76,7 @@ export default function VendorAddForm({
                   alert(JSON.stringify(values, null, 2));
 
                   showToast({
-                    type: 'error',
+                    type: 'success',
                     title: 'New Vendor',
                     message: 'Vendor has been added successfully',
                     duration: 3000,
