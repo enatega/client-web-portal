@@ -12,24 +12,19 @@ import { TippingSchema } from '@/lib/utils/schema/tipping';
 
 // Components
 import CustomButton from '@/lib/ui/useable-components/button';
-import CustomNumberTextField from '../custom-input';
+import CustomNumberTextField from '../../../../useable-components/custom-input';
 
 // Formik
 import { Form, Formik, FormikHelpers } from 'formik';
 
 // GraphQL
-import {
-  createTipping,
-  editTipping,
-  getTipping,
-} from '@/lib/api/graphql/mutation';
+import { getTipping } from '@/lib/api/graphql';
+import { createTipping, editTipping } from '@/lib/api/graphql/mutation';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { gql, useMutation } from '@apollo/client';
 
 //Toast
 import useToast from '@/lib/hooks/useToast';
-
-//Hooks
 
 const CREATE_TIPPING = gql`
   ${createTipping}
@@ -44,6 +39,7 @@ const EDIT_TIPPING = gql`
 `;
 
 const TippingAddForm = () => {
+  // State
   const initialValues: ITippingsForm = {
     tip1: '',
     tip2: '',
@@ -121,6 +117,8 @@ const TippingAddForm = () => {
                 name="tip1"
                 placeholder="Tip 1 e.g 10"
                 maxLength={35}
+                min={0}
+                max={100}
                 value={values.tip1}
                 onChange={handleChange}
                 showLabel={true}
@@ -133,6 +131,8 @@ const TippingAddForm = () => {
                 name="tip2"
                 placeholder="Tip 2 e.g 20"
                 maxLength={35}
+                min={0}
+                max={100}
                 showLabel={true}
                 value={values.tip2}
                 onChange={handleChange}
@@ -145,6 +145,8 @@ const TippingAddForm = () => {
                 name="tip3"
                 placeholder="Tip 3 e.g 30"
                 maxLength={35}
+                min={0}
+                max={100}
                 showLabel={true}
                 value={values.tip3}
                 onChange={handleChange}

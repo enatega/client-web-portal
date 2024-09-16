@@ -22,20 +22,29 @@ export default function CustomNumberTextField({
   value,
   ...props
 }: ICustomNumberTextFieldProps) {
-  //Formik
+  // Formik
   const { setFieldValue } = useFormikContext<ITippingsForm>();
 
+  const MIN_VALUE = 0;
+  const MAX_VALUE = 100;
+
   const handleIncrease = () => {
-    setFieldValue(name, (parseFloat(value as string) || 0) + 1);
+    const currentValue = parseFloat(value as string) || 0;
+    if (currentValue < MAX_VALUE) {
+      setFieldValue(name, currentValue + 1);
+    }
   };
 
   const handleDecrease = () => {
-    setFieldValue(name, (parseFloat(value as string) || 0) - 1);
+    const currentValue = parseFloat(value as string) || 0;
+    if (currentValue > MIN_VALUE) {
+      setFieldValue(name, currentValue - 1);
+    }
   };
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor="username" className="text-sm font-medium text-gray-600">
+      <label htmlFor={name} className="text-sm font-medium text-gray-600">
         {placeholder}
       </label>
 

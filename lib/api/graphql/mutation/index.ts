@@ -1,11 +1,3 @@
-export const getTipping = `query Tips{
-    tips {
-      _id
-      tipVariations
-      enabled
-    }
-  }`;
-
 export const createTipping = `mutation CreateTipping($tippingInput:TippingInput!){
         createTipping(tippingInput:$tippingInput){
           _id

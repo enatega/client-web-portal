@@ -9,5 +9,5 @@ export interface IActionMenuItem extends IGlobalComponentProps {
 
 export interface IActionMenuProps extends IGlobalComponentProps {
   items: IActionMenuItem[];
-  itemId: number;
+  itemId: string;
 }

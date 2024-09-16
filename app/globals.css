@@ -210,6 +210,10 @@ body {
 
 .p-datatable-table .p-checkbox-box {
   border: 1px solid !important;
+  height: 15px;
+  width: 15px;
+  border-radius: 4px;
+  margin-top: 2px;
 }
 
 .p-datatable-table tbody {

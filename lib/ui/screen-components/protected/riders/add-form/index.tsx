@@ -40,6 +40,7 @@ const initialValues: IRiderForm = {
 };
 
 export default function RiderAddForm({
+  refetch,
   position = 'right',
   setIsAddRiderVisible,
   isAddRiderVisible,

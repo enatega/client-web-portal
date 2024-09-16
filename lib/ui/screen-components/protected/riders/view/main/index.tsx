@@ -6,7 +6,7 @@ import { FilterMatchMode } from 'primereact/api';
 
 // Interface and Types
 import {
-  IRiderDataComponentProps,
+  IRiderResponse,
   IRidersMainComponentsProps,
 } from '@/lib/utils/interfaces/rider.interface';
 
@@ -16,15 +16,16 @@ import RiderHeader from '../header';
 
 // Utilities and Data
 import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants/data.table.columns';
-import { ridersData } from '@/lib/utils/dummy';
 
 export default function RidersMain({
+  refetch,
+  data,
   setIsAddRiderVisible,
 }: IRidersMainComponentsProps) {
   // Hooks
-  const [selectedProducts, setSelectedProducts] = useState<
-    IRiderDataComponentProps[]
-  >([]);
+  const [selectedProducts, setSelectedProducts] = useState<IRiderResponse[]>(
+    []
+  );
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
     global: { value: '' as string | null, matchMode: FilterMatchMode.CONTAINS },
@@ -60,7 +61,7 @@ export default function RidersMain({
             onGlobalFilterChange={onGlobalFilterChange}
           />
         }
-        data={ridersData}
+        data={data?.riders || []}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}

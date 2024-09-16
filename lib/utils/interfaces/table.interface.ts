@@ -22,8 +22,9 @@ export interface IDataTableProps<T> extends IGlobalComponentProps {
   columns: IColumnConfig<T>[];
   filters?: IFilterType;
   size?: 'small' | 'normal' | 'large';
+  loading?: boolean;
 }
 
 export interface ITableExtends extends IGlobalComponentProps {
-  id: number | string;
+  _id: number | string;
 }
