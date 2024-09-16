@@ -1,3 +1,4 @@
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import {
   faCheck,
   faExclamationTriangle,
@@ -32,3 +33,8 @@ export const SEVERITY_STYLES: ISeverityStyles = {
     iconBg: '#F7DC6F',
   },
 };
+
+export const ApolloClientConfig = new ApolloClient({
+  uri: 'https://enatega-multivendor.up.railway.app/graphql',
+  cache: new InMemoryCache(),
+});
