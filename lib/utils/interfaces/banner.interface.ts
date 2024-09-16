@@ -16,7 +16,7 @@ export interface IBannersAddFormComponentProps extends IGlobalComponentProps {
 }
 
 export type IBannerToggleComponentProps = {
-  _id: number;
+  _id: string;
   image: string;
   title: string;
   description: string;
