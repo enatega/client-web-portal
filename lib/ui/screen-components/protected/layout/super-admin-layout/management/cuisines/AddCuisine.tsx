@@ -1,160 +1,155 @@
 'use client';
 import { CREATE_CUISINE } from '@/lib/api/graphql/mutation/cuisines';
-import { useMutation } from '@apollo/client';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Toast } from 'primereact/toast';
+import { ToastContext } from '@/lib/context/toast.context';
+import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
+import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
 import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  RefObject,
-  SetStateAction,
-  useState,
-} from 'react';
+  IAddCuisineProps,
+  ICuisine,
+} from '@/lib/utils/interfaces/cuisine.interface';
+import { CuisineFormSchema } from '@/lib/utils/schema';
+import { useMutation } from '@apollo/client';
+import { ErrorMessage, Form, Formik } from 'formik';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { useContext } from 'react';
 
 export default function AddCuisine({
   setVisible,
-  toast,
-}: {
-  setVisible: Dispatch<SetStateAction<boolean>>;
-  toast: RefObject<Toast>;
-}) {
-  //form data
-  const [formData, setFormData] = useState({
+  setCuisinesData,
+}: IAddCuisineProps) {
+  // initial values
+  const initialValues = {
     name: '',
     description: '',
-    shopType: '',
-  });
-
-  // handle form change
-  const handleFormChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { value, name } = e.target;
-    setFormData((prevValues) => ({
-      ...prevValues,
-      [name]: value,
-    }));
+    shopType: {
+      label: '',
+      code: '',
+    },
   };
-  // create mutation
+  const { showToast } = useContext(ToastContext);
+  //mutation
   const [CreateCuisine, { loading, error }] = useMutation(CREATE_CUISINE);
-
-  //handle form submit
-  const handleFormSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
-    try {
-      if (!formData.name) {
-        return toast.current?.show({
-          severity: 'warn',
-          summary: 'Warning',
-          detail: 'Name Field cannot be empty',
-          life: 2000,
-        });
-      } else if (!formData.description) {
-        return toast.current?.show({
-          severity: 'warn',
-          summary: 'Warning',
-          detail: 'Description cannot be empty',
-          life: 2000,
-        });
-      } else if (!formData.shopType) {
-        return toast.current?.show({
-          severity: 'warn',
-          summary: 'Warning',
-          detail: 'Shop Type cannot be empty',
-          life: 2000,
-        });
-      }
-      const response = await CreateCuisine({
-        variables: { cuisineInput: formData },
-      });
-      if (response) {
-        setVisible(false);
-        toast?.current?.show({
-          severity: 'success',
-          summary: 'Sucess',
-          detail: 'Cuisine was added successfully!',
-          life: 2000,
-        });
-      }
-    } catch (err) {
-      setVisible(true);
-      toast?.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: error?.message,
-        life: 2000,
-      });
-      return console.log(err);
-    }
-  };
-
+  // shop type options
+  const shopTypeOptions = [
+    { label: 'Restaurant', code: 'restaurant' },
+    { label: 'Shop', code: 'shop' },
+  ];
   return (
     <div className="flex flex-col gap-4">
       <h2 className="font-bold mb-3 text-xl">Add Cuisine</h2>
-      <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="name">
-            Cuisine Name
-          </label>
-          <InputText
-            value={formData.name}
-            onChange={handleFormChange}
-            name="name"
-            id="name"
-            className="w-full py-2 px-1 text-sm"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="description">
-            Description
-          </label>
-          <InputTextarea
-            value={formData.description}
-            onChange={handleFormChange}
-            name="description"
-            id="description"
-            className="w-full text-sm"
-            rows={5}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="shoptType">
-            Shop Type
-          </label>
-          <select
-            name="shopType"
-            id="shopType"
-            onChange={handleFormChange}
-            value={formData.shopType}
-            className="w-full outline-none py-2 px-1 text-sm"
-          >
-            <option value="">Select</option>
-            <option value="Restaurant">Restaurant</option>
-            <option value="Hotel">Hotel</option>
-            <option value="Bakery">Bakery</option>
-          </select>
-        </div>
-        <Button
-          type="submit"
-          className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]"
-        >
-          {loading ? (
-            <FontAwesomeIcon
-              color="white"
-              icon={faSpinner}
-              className="animate-spin self-center items-center"
-            />
-          ) : (
-            'Add'
-          )}
-        </Button>
-      </form>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={CuisineFormSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            setSubmitting(true);
+            const formData = {
+              name: values.name,
+              description: values.description,
+              shopType: values.shopType.label,
+            };
+            const res = await CreateCuisine({
+              variables: { cuisineInput: formData },
+            });
+            setVisible(false);
+            showToast({
+              type: 'success',
+              message: 'Cuisine was added successfully!',
+              life: 2000,
+            });
+            const newCuisine: ICuisine = res.data.createCuisine;
+            setCuisinesData(newCuisine);
+
+            setSubmitting(false);
+          } catch (err) {
+            setVisible(true);
+            showToast({
+              type: 'error',
+              message:
+                error?.message ||
+                error?.networkError?.message ||
+                error?.clientErrors[0].message ||
+                error?.graphQLErrors[0].message ||
+                'An error occured',
+              life: 2000,
+            });
+            setSubmitting(false);
+            return console.log(err);
+          }
+        }}
+        validateOnChange={true}
+      >
+        {({
+          errors,
+          handleSubmit,
+          handleChange,
+          values,
+          isSubmitting,
+          setFieldValue,
+        }) => {
+          return (
+            <Form onSubmit={handleSubmit}>
+              <CustomTextField
+                showLabel={true}
+                name="name"
+                onChange={handleChange}
+                value={values.name}
+                type="text"
+                placeholder="Name"
+                className={`${errors.name ? 'text-red-600 outline outline-red-600' : ''}`}
+              />
+              <ErrorMessage
+                name="name"
+                component="span"
+                className="text-red-600"
+              />
+              <CustomTextAreaField
+                showLabel={true}
+                label="Description"
+                name="description"
+                onChange={handleChange}
+                value={values.description}
+                placeholder="Description"
+                rows={5}
+                className={`${errors.description ? 'text-red-600 outline outline-red-600' : ''}`}
+              />
+              <ErrorMessage
+                name="description"
+                component="span"
+                className="text-red-600"
+              />
+              <CustomDropdownComponent
+                name="shopType"
+                options={shopTypeOptions}
+                selectedItem={values.shopType}
+                setSelectedItem={setFieldValue}
+                placeholder="Shop Type"
+                showLabel={true}
+              />
+              <span
+                className={
+                  errors.shopType?.label ? 'text-red-600 visible' : 'hidden'
+                }
+              >
+                {errors.shopType?.label}
+              </span>
+
+              <button
+                className="block float-end bg-black rounded-md px-5 py-2 my-2 text-white"
+                disabled={isSubmitting || loading}
+                type="submit"
+              >
+                {isSubmitting || loading ? (
+                  <ProgressSpinner className="w-5 h-5" />
+                ) : (
+                  'Add'
+                )}
+              </button>
+            </Form>
+          );
+        }}
+      </Formik>
     </div>
   );
 }

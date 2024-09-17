@@ -1,10 +1,12 @@
+import { Dispatch, SetStateAction } from 'react';
+
 export interface ICuisine {
+  _id: string;
   description: string;
-  image: string;
+  image?: string;
   name: string;
   shopType: string;
   __typename: string;
-  _id: string;
 }
 export interface ICuisinesData {
   data: {
@@ -21,3 +23,8 @@ export interface IGetCuisinesData {
 }
 
 export interface IGetCuisinesVariables {}
+
+export interface IAddCuisineProps {
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  setCuisinesData: (cuisine: ICuisine) => void;
+}

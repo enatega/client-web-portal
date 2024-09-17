@@ -7,18 +7,18 @@ import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { IQueryResult } from '@/lib/utils/interfaces';
 import {
+  ICuisine,
   IGetCuisinesData,
   IGetCuisinesVariables,
 } from '@/lib/utils/interfaces/cuisine.interface';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { DocumentNode } from 'graphql';
 import { Sidebar } from 'primereact/sidebar';
-import { Toast } from 'primereact/toast';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CuisinesScreen() {
   const [visible, setVisible] = useState(false);
-
+  const [cuisinesData, setCuisinesData] = useState<ICuisine[]>([]);
   const { data, fetch, loading } = useLazyQueryQL<
     DocumentNode,
     IGetCuisinesVariables
@@ -26,21 +26,30 @@ export default function CuisinesScreen() {
   useEffect(() => {
     fetch();
   }, []);
-  //toast ref
-  const toast = useRef<Toast>(null);
+  useEffect(() => {
+    if (data) {
+      setCuisinesData(data.cuisines);
+    }
+  }, [data]);
   //button click
   const handleButtonClick = () => {
     setVisible(true);
   };
+  //handle add cuisine locally
+  const addCuisineLocally = (cuisine: ICuisine) => {
+    setCuisinesData((prevCuisines) => [cuisine, ...prevCuisines]);
+  };
   return (
     <div className="flex flex-col items-center w-full">
-      <Toast ref={toast} position="top-left" />
       <Sidebar
         visible={visible}
         onHide={() => setVisible(false)}
         position="right"
       >
-        <AddCuisine setVisible={setVisible} toast={toast} />
+        <AddCuisine
+          setVisible={setVisible}
+          setCuisinesData={addCuisineLocally}
+        />
       </Sidebar>
       <div className="flex justify-between items-center px-5 w-full">
         <HeaderText text="Cuisines" className="mx-5" />
@@ -48,11 +57,11 @@ export default function CuisinesScreen() {
           icon={faCirclePlus}
           iconStyles={{ color: 'white' }}
           onClick={handleButtonClick}
-          title="Add Coupon"
+          title="Add Cuisine"
           className="bg-black text-white p-2 rounded-md"
         />
       </div>
-      <CuisineTable data={data?.cuisines} loading={loading} />
+      <CuisineTable data={cuisinesData} loading={loading} />
     </div>
   );
 }

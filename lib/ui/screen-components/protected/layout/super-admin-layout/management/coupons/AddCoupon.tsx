@@ -1,3 +1,4 @@
+'use client';
 import { CREATE_COUPON } from '@/lib/api/graphql/mutation/coupons';
 import { useMutation } from '@apollo/client';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
