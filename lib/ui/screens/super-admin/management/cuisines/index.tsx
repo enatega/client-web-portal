@@ -1,19 +1,25 @@
 'use client';
+//graphql
 import { GET_CUISINES } from '@/lib/api/graphql/query/cuisines';
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { DocumentNode } from 'graphql';
+//components
 import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/AddCuisine';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
+//prime react components
+import { Sidebar } from 'primereact/sidebar';
+//interfaces
 import { IQueryResult } from '@/lib/utils/interfaces';
 import {
   ICuisine,
   IGetCuisinesData,
   IGetCuisinesVariables,
 } from '@/lib/utils/interfaces/cuisine.interface';
+//icons
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { DocumentNode } from 'graphql';
-import { Sidebar } from 'primereact/sidebar';
+//hooks
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useEffect, useState } from 'react';
 
 export default function CuisinesScreen() {
@@ -23,22 +29,28 @@ export default function CuisinesScreen() {
     DocumentNode,
     IGetCuisinesVariables
   >(GET_CUISINES, {}) as IQueryResult<IGetCuisinesData | undefined, undefined>;
+
+  //toggle visibility
+  const handleButtonClick = () => {
+    setVisible(true);
+  };
+
+  //handle add cuisine locally to append child in the cuisine array
+  const addCuisineLocally = (cuisine: ICuisine) => {
+    setCuisinesData((prevCuisines) => [cuisine, ...prevCuisines]);
+  };
+
+  //fetch
   useEffect(() => {
     fetch();
   }, []);
+
+  //appending cuisines
   useEffect(() => {
     if (data) {
       setCuisinesData(data.cuisines);
     }
   }, [data]);
-  //button click
-  const handleButtonClick = () => {
-    setVisible(true);
-  };
-  //handle add cuisine locally
-  const addCuisineLocally = (cuisine: ICuisine) => {
-    setCuisinesData((prevCuisines) => [cuisine, ...prevCuisines]);
-  };
   return (
     <div className="flex flex-col items-center w-full">
       <Sidebar

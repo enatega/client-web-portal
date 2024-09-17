@@ -1,36 +1,51 @@
 import { GET_COUPONS } from '@/lib/api/graphql/query/coupons';
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import AddCoupon from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/AddCoupon';
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
-// import GlobalButton from '@/lib/ui/useable-components/global-buttons/button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { IQueryResult } from '@/lib/utils/interfaces';
-import { IGetCouponsData } from '@/lib/utils/interfaces/coupons.interface';
+import {
+  ICoupon,
+  IGetCouponsData,
+} from '@/lib/utils/interfaces/coupons.interface';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 import { Sidebar } from 'primereact/sidebar';
-import { Toast } from 'primereact/toast';
-import { useEffect, useRef, useState } from 'react';
+
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { useEffect, useState } from 'react';
 export default function CouponsScreen() {
-  //toast ref
-  const toast = useRef<Toast>(null);
   //states
   const [visible, setVisible] = useState(false);
+  const [coupons, setCoupons] = useState<ICoupon[]>([]);
 
+  //query
   const { data, fetch, loading } = useLazyQueryQL(
     GET_COUPONS,
     {}
   ) as IQueryResult<IGetCouponsData | undefined, undefined>;
-  useEffect(() => {
-    fetch();
-  }, []);
+
+  //toggle visibility
   const handleButtonClick = () => {
     setVisible(true);
   };
+  //handle add cuisine locally to append child in the cuisine array
+  const handleAddCouponLocally = (coupon: ICoupon) => {
+    setCoupons((prevCoupons) => [coupon, ...prevCoupons]);
+  };
+  //fetch
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  //appending coupons
+  useEffect(() => {
+    if (data) {
+      setCoupons(data.coupons);
+    }
+  }, [data]);
   return (
     <div className="flex flex-col items-center w-full h-auto">
-      <Toast ref={toast} position="top-left" />
       <Sidebar
         visible={visible}
         onHide={() => setVisible(false)}
@@ -38,8 +53,7 @@ export default function CouponsScreen() {
       >
         <AddCoupon
           setVisible={setVisible}
-          toast={toast}
-          executeLazyQuery={fetch}
+          setCoupons={handleAddCouponLocally}
         />
       </Sidebar>
       <div className="flex justify-between items-center px-5 w-full">
@@ -52,7 +66,7 @@ export default function CouponsScreen() {
           className="bg-black text-white p-2 rounded-md"
         />
       </div>
-      <CouponTable data={data?.coupons} loading={loading} />
+      <CouponTable data={coupons} loading={loading} />
     </div>
   );
 }

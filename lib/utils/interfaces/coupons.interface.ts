@@ -26,3 +26,7 @@ export interface ICouponsStakProps {
   setSelectedData: Dispatch<SetStateAction<ICoupon[]>>;
   selectedData: ICoupon[];
 }
+export interface IAddCouponProps {
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  setCoupons: (coupon: ICoupon) => void;
+}

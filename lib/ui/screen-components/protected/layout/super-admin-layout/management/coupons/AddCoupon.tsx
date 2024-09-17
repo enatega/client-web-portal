@@ -1,94 +1,153 @@
 'use client';
 import { CREATE_COUPON } from '@/lib/api/graphql/mutation/coupons';
-import { useMutation } from '@apollo/client';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button } from 'primereact/button';
-import { InputNumber } from 'primereact/inputnumber';
-import { InputSwitch } from 'primereact/inputswitch';
-import { InputText } from 'primereact/inputtext';
-import { Toast } from 'primereact/toast';
+import { ToastContext } from '@/lib/context/toast.context';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
+import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 import {
-  ChangeEvent,
-  Dispatch,
-  FormEvent,
-  RefObject,
-  SetStateAction,
-  useState,
-} from 'react';
+  IAddCouponProps,
+  ICoupon,
+} from '@/lib/utils/interfaces/coupons.interface';
+import { CouponFormSchema } from '@/lib/utils/schema/coupon';
+import { useMutation } from '@apollo/client';
+import { ErrorMessage, Form, Formik } from 'formik';
+import { InputSwitch } from 'primereact/inputswitch';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { useContext } from 'react';
 
-export default function AddCoupon({
-  toast,
-  setVisible,
-  executeLazyQuery,
-}: {
-  toast: RefObject<Toast>;
-  setVisible: Dispatch<SetStateAction<boolean>>;
-  executeLazyQuery: () => void;
-}) {
-  const [formData, setFormData] = useState({
+export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
+  //initial values
+  const initialValues = {
     title: '',
     discount: 0,
     enabled: true,
-  });
-
-  //handle form change
-  const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
   };
+
   //mutation
-  const [createCoupon, { loading, error }] = useMutation(CREATE_COUPON);
-  //handle subission
-  const handleFormSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const [CreateCoupon, { loading, error }] = useMutation(CREATE_COUPON);
+  //toast
+  const { showToast } = useContext(ToastContext);
 
-    //validation
-    if (!formData.title) {
-      toast?.current?.show({
-        severity: 'warn',
-        summary: 'Warning',
-        detail: 'Title is a required field',
-      });
-    } else if (!formData.discount) {
-      toast?.current?.show({
-        severity: 'warn',
-        summary: 'Warning',
-        detail: 'Please add a discount',
-      });
-    }
-
-    try {
-      const response = await createCoupon({
-        variables: {
-          couponInput: formData,
-        },
-      });
-      executeLazyQuery();
-      if (response) {
-        setVisible(false);
-        return toast?.current?.show({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Successfully added the coupon',
-        });
-      }
-    } catch (err) {
-      setVisible(true);
-      toast?.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: error?.message,
-      });
-      return console.log(err);
-    }
-  };
   return (
     <div className="flex flex-col gap-4">
-      <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={CouponFormSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            setSubmitting(true);
+            const formData = {
+              title: values.title,
+              discount: values.discount,
+              enabled: values.enabled,
+            };
+            const res = await CreateCoupon({
+              variables: {
+                couponInput: formData,
+              },
+            });
+            setVisible(false);
+            showToast({
+              type: 'success',
+              message: 'Coupon was added successfully!',
+              life: 2000,
+            });
+            const newCoupon: ICoupon = res.data.createCoupon;
+            setCoupons(newCoupon);
+
+            setSubmitting(false);
+          } catch (err) {
+            setVisible(true);
+            showToast({
+              type: 'error',
+              message:
+                error?.message ||
+                error?.networkError?.message ||
+                error?.clientErrors[0].message ||
+                error?.graphQLErrors[0].message ||
+                'An error occured',
+              life: 2000,
+            });
+            setSubmitting(false);
+            return console.log(err);
+          }
+        }}
+        validateOnChange={true}
+      >
+        {({
+          errors,
+          handleSubmit,
+          handleChange,
+          values,
+          isSubmitting,
+          setFieldValue,
+        }) => {
+          return (
+            <Form onSubmit={handleSubmit}>
+              <div className="flex gap-x-2">
+                <h2>Add Coupon</h2>
+                <div className="flex gap-x-1 items-center">
+                  {values.enabled ? 'Enabled' : 'Disabled'}
+                  <InputSwitch
+                    checked={values.enabled}
+                    onChange={(e) => setFieldValue('enabled', e.value)}
+                  />
+                </div>
+              </div>
+              <CustomTextField
+                value={values.title}
+                name="title"
+                showLabel={true}
+                placeholder={'Title'}
+                type="text"
+                onChange={handleChange}
+                className={
+                  errors.title ? 'text-red-600 outline outine-red' : ''
+                }
+              />
+              <ErrorMessage
+                name="title"
+                component="span"
+                className="text-red-600"
+              />
+              <CustomNumberField
+                value={values.discount}
+                name="discount"
+                showLabel={true}
+                placeholder={'Discount'}
+                onChange={handleChange}
+                min={0}
+                max={100}
+                className={
+                  errors.discount ? 'text-red-600 outline outine-red' : ''
+                }
+              />
+              {errors.discount}
+              <ErrorMessage
+                name="discount"
+                component="span"
+                className="text-red-600"
+              />
+              <button
+                className="block float-end bg-black rounded-md px-12 py-4 my-2 text-white items-center justify-center"
+                disabled={isSubmitting || loading}
+                type="submit"
+              >
+                {isSubmitting || loading ? (
+                  <ProgressSpinner
+                    className="w-6 h-6 items-center self-center m-0 p-0"
+                    strokeWidth="5"
+                    style={{ fill: 'white', accentColor: 'white' }}
+                    color="white"
+                  />
+                ) : (
+                  'Add'
+                )}
+              </button>
+            </Form>
+          );
+        }}
+      </Formik>
+      {/* <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
         <div className="flex gap-2">
           <h2 className="font-bold mb-3 text-xl">Add Coupon</h2>
           {formData.enabled ? 'Enabled' : 'Disabled'}
@@ -139,7 +198,7 @@ export default function AddCoupon({
             'Add'
           )}
         </Button>
-      </form>
+      </form> */}
     </div>
   );
 }

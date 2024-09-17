@@ -136,12 +136,17 @@ export default function AddCuisine({
               </span>
 
               <button
-                className="block float-end bg-black rounded-md px-5 py-2 my-2 text-white"
+                className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"
                 disabled={isSubmitting || loading}
                 type="submit"
               >
                 {isSubmitting || loading ? (
-                  <ProgressSpinner className="w-5 h-5" />
+                  <ProgressSpinner
+                    className="w-6 h-6 items-center self-center m-0 p-0"
+                    strokeWidth="5"
+                    style={{ fill: 'white', accentColor: 'white' }}
+                    color="white"
+                  />
                 ) : (
                   'Add'
                 )}
