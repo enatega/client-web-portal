@@ -10,7 +10,7 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 //prime react components
 import { Sidebar } from 'primereact/sidebar';
 //interfaces
-import { IQueryResult } from '@/lib/utils/interfaces';
+import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICuisine,
   IGetCuisinesData,
@@ -28,7 +28,10 @@ export default function CuisinesScreen() {
   const { data, fetch, loading } = useLazyQueryQL<
     DocumentNode,
     IGetCuisinesVariables
-  >(GET_CUISINES, {}) as IQueryResult<IGetCuisinesData | undefined, undefined>;
+  >(GET_CUISINES, {}) as ILazyQueryResult<
+    IGetCuisinesData | undefined,
+    undefined
+  >;
 
   //toggle visibility
   const handleButtonClick = () => {
