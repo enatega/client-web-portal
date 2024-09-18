@@ -3,7 +3,7 @@ import AddCoupon from '@/lib/ui/screen-components/protected/layout/super-admin-l
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
-import { IQueryResult } from '@/lib/utils/interfaces';
+import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICoupon,
   IGetCouponsData,
@@ -23,7 +23,7 @@ export default function CouponsScreen() {
   const { data, fetch, loading } = useLazyQueryQL(
     GET_COUPONS,
     {}
-  ) as IQueryResult<IGetCouponsData | undefined, undefined>;
+  ) as ILazyQueryResult<IGetCouponsData | undefined, undefined>;
 
   //toggle visibility
   const handleButtonClick = () => {
