@@ -1,4 +1,4 @@
-import { SEND_NOTIFICATION_USER } from '@/lib/api/graphql/mutants';
+import { SEND_NOTIFICATION_USER } from '@/lib/api/graphql/mutations';
 import { useMutation } from '@apollo/client';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

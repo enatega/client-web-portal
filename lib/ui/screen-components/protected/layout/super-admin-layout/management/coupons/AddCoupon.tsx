@@ -1,5 +1,5 @@
 'use client';
-import { CREATE_COUPON } from '@/lib/api/graphql/mutants';
+import { CREATE_COUPON } from '@/lib/api/graphql/mutations';
 import { ToastContext } from '@/lib/context/toast.context';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';

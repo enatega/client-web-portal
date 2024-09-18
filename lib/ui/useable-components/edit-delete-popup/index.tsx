@@ -1,5 +1,5 @@
 'use client';
-import { DELETE_COUPON, DELETE_CUISINE } from '@/lib/api/graphql/mutants';
+import { DELETE_COUPON, DELETE_CUISINE } from '@/lib/api/graphql/mutations';
 import { ToastContext } from '@/lib/context/toast.context';
 import IEditDeleteInterface, {
   IEditDeleteProps,

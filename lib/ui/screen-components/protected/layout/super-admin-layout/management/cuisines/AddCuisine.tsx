@@ -1,5 +1,5 @@
 'use client';
-import { CREATE_CUISINE } from '@/lib/api/graphql/mutants';
+import { CREATE_CUISINE } from '@/lib/api/graphql/mutations';
 import { ToastContext } from '@/lib/context/toast.context';
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';

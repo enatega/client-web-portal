@@ -15,7 +15,7 @@ import GenericTable from '../../../../../../useable-components/global-table';
 import { InputSwitch } from 'primereact/inputswitch';
 
 //hooks
-import { EDIT_COUPON } from '@/lib/api/graphql/mutants';
+import { EDIT_COUPON } from '@/lib/api/graphql/mutations';
 import { ToastContext } from '@/lib/context/toast.context';
 import { useMutation } from '@apollo/client';
 import { debounce } from 'lodash';
