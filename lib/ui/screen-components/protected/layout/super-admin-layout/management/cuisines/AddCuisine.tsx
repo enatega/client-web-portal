@@ -55,8 +55,9 @@ export default function AddCuisine({
             setVisible(false);
             showToast({
               type: 'success',
+              title: 'New Cuisine',
               message: 'Cuisine was added successfully!',
-              life: 2000,
+              duration: 2000,
             });
             const newCuisine: ICuisine = res.data.createCuisine;
             setCuisinesData(newCuisine);
@@ -66,13 +67,14 @@ export default function AddCuisine({
             setVisible(true);
             showToast({
               type: 'error',
+              title: 'New Cuisine',
               message:
                 error?.message ||
                 error?.networkError?.message ||
                 error?.clientErrors[0].message ||
                 error?.graphQLErrors[0].message ||
                 'An error occured',
-              life: 2000,
+              duration: 2000,
             });
             setSubmitting(false);
             return console.log(err);
