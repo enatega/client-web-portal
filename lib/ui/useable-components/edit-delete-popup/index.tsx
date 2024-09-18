@@ -1,14 +1,25 @@
 'use client';
+// queries
 import { DELETE_COUPON, DELETE_CUISINE } from '@/lib/api/graphql/mutations';
-import { ToastContext } from '@/lib/context/toast.context';
+
+//interfaces
 import IEditDeleteInterface, {
   IEditDeleteProps,
 } from '@/lib/utils/interfaces/edit-delete.interface';
-import { useMutation } from '@apollo/client';
+
+//components
+import DeleteDialog from '../delete-dialog';
+
+//icons
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+//contexts
+import { ToastContext } from '@/lib/context/toast.context';
+
+//hooks
+import { useMutation } from '@apollo/client';
 import { useContext, useEffect, useRef, useState } from 'react';
-import DeleteDialog from '../delete-dialog';
 
 export default function EditDeletePopup<T extends IEditDeleteProps>({
   setIsEditDeletePopupOpen,
@@ -19,54 +30,20 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
   const [isDeleting, setIsDeleting] = useState({ _id: '', bool: false });
   const [isEditing, setIsEditing] = useState({ data: {}, bool: false });
   console.log({ isEditing });
+
   //popup ref
   const popupRef = useRef<HTMLDivElement | null>(null);
-
-  //handle blur
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        popupRef.current &&
-        !popupRef.current.contains(event.target as Node)
-      ) {
-        setIsDeleting({
-          _id: '',
-          bool: false,
-        });
-        setIsEditDeletePopupOpen({
-          bool: false,
-          _id: '',
-        });
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [setIsEditing, setIsDeleting, setIsEditDeletePopupOpen]);
-
-  //handle delete icon click
-  const handleDeleteClick = () => {
-    console.log({ msg: 'Delete called', data: data._id });
-    setIsDeleting(() => ({
-      _id: data?._id,
-      bool: true,
-    }));
-    setIsEditDeletePopupOpen({
-      _id: '',
-      bool: false,
-    });
-  };
-  //delete queries
-  const [deleteCoupon] = useMutation(DELETE_COUPON);
-  const [deleteCuisine] = useMutation(DELETE_CUISINE);
 
   //toast
   const { showToast } = useContext(ToastContext);
 
+  //delete queries
+  const [deleteCoupon] = useMutation(DELETE_COUPON);
+  const [deleteCuisine] = useMutation(DELETE_CUISINE);
+
   //handle delete
   async function deleteItem() {
-    console.log({ msg: 'called del func' });
+    console.log({ mg: 'delete item called!' });
     try {
       //coupon
       if (type === 'coupon') {
@@ -101,9 +78,29 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
       });
     }
   }
+  //handle blur
   useEffect(() => {
-    console.log({ isDeleting });
-  }, [isDeleting]);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popupRef.current &&
+        !popupRef.current.contains(event.target as Node)
+      ) {
+        setIsDeleting({
+          _id: '',
+          bool: false,
+        });
+        setIsEditDeletePopupOpen({
+          bool: false,
+          _id: '',
+        });
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [setIsEditing, setIsDeleting, setIsEditDeletePopupOpen]);
+
   return (
     <div
       ref={popupRef}
@@ -128,7 +125,7 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
           className="cursor-pointer"
         />
       </button>
-      <button onClick={handleDeleteClick}>
+      <button onClick={() => setIsDeleting({ _id: data._id, bool: true })}>
         <FontAwesomeIcon
           color="red"
           width={15}
@@ -138,8 +135,8 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
       </button>
       {/* Delete Dailog  */}
       <DeleteDialog
-        onConfirm={deleteItem}
         visible={isDeleting.bool}
+        onConfirm={deleteItem}
         onHide={() => setIsDeleting({ _id: '', bool: false })}
       />
     </div>

@@ -1,6 +1,12 @@
+//css
+import './index.css';
+
 //interfaces
 import { ITableColumn } from '@/lib/utils/interfaces';
-import { ICoupon } from '@/lib/utils/interfaces/coupons.interface';
+import {
+  ICoupon,
+  IEditPopupVal,
+} from '@/lib/utils/interfaces/coupons.interface';
 
 //icons
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsisVertical';
@@ -29,10 +35,7 @@ export default function CouponTable({
   loading: boolean;
 }) {
   //states
-  const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<{
-    _id: string;
-    bool: boolean;
-  }>({
+  const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<IEditPopupVal>({
     _id: '',
     bool: false,
   });
@@ -43,15 +46,6 @@ export default function CouponTable({
   //toast
   const { showToast } = useContext(ToastContext);
 
-  //sorting data
-  useEffect(() => {
-    const filteredData = data?.filter((coupon) =>
-      Object.values(coupon).some((value) =>
-        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    );
-    setSortedData(filteredData || []);
-  }, [searchQuery, data]);
   // handle enabled toggle
   function handleEnableField(rowData: ICoupon) {
     const coupon = sortedData.find((d) => d._id === rowData._id);
@@ -62,7 +56,7 @@ export default function CouponTable({
   //edit mutation
   const [editCoupon, { data: newData, loading: loadingNew, error }] =
     useMutation(EDIT_COUPON);
-  console.log({ newData });
+
   //handle toggle mutation
   async function handleSubmitToggleState(rowData: ICoupon) {
     try {
@@ -115,8 +109,8 @@ export default function CouponTable({
         <div className="flex gap-2 items-center w-full justify-between">
           <InputSwitch
             checked={rowData.enabled}
-            disabled={loadingNew}
-            className="justify-self-start "
+            disabled={loadingNew && newData?.editCoupon?._id === rowData?._id}
+            className={rowData.enabled ? 'p-inputswitch-checked' : ''}
             onChange={() => handleEnableField(rowData)}
             onClick={() => optimizedToggleFunction(rowData)}
           />
@@ -143,6 +137,15 @@ export default function CouponTable({
     },
   ];
 
+  //sorting data
+  useEffect(() => {
+    const filteredData = data?.filter((coupon) =>
+      Object.values(coupon).some((value) =>
+        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+    setSortedData(filteredData || []);
+  }, [searchQuery, data]);
   return (
     <div className="flex flex-col gap-2 p-3 w-full">
       <CustomTextField

@@ -21,3 +21,7 @@ export interface IAddCouponProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
   setCoupons: (coupon: ICoupon) => void;
 }
+export interface IEditPopupVal {
+  _id: string;
+  bool: boolean;
+}
