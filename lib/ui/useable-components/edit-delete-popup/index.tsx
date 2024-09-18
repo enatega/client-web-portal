@@ -38,18 +38,18 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
   const { showToast } = useContext(ToastContext);
 
   //delete queries
-  const [deleteCoupon] = useMutation(DELETE_COUPON);
-  const [deleteCuisine] = useMutation(DELETE_CUISINE);
+  const [deleteCoupon, { error: couponError }] = useMutation(DELETE_COUPON);
+  const [deleteCuisine, { error: cuisineError }] = useMutation(DELETE_CUISINE);
 
   //handle delete
   async function deleteItem() {
-    console.log({ mg: 'delete item called!' });
+    console.log({ mg: 'delete item called!', id: data._id, type });
     try {
       //coupon
       if (type === 'coupon') {
         await deleteCoupon({
           variables: {
-            _id: isDeleting._id,
+            id: data._id,
           },
         });
         showToast({
@@ -60,7 +60,7 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
       } else if (type === 'cuisine') {
         await deleteCuisine({
           variables: {
-            _id: isDeleting._id,
+            id: data._id,
           },
         });
         showToast({
@@ -73,7 +73,10 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
       console.log(err);
       showToast({
         type: 'error',
-        message: 'An unknown error occured, please try again',
+        message:
+          'An unknown error occured, please try again' ||
+          couponError?.graphQLErrors[0].message ||
+          cuisineError?.graphQLErrors[0].message,
         life: 2000,
       });
     }
