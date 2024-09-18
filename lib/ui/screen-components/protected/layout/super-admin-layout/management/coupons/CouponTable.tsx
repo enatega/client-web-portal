@@ -15,7 +15,7 @@ export default function CouponTable({
   data: ICoupon[] | null | undefined;
   loading: boolean;
 }) {
-  const [isEditing, setIsEditing] = useState<{
+  const [, setIsEditing] = useState<{
     bool: boolean;
     data: ICoupon;
   }>({
@@ -28,7 +28,7 @@ export default function CouponTable({
       _id: '',
     },
   });
-  const [isDeleting, setIsDeleting] = useState<{ _id: string; bool: boolean }>({
+  const [, setIsDeleting] = useState<{ _id: string; bool: boolean }>({
     _id: '',
     bool: false,
   });
@@ -42,7 +42,7 @@ export default function CouponTable({
   const [searchQuery, setSearchQuery] = useState('');
   const [sortedData, setSortedData] = useState<ICoupon[]>([]);
   const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
-  console.log({ isEditing, isDeleting });
+
   useEffect(() => {
     const filteredData = data?.filter((coupon) =>
       Object.values(coupon).some((value) =>

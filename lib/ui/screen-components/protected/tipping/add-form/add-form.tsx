@@ -29,13 +29,10 @@ const TippingAddForm = () => {
         <Formik
           initialValues={account}
           // validationSchema={SignupSchema}
-          onSubmit={(e) => {
-            console.log(e);
-          }}
+          onSubmit={() => {}}
           validateOnChange
         >
-          {({ values, handleChange }) => {
-            console.log({ values, handleChange });
+          {() => {
             return (
               <Form className="grid grid-cols-4 gap-3 items-end">
                 {/* <CustomNumberTextField

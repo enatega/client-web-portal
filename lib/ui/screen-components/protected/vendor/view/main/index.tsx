@@ -32,13 +32,19 @@ export default function VendorMain({
   setSelectedVendorFilter,
 }: IVendorMainComponentProps) {
   // Context
-  const { onSetVendorFormVisible, globalFilter, filtered, vendorResponse } =
-    useContext(VendorContext);
+  const {
+    onSetVendorFormVisible,
+    globalFilter,
+    onSetGlobalFilter,
+    filtered,
+    vendorResponse,
+  } = useContext(VendorContext);
   const {
     onSetRestaurantFormVisible,
     restaurantGlobalFilter,
     restaurantFiltered,
     restaurantByOwnerResponse,
+    onSetRestaurantGlobalFilter,
   } = useContext(RestaurantContext);
 
   const vendors = globalFilter ? filtered : vendorResponse?.data?.vendors;
@@ -72,6 +78,8 @@ export default function VendorMain({
               maxLength={35}
               placeholder="Search Vendors"
               showLabel={false}
+              value={globalFilter}
+              onChange={(e) => onSetGlobalFilter(e.target.value)}
             />
 
             <CustomTab
@@ -133,6 +141,8 @@ export default function VendorMain({
                 maxLength={35}
                 placeholder="Search Restaurants"
                 showLabel={false}
+                value={restaurantGlobalFilter}
+                onChange={(e) => onSetRestaurantGlobalFilter(e.target.value)}
               />
             </div>
             <CustomTab

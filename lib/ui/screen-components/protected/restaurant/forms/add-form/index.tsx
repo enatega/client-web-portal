@@ -88,8 +88,6 @@ export default function RestaurantAddForm({
                   isSubmitting,
                   setFieldValue,
                 }) => {
-                  console.log(errors, values);
-
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-3 mb-2">

@@ -48,8 +48,9 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
             setVisible(false);
             showToast({
               type: 'success',
+              title: 'New Coupon',
               message: 'Coupon was added successfully!',
-              life: 2000,
+              duration: 2000,
             });
             const newCoupon: ICoupon = res.data.createCoupon;
             setCoupons(newCoupon);
@@ -59,13 +60,14 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
             setVisible(true);
             showToast({
               type: 'error',
+              title: 'New Coupon',
               message:
                 error?.message ||
                 error?.networkError?.message ||
                 error?.clientErrors[0].message ||
                 error?.graphQLErrors[0].message ||
                 'An error occured',
-              life: 2000,
+              duration: 2000,
             });
             setSubmitting(false);
             return console.log(err);

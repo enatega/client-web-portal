@@ -13,7 +13,7 @@ export default function CuisineTable({
   loading: boolean;
 }) {
   //state variables
-  const [isEditing, setIsEditing] = useState<{
+  const [, setIsEditing] = useState<{
     bool: boolean;
     data: ICuisine;
   }>({
@@ -27,7 +27,7 @@ export default function CuisineTable({
       shopType: '',
     },
   });
-  const [isDeleting, setIsDeleting] = useState<{ _id: string; bool: boolean }>({
+  const [, setIsDeleting] = useState<{ _id: string; bool: boolean }>({
     _id: '',
     bool: false,
   });
@@ -98,7 +98,7 @@ export default function CuisineTable({
       ),
     },
   ];
-  console.log({ isDeleting, isEditing });
+
   return (
     <GenericTable
       columns={cuisineColums}

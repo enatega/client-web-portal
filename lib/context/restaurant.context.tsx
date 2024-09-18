@@ -90,7 +90,6 @@ export const RestaurantProvider = ({ children }: IProvider) => {
   }, [restaurantGlobalFilter]);
 
   useEffect(() => {
-    console.log({ restaurant: vendorId });
     restaurantByOwnerResponse.refetch();
   }, [vendorId]);
 
