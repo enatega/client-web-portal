@@ -5,6 +5,7 @@ import './index.css';
 import { ITableColumn } from '@/lib/utils/interfaces';
 import {
   ICoupon,
+  ICouponsTableProps,
   IEditPopupVal,
 } from '@/lib/utils/interfaces/coupons.interface';
 
@@ -14,33 +15,60 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
 import GenericTable from '../../../../../../useable-components/global-table';
 
 //prime react
 import { InputSwitch } from 'primereact/inputswitch';
 
+//queries
+import { DELETE_COUPON, EDIT_COUPON } from '@/lib/api/graphql';
+
 //hooks
-import { EDIT_COUPON } from '@/lib/api/graphql/mutations';
 import { ToastContext } from '@/lib/context/toast.context';
 import { useMutation } from '@apollo/client';
 import { debounce } from 'lodash';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 export default function CouponTable({
   data,
   loading,
-}: {
-  data: ICoupon[] | null | undefined;
-  loading: boolean;
-}) {
+  filters,
+}: ICouponsTableProps) {
+  //filters
+
+  //delete queries
+  const [
+    deleteCoupon,
+    {
+      error: deleteCouponError,
+      data: deleteCouponData,
+      loading: deleteCouponLoading,
+    },
+  ] = useMutation(DELETE_COUPON);
+  //temporary console
+  console.log(
+    deleteCoupon,
+    deleteCouponData,
+    deleteCouponError,
+    deleteCouponLoading
+  );
+  const [
+    editCoupon,
+    {
+      data: editCouponData,
+      loading: editCouponLoading,
+      error: editCouponError,
+    },
+  ] = useMutation(EDIT_COUPON);
+
   //states
   const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<IEditPopupVal>({
     _id: '',
     bool: false,
   });
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortedData, setSortedData] = useState<ICoupon[]>([]);
+  const [sortedData, setSortedData] = useState<ICoupon[] | null | undefined>(
+    data
+  );
   const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
 
   //toast
@@ -48,16 +76,14 @@ export default function CouponTable({
 
   // handle enabled toggle
   function handleEnableField(rowData: ICoupon) {
-    const coupon = sortedData.find((d) => d._id === rowData._id);
-    const filteredData = sortedData.filter((d) => d._id !== rowData._id);
+    const coupon = sortedData?.find((d) => d._id === rowData._id);
+    const filteredData = sortedData?.filter((d) => d._id !== rowData._id);
     const updatedCoupon = { ...rowData, enabled: !coupon?.enabled };
-    setSortedData(() => [updatedCoupon, ...filteredData]);
+    if (filteredData) {
+      setSortedData(() => [updatedCoupon, ...filteredData]);
+    }
   }
-  //edit mutation
-  const [editCoupon, { data: newData, loading: loadingNew, error }] =
-    useMutation(EDIT_COUPON);
-
-  //handle toggle mutation
+  //handle toggle mutation (edit)
   async function handleSubmitToggleState(rowData: ICoupon) {
     try {
       const updatedCoupon = {
@@ -79,15 +105,41 @@ export default function CouponTable({
       showToast({
         type: 'error',
         message:
-          error?.message ||
-          error?.graphQLErrors[0].message ||
+          editCouponError?.message ||
+          editCouponError?.graphQLErrors[0].message ||
           'Something went wrong please try again',
       });
     }
   }
+
   //debounce toggle state
   const optimizedToggleFunction = debounce(handleSubmitToggleState, 2000);
 
+  //handle final delete
+  // async function deleteItem() {
+  //   try {
+  //     await deleteCoupon({
+  //       variables: {
+  //         id: deleteCouponData?._id,
+  //       },
+  //     });
+  //     showToast({
+  //       type: 'success',
+  //       message: 'Coupon deletion was successfull',
+  //       life: 2000,
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     showToast({
+  //       type: 'error',
+  //       message:
+  //         'An unknown error occured, please try again' ||
+  //         deleteCouponError?.graphQLErrors[0].message ||
+  //         deleteCouponError?.message,
+  //       life: 2000,
+  //     });
+  //   }
+  // }
   //column
   const columns: ITableColumn<ICoupon>[] = [
     {
@@ -109,7 +161,10 @@ export default function CouponTable({
         <div className="flex gap-2 items-center w-full justify-between">
           <InputSwitch
             checked={rowData.enabled}
-            disabled={loadingNew && newData?.editCoupon?._id === rowData?._id}
+            disabled={
+              editCouponLoading &&
+              editCouponData?.editCoupon?._id === rowData?._id
+            }
             className={rowData.enabled ? 'p-inputswitch-checked' : ''}
             onChange={() => handleEnableField(rowData)}
             onClick={() => optimizedToggleFunction(rowData)}
@@ -137,33 +192,14 @@ export default function CouponTable({
     },
   ];
 
-  //sorting data
-  useEffect(() => {
-    const filteredData = data?.filter((coupon) =>
-      Object.values(coupon).some((value) =>
-        value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    );
-    setSortedData(filteredData || []);
-  }, [searchQuery, data]);
   return (
-    <div className="flex flex-col gap-2 p-3 w-full">
-      <CustomTextField
-        type="text"
-        name="searchQuery"
-        showLabel={false}
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="w-72 p-3 rounded-md m-2 outline active:outline-green-700 self-start"
-        placeholder="Filter tasks..."
-      />
-      <GenericTable
-        columns={columns}
-        data={sortedData}
-        onSelectionChange={(e) => setSelectedData(e as ICoupon[])}
-        selection={selectedData}
-        loading={loading}
-      />
-    </div>
+    <GenericTable
+      columns={columns}
+      data={sortedData}
+      onSelectionChange={(e) => setSelectedData(e as ICoupon[])}
+      selection={selectedData}
+      loading={loading}
+      filters={filters}
+    />
   );
 }

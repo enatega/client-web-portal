@@ -20,7 +20,10 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 //hooks
 import { GET_CUISINES } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import { useEffect, useState } from 'react';
+import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
+import { FilterMatchMode } from 'primereact/api';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CuisinesScreen() {
   const [visible, setVisible] = useState(false);
@@ -29,6 +32,23 @@ export default function CuisinesScreen() {
     DocumentNode,
     IGetCuisinesVariables
   >(GET_CUISINES, {}) as IQueryResult<IGetCuisinesData | undefined, undefined>;
+
+  //filters
+  const [filters, setFilters] = useState({
+    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
+  });
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+  //global filters change
+  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters['global'].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
 
   //toggle visibility
   const handleButtonClick = () => {
@@ -73,7 +93,19 @@ export default function CuisinesScreen() {
           className="bg-black text-white p-2 rounded-md"
         />
       </div>
-      <CuisineTable data={cuisinesData} loading={loading} />
+      <div className="self-start flex items-center justify-center gap-x-3">
+        <CustomTextField
+          name="searchQuery"
+          onChange={onGlobalFilterChange}
+          value={globalFilterValue}
+          showLabel={false}
+          placeholder="Seach here..."
+          type="text"
+          className="w-96"
+        />
+        <CustomActionActionButton Icon={faCirclePlus} title="Action" />
+      </div>
+      <CuisineTable data={cuisinesData} loading={loading} filters={filters} />
     </div>
   );
 }

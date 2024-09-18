@@ -1,3 +1,4 @@
+import { DataTableFilterMeta } from 'primereact/datatable';
 import { Dispatch, SetStateAction } from 'react';
 
 export interface ICuisine {
@@ -18,4 +19,10 @@ export interface IGetCuisinesVariables {}
 export interface IAddCuisineProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
   setCuisinesData: (cuisine: ICuisine) => void;
+}
+
+export interface ICuisineTableProps {
+  data: ICuisine[] | undefined | null;
+  loading: boolean;
+  filters?: DataTableFilterMeta;
 }
