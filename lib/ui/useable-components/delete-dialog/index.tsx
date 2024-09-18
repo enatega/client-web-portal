@@ -27,7 +27,7 @@ export default function DeleteDialog({
     accept,
     reject,
   });
-
+  console.log({ visible });
   return (
     <>
       {/* {visible && <ConfirmDialog />} */}
