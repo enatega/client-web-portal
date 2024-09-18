@@ -8,16 +8,7 @@ export interface ICuisine {
   shopType: string;
   __typename: string;
 }
-export interface ICuisinesData {
-  data: {
-    description: string;
-    image: string;
-    name: string;
-    shopType: string;
-    __typename: string;
-    _id: string;
-  }[];
-}
+
 export interface IGetCuisinesData {
   cuisines: ICuisine[];
 }

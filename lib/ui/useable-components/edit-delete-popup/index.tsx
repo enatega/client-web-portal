@@ -1,14 +1,16 @@
 'use client';
 import { DELETE_COUPON, DELETE_CUISINE } from '@/lib/api/graphql/mutants';
 import { ToastContext } from '@/lib/context/toast.context';
-import IEditDeleteInterface from '@/lib/utils/interfaces/edit-delete.interface';
+import IEditDeleteInterface, {
+  IEditDeleteProps,
+} from '@/lib/utils/interfaces/edit-delete.interface';
 import { useMutation } from '@apollo/client';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useEffect, useRef, useState } from 'react';
 import DeleteDialog from '../delete-dialog';
 
-export default function EditDeletePopup<T extends { _id: string }>({
+export default function EditDeletePopup<T extends IEditDeleteProps>({
   setIsEditDeletePopupOpen,
   data,
   type,

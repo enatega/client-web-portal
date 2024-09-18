@@ -1,8 +1,6 @@
 import { ApolloError } from '@apollo/client';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
-import { ICouponsData } from './coupons.interface';
-import { ICuisinesData } from './cuisine.interface';
 
 export interface IGlobalProps {
   children?: React.ReactNode;
@@ -14,10 +12,7 @@ export interface IDropdownSelectItem {
   label: string;
   code: string;
 }
-export interface IQueryResponse {
-  coupons: ICouponsData[] | undefined;
-  cuisines: ICuisinesData[] | undefined;
-}
+
 export interface QueryState {
   data: {}[];
   loading: boolean;
