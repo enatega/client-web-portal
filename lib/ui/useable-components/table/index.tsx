@@ -38,7 +38,7 @@ const Table = <T extends ITableExtends>({
       onSelectionChange={handleSelectionChange}
       dataKey="id"
       tableStyle={{ minWidth: '50rem' }}
-      selectionMode="multiple"
+      selectionMode="checkbox"
       filters={filters}
     >
       <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
