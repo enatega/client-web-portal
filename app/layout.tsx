@@ -25,7 +25,6 @@ import { useSetupApollo } from '@/lib/hooks/useSetApollo';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './globals.css';
-
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
@@ -40,7 +39,6 @@ export default function RootLayout({
   const value = {
     ripple: true,
   };
-
   return (
     <html lang="en">
       <head>

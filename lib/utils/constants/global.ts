@@ -1,10 +1,11 @@
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import {
   faCheck,
   faExclamationTriangle,
   faInfoCircle,
   faXmarkCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ISeverityStyles } from '../interfaces';
+import { ISeverityStyles } from '../interfaces/toast.interface';
 
 export const SEVERITY_STYLES: ISeverityStyles = {
   error: {
@@ -32,3 +33,8 @@ export const SEVERITY_STYLES: ISeverityStyles = {
     iconBg: '#F7DC6F',
   },
 };
+
+export const ApolloClientConfig = new ApolloClient({
+  uri: 'https://enatega-multivendor.up.railway.app/graphql',
+  cache: new InMemoryCache(),
+});

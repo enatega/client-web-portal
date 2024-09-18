@@ -10,7 +10,7 @@ import { VendorContext } from '@/lib/context/vendor.context';
 
 // Interface and Types
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
-import { IVendorForm } from '@/lib/utils/interfaces/forms';
+import { IRiderForm } from '@/lib/utils/interfaces/forms';
 
 // Constants
 import { VendorErrors } from '@/lib/utils/constants';
@@ -31,7 +31,7 @@ import { VendorSchema } from '@/lib/utils/schema';
 import { ToastContext } from '@/lib/context/toast.context';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-const initialValues: IVendorForm = {
+const initialValues: IRiderForm = {
   name: '',
   email: '',
   password: '',
