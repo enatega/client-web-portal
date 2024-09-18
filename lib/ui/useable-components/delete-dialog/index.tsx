@@ -11,15 +11,22 @@ const DeleteDialog = ({
   onConfirm,
   message,
 }: IDeleteDialogProps) => {
+  console.log({ visible });
   const footer = (
     <div>
       <Button
         label="No"
         icon="pi pi-times"
         onClick={onHide}
-        className="p-button-text"
+        className="p-button-text text-blue-600 border border-blue-600 active:bg-blue-700 px-5 py-2 mx-2"
       />
-      <Button label="Yes" icon="pi pi-check" onClick={onConfirm} autoFocus />
+      <Button
+        label="Yes"
+        icon="pi pi-check"
+        onClick={onConfirm}
+        autoFocus
+        className=" text-white bg-red-600 px-5 py-2 mx-2"
+      />
     </div>
   );
 

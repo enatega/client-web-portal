@@ -13,24 +13,6 @@ export default function CuisineTable({
   loading: boolean;
 }) {
   //state variables
-  const [isEditing, setIsEditing] = useState<{
-    bool: boolean;
-    data: ICuisine;
-  }>({
-    bool: false,
-    data: {
-      _id: '',
-      __typename: '',
-      description: '',
-      image: '',
-      name: '',
-      shopType: '',
-    },
-  });
-  const [isDeleting, setIsDeleting] = useState<{ _id: string; bool: boolean }>({
-    _id: '',
-    bool: false,
-  });
   const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<{
     _id: string;
     bool: boolean;
@@ -77,10 +59,9 @@ export default function CuisineTable({
         <div className="three-dots">
           {isEditPopupOpen._id === data._id && isEditPopupOpen.bool ? (
             <EditDeletePopup
-              setIsDeleting={setIsDeleting}
-              setIsEditing={setIsEditing}
               setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
               data={data}
+              type={'cuisine'}
             />
           ) : (
             <FontAwesomeIcon
@@ -98,7 +79,6 @@ export default function CuisineTable({
       ),
     },
   ];
-  console.log({ isDeleting, isEditing });
   return (
     <GenericTable
       columns={cuisineColums}

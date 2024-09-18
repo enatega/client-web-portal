@@ -1,6 +1,5 @@
 'use client';
 //graphql
-import { GET_CUISINES } from '@/lib/api/graphql/query/cuisines';
 import { DocumentNode } from 'graphql';
 //components
 import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/AddCuisine';
@@ -19,6 +18,7 @@ import {
 //icons
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 //hooks
+import { GET_CUISINES } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useEffect, useState } from 'react';
 

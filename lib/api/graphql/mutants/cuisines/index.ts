@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const createCuisine = gql`
+export const CREATE_CUISINE = gql`
   mutation CreateCuisine($cuisineInput: CuisineInput!) {
     createCuisine(cuisineInput: $cuisineInput) {
       _id
@@ -11,7 +11,7 @@ export const createCuisine = gql`
     }
   }
 `;
-export const editCuisine = gql`
+export const EDIT_CUISINE = gql`
   mutation editCuisine($cuisineInput: CuisineInput!) {
     editCuisine(cuisineInput: $cuisineInput) {
       _id
@@ -22,7 +22,7 @@ export const editCuisine = gql`
     }
   }
 `;
-export const deleteCuisine = gql`
+export const DELETE_CUISINE = gql`
   mutation DeleteCuisine($id: String!) {
     deleteCuisine(id: $id)
   }

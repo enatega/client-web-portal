@@ -1,4 +1,3 @@
-import { GET_COUPONS } from '@/lib/api/graphql/query/coupons';
 import AddCoupon from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/AddCoupon';
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -12,6 +11,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 import { Sidebar } from 'primereact/sidebar';
 
+import { GET_COUPONS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useEffect, useState } from 'react';
 export default function CouponsScreen() {
