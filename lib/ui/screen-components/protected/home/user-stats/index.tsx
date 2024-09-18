@@ -1,16 +1,25 @@
 // Components
 import StatsCard from '@/lib/ui/useable-components/stats-card';
 
-// Interface & Types
-
-// Dummy Data
+// GraphQL Queries
 import {
   GET_RESTAURANTS_L,
   GET_RIDERS_L,
   GET_USERS_L,
   GET_VENDORS_L,
 } from '@/lib/api/graphql';
+
+// Hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+
+// Icons
+import {
+  IQueryResult,
+  IRestaurantsResponseGraphQL,
+  IUsersResponseGraphQL,
+  IVendorResponseGraphQL,
+} from '@/lib/utils/interfaces';
+import { IRidersResponseGraphQL } from '@/lib/utils/interfaces/rider.interface';
 import {
   faMotorcycle,
   faStore,
@@ -20,55 +29,51 @@ import {
 
 export default function UserStats() {
   const usersCount = useQueryGQL(GET_USERS_L, {
-    fetchPolicy: 'network-only',
     debounceMs: 300,
-  });
+  }) as IQueryResult<IUsersResponseGraphQL | undefined, undefined>;
   const vendorsCount = useQueryGQL(GET_VENDORS_L, {
-    fetchPolicy: 'network-only',
     debounceMs: 300,
-  });
+  }) as IQueryResult<IVendorResponseGraphQL | undefined, undefined>;
   const restaurantsCount = useQueryGQL(GET_RESTAURANTS_L, {
-    fetchPolicy: 'network-only',
     debounceMs: 300,
-  });
+  }) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
   const ridersCount = useQueryGQL(GET_RIDERS_L, {
-    fetchPolicy: 'network-only',
     debounceMs: 300,
-  });
+  }) as IQueryResult<IRidersResponseGraphQL | undefined, undefined>;
 
   return (
     <div className="grid items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <StatsCard
         label="Total User"
-        total={40987}
+        total={usersCount?.data?.users?.length ?? 0}
         description="8.5% up from yesterday"
         icon={faUsers}
         route="/general/users"
-        loading={usersCount?.isLoading}
+        loading={usersCount?.loading}
       />
       <StatsCard
         label="Total Vendors"
-        total={7689}
+        total={vendorsCount.data?.vendors?.length ?? 0}
         description="2.4% up from yesterday"
         icon={faStore}
         route="/general/vendors"
-        loading={vendorsCount?.isLoading}
+        loading={vendorsCount?.loading}
       />
       <StatsCard
         label="Total Restaurants"
-        total={20689}
+        total={restaurantsCount?.data?.restaurants?.length ?? 0}
         description="6.1% down from yesterday"
         icon={faUtensils}
         route="/general/restaurants"
-        loading={restaurantsCount?.isLoading}
+        loading={restaurantsCount?.loading}
       />
       <StatsCard
         label="Total Riders"
-        total={12689}
+        total={ridersCount?.data?.riders?.length ?? 0}
         description="1.9% up from yesterday"
         icon={faMotorcycle}
         route="/general/riders"
-        loading={ridersCount?.isLoading}
+        loading={ridersCount?.loading}
       />
     </div>
   );

@@ -71,14 +71,6 @@ body {
   gap: 10px;
 }
 
-/* Card */
-.card {
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  background-color: white;
-}
-
 /* Text Component */
 .custom-text {
   font-feature-settings:
@@ -92,6 +84,14 @@ body {
   line-height: 40px;
 }
 
+/* Card */
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background-color: white;
+}
+
 .card-h1 {
   font-size: 15px;
   line-height: 20px;
@@ -101,6 +101,13 @@ body {
 
 .card-h2 {
   font-size: 13px;
+  line-height: 20px;
+  letter-spacing: 3%;
+  font-weight: 400;
+}
+
+.card-h3 {
+  font-size: 11px;
   line-height: 20px;
   letter-spacing: 3%;
   font-weight: 400;

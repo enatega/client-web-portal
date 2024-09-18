@@ -22,6 +22,7 @@ export const useQueryGQL = <
     fetchPolicy?: WatchQueryFetchPolicy;
     retry?: number;
     retryDelayMs?: number;
+    onCompleted?: (data: NoInfer<T>) => void;
   } = {}
 ) => {
   const {
@@ -31,12 +32,14 @@ export const useQueryGQL = <
     fetchPolicy,
     retry = 3,
     retryDelayMs = 1000,
+    onCompleted,
   } = options;
   const { data, error, loading, refetch } = useQuery<T, V>(query, {
     variables,
     skip: !enabled,
     fetchPolicy,
     pollInterval,
+    onCompleted,
   });
 
   const debouncedRefetch = useCallback(

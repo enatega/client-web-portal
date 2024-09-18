@@ -8,24 +8,12 @@ export const GET_VENDORS = gql`
       userType
       restaurants {
         _id
-        orderId
-        orderPrefix
-        slug
-        name
-        image
-        address
-        location {
-          coordinates
-        }
-        zone {
-          _id
-          title
-        }
-        shopType
       }
     }
+    vendorCount @client
   }
 `;
+
 export const GET_VENDORS_L = gql`
   query vendors {
     vendors {

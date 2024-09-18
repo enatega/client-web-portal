@@ -4,17 +4,17 @@
 import React, { useRef } from 'react';
 
 // Interfaces
-import {
-  IToast,
-  IToastContext,
-  IToastProviderProps,
-} from '@/lib/utils/interfaces';
 
 // Prime React
 import { Toast } from 'primereact/toast';
 
 // Components
 import CustomNotification from '../ui/useable-components/notification';
+import {
+  IToast,
+  IToastContext,
+  IToastProviderProps,
+} from '../utils/interfaces/toast.interface';
 
 export const ToastContext = React.createContext<IToastContext>(
   {} as IToastContext

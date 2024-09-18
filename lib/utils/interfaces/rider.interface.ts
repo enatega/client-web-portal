@@ -28,3 +28,22 @@ export interface IRiderHeaderProps extends IGlobalComponentProps {
   globalFilterValue: string;
   onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+export interface IRiderReponse {
+  _id: string;
+  name: string;
+  username: string;
+  password: string;
+  phone: string;
+  available: boolean;
+  zone: {
+    _id: string;
+    title: string;
+    __typename: 'Zone';
+  };
+  __typename: 'Rider';
+}
+
+export interface IRidersResponseGraphQL {
+  riders: IRiderReponse[];
+}

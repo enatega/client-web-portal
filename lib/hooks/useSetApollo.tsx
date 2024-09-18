@@ -1,3 +1,4 @@
+// Imports for Apollo Client setup and configuration
 import { useConfiguration } from '@/lib/hooks/useConfiguration';
 import {
   ApolloClient,
@@ -12,8 +13,12 @@ import {
 } from '@apollo/client';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
+
+// GraphQL related imports
 import { DefinitionNode } from 'graphql';
 import { createClient } from 'graphql-ws';
+
+// Utility imports
 import { Subscription } from 'zen-observable-ts';
 
 export const useSetupApollo = (): ApolloClient<NormalizedCacheObject> => {

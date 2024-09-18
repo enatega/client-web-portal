@@ -20,7 +20,9 @@ import { FontawesomeConfig } from '@/lib/config';
 
 // Styles
 import { ConfigurationProvider } from '@/lib/context/configuration.context';
+import { RestaurantProvider } from '@/lib/context/restaurant.context';
 import { ToastProvider } from '@/lib/context/toast.context';
+import { VendorProvider } from '@/lib/context/vendor.context';
 import { useSetupApollo } from '@/lib/hooks/useSetApollo';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
@@ -51,7 +53,11 @@ export default function RootLayout({
             <ToastProvider>
               <ConfigurationProvider>
                 <LayoutProvider>
-                  <SidebarProvider>{children}</SidebarProvider>
+                  <SidebarProvider>
+                    <VendorProvider>
+                      <RestaurantProvider>{children}</RestaurantProvider>
+                    </VendorProvider>
+                  </SidebarProvider>
                 </LayoutProvider>
               </ConfigurationProvider>
             </ToastProvider>

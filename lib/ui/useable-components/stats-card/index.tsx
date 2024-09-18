@@ -7,7 +7,7 @@ import { IStatsCardProps } from '@/lib/utils/interfaces';
 
 // Methods
 import { formatCurrency } from '@/lib/utils/methods';
-import { Skeleton } from 'primereact/skeleton';
+import DashboardStatsCardSkeleton from '../custom-skeletons/dasboard.stats.card.skeleton';
 
 export default function StatsCard({
   label,
@@ -18,14 +18,7 @@ export default function StatsCard({
   loading = false,
 }: IStatsCardProps) {
   return loading ? (
-    <div className="card cursor-pointer">
-      <div className="flex justify-between items-center mb-2">
-        <Skeleton width="60%" height="1rem" className="mb-2"></Skeleton>
-        <Skeleton shape="circle" size="2.5rem"></Skeleton>
-      </div>
-      <Skeleton width="80%" height="2rem" className="mb-2"></Skeleton>
-      <Skeleton width="40%" height="1rem"></Skeleton>
-    </div>
+    <DashboardStatsCardSkeleton />
   ) : (
     <Link href={route}>
       <div className="card cursor-pointer">
