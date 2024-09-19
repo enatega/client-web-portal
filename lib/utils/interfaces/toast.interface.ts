@@ -9,7 +9,7 @@ export interface IToast {
   type: TToastSeverity;
   title: string;
   message: string;
-  duration: number;
+  duration?: number;
   loading?: boolean;
 }
 

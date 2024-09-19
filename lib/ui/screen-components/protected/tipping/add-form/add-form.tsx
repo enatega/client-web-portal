@@ -18,8 +18,7 @@ import CustomNumberTextField from '@/lib/ui/useable-components/custom-input';
 import { Form, Formik, FormikHelpers } from 'formik';
 
 // GraphQL
-import { getTipping } from '@/lib/api/graphql';
-import { createTipping, editTipping } from '@/lib/api/graphql/mutation';
+import { createTipping, editTipping, getTipping } from '@/lib/api/graphql';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { gql, useMutation } from '@apollo/client';
 
