@@ -12,8 +12,6 @@ export const uploadImageToCloudinary: IUploadImageToCloudinary = async (
     upload_preset: preset,
   };
 
-  console.log({ file, preset, url, data });
-
   try {
     const result = await fetch(url, {
       body: JSON.stringify(data),

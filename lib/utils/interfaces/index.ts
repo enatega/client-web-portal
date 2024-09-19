@@ -7,6 +7,7 @@ export * from './image-upload.interface';
 export * from './input-field.interface';
 export * from './layout.interface';
 export * from './panel-menu.interface';
+export * from './popup-menu.interface';
 export * from './progress-indicator.interface';
 export * from './restaurant.interface';
 export * from './ripple.interface';

@@ -6,7 +6,7 @@ import {
 } from '@apollo/client';
 import { WatchQueryFetchPolicy } from '@apollo/client/core/watchQueryOptions';
 import { debounce } from 'lodash';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { retryQuery } from '../utils/methods';
 
 export const useQueryGQL = <
@@ -34,6 +34,7 @@ export const useQueryGQL = <
     retryDelayMs = 1000,
     onCompleted,
   } = options;
+
   const { data, error, loading, refetch } = useQuery<T, V>(query, {
     variables,
     skip: !enabled,
@@ -42,25 +43,36 @@ export const useQueryGQL = <
     onCompleted,
   });
 
+  const [isRefetching, setIsRefetching] = useState(false);
+
   const debouncedRefetch = useCallback(
     debounce(async (variables?: Partial<V>) => {
-      return await retryQuery(() => refetch(variables), retry, retryDelayMs);
+      setIsRefetching(true);
+      try {
+        const result = await retryQuery(
+          () => refetch(variables),
+          retry,
+          retryDelayMs
+        );
+        return result;
+      } finally {
+        setIsRefetching(false);
+      }
     }, debounceMs),
     [refetch, debounceMs, retry, retryDelayMs]
   );
 
   const handleRefetch = async () => {
     if (enabled) {
-      await debouncedRefetch(); // Ensure the async debounced fetch is awaited
+      await debouncedRefetch();
     }
   };
 
   return {
     data,
     error,
-    loading,
+    loading: loading || isRefetching,
     refetch: handleRefetch,
-    isLoading: loading,
     isError: !!error,
     isSuccess: !!data,
   };

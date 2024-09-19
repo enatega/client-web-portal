@@ -13,6 +13,7 @@ interface IGlobalTextFieldProps extends IGlobalComponentProps {
   value?: string;
   showLabel: boolean;
   style?: CSSProperties;
+  isLoading?: boolean;
 }
 
 // Extra

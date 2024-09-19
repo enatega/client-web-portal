@@ -18,7 +18,7 @@ import {
 // Components
 import DeleteDialog from '../delete-dialog';
 
-const ActionMenu = ({ items, itemId }: IActionMenuProps) => {
+const ActionMenu = ({ items }: IActionMenuProps) => {
   //Hooks
   const [deleteProductDialogVisible, setDeleteProductDialogVisible] =
     useState(false);
@@ -41,7 +41,6 @@ const ActionMenu = ({ items, itemId }: IActionMenuProps) => {
 
   const confirmDelete = () => {
     if (itemToDelete) {
-      console.log('Deleting item with ID:', itemId); // Print the ID
       itemToDelete.command?.({} as MenuItemCommandEvent);
       setDeleteProductDialogVisible(false);
       setItemToDelete(null);

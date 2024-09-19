@@ -28,6 +28,16 @@ export const GET_VENDOR_BY_ID = gql`
       _id
       email
       userType
+    }
+  }
+`;
+
+export const GET_VENDOR_BY_ID_WITH_RESTAURANTS = gql`
+  query GetVendor($id: String!) {
+    getVendor(id: $id) {
+      _id
+      email
+      userType
       restaurants {
         _id
         orderId

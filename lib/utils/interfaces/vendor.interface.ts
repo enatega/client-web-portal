@@ -14,7 +14,7 @@ export interface IVendorAddFormComponentProps extends IGlobalComponentProps {
 
 export interface IVendorContextProps {
   vendorFormVisible: boolean;
-  onSetVendorFormVisible: (status: boolean) => void;
+  onSetVendorFormVisible: (status: boolean, isEdit?: boolean) => void;
   vendorId: string | null;
   onSetVendorId: (val: string) => void;
   vendorResponse: IQueryResult<IVendorResponseGraphQL | undefined, undefined>;
@@ -49,12 +49,20 @@ export interface IVendorReponse {
   email: string;
   userType: string;
   restaurants: {
-    __typename: 'Restaurant';
     _id: string;
   }[];
-  __typename: 'OwnerData';
 }
 
 export interface IVendorResponseGraphQL {
   vendors: IVendorReponse[];
+}
+
+export interface IGetVendorReponse
+  extends Omit<IVendorReponse, 'restaurants' | 'userType'> {
+  _id: string;
+  email: string;
+}
+
+export interface IGetVendorResponseGraphQL {
+  getVendor: IVendorReponse;
 }

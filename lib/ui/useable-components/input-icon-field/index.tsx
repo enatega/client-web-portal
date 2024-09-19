@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
+import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 // Styles
 
@@ -16,9 +17,10 @@ export default function CustomIconTextField({
   iconProperties: { icon, position, style },
   placeholder,
   showLabel,
+  isLoading = false,
   ...props
 }: IIconTextFieldProps) {
-  return (
+  return !isLoading ? (
     <IconField iconPosition={position}>
       <InputIcon style={style}>
         <FontAwesomeIcon icon={icon} />
@@ -37,5 +39,7 @@ export default function CustomIconTextField({
         />
       </div>
     </IconField>
+  ) : (
+    <InputSkeleton />
   );
 }

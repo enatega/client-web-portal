@@ -41,7 +41,7 @@ export const RestaurantSchema = Yup.object().shape({
     .oneOf([Yup.ref('password'), null], 'Password must match')
     .required('Required'),
 
-  address: Yup.string().min(2).max(35).required('Required'),
+  address: Yup.string().min(2).max(100).required('Required'),
   deliveryTime: Yup.number().required('Required'),
   minOrder: Yup.number().required('Required'),
   salesTax: Yup.number().required('Required'),

@@ -14,6 +14,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputMask } from 'primereact/inputmask';
 
 // Styles
+import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 import classes from './phone-input-field.module.css';
 
 export default function CustomPhoneTextField({
@@ -21,11 +22,12 @@ export default function CustomPhoneTextField({
   style,
   showLabel,
   placeholder = '',
+  isLoading = false,
   ...props
 }: IPhoneTextFieldProps) {
   const [selectedCity, setSelectedCity] = useState('+44');
 
-  return (
+  return !isLoading ? (
     <div className="relative w-full flex flex-col justify-center gap-y-1">
       {showLabel && (
         <label htmlFor="username" className="text-sm font-[500]">
@@ -51,5 +53,7 @@ export default function CustomPhoneTextField({
         />
       </div>
     </div>
+  ) : (
+    <InputSkeleton />
   );
 }

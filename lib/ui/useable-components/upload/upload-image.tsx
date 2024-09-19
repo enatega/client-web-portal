@@ -54,8 +54,6 @@ function CustomUploadImageComponent({
         if (fileReader.result) {
           setImageFile(fileReader.result as string);
 
-          console.log(configuration);
-
           uploadImageToCloudinary(
             fileReader.result as string,
             configuration?.cloudinaryUploadUrl ?? '',

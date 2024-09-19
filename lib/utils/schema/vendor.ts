@@ -40,3 +40,9 @@ export const VendorSchema = Yup.object().shape({
     .oneOf([Yup.ref('password'), null], 'Password must match')
     .required('Required'),
 });
+export const VendorEditSchema = Yup.object().shape({
+  name: Yup.string(),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string(),
+  confirmPassword: Yup.string(),
+});

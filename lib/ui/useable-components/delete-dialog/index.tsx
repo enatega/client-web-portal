@@ -2,7 +2,6 @@ import { Button } from 'primereact/button';
 import { confirmDialog } from 'primereact/confirmdialog';
 
 export default function DeleteDialog({
-  visible,
   onConfirm,
   onHide,
 }: {
@@ -10,12 +9,9 @@ export default function DeleteDialog({
   onConfirm: () => void;
   onHide: () => void;
 }) {
-  const accept = () => {
-    console.log('accept');
-  };
+  const accept = () => {};
 
   const reject = () => {
-    console.log('accept');
     onHide();
   };
 
@@ -27,7 +23,7 @@ export default function DeleteDialog({
     accept,
     reject,
   });
-  console.log({ visible });
+
   return (
     <>
       {/* {visible && <ConfirmDialog />} */}

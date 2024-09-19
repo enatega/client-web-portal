@@ -319,7 +319,7 @@ export default function RestaurantAddForm({
                             placeholder="Address"
                             name="address"
                             type="text"
-                            maxLength={20}
+                            maxLength={100}
                             showLabel={true}
                             value={values.address ?? ''}
                             onChange={handleChange}

@@ -39,12 +39,13 @@ export default function VendorMain({
     filtered,
     vendorResponse,
   } = useContext(VendorContext);
+
   const {
     onSetRestaurantFormVisible,
     restaurantGlobalFilter,
     restaurantFiltered,
-    restaurantByOwnerResponse,
     onSetRestaurantGlobalFilter,
+    restaurantByOwnerResponse,
   } = useContext(RestaurantContext);
 
   const vendors = globalFilter ? filtered : vendorResponse?.data?.vendors;
@@ -92,7 +93,11 @@ export default function VendorMain({
 
         {/* Vendors content */}
         <div className="pb-16">
-          {vendors ? (
+          {vendorResponse?.loading ? (
+            new Array(10)
+              .fill(0)
+              .map((_, i: number) => <CustomVendorSkeleton key={i} />)
+          ) : vendors ? (
             vendors?.map((vendor) => (
               <VendorCard
                 key={vendor._id}
@@ -102,10 +107,6 @@ export default function VendorMain({
                 totalRestaurants={vendor?.restaurants?.length ?? 0}
               />
             ))
-          ) : vendorResponse?.loading ? (
-            new Array(10)
-              .fill(0)
-              .map((_, i: number) => <CustomVendorSkeleton key={i} />)
           ) : (
             <div className="flex justify-center items-center h-64 px-4">
               <div className="text-gray-500 text-base sm:text-lg font-semibold text-center">
@@ -154,14 +155,14 @@ export default function VendorMain({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-16 pt-">
-          {restaurants ? (
-            restaurants.map((restaurant) => (
-              <RestaurantCard key={restaurant._id} restaurant={restaurant} />
-            ))
-          ) : restaurantByOwnerResponse?.loading ? (
+          {restaurantByOwnerResponse?.loading ? (
             new Array(10)
               .fill(0)
               .map((_, i: number) => <CustomRestaurantCardSkeleton key={i} />)
+          ) : restaurants ? (
+            restaurants.map((restaurant) => (
+              <RestaurantCard key={restaurant._id} restaurant={restaurant} />
+            ))
           ) : (
             <div className="flex justify-center items-center h-64 px-4 col-span-full">
               <div className="text-gray-500 text-base sm:text-lg font-semibold text-center">

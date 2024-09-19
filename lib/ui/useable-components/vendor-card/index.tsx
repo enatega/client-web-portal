@@ -1,6 +1,6 @@
 // Core
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 // Context
 import { VendorContext } from '@/lib/context/vendor.context';
@@ -12,10 +12,15 @@ import { IVendorCardProps } from '@/lib/utils/interfaces';
 import { onUseLocalStorage } from '@/lib/utils/methods';
 
 // Icons
-import { faEllipsisV, faShop } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEdit,
+  faEllipsisVertical,
+  faShop,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 // Component
-import RippleComponent from '../ripple';
+import CustomPopupMenu from '../popup-menu';
 import TextComponent from '../text-field';
 
 export default function VendorCard({
@@ -26,6 +31,9 @@ export default function VendorCard({
 }: IVendorCardProps) {
   // Context
   const { vendorId, onSetVendorId } = useContext(VendorContext);
+  const { onSetVendorFormVisible } = useContext(VendorContext);
+
+  const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<boolean>(false);
 
   // Handlers
   const onVendorCardClicked = (_vendorId: string) => {
@@ -33,8 +41,21 @@ export default function VendorCard({
     onUseLocalStorage('save', 'vendorId', _vendorId.toString());
   };
 
+  const onHandlerEdit = () => {
+    onSetVendorFormVisible(true, true);
+  };
+
+  const onHandlerDelete = () => {};
   return (
-    <RippleComponent onClick={() => onVendorCardClicked(_id)}>
+    <div
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+        if (!(e.target as HTMLElement).closest('.three-dots')) {
+          onVendorCardClicked(_id);
+        }
+        setIsEditDeletePopupOpen(false);
+      }}
+      className="relative"
+    >
       <div
         className={`flex items-center  bg-${vendorId === _id ? 'black' : 'white'} p-2 px-3 cursor-pointer`}
       >
@@ -69,12 +90,45 @@ export default function VendorCard({
             </span>
           </div>
         </div>
-        <FontAwesomeIcon
-          icon={faEllipsisV}
-          color={vendorId === _id ? 'white' : 'black'}
-          size="lg"
-        />
+
+        <div className="three-dots relative">
+          {vendorId === _id && (
+            <FontAwesomeIcon
+              icon={faEllipsisVertical}
+              className={`p-1 ${
+                isEditPopupOpen ? 'text-gray-400' : 'text-white'
+              } hover:scale-105 cursor-pointer`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsEditDeletePopupOpen(!isEditPopupOpen);
+              }}
+            />
+          )}
+          {isEditPopupOpen && (
+            <div className="absolute top-full left-0 mt-1 -translate-x-full z-10">
+              <CustomPopupMenu
+                close={() => setIsEditDeletePopupOpen(false)}
+                items={[
+                  {
+                    title: 'Edit',
+                    icon: faEdit,
+                    fn: onHandlerEdit,
+                    data: vendorId,
+                    color: 'text-gray-600',
+                  },
+                  {
+                    title: 'Delete',
+                    icon: faTrash,
+                    fn: onHandlerDelete,
+                    data: null,
+                    color: 'text-red-500',
+                  },
+                ]}
+              />
+            </div>
+          )}
+        </div>
       </div>
-    </RippleComponent>
+    </div>
   );
 }
