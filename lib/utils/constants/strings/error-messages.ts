@@ -1,10 +1,6 @@
-import {
-  IRiderErrors,
-  ISignFormErrors,
-  IVendorErrors,
-} from '../../interfaces/forms';
-import { IBannersErrors } from '../../interfaces/forms/banners.form.interface';
+import { ISignFormErrors, IVendorErrors } from '../../interfaces/forms';
 import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
+import { IRiderErrors } from '../../interfaces/forms/riders.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',

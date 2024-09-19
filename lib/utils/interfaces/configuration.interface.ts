@@ -1,6 +1,7 @@
-import { IProvider } from './layout.interface';
+import { ReactNode } from 'react';
+import { IGlobalProps } from './global.interface';
 
-export interface IConfigurationProviderProps extends IProvider {}
+export interface IConfigurationContextProps extends IGlobalProps {}
 
 export interface IConfiguration {
   webClientID?: string;
@@ -23,4 +24,8 @@ export interface IConfigurationUnresolved {
   currency: string;
   currencySymbol: string;
   deliveryRate: number;
+}
+
+export interface IConfigurationProviderProps {
+  children: ReactNode;
 }

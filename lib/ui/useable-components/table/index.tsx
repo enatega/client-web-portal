@@ -30,9 +30,9 @@ const Table = <T extends ITableExtends>({
 
   return (
     <DataTable
+      header={header}
       paginator
       rows={5}
-      header={header}
       rowsPerPageOptions={[5, 10, 25, 50]}
       value={data}
       size={size}

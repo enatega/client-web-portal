@@ -12,5 +12,4 @@ export * from './sidebar.interface';
 export * from './stat-card.interface';
 export * from './tabs.interface';
 export * from './text.interface';
-export * from './toast.interface';
 export * from './vendor.interface';

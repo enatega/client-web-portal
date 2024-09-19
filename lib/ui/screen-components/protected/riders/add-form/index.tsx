@@ -133,8 +133,8 @@ export default function RiderAddForm({
       onHide={onHide}
       className="w-full sm:w-[450px]"
     >
-      <div className="w-full h-full flex items-center justify-start">
-        <div className="h-full w-full">
+      {/* <div className="w-full h-full flex items-center justify-start">
+        <div className="h-full">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col mb-2">
               <span className="text-lg">{rider ? 'Edit' : 'Add'} Rider</span>
@@ -300,7 +300,7 @@ export default function RiderAddForm({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </Sidebar>
   );
 }
