@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
-import GenericTable from '../../../../../../useable-components/global-table';
+import GenericTable from '@/lib/ui/useable-components/global-table';
 
 //hooks
 import { useState } from 'react';

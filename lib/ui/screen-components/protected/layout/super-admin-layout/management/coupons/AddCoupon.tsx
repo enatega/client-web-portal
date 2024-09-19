@@ -1,17 +1,32 @@
 'use client';
-import { CREATE_COUPON } from '@/lib/api/graphql/mutations';
+//queries
+import { CREATE_COUPON } from '@/lib/api/graphql';
+
+//contexts
 import { ToastContext } from '@/lib/context/toast.context';
+
+//components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
+
+//interfaces
 import {
   IAddCouponProps,
   ICoupon,
 } from '@/lib/utils/interfaces/coupons.interface';
+
+//schema
 import { CouponFormSchema } from '@/lib/utils/schema/coupon';
-import { useMutation } from '@apollo/client';
+
+//formik
 import { ErrorMessage, Form, Formik } from 'formik';
+
+//prime react
 import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
+
+//hooks
+import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
 export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {

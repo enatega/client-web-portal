@@ -23,10 +23,14 @@ import { InputSwitch } from 'primereact/inputswitch';
 //queries
 import { DELETE_COUPON, EDIT_COUPON } from '@/lib/api/graphql';
 
-//hooks
+//contexts
 import { ToastContext } from '@/lib/context/toast.context';
-import { useMutation } from '@apollo/client';
+
+//lodash
 import { debounce } from 'lodash';
+
+//hooks
+import { useMutation } from '@apollo/client';
 import { useContext, useState } from 'react';
 
 export default function CouponTable({
@@ -191,11 +195,11 @@ export default function CouponTable({
       ),
     },
   ];
-
+  console.log({ data, sortedData });
   return (
     <GenericTable
       columns={columns}
-      data={sortedData}
+      data={sortedData?.length !== 0 ? sortedData : data}
       onSelectionChange={(e) => setSelectedData(e as ICoupon[])}
       selection={selectedData}
       loading={loading}

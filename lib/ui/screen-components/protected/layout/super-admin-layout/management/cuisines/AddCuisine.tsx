@@ -1,17 +1,32 @@
 'use client';
-import { CREATE_CUISINE } from '@/lib/api/graphql/mutations';
+//contexts
+import { CREATE_CUISINE } from '@/lib/api/graphql';
+
+//contexts
 import { ToastContext } from '@/lib/context/toast.context';
+
+//components
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
+
+//interfaces
 import {
   IAddCuisineProps,
   ICuisine,
 } from '@/lib/utils/interfaces/cuisine.interface';
+
+//schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
-import { useMutation } from '@apollo/client';
+
+//formik
 import { ErrorMessage, Form, Formik } from 'formik';
+
+//prime react
 import { ProgressSpinner } from 'primereact/progressspinner';
+
+//hooks
+import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
 export default function AddCuisine({

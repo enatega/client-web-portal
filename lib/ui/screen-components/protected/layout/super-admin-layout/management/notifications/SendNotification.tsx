@@ -33,6 +33,7 @@ export default function SendNotification({
 }) {
   //toast
   const { showToast } = useContext(ToastContext);
+
   //states
   const [notificationData, setNotificationData] = useState({
     title: '',
