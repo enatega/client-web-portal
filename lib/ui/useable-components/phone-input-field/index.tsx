@@ -1,3 +1,4 @@
+'use client';
 import { CountryCodes } from '@/lib/utils/constants/country-codes';
 import { IPhoneTextFieldProps } from '@/lib/utils/interfaces';
 import { Dropdown } from 'primereact/dropdown';
