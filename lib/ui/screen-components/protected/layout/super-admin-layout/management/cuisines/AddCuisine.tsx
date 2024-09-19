@@ -13,6 +13,7 @@ import { useMutation } from '@apollo/client';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { useContext } from 'react';
+// import { useContext } from 'react';
 
 export default function AddCuisine({
   setVisible,
@@ -29,7 +30,7 @@ export default function AddCuisine({
   };
   const { showToast } = useContext(ToastContext);
   //mutation
-  const [CreateCuisine, { loading, error }] = useMutation(CREATE_CUISINE);
+  const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE);
   // shop type options
   const shopTypeOptions = [
     { label: 'Restaurant', code: 'restaurant' },
@@ -69,10 +70,11 @@ export default function AddCuisine({
               type: 'error',
               title: 'New Cuisine',
               message:
-                error?.message ||
-                error?.networkError?.message ||
-                error?.clientErrors[0].message ||
-                error?.graphQLErrors[0].message ||
+                // This will not work (Hamza)
+                /*    err?.message ||
+                err?.networkError?.message ||
+                err?.clientErrors[0].message ||
+                err?.graphQLErrors[0].message || */
                 'An error occured',
               duration: 2000,
             });

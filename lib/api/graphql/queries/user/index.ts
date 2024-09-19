@@ -23,3 +23,16 @@ export const GET_USERS_L = gql`
     }
   }
 `;
+
+export const getUsers = `query{
+  users{
+    _id
+    name
+    email
+    phone
+    addresses{
+      location{coordinates}
+      deliveryAddress
+    }
+  }
+}`;

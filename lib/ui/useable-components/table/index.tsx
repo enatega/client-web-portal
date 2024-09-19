@@ -18,6 +18,8 @@ const Table = <T extends ITableExtends>({
   setSelectedData,
   columns,
   filters,
+  size = 'small',
+  loading,
 }: IDataTableProps<T>) => {
   //For checkbox selection of column
   const handleSelectionChange = (
@@ -33,13 +35,14 @@ const Table = <T extends ITableExtends>({
       rows={5}
       rowsPerPageOptions={[5, 10, 25, 50]}
       value={data}
-      size={'normal'}
+      size={size}
       selection={selectedData}
       onSelectionChange={handleSelectionChange}
-      dataKey="id"
+      dataKey="_id"
       tableStyle={{ minWidth: '50rem' }}
       selectionMode="checkbox"
       filters={filters}
+      loading={loading}
     >
       <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
       {columns.map((col, index) => (

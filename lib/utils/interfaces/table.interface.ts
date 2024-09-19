@@ -9,8 +9,8 @@ export interface IFilterType {
 }
 
 export interface IColumnConfig<T> extends IGlobalComponentProps {
+  headerName?: string;
   propertyName: string;
-  headerName: string;
   body?: (rowData: T) => React.ReactNode;
 }
 
@@ -21,8 +21,10 @@ export interface IDataTableProps<T> extends IGlobalComponentProps {
   setSelectedData: React.Dispatch<React.SetStateAction<T[]>>;
   columns: IColumnConfig<T>[];
   filters?: IFilterType;
+  size?: 'small' | 'normal' | 'large';
+  loading?: boolean;
 }
 
 export interface ITableExtends extends IGlobalComponentProps {
-  id: number | string;
+  _id: number | string;
 }

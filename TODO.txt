@@ -1,3 +1,0 @@
-Hamza
-1. Shift tipping input to generic components
-2. Refactor banner ui code

@@ -1,40 +1,37 @@
 'use client';
-//graphql
-import { DocumentNode } from 'graphql';
-//components
+
+// React and hooks
+import { ChangeEvent, useEffect, useState } from 'react';
+
+// Components
 import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/AddCuisine';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
+import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
-//prime react components
+
+// PrimeReact components
+import { FilterMatchMode } from 'primereact/api';
 import { Sidebar } from 'primereact/sidebar';
-//interfaces
-import { ILazyQueryResult } from '@/lib/utils/interfaces';
+
+// Interfaces
+import { IQueryResult } from '@/lib/utils/interfaces';
 import {
   ICuisine,
   IGetCuisinesData,
-  IGetCuisinesVariables,
 } from '@/lib/utils/interfaces/cuisine.interface';
-//icons
+
+// Icons
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-//hooks
+
+// API and hooks
 import { GET_CUISINES } from '@/lib/api/graphql';
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
-import { FilterMatchMode } from 'primereact/api';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 
 export default function CuisinesScreen() {
   const [visible, setVisible] = useState(false);
   const [cuisinesData, setCuisinesData] = useState<ICuisine[]>([]);
-  const { data, fetch, loading } = useLazyQueryQL<
-    DocumentNode,
-    IGetCuisinesVariables
-  >(GET_CUISINES, {}) as ILazyQueryResult<
-    IGetCuisinesData | undefined,
-    undefined
-  >;
 
   //filters
   const [filters, setFilters] = useState({
@@ -52,6 +49,10 @@ export default function CuisinesScreen() {
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
+  const { data, loading } = useQueryGQL(GET_CUISINES, {}) as IQueryResult<
+    IGetCuisinesData | undefined,
+    undefined
+  >;
 
   //toggle visibility
   const handleButtonClick = () => {
@@ -62,11 +63,6 @@ export default function CuisinesScreen() {
   const addCuisineLocally = (cuisine: ICuisine) => {
     setCuisinesData((prevCuisines) => [cuisine, ...prevCuisines]);
   };
-
-  //fetch
-  useEffect(() => {
-    fetch();
-  }, []);
 
   //appending cuisines
   useEffect(() => {

@@ -1,5 +1,5 @@
+export * from '../../ui/useable-components/table/data.table.columns';
 export * from './country-codes';
-export * from './data.table.columns';
 export * from './global';
 export * from './restaurant';
 export * from './strings';

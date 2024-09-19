@@ -3,7 +3,7 @@ import AddCoupon from '@/lib/ui/screen-components/protected/layout/super-admin-l
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
-import { ILazyQueryResult } from '@/lib/utils/interfaces';
+import { IQueryResult } from '@/lib/utils/interfaces';
 import {
   ICoupon,
   IGetCouponsData,
@@ -17,11 +17,12 @@ import { Sidebar } from 'primereact/sidebar';
 
 //queries
 import { GET_COUPONS } from '@/lib/api/graphql';
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import { FilterMatchMode } from 'primereact/api';
 import { ChangeEvent, useEffect, useState } from 'react';
+
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 
 export default function CouponsScreen() {
   //filters
@@ -46,10 +47,10 @@ export default function CouponsScreen() {
   const [coupons, setCoupons] = useState<ICoupon[]>([]);
 
   //query
-  const { data, fetch, loading } = useLazyQueryQL(
-    GET_COUPONS,
-    {}
-  ) as ILazyQueryResult<IGetCouponsData | undefined, undefined>;
+  const { data, loading } = useQueryGQL(GET_COUPONS, {}) as IQueryResult<
+    IGetCouponsData | undefined,
+    undefined
+  >;
 
   //toggle visibility
   const handleButtonClick = () => {
@@ -60,15 +61,13 @@ export default function CouponsScreen() {
     setCoupons((prevCoupons) => [coupon, ...prevCoupons]);
   };
 
-  //useEffects
-  useEffect(() => {
-    fetch();
-  }, []);
+  //appending coupons
   useEffect(() => {
     if (data) {
       setCoupons(data.coupons);
     }
   }, [data]);
+
   return (
     <div className="flex flex-col items-center w-full h-auto">
       <Sidebar

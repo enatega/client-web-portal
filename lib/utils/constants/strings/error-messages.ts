@@ -1,5 +1,10 @@
-import { ISignFormErrors, IVendorErrors } from '../../interfaces/forms';
+import {
+  IBannersErrors,
+  ISignFormErrors,
+  IVendorErrors,
+} from '../../interfaces/forms';
 import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
+import { IRiderErrors } from '../../interfaces/forms/riders.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -36,4 +41,21 @@ export const RestaurantErrors: IRestaurantFormErrors = {
   salesTax: ['Required'],
   shopType: ['Required'],
   cuisines: ['Required', 'Cuisines field must have at least 1 items'],
+};
+
+export const RiderErrors: IRiderErrors = {
+  name: ['Required'],
+  username: ['Required'],
+  password: ['Required', ...PasswordErrors],
+  confirmPassword: ['Required', 'Password must match'],
+  zone: ['Required'],
+  phone: ['Required'],
+};
+
+export const BannersErrors: IBannersErrors = {
+  title: ['Required'],
+  description: ['Required'],
+  action: ['Required'],
+  screen: ['Required'],
+  file: ['Required'],
 };

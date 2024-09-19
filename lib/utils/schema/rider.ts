@@ -2,9 +2,9 @@ import * as Yup from 'yup';
 import { PasswordErrors } from '../constants';
 
 export const RiderSchema = Yup.object().shape({
-  riderName: Yup.string().min(2).max(35).required('Required'),
-  riderEmail: Yup.string().email('Invalid email').required('Required'),
-  riderPassword: Yup.string()
+  name: Yup.string().min(2).max(35).required('Required'),
+  username: Yup.string().min(2).max(35).required('Required'),
+  password: Yup.string()
     .min(6, PasswordErrors[0])
     .max(20)
     .test('complexity', function (value: string | undefined) {
@@ -35,9 +35,15 @@ export const RiderSchema = Yup.object().shape({
       return true;
     })
     .required('Required'),
-  riderConfirmPassword: Yup.string()
+  confirmPassword: Yup.string()
     .nullable()
-    .oneOf([Yup.ref('vendorPassword'), null], 'Password must match')
+    .oneOf([Yup.ref('password'), null], 'Password must match')
     .required('Required'),
-  riderZone: Yup.string().nullable().required('Required'),
+  zone: Yup.object()
+    .shape({
+      label: Yup.string().required('Required'),
+      code: Yup.string().required('Required'),
+    })
+    .required('Required'),
+  phone: Yup.string().required('Required'),
 });

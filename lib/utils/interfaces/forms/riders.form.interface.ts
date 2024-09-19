@@ -1,17 +1,19 @@
 import { IDropdownSelectItem } from '../global.interface';
 
 export interface IRiderForm {
-  riderName: string;
-  riderEmail: string;
-  riderPassword: string;
-  riderConfirmPassword: string;
-  riderPhoneNumber: string;
-  riderZone: IDropdownSelectItem | null;
+  name: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+  zone: IDropdownSelectItem | null;
+  phone: number | null;
 }
 
 export interface IRiderErrors {
   name: string[];
-  email: string[];
+  username: string[];
   password: string[];
   confirmPassword: string[];
+  zone: string[];
+  phone: string[];
 }

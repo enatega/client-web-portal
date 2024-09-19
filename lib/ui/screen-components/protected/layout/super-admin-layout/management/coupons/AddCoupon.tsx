@@ -13,6 +13,7 @@ import { ErrorMessage, Form, Formik } from 'formik';
 import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { useContext } from 'react';
+// import { useContext } from 'react';
 
 export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
   //initial values
@@ -23,7 +24,7 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
   };
 
   //mutation
-  const [CreateCoupon, { loading, error }] = useMutation(CREATE_COUPON);
+  const [CreateCoupon, { loading }] = useMutation(CREATE_COUPON);
   //toast
   const { showToast } = useContext(ToastContext);
 
@@ -62,10 +63,11 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
               type: 'error',
               title: 'New Coupon',
               message:
-                error?.message ||
+                //This will not work
+                /*  error?.message ||
                 error?.networkError?.message ||
                 error?.clientErrors[0].message ||
-                error?.graphQLErrors[0].message ||
+                error?.graphQLErrors[0].message || */
                 'An error occured',
               duration: 2000,
             });

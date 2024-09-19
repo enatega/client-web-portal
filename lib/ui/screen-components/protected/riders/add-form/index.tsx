@@ -1,125 +1,175 @@
 // Core
+import { Form, Formik, FormikHelpers } from 'formik';
 
 // Prime React
 import { Sidebar } from 'primereact/sidebar';
 
-// FontAwesome
-
 // Interface and Types
-import { IRidersAddFormComponentProps } from '@/lib/utils/interfaces/rider.interface';
+import { IQueryResult } from '@/lib/utils/interfaces';
+import { IRiderForm } from '@/lib/utils/interfaces/forms';
+import {
+  IRidersAddFormComponentProps,
+  IZonesResponse,
+} from '@/lib/utils/interfaces/rider.interface';
 
 // Components
+import CustomButton from '@/lib/ui/useable-components/button';
+import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
+import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
+import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 
 // Utilities and Constants
-// import { PasswordErrors, RiderErrors } from '@/lib/utils/constants';
-// import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
-// import { RiderSchema } from '@/lib/utils/schema/rider';
+import { RiderErrors } from '@/lib/utils/constants';
+import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
+import { RiderSchema } from '@/lib/utils/schema/rider';
 
-// const initialValues: IRiderForm = {
-//   riderName: '',
-//   riderEmail: '',
-//   riderPassword: '',
-//   riderConfirmPassword: '',
-//   riderPhoneNumber: '',
-//   riderZone: null,
-// };
+//Toast
+import useToast from '@/lib/hooks/useToast';
+
+//GraphQL
+import { getRiders, getZones } from '@/lib/api/graphql';
+import { createRider, editRider } from '@/lib/api/graphql/mutation';
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import { gql, useMutation } from '@apollo/client';
+
+const GET_RIDERS = gql`
+  ${getRiders}
+`;
+
+const CREATE_RIDER = gql`
+  ${createRider}
+`;
+
+const EDIT_RIDER = gql`
+  ${editRider}
+`;
+
+const GET_ZONES = gql`
+  ${getZones}
+`;
 
 export default function RiderAddForm({
+  onHide,
+  rider,
   position = 'right',
-  setIsAddRiderVisible,
   isAddRiderVisible,
 }: IRidersAddFormComponentProps) {
-  // Prime React
+  // State
+  const initialValues: IRiderForm = {
+    name: '',
+    username: '',
+    password: '',
+    ...rider,
+    confirmPassword: rider?.password ?? '',
+    phone: rider ? +rider.phone : null,
+    zone: rider ? { label: rider.zone.title, code: rider.zone._id } : null,
+  };
 
-  // Interface and Types
+  // Hooks
+  const { showToast } = useToast();
 
-  // const [account] = useState<IVendorForm>(initialValues);
+  // Query
+  const { data } = useQueryGQL(GET_ZONES, {
+    fetchPolicy: 'cache-and-network',
+  }) as IQueryResult<IZonesResponse | undefined, undefined>;
 
-  // const SignupSchema = Yup.object().shape({
-  //   firstName: Yup.string().min(2).max(35).required('Required'),
-  //   vendorName: Yup.string().min(2).max(35).required('Required'),
-  //   vendorEmail: Yup.string().email('Invalid email').required('Required'),
-  //   vendorPassword: Yup.string()
-  //     .min(6, 'At least 6 characters')
-  //     .max(20)
-  //     .test('complexity', function (value: string | undefined) {
-  //       const errors: string[] = [];
+  // Mutation
+  const mutation = rider ? EDIT_RIDER : CREATE_RIDER;
+  const [mutate, { loading: mutationLoading }] = useMutation(mutation, {
+    refetchQueries: [{ query: GET_RIDERS }],
+  });
 
-  //       if (!value) return this.createError({});
-
-  //       if (!/[a-z]/.test(value)) {
-  //         errors.push('At least one lowercase letter (a-z)');
-  //       }
-  //       if (!/[A-Z]/.test(value)) {
-  //         errors.push('At least one uppercase letter (A-Z)');
-  //       }
-  //       if (!/\d/.test(value)) {
-  //         errors.push('At least one number (0-9)');
-  //       }
-  //       if (!/[@$!%*?&]/.test(value)) {
-  //         errors.push('At least one special character');
-  //       }
-
-  //       if (errors.length) {
-  //         return this.createError({ message: errors.join(', ') });
-  //       }
-  //       return true;
-  //     })
-  //     .required('Required'),
-  //   vendorConfirmPassword: Yup.string()
-  //     .nullable()
-  //     .oneOf([Yup.ref('password'), null], 'Password must match')
-  //     .required('Required'),
-  // });
+  // Form Submission
+  const handleSubmit = (
+    values: IRiderForm,
+    { resetForm }: FormikHelpers<IRiderForm>
+  ) => {
+    if (data) {
+      mutate({
+        variables: {
+          riderInput: {
+            _id: rider ? rider._id : '',
+            name: values.name,
+            username: values.username,
+            password: values.password,
+            phone: values.phone?.toString(),
+            zone: values.zone?.code,
+            available: rider ? rider.available : true,
+          },
+        },
+        onCompleted: () => {
+          showToast({
+            type: 'success',
+            title: 'Success!',
+            message: rider ? 'Rider updated' : 'Rider added',
+            duration: 3000,
+          });
+          resetForm();
+          onHide();
+        },
+        onError: (error) => {
+          let message = '';
+          try {
+            message = error.graphQLErrors[0].message;
+          } catch (err) {
+            message = 'ActionFailedTryAgain';
+          }
+          showToast({
+            type: 'error',
+            title: 'Error!',
+            message,
+            duration: 3000,
+          });
+        },
+      });
+    }
+  };
 
   return (
     <Sidebar
       visible={isAddRiderVisible}
       position={position}
-      onHide={() => setIsAddRiderVisible(false)}
+      onHide={onHide}
       className="w-full sm:w-[450px]"
     >
-      {/* <div className="w-full h-full flex items-center justify-start">
-        <div className="h-full">
+      <div className="w-full h-full flex items-center justify-start">
+        <div className="h-full w-full">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col mb-2">
-              <span className="text-lg">Add Vendor</span>
+              <span className="text-lg">{rider ? 'Edit' : 'Add'} Rider</span>
             </div>
 
             <div>
               <Formik
-                initialValues={account}
-                validationSchema={SignupSchema}
-                onSubmit={(e) => {
-                  console.log(e);
-                }}
-                validateOnChange
+                initialValues={initialValues}
+                validationSchema={RiderSchema}
+                onSubmit={handleSubmit}
+                enableReinitialize
               >
                 {({
                   values,
                   errors,
                   handleChange,
                   handleSubmit,
-                  isSubmitting,
+                  setFieldValue,
                 }) => {
-                  console.log({ errors });
-
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-4">
                         <div>
                           <CustomTextField
                             type="text"
-                            name="riderName"
+                            name="name"
                             placeholder="Name"
                             maxLength={35}
-                            value={values.riderName}
+                            value={values.name}
                             onChange={handleChange}
                             showLabel={true}
                             style={{
                               borderColor: onErrorMessageMatcher(
-                                'email',
-                                errors?.riderName,
+                                'name',
+                                errors?.name,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -128,22 +178,18 @@ export default function RiderAddForm({
                           />
                         </div>
                         <div>
-                          <CustomIconTextField
-                            type="email"
-                            name="riderEmail"
-                            placeholder="Email"
+                          <CustomTextField
+                            type="text"
+                            name="username"
+                            placeholder="Username"
                             maxLength={35}
-                            showLabel={true}
-                            iconProperties={{
-                              icon: faEnvelope,
-                              position: 'right',
-                            }}
-                            value={values.riderEmail}
+                            value={values.username}
                             onChange={handleChange}
+                            showLabel={true}
                             style={{
                               borderColor: onErrorMessageMatcher(
-                                'email',
-                                errors?.riderEmail,
+                                'username',
+                                errors?.username,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -153,22 +199,17 @@ export default function RiderAddForm({
                         </div>
 
                         <div>
-                          <CustomIconTextField
+                          <CustomPasswordTextField
                             placeholder="Password"
-                            name="riderPassword"
-                            type="password"
+                            name="password"
                             maxLength={20}
-                            value={values.riderPassword}
+                            value={values.password}
                             showLabel={true}
-                            iconProperties={{
-                              icon: faEye,
-                              position: 'right',
-                            }}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'password',
-                                errors?.riderPassword,
+                                errors?.password,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -178,22 +219,18 @@ export default function RiderAddForm({
                         </div>
 
                         <div>
-                          <CustomIconTextField
+                          <CustomPasswordTextField
                             placeholder="Confirm Password"
-                            name="riderConfirmPassword"
-                            type="password"
+                            name="confirmPassword"
                             maxLength={20}
                             showLabel={true}
-                            iconProperties={{
-                              icon: faEye,
-                              position: 'right',
-                            }}
-                            value={values.riderConfirmPassword ?? ''}
+                            value={values.confirmPassword ?? ''}
                             onChange={handleChange}
+                            feedback={false}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
-                                errors?.riderConfirmPassword,
+                                errors?.confirmPassword,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -202,13 +239,59 @@ export default function RiderAddForm({
                           />
                         </div>
 
-                      <CustomButton
-                        className="w-full h-12 bg-transparent text-black border-gray-300 hover:bg-whit px-32"
-                        label="Add"
-                        rounded={true}
-                        icon="pi pi-google"
-                        type="submit"
-                      />
+                        <div>
+                          <CustomDropdownComponent
+                            placeholder="Zone"
+                            options={
+                              data?.zones.map((val) => {
+                                return { label: val.title, code: val._id };
+                              }) || []
+                            }
+                            showLabel={true}
+                            name="zone"
+                            selectedItem={values.zone}
+                            setSelectedItem={setFieldValue}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'zone',
+                                errors?.zone,
+                                RiderErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
+                          />
+                        </div>
+
+                        <div>
+                          <CustomNumberField
+                            min={0}
+                            placeholder="Phone Number"
+                            name="phone"
+                            showLabel={true}
+                            value={values.phone}
+                            useGrouping={false}
+                            onChange={setFieldValue}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'phone',
+                                errors?.phone,
+                                RiderErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
+                          />
+                        </div>
+
+                        <div className="flex justify-end mt-4">
+                          <CustomButton
+                            className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                            label={rider ? 'Update' : 'Add'}
+                            type="submit"
+                            loading={mutationLoading}
+                          />
+                        </div>
                       </div>
                     </Form>
                   );
@@ -217,7 +300,7 @@ export default function RiderAddForm({
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </Sidebar>
   );
 }

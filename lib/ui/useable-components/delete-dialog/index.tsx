@@ -1,40 +1,52 @@
-import { Button } from 'primereact/button';
-import { confirmDialog } from 'primereact/confirmdialog';
+// Prime React
+import { Dialog } from 'primereact/dialog';
 
-export default function DeleteDialog({
-  onConfirm,
+// Components
+import CustomButton from '../button';
+
+// Interface and Types
+import { IDeleteDialogProps } from '@/lib/utils/interfaces/dialog.interface';
+
+const DeleteDialog = ({
+  visible,
   onHide,
-}: {
-  visible: boolean;
-  onConfirm: () => void;
-  onHide: () => void;
-}) {
-  const accept = () => {};
-
-  const reject = () => {
-    onHide();
-  };
-
-  confirmDialog({
-    message: 'Are you sure you want to proceed?',
-    header: 'Confirmation',
-    icon: 'pi pi-exclamation-triangle',
-    defaultFocus: 'accept',
-    accept,
-    reject,
-  });
+  onConfirm,
+  message,
+  loading,
+}: IDeleteDialogProps) => {
+  const footer = (
+    <div className="space-x-2">
+      <CustomButton
+        label="No"
+        icon="pi pi-times"
+        onClick={onHide}
+        className="border text-black px-5 h-9 border-gray-300 rounded"
+      />
+      <CustomButton
+        loading={loading}
+        label="Confirm"
+        className="bg-red-500 px-4 h-9 text-white border-gray-300 rounded"
+        icon="pi pi-check"
+        onClick={onConfirm}
+      />
+    </div>
+  );
 
   return (
-    <>
-      {/* {visible && <ConfirmDialog />} */}
-      <div className="card flex flex-wrap gap-2 justify-content-center">
-        <Button
-          onClick={onConfirm}
-          icon="pi pi-check"
-          label="Confirm"
-          className="mr-2"
-        ></Button>
+    <Dialog
+      visible={visible}
+      style={{ width: '32rem' }}
+      breakpoints={{ '960px': '75vw', '641px': '90vw' }}
+      header="Confirm Deletion"
+      modal
+      footer={footer}
+      onHide={onHide}
+    >
+      <div className="confirmation-content">
+        <span>{message || 'Are you sure you want to delete this item?'}</span>
       </div>
-    </>
+    </Dialog>
   );
-}
+};
+
+export default DeleteDialog;

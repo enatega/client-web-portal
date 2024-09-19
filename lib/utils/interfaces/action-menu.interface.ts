@@ -1,13 +1,11 @@
-import { MenuItemCommandEvent } from 'primereact/menuitem';
 import { IGlobalComponentProps } from './global.interface';
 
-export interface IActionMenuItem extends IGlobalComponentProps {
+export interface IActionMenuItem<T> extends IGlobalComponentProps {
   label: string;
-  command?: (event: MenuItemCommandEvent) => void;
-  id?: number;
+  command?: (data?: T) => void;
 }
 
-export interface IActionMenuProps extends IGlobalComponentProps {
-  items: IActionMenuItem[];
-  itemId: number;
+export interface IActionMenuProps<T> extends IGlobalComponentProps {
+  items: IActionMenuItem<T>[];
+  data: T;
 }
