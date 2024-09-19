@@ -71,13 +71,17 @@ export default function SendNotification({
       });
       return showToast({
         type: 'success',
+        title: 'Notification',
         message: 'Successfully sent the notification',
+        duration: 2500,
       });
     } catch (err) {
       setVisible(true);
       showToast({
         type: 'error',
-        message: error?.message,
+        title: 'Notification',
+        message: error?.message ?? 'Something went wrong',
+        duration: 2500,
       });
       return console.log(err);
     }
