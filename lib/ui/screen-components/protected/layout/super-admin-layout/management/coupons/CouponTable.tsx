@@ -130,7 +130,7 @@ export default function CouponTable({
   //       },
   //     });
   //     showToast({
-  // title:"Sucess",
+  // title:"Success",
   //       type: 'success',
   //       message: 'Coupon deletion was successfull',
   //       life: 2000,

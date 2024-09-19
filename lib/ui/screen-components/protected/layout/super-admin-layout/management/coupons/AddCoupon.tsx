@@ -62,7 +62,7 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
             });
             setVisible(false);
             showToast({
-              title: 'Sucess',
+              title: 'Success',
               type: 'success',
               message: 'Coupon was added successfully!',
               life: 2000,
@@ -107,6 +107,7 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
                   <InputSwitch
                     checked={values.enabled}
                     onChange={(e) => setFieldValue('enabled', e.value)}
+                    className={values.enabled ? 'p-inputswitch-checked' : ''}
                   />
                 </div>
               </div>
