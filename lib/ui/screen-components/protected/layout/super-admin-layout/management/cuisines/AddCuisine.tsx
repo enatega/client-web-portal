@@ -69,6 +69,7 @@ export default function AddCuisine({
             });
             setVisible(false);
             showToast({
+              title: 'Error',
               type: 'success',
               message: 'Cuisine was added successfully!',
               life: 2000,
@@ -80,6 +81,7 @@ export default function AddCuisine({
           } catch (err) {
             setVisible(true);
             showToast({
+              title: 'Error',
               type: 'error',
               message:
                 error?.message ||

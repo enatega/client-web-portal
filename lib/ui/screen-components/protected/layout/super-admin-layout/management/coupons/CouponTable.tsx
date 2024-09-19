@@ -102,11 +102,13 @@ export default function CouponTable({
         },
       });
       showToast({
+        title: 'Info',
         type: 'info',
         message: 'Operation successfull!',
       });
     } catch (err) {
       showToast({
+        title: 'Error',
         type: 'error',
         message:
           editCouponError?.message ||
@@ -128,6 +130,7 @@ export default function CouponTable({
   //       },
   //     });
   //     showToast({
+  // title:"Sucess",
   //       type: 'success',
   //       message: 'Coupon deletion was successfull',
   //       life: 2000,
@@ -135,6 +138,7 @@ export default function CouponTable({
   //   } catch (err) {
   //     console.log(err);
   //     showToast({
+  // title:"Error",
   //       type: 'error',
   //       message:
   //         'An unknown error occured, please try again' ||

@@ -71,12 +71,14 @@ export default function SendNotification({
         title: '',
       });
       return showToast({
+        title: 'Success',
         type: 'success',
         message: 'Successfully sent the notification',
       });
     } catch (err) {
       setVisible(true);
       showToast({
+        title: 'Error',
         type: 'error',
         message: error?.message,
       });

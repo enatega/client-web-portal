@@ -62,6 +62,7 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
             });
             setVisible(false);
             showToast({
+              title: 'Sucess',
               type: 'success',
               message: 'Coupon was added successfully!',
               life: 2000,
@@ -73,6 +74,7 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
           } catch (err) {
             setVisible(true);
             showToast({
+              title: 'Error',
               type: 'error',
               message:
                 error?.message ||
