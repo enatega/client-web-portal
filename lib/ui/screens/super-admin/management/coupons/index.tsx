@@ -1,11 +1,12 @@
 //components
 import AddCoupon from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/AddCoupon';
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
+import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 //interfaces
-import { IQueryResult } from '@/lib/utils/interfaces';
 import {
   ICoupon,
   IGetCouponsData,
@@ -15,14 +16,15 @@ import {
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 //prime react
+import { FilterMatchMode } from 'primereact/api';
 import { Sidebar } from 'primereact/sidebar';
 
 //queries
 import { GET_COUPONS } from '@/lib/api/graphql';
+
+//hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
-import { FilterMatchMode } from 'primereact/api';
+import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CouponsScreen() {
@@ -53,7 +55,7 @@ export default function CouponsScreen() {
   const { data, fetch, loading } = useLazyQueryQL(
     GET_COUPONS,
     {}
-  ) as IQueryResult<IGetCouponsData | undefined, undefined>;
+  ) as ILazyQueryResult<IGetCouponsData | undefined, undefined>;
 
   //toggle visibility
   const handleButtonClick = () => {

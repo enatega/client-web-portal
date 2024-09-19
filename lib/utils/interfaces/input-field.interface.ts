@@ -3,7 +3,6 @@ import { InputMaskChangeEvent } from 'primereact/inputmask';
 import { CSSProperties } from 'react';
 import { TNumberMode } from '../types';
 import { IGlobalComponentProps } from './global.interface';
-
 // Global
 interface IGlobalTextFieldProps extends IGlobalComponentProps {
   type: string;
@@ -14,33 +13,28 @@ interface IGlobalTextFieldProps extends IGlobalComponentProps {
   showLabel: boolean;
   style?: CSSProperties;
 }
-
 // Extra
 interface IIconProperties {
   position: 'left' | 'right';
   icon: IconDefinition;
   style?: CSSProperties;
 }
-
 // Fields
 export interface ITextFieldProps extends IGlobalTextFieldProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
 export interface IIconTextFieldProps extends IGlobalTextFieldProps {
   iconProperties: IIconProperties;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
 export interface IPhoneTextFieldProps extends IGlobalTextFieldProps {
   mask: string;
   showLabel: boolean;
   onChange?: (event: InputMaskChangeEvent) => void;
 }
-
 export interface INumberTextFieldProps
   extends Omit<IGlobalTextFieldProps, 'value' | 'type'> {
-  value: number;
+  value: number | null;
   min: number;
   max?: number;
   minFractionDigits?: number;
@@ -50,15 +44,17 @@ export interface INumberTextFieldProps
   locale?: string;
   prefix?: string;
   suffix?: string;
+  useGrouping?: boolean;
   onChange: (field: string, value: number | null) => void;
 }
-
 export interface IPasswordTextFieldProps
   extends Omit<IGlobalTextFieldProps, 'type'> {
-  iconProperties: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
+  feedback?: boolean;
+  iconProperties?: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
-export interface ICustomNumberTextFieldProps extends IGlobalTextFieldProps {
+export interface ICustomNumberTippingProps extends IGlobalTextFieldProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  min?: number;
+  max?: number;
 }

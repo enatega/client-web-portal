@@ -1,6 +1,6 @@
 'use client';
 //graphql
-import { DocumentNode } from 'graphql';
+import { GET_CUISINES } from '@/lib/api/graphql';
 //components
 import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/AddCuisine';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
@@ -9,16 +9,14 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 //prime react components
 import { Sidebar } from 'primereact/sidebar';
 //interfaces
-import { IQueryResult } from '@/lib/utils/interfaces';
+import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICuisine,
   IGetCuisinesData,
-  IGetCuisinesVariables,
 } from '@/lib/utils/interfaces/cuisine.interface';
 //icons
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 //hooks
-import { GET_CUISINES } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
@@ -28,10 +26,10 @@ import { ChangeEvent, useEffect, useState } from 'react';
 export default function CuisinesScreen() {
   const [visible, setVisible] = useState(false);
   const [cuisinesData, setCuisinesData] = useState<ICuisine[]>([]);
-  const { data, fetch, loading } = useLazyQueryQL<
-    DocumentNode,
-    IGetCuisinesVariables
-  >(GET_CUISINES, {}) as IQueryResult<IGetCuisinesData | undefined, undefined>;
+  const { data, loading } = useLazyQueryQL(
+    GET_CUISINES,
+    {}
+  ) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
 
   //filters
   const [filters, setFilters] = useState({
@@ -59,11 +57,6 @@ export default function CuisinesScreen() {
   const addCuisineLocally = (cuisine: ICuisine) => {
     setCuisinesData((prevCuisines) => [cuisine, ...prevCuisines]);
   };
-
-  //fetch
-  useEffect(() => {
-    fetch();
-  }, []);
 
   //appending cuisines
   useEffect(() => {

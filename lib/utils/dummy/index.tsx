@@ -5,7 +5,6 @@ import {
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 import { IDropdownSelectItem, IStatsCardProps } from '../interfaces';
-import { IRiderDataComponentProps } from '../interfaces/rider.interface';
 
 export const dummyStatsData: IStatsCardProps[] = [
   {
@@ -91,24 +90,3 @@ export const generateRandomUserCounts = () => {
 
   return Array.from(randomNumbers);
 };
-
-export const ridersData: IRiderDataComponentProps[] = [
-  {
-    id: 1,
-    name: 'Hamza',
-    email: 'dummy@gmail.com',
-    password: 'dummy',
-    phone: '+92333333333',
-    zone: 'Asia',
-    available: false,
-  },
-  {
-    id: 2,
-    name: 'Ahmed',
-    email: 'anotherdummy@gmail.com',
-    password: 'anotherdummy',
-    phone: '+92334444555',
-    zone: 'Asia',
-    available: true,
-  },
-];

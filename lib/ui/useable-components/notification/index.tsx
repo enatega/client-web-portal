@@ -1,12 +1,12 @@
 import { SEVERITY_STYLES } from '@/lib/utils/constants';
-import { INotificationComponentProps } from '@/lib/utils/interfaces';
+import { IToastNotificationComponentProps } from '@/lib/utils/interfaces';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const CustomNotification = ({
   type,
   title,
   message,
-}: INotificationComponentProps) => {
+}: IToastNotificationComponentProps) => {
   const styles = SEVERITY_STYLES[type];
 
   return (

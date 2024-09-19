@@ -70,7 +70,7 @@ export default function AddCoupon({
               title: 'Success',
               type: 'success',
               message: 'Coupon was added successfully!',
-              life: 2000,
+              duration: 2000,
             });
             const newCoupon: ICoupon = res.data.createCoupon;
             setCoupons(newCoupon);
@@ -87,7 +87,7 @@ export default function AddCoupon({
                 error?.clientErrors[0].message ||
                 error?.graphQLErrors[0].message ||
                 'An error occured',
-              life: 2000,
+              duration: 2000,
             });
             setSubmitting(false);
             return console.log(err);

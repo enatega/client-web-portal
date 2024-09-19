@@ -104,6 +104,7 @@ export default function CouponTable({
         title: 'Info',
         type: 'info',
         message: 'Operation successfull!',
+        duration: 2000,
       });
     } catch (err) {
       showToast({
@@ -113,6 +114,7 @@ export default function CouponTable({
           editCouponError?.message ||
           editCouponError?.graphQLErrors[0].message ||
           'Something went wrong please try again',
+        duration: 2000,
       });
     }
   }

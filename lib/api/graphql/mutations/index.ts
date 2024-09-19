@@ -4,5 +4,6 @@ export * from './coupons';
 export * from './cuisines';
 export * from './notifications';
 export * from './options';
+export * from './riders';
 export * from './taxations';
 export * from './tippings';

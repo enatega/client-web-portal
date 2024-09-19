@@ -69,10 +69,10 @@ export default function AddCuisine({
             });
             setVisible(false);
             showToast({
-              title: 'Error',
+              title: 'Success',
               type: 'success',
               message: 'Cuisine was added successfully!',
-              life: 2000,
+              duration: 2000,
             });
             const newCuisine: ICuisine = res.data.createCuisine;
             setCuisinesData(newCuisine);
@@ -89,7 +89,7 @@ export default function AddCuisine({
                 error?.clientErrors[0].message ||
                 error?.graphQLErrors[0].message ||
                 'An error occured',
-              life: 2000,
+              duration: 2000,
             });
             setSubmitting(false);
             return console.log(err);

@@ -10,9 +10,11 @@ export interface IToast {
   title: string;
   message: string;
   duration: number;
+  loading?: boolean;
 }
 
-export interface INotificationComponentProps extends Omit<IToast, 'duration'> {}
+export interface IToastNotificationComponentProps
+  extends Omit<IToast, 'duration'> {}
 
 interface ISeverityStyle {
   bgColor: string;
