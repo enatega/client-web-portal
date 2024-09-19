@@ -1,6 +1,6 @@
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-export default function Loader() {
+export default function CustomLoader() {
   return (
     <div className="flex m-auto justify-center items-center">
       <FontAwesomeIcon

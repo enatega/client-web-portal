@@ -21,6 +21,10 @@ export interface ICouponsStakProps {
 export interface IAddCouponProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
   setCoupons: (coupon: ICoupon) => void;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
+  setEditData: Dispatch<SetStateAction<ICoupon | undefined>>;
+  isEditing: boolean;
+  editData: ICoupon | undefined;
 }
 export interface IEditPopupVal {
   _id: string;

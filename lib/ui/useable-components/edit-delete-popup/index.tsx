@@ -2,9 +2,7 @@
 // queries
 
 //interfaces
-import IEditDeleteInterface, {
-  IEditDeleteProps,
-} from '@/lib/utils/interfaces/edit-delete.interface';
+import IEditDeleteInterface from '@/lib/utils/interfaces/edit-delete.interface';
 
 //components
 
@@ -15,19 +13,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //contexts
 
 //hooks
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-export default function EditDeletePopup<T extends IEditDeleteProps>({
-  setIsEditDeletePopupOpen,
-  data,
-}: IEditDeleteInterface<T>) {
+export default function EditDeletePopup({
+  setIsDeleting,
+  setIsEditing,
+  setVisible,
+  visible,
+}: IEditDeleteInterface) {
   //states
-  const [isDeleting, setIsDeleting] = useState({ _id: '', bool: false });
-  //temporary console
-  console.log(isDeleting);
-  const [isEditing, setIsEditing] = useState({ data: {}, bool: false });
-  console.log({ isEditing });
-
   //popup ref
   const popupRef = useRef<HTMLDivElement | null>(null);
 
@@ -38,39 +32,21 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
         popupRef.current &&
         !popupRef.current.contains(event.target as Node)
       ) {
-        setIsDeleting({
-          _id: '',
-          bool: false,
-        });
-        setIsEditDeletePopupOpen({
-          bool: false,
-          _id: '',
-        });
+        setVisible(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [setIsEditing, setIsDeleting, setIsEditDeletePopupOpen]);
+  }, [setIsEditing, setIsDeleting, visible, setVisible]);
 
   return (
     <div
       ref={popupRef}
       className="flex flex-col gap-2 p-3 rounded-lg right-0 bg-white shadow-xl border-gray-400 border w-8 sticky h-16 items-center justify-center"
     >
-      <button
-        onClick={() => {
-          setIsEditing({
-            bool: true,
-            data: data,
-          });
-          setIsEditDeletePopupOpen({
-            _id: '',
-            bool: false,
-          });
-        }}
-      >
+      <button onClick={setIsEditing}>
         <FontAwesomeIcon
           color="blue"
           icon={faEdit}
@@ -78,7 +54,7 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
           className="cursor-pointer"
         />
       </button>
-      <button onClick={() => setIsDeleting({ _id: data._id, bool: true })}>
+      <button onClick={setIsDeleting}>
         <FontAwesomeIcon
           color="red"
           width={15}

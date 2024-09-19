@@ -46,6 +46,8 @@ export default function CouponsScreen() {
   //states
   const [visible, setVisible] = useState(false);
   const [coupons, setCoupons] = useState<ICoupon[]>([]);
+  const [editData, setEditData] = useState<ICoupon>();
+  const [isEditing, setIsEditing] = useState(false);
 
   //query
   const { data, fetch, loading } = useLazyQueryQL(
@@ -81,6 +83,10 @@ export default function CouponsScreen() {
         <AddCoupon
           setVisible={setVisible}
           setCoupons={handleAddCouponLocally}
+          editData={editData}
+          setEditData={setEditData}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
         />
       </Sidebar>
       <div className="flex justify-between items-center px-5 w-full">

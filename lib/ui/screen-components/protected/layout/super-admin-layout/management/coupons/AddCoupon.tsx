@@ -29,12 +29,17 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
-export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
+export default function AddCoupon({
+  setVisible,
+  setCoupons,
+  editData,
+  isEditing,
+}: IAddCouponProps) {
   //initial values
   const initialValues = {
-    title: '',
-    discount: 0,
-    enabled: true,
+    title: isEditing && editData?.title ? editData?.title : '',
+    discount: isEditing && editData?.discount ? editData?.discount : 0,
+    enabled: isEditing && editData?.enabled ? editData?.enabled : true,
   };
 
   //mutation
@@ -165,58 +170,6 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
           );
         }}
       </Formik>
-      {/* <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
-        <div className="flex gap-2">
-          <h2 className="font-bold mb-3 text-xl">Add Coupon</h2>
-          {formData.enabled ? 'Enabled' : 'Disabled'}
-          <InputSwitch
-            checked={formData.enabled}
-            onChange={() =>
-              setFormData((prev) => ({ ...prev, enabled: !prev.enabled }))
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="name">
-            Title
-          </label>
-          <InputText
-            value={formData.title}
-            onChange={handleFormChange}
-            name="title"
-            id="title"
-            className="w-full py-2 px-1 text-sm"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="discount">
-            Discount
-          </label>
-          <InputNumber
-            value={formData.discount}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, discount: e.value ?? 0 }))
-            }
-            name="discount"
-            id="discount"
-            className="w-full text-sm"
-          />
-        </div>
-        <Button
-          type="submit"
-          className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]"
-        >
-          {loading ? (
-            <FontAwesomeIcon
-              color="white"
-              icon={faSpinner}
-              className="animate-spin self-center items-center"
-            />
-          ) : (
-            'Add'
-          )}
-        </Button>
-      </form> */}
     </div>
   );
 }

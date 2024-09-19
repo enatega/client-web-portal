@@ -14,7 +14,6 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsis
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
-import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import GenericTable from '../../../../../../useable-components/global-table';
 
 //prime react
@@ -178,11 +177,12 @@ export default function CouponTable({
             onClick={() => optimizedToggleFunction(rowData)}
           />
           {isEditPopupOpen._id === rowData._id && isEditPopupOpen.bool ? (
-            <EditDeletePopup
-              setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
-              data={rowData}
-              type="coupon"
-            />
+            // <EditDeletePopup
+            //   setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
+            //   data={rowData}
+            //   type="coupon"
+            // />
+            <></>
           ) : (
             <FontAwesomeIcon
               icon={faEllipsisVertical}

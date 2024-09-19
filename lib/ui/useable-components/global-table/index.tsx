@@ -1,4 +1,4 @@
-import Loader from '@/lib/ui/screen-components/loader/Loader';
+import CustomLoader from '@/lib/ui/useable-components/custom-loader/Loader';
 import {
   IGenericTableExtends,
   IGenericTableProps,
@@ -17,7 +17,7 @@ const GenericTable = <T extends IGenericTableExtends>({
   loading,
   filters,
 }: IGenericTableProps<T>) => {
-  if (loading) return <Loader />;
+  if (loading) return <CustomLoader />;
   return (
     <>
       <DataTable
