@@ -42,7 +42,7 @@ export const RestaurantSchema = Yup.object().shape({
     .required('Required'),
 
   address: Yup.string().min(2).max(35).required('Required'),
-  deliveryTime: Yup.string().min(2).max(35).required('Required'),
+  deliveryTime: Yup.number().required('Required'),
   minOrder: Yup.number().required('Required'),
   salesTax: Yup.number().required('Required'),
   shopType: Yup.mixed<IDropdownSelectItem>().required('Required'),
@@ -50,4 +50,7 @@ export const RestaurantSchema = Yup.object().shape({
     .of(Yup.mixed<IDropdownSelectItem>())
     .min(1, 'Cuisines field must have at least 1 items')
     .required('Required'),
+
+  image: Yup.string().nullable(),
+  logo: Yup.string().nullable(),
 });

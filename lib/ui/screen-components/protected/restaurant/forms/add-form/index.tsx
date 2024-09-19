@@ -1,13 +1,19 @@
 // Core
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from 'formik';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 
 // Prime React
 import { Sidebar } from 'primereact/sidebar';
 
 // Interface and Types
-import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
+import {
+  ICreateRestaurantResponse,
+  IDropdownSelectItem,
+  IQueryResult,
+  IRestaurantsByOwnerResponseGraphQL,
+  IVendorAddFormComponentProps,
+} from '@/lib/utils/interfaces';
 
 // Core
 import { RestaurantContext } from '@/lib/context/restaurant.context';
@@ -21,10 +27,9 @@ import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 
 // Constants
-import { RestaurantErrors } from '@/lib/utils/constants';
+import { RestaurantErrors, SHOP_TYPE } from '@/lib/utils/constants';
 
 // Dummy
-import { dummyCountriesData } from '@/lib/utils/dummy';
 
 // Interface
 import { IRestaurantForm } from '@/lib/utils/interfaces';
@@ -33,8 +38,22 @@ import { IRestaurantForm } from '@/lib/utils/interfaces';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 
 // Schemas
+import {
+  CREATE_RESTAURANT,
+  GET_CUISINES,
+  GET_RESTAURANTS_BY_OWNER,
+} from '@/lib/api/graphql';
+import { ToastContext } from '@/lib/context/toast.context';
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
+import CustomUploadImageComponent from '@/lib/ui/useable-components/upload/upload-image';
+import {
+  ICuisine,
+  IGetCuisinesData,
+} from '@/lib/utils/interfaces/cuisine.interface';
+import { toTextCase } from '@/lib/utils/methods';
 import { RestaurantSchema } from '@/lib/utils/schema/restaurant';
+import { ApolloCache, ApolloError, useMutation } from '@apollo/client';
 
 const initialValues: IRestaurantForm = {
   name: '',
@@ -42,19 +61,136 @@ const initialValues: IRestaurantForm = {
   password: '',
   confirmPassword: '',
   address: '',
-  deliveryTime: '',
+  deliveryTime: 0,
   minOrder: 0,
   salesTax: 0.0,
   shopType: null,
   cuisines: [],
+  image: '',
+  logo: '',
 };
 
 export default function RestaurantAddForm({
   position = 'right',
 }: IVendorAddFormComponentProps) {
   // Context
-  const { restaurantFormVisible, onSetRestaurantFormVisible } =
-    useContext(RestaurantContext);
+
+  const { showToast } = useContext(ToastContext);
+  const {
+    restaurantFormVisible,
+    onSetRestaurantFormVisible,
+    vendorId,
+    isEditingRestaurant,
+  } = useContext(RestaurantContext);
+
+  // API
+  // Mutation
+  const [createRestaurant] = useMutation(CREATE_RESTAURANT, {
+    onError,
+    onCompleted: () => {
+      showToast({
+        type: 'success',
+        title: 'New Restaurant',
+        message: `Restaurant has been ${isEditingRestaurant ? 'edited' : 'added'} successfully`,
+        duration: 3000,
+      });
+      onSetRestaurantFormVisible(false);
+    },
+    update: update,
+  });
+
+  const cuisineResponse = useQueryGQL(GET_CUISINES, {
+    debounceMs: 300,
+  }) as IQueryResult<IGetCuisinesData | undefined, undefined>;
+  cuisineResponse.data?.cuisines;
+
+  // Memoized Constants
+  const cuisinesDropdown = useMemo(
+    () =>
+      cuisineResponse.data?.cuisines?.map((cuisin: ICuisine) => {
+        return { label: toTextCase(cuisin.name, 'title'), code: cuisin.name };
+      }),
+    [cuisineResponse.data?.cuisines]
+  );
+
+  // Handlers
+  const onCreateRestaurant = async (data: IRestaurantForm) => {
+    try {
+      if (!vendorId) {
+        showToast({
+          type: 'error',
+          title: `${vendorId ? 'Edit' : 'Create'} Vendor`,
+          message: `Restaurant ${isEditingRestaurant ? 'Edit' : 'Create'} Failed - Please select a vendor.`,
+          duration: 2500,
+        });
+        return;
+      }
+
+      await createRestaurant({
+        variables: {
+          owner: vendorId,
+          restaurant: {
+            name: data.name,
+            address: data.address,
+            image: data.image,
+            logo: data.logo,
+            deliveryTime: data.deliveryTime,
+            minimumOrder: data.minOrder,
+            username: data.username,
+            password: data.password,
+            shopType: data.shopType?.code,
+            cuisines: data.cuisines.map(
+              (cuisin: IDropdownSelectItem) => cuisin.code
+            ),
+          },
+        },
+      });
+    } catch (error) {
+      showToast({
+        type: 'error',
+        title: `${vendorId ? 'Edit' : 'Create'} Vendor`,
+        message: `Restaurant ${isEditingRestaurant ? 'Edit' : 'Create'} Failed`,
+        duration: 2500,
+      });
+    }
+  };
+
+  function onError({ graphQLErrors, networkError }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: `${isEditingRestaurant ? 'Edit' : 'Create'} Restaurant`,
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        `Restaurant ${vendorId ? 'Edit' : 'Create'} Failed`,
+      duration: 2500,
+    });
+  }
+  function update(
+    cache: ApolloCache<unknown>,
+    data: ICreateRestaurantResponse
+  ): void {
+    if (!data) return;
+
+    const cachedData: IRestaurantsByOwnerResponseGraphQL | null =
+      cache.readQuery({
+        query: GET_RESTAURANTS_BY_OWNER,
+        variables: { id: vendorId },
+      });
+
+    const cachedRestaurants = cachedData?.restaurantByOwner?.restaurants ?? [];
+
+    cache.writeQuery({
+      query: GET_RESTAURANTS_BY_OWNER,
+      variables: { id: vendorId },
+      data: {
+        restaurantByOwner: {
+          ...cachedData?.restaurantByOwner,
+          restaurants: [...(cachedRestaurants ?? []), createRestaurant],
+        },
+      },
+    });
+  }
 
   return (
     <Sidebar
@@ -75,8 +211,7 @@ export default function RestaurantAddForm({
                 initialValues={initialValues}
                 validationSchema={RestaurantSchema}
                 onSubmit={async (values) => {
-                  await new Promise((r) => setTimeout(r, 500));
-                  alert(JSON.stringify(values, null, 2));
+                  await onCreateRestaurant(values);
                 }}
                 validateOnChange
               >
@@ -201,13 +336,14 @@ export default function RestaurantAddForm({
                         </div>
 
                         <div>
-                          <CustomTextField
+                          <CustomNumberField
+                            suffix="m"
+                            min={0}
+                            max={500}
                             placeholder="Delivery Time"
                             name="deliveryTime"
-                            type="text"
-                            maxLength={20}
                             showLabel={true}
-                            value={values.deliveryTime ?? ''}
+                            value={values.deliveryTime}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
@@ -256,7 +392,7 @@ export default function RestaurantAddForm({
                             onChange={setFieldValue}
                             style={{
                               borderColor: onErrorMessageMatcher(
-                                'confirmPassword',
+                                'salesTax',
                                 errors?.salesTax,
                                 RestaurantErrors
                               )
@@ -271,7 +407,7 @@ export default function RestaurantAddForm({
                             placeholder="Shop Category"
                             selectedItem={values.shopType}
                             setSelectedItem={setFieldValue}
-                            options={dummyCountriesData}
+                            options={SHOP_TYPE}
                             showLabel={true}
                             style={{
                               borderColor: onErrorMessageMatcher(
@@ -289,7 +425,7 @@ export default function RestaurantAddForm({
                           <CustomMultiSelectComponent
                             name="cuisines"
                             placeholder="Cuisines"
-                            options={dummyCountriesData}
+                            options={cuisinesDropdown ?? []}
                             selectedItems={values.cuisines}
                             setSelectedItems={setFieldValue}
                             showLabel={true}
@@ -302,6 +438,20 @@ export default function RestaurantAddForm({
                                 ? 'red'
                                 : '',
                             }}
+                          />
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border border-gray-200 p-4 rounded-lg">
+                          <CustomUploadImageComponent
+                            key="logo"
+                            name="logo"
+                            title="Upload Logo"
+                            onSetImageUrl={setFieldValue}
+                          />
+                          <CustomUploadImageComponent
+                            key={'image'}
+                            name="image"
+                            title="Upload Image"
+                            onSetImageUrl={setFieldValue}
                           />
                         </div>
 

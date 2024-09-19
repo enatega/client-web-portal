@@ -20,6 +20,7 @@ import { createClient } from 'graphql-ws';
 
 // Utility imports
 import { Subscription } from 'zen-observable-ts';
+import { APP_NAME } from '../utils/constants';
 
 export const useSetupApollo = (): ApolloClient<NormalizedCacheObject> => {
   const { SERVER_URL, WS_SERVER_URL } = useConfiguration();
@@ -47,8 +48,13 @@ export const useSetupApollo = (): ApolloClient<NormalizedCacheObject> => {
   );
 
   const request = async (operation: Operation): Promise<void> => {
-    const data = localStorage.getItem('token');
-    const token = data ? data : null;
+    const data = localStorage.getItem(`user-${APP_NAME}`);
+
+    let token = null;
+    if (data) {
+      token = JSON.parse(data).token;
+    }
+
     operation.setContext({
       headers: {
         authorization: token ? `Bearer ${token}` : '',

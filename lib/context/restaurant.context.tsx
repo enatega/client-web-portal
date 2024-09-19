@@ -33,20 +33,9 @@ export const RestaurantProvider = ({ children }: IProvider) => {
     useState<IRestaurantByOwner[]>();
   const [restaurantGlobalFilter, setRestaurantGlobalFilter] =
     useState<string>('');
+  const [isEditingRestaurant, setIsEditing] = useState(false);
 
   // API
-  // const restaurantResponse = useQueryGQL(
-  //   GET_RESTAURANTS,
-  //   {},
-  //   {
-  //     debounceMs: 300,
-  //     onCompleted: (data: unknown) => {
-  //       const _data = data as IRestaurantsResponseGraphQL;
-  //       setRestaurantId(_data?.restaurants[0]?._id ?? '');
-  //     },
-  //   }
-  // ) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
-
   const restaurantByOwnerResponse = useQueryGQL(
     GET_RESTAURANTS_BY_OWNER,
     {
@@ -74,6 +63,10 @@ export const RestaurantProvider = ({ children }: IProvider) => {
     setRestaurantGlobalFilter(filter);
   };
 
+  const onSetEditingRestaurant = (status: boolean) => {
+    setIsEditing(status);
+  };
+
   const onHandlerFilterData = () => {
     const _filtered: IRestaurantByOwner[] = onFilterObjects(
       restaurantByOwnerResponse?.data?.restaurantByOwner?.restaurants ?? [],
@@ -94,6 +87,7 @@ export const RestaurantProvider = ({ children }: IProvider) => {
   }, [vendorId]);
 
   const value: IRestaurantContextProps = {
+    vendorId,
     restaurantFormVisible,
     onSetRestaurantFormVisible,
     restaurantId,
@@ -104,6 +98,9 @@ export const RestaurantProvider = ({ children }: IProvider) => {
     restaurantGlobalFilter,
     onSetRestaurantGlobalFilter,
     restaurantFiltered,
+    // Editing,
+    isEditingRestaurant,
+    onSetEditingRestaurant,
   };
 
   return (

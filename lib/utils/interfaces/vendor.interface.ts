@@ -21,6 +21,8 @@ export interface IVendorContextProps {
   globalFilter: string;
   onSetGlobalFilter: (filter: string) => void;
   filtered?: IVendorReponse[];
+  isEditingVendor: boolean;
+  onSetEditingVendor: (status: boolean) => void;
 }
 
 export interface IVendorHeaderComponentsProps extends IGlobalComponentProps {

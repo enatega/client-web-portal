@@ -1,4 +1,5 @@
 // Core
+import { ApolloError, useMutation } from '@apollo/client';
 import { Form, Formik } from 'formik';
 import { useContext } from 'react';
 
@@ -6,14 +7,16 @@ import { useContext } from 'react';
 import { Sidebar } from 'primereact/sidebar';
 
 // Context
+import { ToastContext } from '@/lib/context/toast.context';
 import { VendorContext } from '@/lib/context/vendor.context';
 
 // Interface and Types
 import { IVendorAddFormComponentProps } from '@/lib/utils/interfaces';
-import { IRiderForm } from '@/lib/utils/interfaces/forms';
+import { IVendorForm } from '@/lib/utils/interfaces/forms';
 
-// Constants
+// Constants and Methods
 import { VendorErrors } from '@/lib/utils/constants';
+import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 
 // Components
 import CustomButton from '@/lib/ui/useable-components/button';
@@ -21,17 +24,16 @@ import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 
-// Methods
-import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
-
 // Schema
 import { VendorSchema } from '@/lib/utils/schema';
 
+// GraphQL
+import { CREATE_VENDOR, EDIT_VENDOR, GET_VENDORS } from '@/lib/api/graphql';
+
 // Icons
-import { ToastContext } from '@/lib/context/toast.context';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-const initialValues: IRiderForm = {
+const initialValues: IVendorForm = {
   name: '',
   email: '',
   password: '',
@@ -42,19 +44,66 @@ export default function VendorAddForm({
   position = 'right',
 }: IVendorAddFormComponentProps) {
   // Context
-  const { vendorFormVisible, onSetVendorFormVisible } =
-    useContext(VendorContext);
+  const {
+    vendorFormVisible,
+    onSetVendorFormVisible,
+    vendorId,
+    isEditingVendor,
+  } = useContext(VendorContext);
   const { showToast } = useContext(ToastContext);
 
   // API
-  // const [mutate, { loading: mutateLoading }] = useMutation(
-  //   'props.vendor ' ? EDIT_VENDOR : CREATE_VENDOR,
-  //   {
-  //     refetchQueries: [{ query: GET_VENDORS }],
-  //     //  onError,
-  //     //  onCompleted
-  //   }
-  // );
+  // Mutations
+  const [createVendor] = useMutation(
+    isEditingVendor && vendorId ? EDIT_VENDOR : CREATE_VENDOR,
+    {
+      refetchQueries: [{ query: GET_VENDORS, fetchPolicy: 'network-only' }],
+      onError,
+    }
+  );
+
+  // Handlers
+  const onVendorCreate = async (data: IVendorForm) => {
+    try {
+      await createVendor({
+        variables: {
+          vendorInput: {
+            _id: isEditingVendor && vendorId ? vendorId : '',
+            email: data.email,
+            password: data.password,
+          },
+        },
+      });
+
+      showToast({
+        type: 'success',
+        title: 'New Vendor',
+        message: `Vendor has been ${vendorId ? 'edited' : 'added'} successfully`,
+        duration: 3000,
+      });
+
+      onSetVendorFormVisible(false);
+    } catch (error) {
+      showToast({
+        type: 'error',
+        title: `${vendorId ? 'Edit' : 'Create'} Vendor`,
+        message: `Vendor ${vendorId ? 'Edit' : 'Create'} Failed`,
+        duration: 2500,
+      });
+    }
+  };
+
+  function onError({ graphQLErrors, networkError }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: `${vendorId ? 'Edit' : 'Create'} Vendor`,
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        `Vendor ${vendorId ? 'Edit' : 'Create'} Failed`,
+      duration: 2500,
+    });
+  }
 
   return (
     <Sidebar
@@ -75,15 +124,7 @@ export default function VendorAddForm({
                 initialValues={initialValues}
                 validationSchema={VendorSchema}
                 onSubmit={async (values) => {
-                  await new Promise((r) => setTimeout(r, 500));
-                  alert(JSON.stringify(values, null, 2));
-
-                  showToast({
-                    type: 'success',
-                    title: 'New Vendor',
-                    message: 'Vendor has been added successfully',
-                    duration: 3000,
-                  });
+                  await onVendorCreate(values);
                 }}
                 validateOnChange
               >

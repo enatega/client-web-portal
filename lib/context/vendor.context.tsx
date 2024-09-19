@@ -30,6 +30,7 @@ export const VendorProvider = ({ children }: IProvider) => {
   const [filtered, setFiltered] = useState<IVendorReponse[]>();
   const [vendorId, setVendorId] = useState<string | null>(null);
   const [globalFilter, setGlobalFilter] = useState<string>('');
+  const [isEditingVendor, setIsEditing] = useState(false);
 
   // API
   const vendorResponse = useQueryGQL(
@@ -54,6 +55,10 @@ export const VendorProvider = ({ children }: IProvider) => {
 
   const onSetGlobalFilter = (filter: string) => {
     setGlobalFilter(filter);
+  };
+
+  const onSetEditingVendor = (status: boolean) => {
+    setIsEditing(status);
   };
 
   const onHandlerFilterData = () => {
@@ -82,6 +87,9 @@ export const VendorProvider = ({ children }: IProvider) => {
     globalFilter,
     onSetGlobalFilter,
     filtered,
+    // Editing
+    isEditingVendor,
+    onSetEditingVendor,
   };
 
   return (

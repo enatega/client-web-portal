@@ -5,6 +5,7 @@ export interface IRestaurantCardProps extends IGlobalComponentProps {
 }
 
 export interface IRestaurantContextProps {
+  vendorId: string | null;
   restaurantFormVisible: boolean;
   onSetRestaurantFormVisible: (status: boolean) => void;
   restaurantId: string | null;
@@ -16,6 +17,9 @@ export interface IRestaurantContextProps {
   restaurantGlobalFilter: string;
   onSetRestaurantGlobalFilter: (filter: string) => void;
   restaurantFiltered?: IRestaurantByOwner[];
+  // Editing,
+  isEditingRestaurant: boolean;
+  onSetEditingRestaurant: (status: boolean) => void;
 }
 
 export interface IRestaurantResponse {
@@ -67,5 +71,34 @@ export interface IRestaurantsByOwnerResponseGraphQL {
     email: string;
     userType: string;
     restaurants: IRestaurantByOwner[];
+  };
+}
+
+// Create
+interface ICreateRestaurant {
+  address: string;
+  cuisines: string[];
+  image: string;
+  location: {
+    __typename: string;
+    coordinates: number[];
+  };
+  logo: string;
+  minimumOrder: number;
+  name: string;
+  orderId: number;
+  orderPrefix: string;
+  password: string;
+  shopType: string;
+  slug: string;
+  tax: number;
+  username: string;
+  __typename: string;
+  _id: string;
+}
+
+export interface ICreateRestaurantResponse {
+  data?: {
+    createRestaurant?: ICreateRestaurant;
   };
 }
