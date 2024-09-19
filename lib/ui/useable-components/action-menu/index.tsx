@@ -82,7 +82,7 @@ const ActionMenu = ({ items, itemId }: IActionMenuProps) => {
         visible={deleteProductDialogVisible}
         onHide={cancelDelete}
         onConfirm={confirmDelete}
-        message="Are you sure you want to delete this item?"
+        // message="Are you sure you want to delete this item?"
       />
     </div>
   );
