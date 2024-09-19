@@ -3,6 +3,7 @@ import {
   ISignFormErrors,
   IVendorErrors,
 } from '../../interfaces/forms';
+import { IBannersErrors } from '../../interfaces/forms/banners.form.interface';
 import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
 
 export const PasswordErrors = [
@@ -44,7 +45,17 @@ export const RestaurantErrors: IRestaurantFormErrors = {
 
 export const RiderErrors: IRiderErrors = {
   name: ['Required'],
-  email: ['Required', 'Invalid email'],
+  username: ['Required'],
   password: ['Required', ...PasswordErrors],
   confirmPassword: ['Required', 'Password must match'],
+  zone: ['Required'],
+  phone: ['Required'],
+};
+
+export const BannersErrors: IBannersErrors = {
+  title: ['Required'],
+  description: ['Required'],
+  action: ['Required'],
+  screen: ['Required'],
+  file: ['Required'],
 };

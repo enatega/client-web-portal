@@ -1,6 +1,0 @@
-TODO: Shift tipping input to a generic component named TippingInput.
-TODO: Refactor the banner UI code.
-TODO: Add style props to CustomDropdown in the "Add Rider" section.
-TODO: Convert table columns into components.
-TODO: Name handlers in functions, as well as refs and states.
-TODO: Look for direct imports and change them to aliases.

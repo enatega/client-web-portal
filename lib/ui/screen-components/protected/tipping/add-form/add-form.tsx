@@ -12,7 +12,7 @@ import { TippingSchema } from '@/lib/utils/schema/tipping';
 
 // Components
 import CustomButton from '@/lib/ui/useable-components/button';
-import CustomNumberTextField from '../../../../useable-components/custom-input';
+import CustomNumberTextField from '@/lib/ui/useable-components/custom-input';
 
 // Formik
 import { Form, Formik, FormikHelpers } from 'formik';
@@ -50,10 +50,9 @@ const TippingAddForm = () => {
   const { showToast } = useToast();
 
   // Query
-  const { refetch, loading, data } = useQueryGQL(
-    GET_TIPPING,
-    {}
-  ) as IQueryResult<ITippingResponse | undefined, undefined>;
+  const { refetch, loading, data } = useQueryGQL(GET_TIPPING, {
+    fetchPolicy: 'cache-and-network',
+  }) as IQueryResult<ITippingResponse | undefined, undefined>;
 
   // Mutation
   const mutation = data && data.tips._id ? EDIT_TIPPING : CREATE_TIPPING;

@@ -7,22 +7,46 @@ import { FilterMatchMode } from 'primereact/api';
 // Interface and Types
 import {
   IRiderResponse,
+  IRidersDataResponse,
   IRidersMainComponentsProps,
 } from '@/lib/utils/interfaces/rider.interface';
 
 // Components
 import Table from '@/lib/ui/useable-components/table';
+import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants';
 import RiderHeader from '../header';
 
 // Utilities and Data
-import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants/data.table.columns';
+import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
+
+// GraphQL
+import { getRiders } from '@/lib/api/graphql';
+import { deleteRider } from '@/lib/api/graphql/mutation';
+import { gql, useMutation } from '@apollo/client';
+
+//Toast
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import useToast from '@/lib/hooks/useToast';
+import { IQueryResult } from '@/lib/utils/interfaces';
+
+const GET_RIDERS = gql`
+  ${getRiders}
+`;
+
+const DELETE_RIDER = gql`
+  ${deleteRider}
+`;
 
 export default function RidersMain({
-  // refetch,
-  data,
   setIsAddRiderVisible,
+  setRider,
 }: IRidersMainComponentsProps) {
   // Hooks
+  const { showToast } = useToast();
+
+  // State - Table
+  const [deleteId, setDeleteId] = useState('');
   const [selectedProducts, setSelectedProducts] = useState<IRiderResponse[]>(
     []
   );
@@ -30,6 +54,19 @@ export default function RidersMain({
   const [filters, setFilters] = useState({
     global: { value: '' as string | null, matchMode: FilterMatchMode.CONTAINS },
   });
+
+  // Query
+  const { data } = useQueryGQL(GET_RIDERS, {
+    fetchPolicy: 'cache-and-network',
+  }) as IQueryResult<IRidersDataResponse | undefined, undefined>;
+
+  //Mutation
+  const [mutateDelete, { loading: mutationLoading }] = useMutation(
+    DELETE_RIDER,
+    {
+      refetchQueries: [{ query: GET_RIDERS }],
+    }
+  );
 
   // For global search
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,14 +77,23 @@ export default function RidersMain({
     setGlobalFilterValue(value);
   };
 
-  const menuItems = [
+  const menuItems: IActionMenuItem<IRiderResponse>[] = [
     {
       label: 'Edit',
-      command: () => console.log('Edit clicked'),
+      command: (data?: IRiderResponse) => {
+        if (data) {
+          setIsAddRiderVisible(true);
+          setRider(data);
+        }
+      },
     },
     {
       label: 'Delete',
-      command: () => console.log('Delete clicked'),
+      command: (data?: IRiderResponse) => {
+        if (data) {
+          setDeleteId(data._id);
+        }
+      },
     },
   ];
 
@@ -66,6 +112,28 @@ export default function RidersMain({
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
         columns={RIDER_TABLE_COLUMNS({ menuItems })}
+      />
+      <DeleteDialog
+        loading={mutationLoading}
+        visible={!!deleteId}
+        onHide={() => {
+          setDeleteId('');
+        }}
+        onConfirm={() => {
+          mutateDelete({
+            variables: { id: deleteId },
+            onCompleted: () => {
+              showToast({
+                type: 'success',
+                title: 'Success!',
+                message: 'Rider Deleted',
+                duration: 3000,
+              });
+              setDeleteId('');
+            },
+          });
+        }}
+        message="Are you sure you want to delete this item?"
       />
     </div>
   );

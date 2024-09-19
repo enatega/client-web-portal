@@ -40,7 +40,7 @@ const Table = <T extends ITableExtends>({
       onSelectionChange={handleSelectionChange}
       dataKey="_id"
       tableStyle={{ minWidth: '50rem' }}
-      selectionMode="multiple"
+      selectionMode="checkbox"
       filters={filters}
       loading={loading}
     >

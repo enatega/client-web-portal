@@ -29,20 +29,37 @@ export interface IRidersHeaderComponentsProps extends IGlobalComponentProps {
 }
 
 export interface IRidersMainComponentsProps extends IGlobalComponentProps {
-  refetch: () => void;
-  data: IRidersDataResponse | null | undefined;
   setIsAddRiderVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setRider: React.Dispatch<React.SetStateAction<IRiderResponse | null>>;
 }
 
 export interface IRidersAddFormComponentProps extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
   isAddRiderVisible: boolean;
-  setIsAddRiderVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  refetch: () => void;
+  onHide: () => void;
+  rider: IRiderResponse | null;
 }
 
 export interface IRiderHeaderProps extends IGlobalComponentProps {
   setIsAddRiderVisible: (visible: boolean) => void;
   globalFilterValue: string;
   onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+interface ILocation {
+  __typename: string;
+  coordinates: number[][][];
+}
+
+interface IZone {
+  __typename: string;
+  _id: string;
+  title: string;
+  description: string;
+  location: ILocation;
+  isActive: boolean;
+}
+
+export interface IZonesResponse {
+  zones: IZone[];
 }

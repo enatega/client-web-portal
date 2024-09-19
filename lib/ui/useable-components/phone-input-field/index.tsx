@@ -1,34 +1,23 @@
-'use client';
-
-// Core
-import { useState } from 'react';
-
-// Interfaces
-import { IPhoneTextFieldProps } from '@/lib/utils/interfaces';
-
-// Constants
 import { CountryCodes } from '@/lib/utils/constants/country-codes';
-
-// Prime React
+import { IPhoneTextFieldProps } from '@/lib/utils/interfaces';
 import { Dropdown } from 'primereact/dropdown';
 import { InputMask } from 'primereact/inputmask';
-
-// Styles
-import classes from './phone-input-field.module.css';
+import { useState } from 'react';
 
 export default function CustomPhoneTextField({
   className,
   style,
   showLabel,
   placeholder = '',
-  ...props
+  value,
+  onChange,
 }: IPhoneTextFieldProps) {
-  const [selectedCity, setSelectedCity] = useState('+44');
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+44');
 
   return (
     <div className="relative w-full flex flex-col justify-center gap-y-1">
       {showLabel && (
-        <label htmlFor="username" className="text-sm font-[500]">
+        <label htmlFor="phone" className="text-sm font-[500]">
           {placeholder}
         </label>
       )}
@@ -37,17 +26,19 @@ export default function CustomPhoneTextField({
         className={`flex items-center border border-gray-300 rounded-md overflow-hidden ${className}`}
       >
         <Dropdown
-          className={`bg-gray-200 border-r border-gray-300 p-2 rounded-l-sm focus:outline-none ${classes.dropdown}`}
+          className="bg-gray-200 border-r border-gray-300 p-2 rounded-l-sm focus:outline-none"
           options={CountryCodes}
-          value={selectedCity}
+          value={selectedCountryCode}
           optionLabel="label"
-          virtualScrollerOptions={{ itemSize: 30 }}
-          onChange={(e) => setSelectedCity(e.value)}
+          optionValue="code"
+          onChange={(e) => setSelectedCountryCode(e.value)}
         />
         <InputMask
-          className="flex-1 p-2 border-none rounded-r-sm focus:outline-none"
+          mask="9999999999"
+          value={value}
+          onChange={onChange}
           placeholder={placeholder}
-          {...props}
+          className="flex-1 p-2 border-none rounded-r-sm focus:outline-none"
         />
       </div>
     </div>

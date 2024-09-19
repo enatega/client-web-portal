@@ -7,19 +7,26 @@ export interface IBannersHeaderComponentsProps extends IGlobalComponentProps {
 
 export interface IBannersMainComponentsProps extends IGlobalComponentProps {
   setIsAddBannerVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setBanner: React.Dispatch<React.SetStateAction<IBannersResponse | null>>;
 }
 
 export interface IBannersAddFormComponentProps extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
   isAddBannerVisible: boolean;
-  setIsAddBannerVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  banner: IBannersResponse | null;
+  onHide: () => void;
 }
 
-export type IBannerToggleComponentProps = {
+export type IBannersResponse = {
   _id: string;
-  image: string;
   title: string;
   description: string;
-  screenName: string;
-  action: 'Open Modal' | 'Navigate';
+  action: 'navigate' | 'openModal';
+  screen: string;
+  file: string;
+  parameters: string;
 };
+
+export interface IBannersDataResponse {
+  banners: IBannersResponse[];
+}

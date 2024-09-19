@@ -1,42 +1,28 @@
-'use client';
 // Core
 import { useState } from 'react';
 
-// GraphQL
-import { getRiders } from '@/lib/api/graphql';
-import { gql } from '@apollo/client';
-
 // Components
-import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import RiderAddForm from '@/lib/ui/screen-components/protected/riders/add-form';
 import RidersMain from '@/lib/ui/screen-components/protected/riders/view/main';
-import { IQueryResult } from '@/lib/utils/interfaces';
-import { IRidersDataResponse } from '@/lib/utils/interfaces/rider.interface';
-
-const GET_RIDERS = gql`
-  ${getRiders}
-`;
+import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 
 export default function RidersScreen() {
   // State
   const [isAddRiderVisible, setIsAddRiderVisible] = useState(false);
-
-  // Query
-  const { refetch, data } = useQueryGQL(GET_RIDERS, {}) as IQueryResult<
-    IRidersDataResponse | undefined,
-    undefined
-  >;
+  const [rider, setRider] = useState<null | IRiderResponse>(null);
 
   return (
     <div className="px-6">
       <RidersMain
-        refetch={refetch}
-        data={data}
         setIsAddRiderVisible={setIsAddRiderVisible}
+        setRider={setRider}
       />
       <RiderAddForm
-        refetch={refetch}
-        setIsAddRiderVisible={setIsAddRiderVisible}
+        rider={rider}
+        onHide={() => {
+          setIsAddRiderVisible(false);
+          setRider(null);
+        }}
         isAddRiderVisible={isAddRiderVisible}
       />
     </div>

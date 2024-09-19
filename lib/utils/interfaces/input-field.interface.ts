@@ -40,7 +40,7 @@ export interface IPhoneTextFieldProps extends IGlobalTextFieldProps {
 
 export interface INumberTextFieldProps
   extends Omit<IGlobalTextFieldProps, 'value' | 'type'> {
-  value: number;
+  value: number | null;
   min: number;
   max?: number;
   minFractionDigits?: number;
@@ -51,6 +51,7 @@ export interface INumberTextFieldProps
   prefix?: string;
   suffix?: string;
   onChange: (field: string, value: number | null) => void;
+  useGrouping?: boolean;
 }
 
 export interface IPasswordTextFieldProps

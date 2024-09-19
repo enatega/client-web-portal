@@ -9,8 +9,8 @@ export interface IFilterType {
 }
 
 export interface IColumnConfig<T> extends IGlobalComponentProps {
+  headerName?: string;
   propertyName: string;
-  headerName: string;
   body?: (rowData: T) => React.ReactNode;
 }
 

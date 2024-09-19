@@ -1,100 +1,175 @@
 // Core
-import { Form, Formik } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
 
 // Prime React
 import { Sidebar } from 'primereact/sidebar';
 
-// FontAwesome
-import {
-  faCheck,
-  faEnvelope,
-  faEye,
-  faLock,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 // Interface and Types
+import { IQueryResult } from '@/lib/utils/interfaces';
 import { IRiderForm } from '@/lib/utils/interfaces/forms';
-import { IRidersAddFormComponentProps } from '@/lib/utils/interfaces/rider.interface';
+import {
+  IRidersAddFormComponentProps,
+  IZonesResponse,
+} from '@/lib/utils/interfaces/rider.interface';
 
 // Components
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
-import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
-import CustomPhoneTextField from '@/lib/ui/useable-components/phone-input-field';
+import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
+import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 
 // Utilities and Constants
-import { PasswordErrors, RiderErrors } from '@/lib/utils/constants';
+import { RiderErrors } from '@/lib/utils/constants';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import { RiderSchema } from '@/lib/utils/schema/rider';
 
-const initialValues: IRiderForm = {
-  riderName: '',
-  riderEmail: '',
-  riderPassword: '',
-  riderConfirmPassword: '',
-  riderPhoneNumber: '',
-  riderZone: null,
-};
+//Toast
+import useToast from '@/lib/hooks/useToast';
+
+//GraphQL
+import { getRiders, getZones } from '@/lib/api/graphql';
+import { createRider, editRider } from '@/lib/api/graphql/mutation';
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import { gql, useMutation } from '@apollo/client';
+
+const GET_RIDERS = gql`
+  ${getRiders}
+`;
+
+const CREATE_RIDER = gql`
+  ${createRider}
+`;
+
+const EDIT_RIDER = gql`
+  ${editRider}
+`;
+
+const GET_ZONES = gql`
+  ${getZones}
+`;
 
 export default function RiderAddForm({
-  // refetch,
+  onHide,
+  rider,
   position = 'right',
-  setIsAddRiderVisible,
   isAddRiderVisible,
 }: IRidersAddFormComponentProps) {
+  // State
+  const initialValues: IRiderForm = {
+    name: '',
+    username: '',
+    password: '',
+    ...rider,
+    confirmPassword: rider?.password ?? '',
+    phone: rider ? +rider.phone : null,
+    zone: rider ? { label: rider.zone.title, code: rider.zone._id } : null,
+  };
+
+  // Hooks
+  const { showToast } = useToast();
+
+  // Query
+  const { data } = useQueryGQL(GET_ZONES, {
+    fetchPolicy: 'cache-and-network',
+  }) as IQueryResult<IZonesResponse | undefined, undefined>;
+
+  // Mutation
+  const mutation = rider ? EDIT_RIDER : CREATE_RIDER;
+  const [mutate, { loading: mutationLoading }] = useMutation(mutation, {
+    refetchQueries: [{ query: GET_RIDERS }],
+  });
+
+  // Form Submission
+  const handleSubmit = (
+    values: IRiderForm,
+    { resetForm }: FormikHelpers<IRiderForm>
+  ) => {
+    if (data) {
+      mutate({
+        variables: {
+          riderInput: {
+            _id: rider ? rider._id : '',
+            name: values.name,
+            username: values.username,
+            password: values.password,
+            phone: values.phone?.toString(),
+            zone: values.zone?.code,
+            available: rider ? rider.available : true,
+          },
+        },
+        onCompleted: () => {
+          showToast({
+            type: 'success',
+            title: 'Success!',
+            message: rider ? 'Rider updated' : 'Rider added',
+            duration: 3000,
+          });
+          resetForm();
+          onHide();
+        },
+        onError: (error) => {
+          let message = '';
+          try {
+            message = error.graphQLErrors[0].message;
+          } catch (err) {
+            message = 'ActionFailedTryAgain';
+          }
+          showToast({
+            type: 'error',
+            title: 'Error!',
+            message,
+            duration: 3000,
+          });
+        },
+      });
+    }
+  };
+
   return (
     <Sidebar
       visible={isAddRiderVisible}
       position={position}
-      onHide={() => setIsAddRiderVisible(false)}
+      onHide={onHide}
       className="w-full sm:w-[450px]"
     >
       <div className="w-full h-full flex items-center justify-start">
         <div className="h-full w-full">
           <div className="flex flex-col gap-2">
             <div className="flex flex-col mb-2">
-              <span className="text-lg">Add Rider</span>
+              <span className="text-lg">{rider ? 'Edit' : 'Add'} Rider</span>
             </div>
 
             <div>
               <Formik
                 initialValues={initialValues}
                 validationSchema={RiderSchema}
-                onSubmit={async (values) => {
-                  await new Promise((r) => setTimeout(r, 500));
-                  alert(JSON.stringify(values, null, 2));
-                }}
-                validateOnChange
+                onSubmit={handleSubmit}
+                enableReinitialize
               >
                 {({
                   values,
                   errors,
                   handleChange,
                   handleSubmit,
-                  isSubmitting,
                   setFieldValue,
                 }) => {
-                  console.log({ errors });
-
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-4">
                         <div>
                           <CustomTextField
                             type="text"
-                            name="riderName"
+                            name="name"
                             placeholder="Name"
                             maxLength={35}
-                            value={values.riderName}
+                            value={values.name}
                             onChange={handleChange}
                             showLabel={true}
                             style={{
                               borderColor: onErrorMessageMatcher(
-                                'email',
-                                errors?.riderName,
+                                'name',
+                                errors?.name,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -103,23 +178,18 @@ export default function RiderAddForm({
                           />
                         </div>
                         <div>
-                          <CustomIconTextField
-                            type="email"
-                            name="riderEmail"
-                            placeholder="Email"
+                          <CustomTextField
+                            type="text"
+                            name="username"
+                            placeholder="username"
                             maxLength={35}
-                            showLabel={true}
-                            iconProperties={{
-                              icon: faEnvelope,
-                              position: 'right',
-                              style: { marginTop: '1px' },
-                            }}
-                            value={values.riderEmail}
+                            value={values.username}
                             onChange={handleChange}
+                            showLabel={true}
                             style={{
                               borderColor: onErrorMessageMatcher(
-                                'email',
-                                errors?.riderEmail,
+                                'username',
+                                errors?.username,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -129,23 +199,17 @@ export default function RiderAddForm({
                         </div>
 
                         <div>
-                          <CustomIconTextField
+                          <CustomPasswordTextField
                             placeholder="Password"
-                            name="riderPassword"
-                            type="password"
+                            name="password"
                             maxLength={20}
-                            value={values.riderPassword}
+                            value={values.password}
                             showLabel={true}
-                            iconProperties={{
-                              icon: faEye,
-                              position: 'right',
-                              style: { marginTop: '1px' },
-                            }}
                             onChange={handleChange}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'password',
-                                errors?.riderPassword,
+                                errors?.password,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -155,23 +219,18 @@ export default function RiderAddForm({
                         </div>
 
                         <div>
-                          <CustomIconTextField
+                          <CustomPasswordTextField
                             placeholder="Confirm Password"
-                            name="riderConfirmPassword"
-                            type="password"
+                            name="confirmPassword"
                             maxLength={20}
                             showLabel={true}
-                            iconProperties={{
-                              icon: faEye,
-                              position: 'right',
-                              style: { marginTop: '1px' },
-                            }}
-                            value={values.riderConfirmPassword ?? ''}
+                            value={values.confirmPassword ?? ''}
                             onChange={handleChange}
+                            feedback={false}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'confirmPassword',
-                                errors?.riderConfirmPassword,
+                                errors?.confirmPassword,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -183,36 +242,19 @@ export default function RiderAddForm({
                         <div>
                           <CustomDropdownComponent
                             placeholder="Zone"
-                            options={[{ label: 'Asia', code: 'As' }]}
+                            options={
+                              data?.zones.map((val) => {
+                                return { label: val.title, code: val._id };
+                              }) || []
+                            }
                             showLabel={true}
-                            name="riderZone"
-                            selectedItem={values.riderZone}
+                            name="zone"
+                            selectedItem={values.zone}
                             setSelectedItem={setFieldValue}
-                            className={`${
-                              onErrorMessageMatcher(
-                                'confirmPassword',
-                                errors?.riderZone,
-                                RiderErrors
-                              )
-                                ? 'border-red-500'
-                                : 'border-gray-300'
-                            } w-full md:w-20rem h-11 p-0 m-0 border text-sm align-middle  focus:outline-none focus:shadow-none p-dropdown-no-box-shadow`}
-                          />
-                        </div>
-                        <div>
-                          <CustomPhoneTextField
-                            type="text"
-                            name="riderPhoneNumber"
-                            placeholder="Phone Number"
-                            maxLength={35}
-                            showLabel
-                            value={values.riderPhoneNumber}
-                            onChange={handleChange}
-                            mask="(999) 999-9999"
                             style={{
                               borderColor: onErrorMessageMatcher(
-                                'confirmPassword',
-                                errors?.riderPhoneNumber,
+                                'zone',
+                                errors?.zone,
                                 RiderErrors
                               )
                                 ? 'red'
@@ -221,70 +263,33 @@ export default function RiderAddForm({
                           />
                         </div>
 
-                        <div className="flex flex-col items-start justify-start gap-2 mb-2 p-2">
-                          <div className="w-full border-b pb-2">
-                            <FontAwesomeIcon icon={faLock} className="mr-2" />
-                            <b>Password Strength</b>
-                          </div>
-
-                          {PasswordErrors.map((pmessage, index) => {
-                            const password = values.riderPassword || '';
-
-                            let isResolved = false;
-                            switch (index) {
-                              case 0: // At least 6 characters
-                                isResolved = password.length >= 6;
-                                break;
-                              case 1: // At least one lowercase letter
-                                isResolved = /[a-z]/.test(password);
-                                break;
-                              case 2: // At least one uppercase letter
-                                isResolved = /[A-Z]/.test(password);
-                                break;
-                              case 3: // At least one number
-                                isResolved = /[0-9]/.test(password);
-                                break;
-                              case 4: // At least one special character
-                                isResolved = /[!@#$%^&*(),.?":{}|<>]/.test(
-                                  password
-                                );
-                                break;
-                              case 5: // At least one special character
-                                isResolved =
-                                  values.riderPassword !== '' &&
-                                  values.riderConfirmPassword !== '' &&
-                                  values.riderPassword ===
-                                    values.riderConfirmPassword;
-                                break;
-                            }
-
-                            const className = isResolved
-                              ? 'text-green-500'
-                              : 'text-gray-500';
-
-                            return (
-                              <div
-                                key={index}
-                                className={`${className} text-sm`}
-                              >
-                                <FontAwesomeIcon
-                                  icon={isResolved ? faCheck : faTimes}
-                                  className="mr-2"
-                                />
-                                <span>{pmessage}</span>
-                              </div>
-                            );
-                          })}
+                        <div>
+                          <CustomNumberField
+                            min={0}
+                            placeholder="Phone Number"
+                            name="phone"
+                            showLabel={true}
+                            value={values.phone}
+                            useGrouping={false}
+                            onChange={setFieldValue}
+                            style={{
+                              borderColor: onErrorMessageMatcher(
+                                'phone',
+                                errors?.phone,
+                                RiderErrors
+                              )
+                                ? 'red'
+                                : '',
+                            }}
+                          />
                         </div>
 
                         <div className="flex justify-end mt-4">
                           <CustomButton
                             className="w-fit h-10 bg-black text-white border-gray-300 px-8"
-                            label="Add"
+                            label={rider ? 'Update' : 'Add'}
                             type="submit"
-                            loading={isSubmitting}
-
-                            // onClick={() => {}}
+                            loading={mutationLoading}
                           />
                         </div>
                       </div>
