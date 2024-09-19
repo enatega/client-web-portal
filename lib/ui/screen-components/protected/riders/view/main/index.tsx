@@ -21,8 +21,7 @@ import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 
 // GraphQL
-import { getRiders } from '@/lib/api/graphql';
-import { deleteRider } from '@/lib/api/graphql/mutation';
+import { deleteRider, getRiders } from '@/lib/api/graphql';
 import { gql, useMutation } from '@apollo/client';
 
 //Toast

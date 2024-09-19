@@ -4,20 +4,60 @@ export const GET_CONFIGURATION = gql`
   query getConfiguration {
     configuration {
       _id
+      email
+      emailName
+      password
+      enableEmail
+      clientId
+      clientSecret
+      sandbox
+      publishableKey
+      secretKey
       currency
       currencySymbol
       deliveryRate
+      twilioAccountSid
+      twilioAuthToken
+      twilioPhoneNumber
       twilioEnabled
-      webClientID
+      formEmail
+      sendGridApiKey
+      sendGridEnabled
+      sendGridEmail
+      sendGridEmailName
+      sendGridPassword
+      dashboardSentryUrl
+      webSentryUrl
+      apiSentryUrl
+      customerAppSentryUrl
+      restaurantAppSentryUrl
+      riderAppSentryUrl
       googleApiKey
+      cloudinaryUploadUrl
+      cloudinaryApiKey
       webAmplitudeApiKey
+      appAmplitudeApiKey
+      webClientID
+      androidClientID
+      iOSClientID
+      expoClientID
       googleMapLibraries
       googleColor
-      webSentryUrl
-      publishableKey
-      clientId
+      termsAndConditions
+      privacyPolicy
+      testOtp
+      firebaseKey
+      authDomain
+      projectId
+      storageBucket
+      msgSenderId
+      appId
+      measurementId
+      isPaidVersion
       skipEmailVerification
       skipMobileVerification
+      costType
+      vapidKey
     }
   }
 `;

@@ -104,7 +104,7 @@ export default function MakeSidebar() {
           isParent: false,
         },
         {
-          text: 'Cousins',
+          text: 'Cuisine',
           route: '/management/cuisines',
           isParent: false,
         },

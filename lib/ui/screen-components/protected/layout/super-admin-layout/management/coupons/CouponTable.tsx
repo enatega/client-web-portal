@@ -30,7 +30,7 @@ import { debounce } from 'lodash';
 
 //hooks
 import { useMutation } from '@apollo/client';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 export default function CouponTable({
   data,
@@ -48,6 +48,7 @@ export default function CouponTable({
       loading: deleteCouponLoading,
     },
   ] = useMutation(DELETE_COUPON);
+
   //temporary console
   console.log(
     deleteCoupon,
@@ -69,9 +70,7 @@ export default function CouponTable({
     _id: '',
     bool: false,
   });
-  const [sortedData, setSortedData] = useState<ICoupon[] | null | undefined>(
-    data
-  );
+  const [sortedData, setSortedData] = useState<ICoupon[] | null | undefined>();
   const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
 
   //toast
@@ -86,6 +85,7 @@ export default function CouponTable({
       setSortedData(() => [updatedCoupon, ...filteredData]);
     }
   }
+
   //handle toggle mutation (edit)
   async function handleSubmitToggleState(rowData: ICoupon) {
     try {
@@ -104,7 +104,7 @@ export default function CouponTable({
         title: 'Info',
         type: 'info',
         message: 'Operation successfull!',
-        duration: 2000,
+        duration: 2500,
       });
     } catch (err) {
       showToast({
@@ -114,7 +114,7 @@ export default function CouponTable({
           editCouponError?.message ||
           editCouponError?.graphQLErrors[0].message ||
           'Something went wrong please try again',
-        duration: 2000,
+        duration: 2500,
       });
     }
   }
@@ -201,11 +201,13 @@ export default function CouponTable({
       ),
     },
   ];
-  console.log({ data, sortedData });
+  useEffect(() => {
+    setSortedData(data);
+  }, [data]);
   return (
     <GenericTable
       columns={columns}
-      data={sortedData?.length !== 0 ? sortedData : data}
+      data={sortedData}
       onSelectionChange={(e) => setSelectedData(e as ICoupon[])}
       selection={selectedData}
       loading={loading}

@@ -3,6 +3,7 @@ import { IDropdownComponentProps } from '@/lib/utils/interfaces';
 
 // Prime React
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 const CustomDropdownComponent = ({
   name,
@@ -11,6 +12,7 @@ const CustomDropdownComponent = ({
   selectedItem,
   setSelectedItem,
   showLabel,
+  isLoading = false,
   ...props
 }: IDropdownComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
@@ -21,7 +23,7 @@ const CustomDropdownComponent = ({
     );
   };
 
-  return (
+  return !isLoading ? (
     <div className={`w-full flex flex-col justify-center gap-y-1`}>
       {showLabel && (
         <label htmlFor="username" className="text-sm font-[500]">
@@ -42,6 +44,8 @@ const CustomDropdownComponent = ({
         {...props}
       />
     </div>
+  ) : (
+    <InputSkeleton />
   );
 };
 

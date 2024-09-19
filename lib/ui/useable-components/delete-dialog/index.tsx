@@ -6,14 +6,13 @@ import CustomButton from '../button';
 
 // Interface and Types
 import { IDeleteDialogProps } from '@/lib/utils/interfaces/dialog.interface';
-import { confirmDialog } from 'primereact/confirmdialog';
 
 const DeleteDialog = ({
   visible,
+  onHide,
   onConfirm,
   message,
   loading,
-  onHide,
 }: IDeleteDialogProps) => {
   const footer = (
     <div className="space-x-2">
@@ -32,15 +31,6 @@ const DeleteDialog = ({
       />
     </div>
   );
-
-  confirmDialog({
-    message: 'Are you sure you want to proceed?',
-    header: 'Confirmation',
-    icon: 'pi pi-exclamation-triangle',
-    defaultFocus: 'accept',
-  });
-
-  console.log({ visible });
 
   return (
     <Dialog

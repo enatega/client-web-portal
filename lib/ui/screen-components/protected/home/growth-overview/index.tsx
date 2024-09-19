@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { Chart } from 'primereact/chart';
 
 // Dummy
-import { generateRandomUserCounts } from '@/lib/utils/dummy';
 
 export default function GrowthOverView() {
   // States
@@ -21,52 +20,39 @@ export default function GrowthOverView() {
     );
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
     const data = {
-      labels: [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-      ],
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
       datasets: [
         {
-          label: 'Total Users',
-          data: generateRandomUserCounts(),
-          fill: true,
-          borderColor: 'rgba(90, 193, 47, 1)',
-          backgroundColor: 'rgba(201, 232, 189, 0.2)',
-          tension: 0.4,
-        },
-        {
-          label: 'Total Vendors',
-          data: generateRandomUserCounts(),
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          backgroundColor: documentStyle.getPropertyValue('--blue-100'),
-          tension: 0.4,
-        },
-        {
-          label: 'Total Restaurants',
-          data: generateRandomUserCounts(),
+          label: 'Restaurants',
+          data: [1, 2, 3, 4, 5, 6, 7],
           fill: false,
           borderColor: documentStyle.getPropertyValue('--pink-500'),
           backgroundColor: documentStyle.getPropertyValue('--pink-100'),
-          tension: 0.4,
+          tension: 0,
         },
         {
-          label: 'Total Users',
-          data: generateRandomUserCounts(),
+          label: 'Vendors',
+          data: [8, 7, 6, 5, 4, 3, 2],
           fill: false,
-          borderColor: documentStyle.getPropertyValue('--gray-500'),
-          backgroundColor: documentStyle.getPropertyValue('--gray-100'),
-          tension: 0.4,
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          backgroundColor: documentStyle.getPropertyValue('--blue-100'),
+          tension: 0,
+        },
+        {
+          label: 'Riders',
+          data: [2, 4, 6, 8, 7, 4, 1],
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--yellow-500'),
+          backgroundColor: documentStyle.getPropertyValue('--yellow-100'),
+          tension: 0,
+        },
+        {
+          label: 'Users',
+          data: [9, 6, 4, 2, 3, 5, 7],
+          fill: false,
+          borderColor: documentStyle.getPropertyValue('--green-500'),
+          backgroundColor: documentStyle.getPropertyValue('--green-100'),
+          tension: 0,
         },
       ],
     };

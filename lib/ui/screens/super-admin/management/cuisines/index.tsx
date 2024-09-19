@@ -4,29 +4,33 @@ import { GET_CUISINES } from '@/lib/api/graphql';
 //components
 import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/AddCuisine';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
+import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
-//prime react components
+
+// PrimeReact components
+import { FilterMatchMode } from 'primereact/api';
 import { Sidebar } from 'primereact/sidebar';
+
 //interfaces
 import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICuisine,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
-//icons
+
+// Icons
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
-import { FilterMatchMode } from 'primereact/api';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CuisinesScreen() {
   const [visible, setVisible] = useState(false);
   const [cuisinesData, setCuisinesData] = useState<ICuisine[]>([]);
-  const { data, loading } = useLazyQueryQL(
+  const { data, loading, fetch } = useLazyQueryQL(
     GET_CUISINES,
     {}
   ) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
@@ -57,6 +61,11 @@ export default function CuisinesScreen() {
   const addCuisineLocally = (cuisine: ICuisine) => {
     setCuisinesData((prevCuisines) => [cuisine, ...prevCuisines]);
   };
+
+  //useEffects
+  useEffect(() => {
+    fetch();
+  }, []);
 
   //appending cuisines
   useEffect(() => {

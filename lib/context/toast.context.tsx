@@ -4,17 +4,17 @@
 import React, { useRef } from 'react';
 
 // Interfaces
-import {
-  IToast,
-  IToastContext,
-  IToastProviderProps,
-} from '@/lib/utils/interfaces';
 
 // Prime React
 import { Toast } from 'primereact/toast';
 
 // Components
 import CustomNotification from '../ui/useable-components/notification';
+import {
+  IToast,
+  IToastContext,
+  IToastProviderProps,
+} from '../utils/interfaces/toast.interface';
 
 export const ToastContext = React.createContext<IToastContext>(
   {} as IToastContext
@@ -28,7 +28,7 @@ export const ToastProvider: React.FC<IToastProviderProps> = ({ children }) => {
   const onShowToast = (config: IToast) => {
     toastRef.current?.show({
       severity: config.type,
-      life: config.duration,
+      life: config?.duration ?? 2500,
       contentStyle: {
         margin: 0,
         padding: 0,

@@ -20,9 +20,11 @@ export interface IRestaurantForm {
   password: string;
   confirmPassword: string;
   address: string;
-  deliveryTime: string;
+  deliveryTime: number;
   minOrder: number;
   salesTax: number;
   shopType: IDropdownSelectItem | null;
   cuisines: IDropdownSelectItem[];
+  image: string;
+  logo: string;
 }

@@ -1,14 +1,16 @@
 import { IPasswordTextFieldProps } from '@/lib/utils/interfaces';
 import { Password } from 'primereact/password';
+import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 export default function CustomPasswordTextField({
   className,
   placeholder,
   showLabel,
   feedback = true,
+  isLoading = false,
   ...props
 }: IPasswordTextFieldProps) {
-  return (
+  return !isLoading ? (
     <div className="flex flex-col gap-y-1 rounded-lg">
       {showLabel && (
         <label htmlFor="username" className="text-sm font-[500]">
@@ -23,5 +25,7 @@ export default function CustomPasswordTextField({
         {...props}
       />
     </div>
+  ) : (
+    <InputSkeleton />
   );
 }

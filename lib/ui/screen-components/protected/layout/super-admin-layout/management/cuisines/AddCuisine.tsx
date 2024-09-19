@@ -42,14 +42,19 @@ export default function AddCuisine({
       code: '',
     },
   };
+
+  //toast
   const { showToast } = useContext(ToastContext);
+
   //mutation
   const [CreateCuisine, { loading, error }] = useMutation(CREATE_CUISINE);
+
   // shop type options
   const shopTypeOptions = [
     { label: 'Restaurant', code: 'restaurant' },
     { label: 'Shop', code: 'shop' },
   ];
+
   return (
     <div className="flex flex-col gap-4">
       <h2 className="font-bold mb-3 text-xl">Add Cuisine</h2>

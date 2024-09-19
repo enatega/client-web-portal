@@ -41,8 +41,8 @@ export default function CuisineTable({
             'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
           }
           alt={data.description}
-          width={80}
-          height={80}
+          width={30}
+          height={30}
           className="rounded-md"
         />
       ),
@@ -73,17 +73,20 @@ export default function CuisineTable({
             // />
             <></>
           ) : (
-            <FontAwesomeIcon
-              icon={faEllipsisVertical}
-              className="hover:scale-105 p-1"
-              onClick={() =>
+            <></>
+          )}
+          <FontAwesomeIcon
+            icon={faEllipsisVertical}
+            className={`p-1 ${isEditPopupOpen._id === data._id && isEditPopupOpen.bool ? 'text-gray-400' : 'hover:scale-105 cursor-pointer'}`}
+            onClick={() => {
+              if (!(isEditPopupOpen._id === data._id && isEditPopupOpen.bool)) {
                 setIsEditDeletePopupOpen({
                   _id: data._id,
                   bool: true,
-                })
+                });
               }
-            />
-          )}
+            }}
+          />
         </div>
       ),
     },

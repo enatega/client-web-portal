@@ -24,15 +24,15 @@ export interface IGlobalButtonProps {
   title: string;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
+
 export interface ILazyQueryResult<T, V> {
   data: T | null;
   error: Error | null;
   loading: boolean;
-  fetch: (variables?: V) => void;
+  fetch: (variables?: V) => void; // for useLazyQuery
   isError: boolean;
   isSuccess: boolean;
 }
-
 export interface IQueryResult<T, V> {
   data: T | null;
   error: Error | null;
@@ -41,6 +41,7 @@ export interface IQueryResult<T, V> {
   isError: boolean;
   isSuccess: boolean;
 }
+
 export interface ITableColumn<T> {
   field?: string;
   header?: string;

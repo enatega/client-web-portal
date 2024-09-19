@@ -22,7 +22,8 @@ export default function VendorHeader({
   setSelectedVendorFilter,
 }: IVendorHeaderComponentsProps) {
   // Context
-  const { onSetVendorFormVisible } = useContext(VendorContext);
+  const { onSetVendorFormVisible, globalFilter, onSetGlobalFilter } =
+    useContext(VendorContext);
 
   return (
     <div className="w-full border-b p-3 flex-shrink-0 sm:block hidden">
@@ -48,6 +49,8 @@ export default function VendorHeader({
             maxLength={35}
             placeholder="Search Vendors"
             showLabel={false}
+            value={globalFilter}
+            onChange={(e) => onSetGlobalFilter(e.target.value)}
           />
         </div>
         <CustomTab

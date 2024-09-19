@@ -44,15 +44,15 @@ export default function EditDeletePopup({
   return (
     <div
       ref={popupRef}
-      className="flex flex-col gap-2 p-3 rounded-lg right-0 bg-white shadow-xl border-gray-400 border w-8 sticky h-16 items-center justify-center"
+      className="flex flex-col gap-2 p-2 rounded-lg right-8  bg-white shadow-xl border border-gray-200 w-fit absolute"
     >
       <button onClick={setIsEditing}>
         <FontAwesomeIcon
-          color="blue"
+          title="Edit"
           icon={faEdit}
-          width={15}
-          className="cursor-pointer"
+          className="w-4 h-4 text-gray-600"
         />
+        <span className="text-sm">Edit</span>
       </button>
       <button onClick={setIsDeleting}>
         <FontAwesomeIcon

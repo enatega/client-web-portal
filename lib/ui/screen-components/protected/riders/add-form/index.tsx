@@ -28,8 +28,7 @@ import { RiderSchema } from '@/lib/utils/schema/rider';
 import useToast from '@/lib/hooks/useToast';
 
 //GraphQL
-import { getRiders, getZones } from '@/lib/api/graphql';
-import { createRider, editRider } from '@/lib/api/graphql/mutation';
+import { createRider, editRider, getRiders, getZones } from '@/lib/api/graphql';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { gql, useMutation } from '@apollo/client';
 
