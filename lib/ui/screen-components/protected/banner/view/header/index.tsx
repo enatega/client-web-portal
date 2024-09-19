@@ -10,10 +10,10 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 // Custom Components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
-import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 // Styles
+import HeaderText from '@/lib/ui/useable-components/header-text';
 import classes from './banner.module.css';
 
 interface IBannersHeaderProps {
@@ -56,7 +56,7 @@ export default function BannersHeader({
   return (
     <div className="flex flex-col mx-[-15px] mb-4 gap-6">
       <div className="flex w-full justify-between">
-        <TextComponent className="text-4xl font-bold" text="Banners" />
+        <HeaderText className="heading" text="Banners" />
         <TextIconClickable
           className="sm:w-auto bg-black text-white border-gray-300 rounded"
           icon={faAdd}

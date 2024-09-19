@@ -1,7 +1,7 @@
 'use client';
 
 // Interface and Types
-import { ICustomNumberTextFieldProps } from '@/lib/utils/interfaces';
+import { ICustomNumberTippingProps } from '@/lib/utils/interfaces';
 
 // Hooks
 import { useFormikContext } from 'formik';
@@ -10,8 +10,8 @@ import { useFormikContext } from 'formik';
 import { InputText } from 'primereact/inputtext';
 
 // Styles
-import classes from './cusom-input.module.css';
 import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
+import classes from './cusom-input.module.css';
 
 export default function CustomNumberTextField({
   className,
@@ -19,7 +19,7 @@ export default function CustomNumberTextField({
   name,
   value,
   ...props
-}: ICustomNumberTextFieldProps) {
+}: ICustomNumberTippingProps) {
   // Formik
   const { setFieldValue } = useFormikContext<ITippingsForm>();
 

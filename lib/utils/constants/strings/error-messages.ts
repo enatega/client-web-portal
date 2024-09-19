@@ -1,4 +1,8 @@
-import { ISignFormErrors, IVendorErrors } from '../../interfaces/forms';
+import {
+  IBannersErrors,
+  ISignFormErrors,
+  IVendorErrors,
+} from '../../interfaces/forms';
 import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
 import { IRiderErrors } from '../../interfaces/forms/riders.form.interface';
 

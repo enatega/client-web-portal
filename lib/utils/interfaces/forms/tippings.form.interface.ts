@@ -4,6 +4,12 @@ export interface ITippingsForm {
   tip3: string;
 }
 
+export interface ITippingErrors {
+  tip1?: string[];
+  tip2?: string[];
+  tip3?: string[];
+}
+
 export interface ITippingResponse {
   tips: {
     __typename: 'Tipping';

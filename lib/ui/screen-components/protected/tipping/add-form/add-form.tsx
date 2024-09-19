@@ -8,6 +8,7 @@ import {
 } from '@/lib/utils/interfaces';
 
 // Schema
+import { TippingSchema } from '@/lib/utils/schema/tipping';
 
 // Components
 import CustomButton from '@/lib/ui/useable-components/button';

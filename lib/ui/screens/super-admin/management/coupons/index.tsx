@@ -12,7 +12,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
 import { Sidebar } from 'primereact/sidebar';
 
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { useEffect, useState } from 'react';
 export default function CouponsScreen() {
   //states
@@ -20,10 +20,10 @@ export default function CouponsScreen() {
   const [coupons, setCoupons] = useState<ICoupon[]>([]);
 
   //query
-  const { data, fetch, loading } = useLazyQueryQL(
-    GET_COUPONS,
-    {}
-  ) as IQueryResult<IGetCouponsData | undefined, undefined>;
+  const { data, loading } = useQueryGQL(GET_COUPONS, {}) as IQueryResult<
+    IGetCouponsData | undefined,
+    undefined
+  >;
 
   //toggle visibility
   const handleButtonClick = () => {
@@ -33,10 +33,6 @@ export default function CouponsScreen() {
   const handleAddCouponLocally = (coupon: ICoupon) => {
     setCoupons((prevCoupons) => [coupon, ...prevCoupons]);
   };
-  //fetch
-  useEffect(() => {
-    fetch();
-  }, []);
 
   //appending coupons
   useEffect(() => {
@@ -44,6 +40,7 @@ export default function CouponsScreen() {
       setCoupons(data.coupons);
     }
   }, [data]);
+
   return (
     <div className="flex flex-col items-center w-full h-auto">
       <Sidebar
