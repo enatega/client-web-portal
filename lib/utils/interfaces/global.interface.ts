@@ -51,3 +51,8 @@ export interface ITableColumn<T> {
   header?: string;
   body?: (data: T) => ReactNode;
 }
+export interface INotificationComponentProps {
+  type: 'success' | 'error' | 'warn' | 'info';
+  title: string;
+  message: string;
+}

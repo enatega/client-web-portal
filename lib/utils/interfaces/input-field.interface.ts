@@ -44,7 +44,7 @@ export interface INumberTextFieldProps
   locale?: string;
   prefix?: string;
   suffix?: string;
-  useGrouping: boolean;
+  useGrouping?: boolean;
   onChange: (field: string, value: number | null) => void;
 }
 export interface IPasswordTextFieldProps
