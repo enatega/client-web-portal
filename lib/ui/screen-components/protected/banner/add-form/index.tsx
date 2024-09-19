@@ -1,7 +1,7 @@
-import { createBanner, editBanner } from '@/lib/api/graphql/mutation/banners';
-import { getBannerActions, getBanners } from '@/lib/api/graphql/query/banners';
+// import { createBanner, editBanner } from '@/lib/api/graphql/mutation/banners';
+import { getBannerActions } from '@/lib/api/graphql/query/banners';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import useToast from '@/lib/hooks/useToast';
+// import useToast from '@/lib/hooks/useToast';
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import { BannersErrors } from '@/lib/utils/constants';
@@ -13,15 +13,15 @@ import { gql } from '@apollo/client';
 import { Form, Formik } from 'formik';
 import { Sidebar } from 'primereact/sidebar';
 
-const CREATE_BANNER = gql`
-  ${createBanner}
-`;
-const EDIT_BANNER = gql`
-  ${editBanner}
-`;
-const GET_BANNERS = gql`
-  ${getBanners}
-`;
+// const CREATE_BANNER = gql`
+//   ${createBanner}
+// `;
+// const EDIT_BANNER = gql`
+//   ${editBanner}
+// `;
+// const GET_BANNERS = gql`
+//   ${getBanners}
+// `;
 const GET_BANNER_ACTIONS = gql`
   ${getBannerActions}
 `;
@@ -43,12 +43,13 @@ const BannersAddForm = ({
   };
 
   // Hooks
-  const { showToast } = useToast();
+  // const { showToast } = useToast();
 
   const { data } = useQueryGQL(GET_BANNER_ACTIONS, {});
   console.log(data);
 
   const handleSubmit = async (values: IBannersForm) => {
+    console.log(values);
     // try {
     //   if (banner) {
     //     // Edit banner logic
@@ -92,18 +93,7 @@ const BannersAddForm = ({
                 onSubmit={handleSubmit}
                 enableReinitialize
               >
-                {({
-                  values,
-                  errors,
-                  handleChange,
-                  handleSubmit,
-                  setFieldValue,
-                }) => {
-                  const handleFileUpload = (base64File: string) => {
-                    console.log(base64File);
-                    // setFieldValue('file', base64File);
-                  };
-
+                {({ values, errors, handleChange, handleSubmit }) => {
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-4">

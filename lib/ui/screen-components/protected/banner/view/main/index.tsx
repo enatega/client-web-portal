@@ -74,7 +74,9 @@ export default function BannersMain({
   const menuItems: IActionMenuItem<IBannersResponse>[] = [
     {
       label: 'Edit',
-      command: (data?: IBannersResponse) => {},
+      command: (data?: IBannersResponse) => {
+        console.log(data);
+      },
     },
     {
       label: 'Delete',

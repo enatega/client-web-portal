@@ -5,26 +5,23 @@ import { useState } from 'react';
 import { FilterMatchMode } from 'primereact/api';
 
 // Interface and Types
-import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
-
-// Components
-
-// Utilities and Data
-
-// GraphQL
-import { getUsers } from '@/lib/api/graphql';
-import { gql } from '@apollo/client';
-
-//Toast
-import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import Table from '@/lib/ui/useable-components/table';
-import { USERS_TABLE_COLUMNS } from '@/lib/utils/constants';
 import { IQueryResult } from '@/lib/utils/interfaces';
 import {
   IUserResponse,
   IUsersDataResponse,
 } from '@/lib/utils/interfaces/users.interface';
+
+// Components
+import { USERS_TABLE_COLUMNS } from '@/lib/utils/constants';
 import UserHeader from '../header';
+
+//Toast
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import Table from '@/lib/ui/useable-components/table';
+
+// GraphQL
+import { getUsers } from '@/lib/api/graphql';
+import { gql } from '@apollo/client';
 
 const GET_USERS = gql`
   ${getUsers}
