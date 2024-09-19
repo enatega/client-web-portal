@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const getCuisines = gql`
+export const GET_CUISINES = gql`
   query Cuisines {
     cuisines {
       _id

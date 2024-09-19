@@ -1,4 +1,4 @@
-import { GET_COUPONS } from '@/lib/api/graphql/query/coupons';
+//components
 import AddCoupon from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/AddCoupon';
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -8,13 +8,39 @@ import {
   ICoupon,
   IGetCouponsData,
 } from '@/lib/utils/interfaces/coupons.interface';
+
+//icons
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 
+//prime react
 import { Sidebar } from 'primereact/sidebar';
 
+//queries
+import { GET_COUPONS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import { useEffect, useState } from 'react';
+import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
+import { FilterMatchMode } from 'primereact/api';
+import { ChangeEvent, useEffect, useState } from 'react';
+
 export default function CouponsScreen() {
+  //filters
+  const [filters, setFilters] = useState({
+    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
+  });
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+  //global filters change
+  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters['global'].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
+
   //states
   const [visible, setVisible] = useState(false);
   const [coupons, setCoupons] = useState<ICoupon[]>([]);
@@ -33,12 +59,11 @@ export default function CouponsScreen() {
   const handleAddCouponLocally = (coupon: ICoupon) => {
     setCoupons((prevCoupons) => [coupon, ...prevCoupons]);
   };
-  //fetch
+
+  //useEffects
   useEffect(() => {
     fetch();
   }, []);
-
-  //appending coupons
   useEffect(() => {
     if (data) {
       setCoupons(data.coupons);
@@ -66,7 +91,19 @@ export default function CouponsScreen() {
           className="bg-black text-white p-2 rounded-md"
         />
       </div>
-      <CouponTable data={coupons} loading={loading} />
+      <div className="self-start flex items-center justify-center gap-x-3">
+        <CustomTextField
+          name="searchQuery"
+          onChange={onGlobalFilterChange}
+          value={globalFilterValue}
+          showLabel={false}
+          placeholder="Filter tasks..."
+          type="text"
+          className="w-96"
+        />
+        <CustomActionActionButton Icon={faCirclePlus} title="Action" />
+      </div>
+      <CouponTable data={coupons} loading={loading} filters={filters} />
     </div>
   );
 }

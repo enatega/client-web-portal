@@ -44,8 +44,17 @@ export default function VendorAddForm({
   // Context
   const { vendorFormVisible, onSetVendorFormVisible } =
     useContext(VendorContext);
-
   const { showToast } = useContext(ToastContext);
+
+  // API
+  // const [mutate, { loading: mutateLoading }] = useMutation(
+  //   'props.vendor ' ? EDIT_VENDOR : CREATE_VENDOR,
+  //   {
+  //     refetchQueries: [{ query: GET_VENDORS }],
+  //     //  onError,
+  //     //  onCompleted
+  //   }
+  // );
 
   return (
     <Sidebar

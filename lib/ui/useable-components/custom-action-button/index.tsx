@@ -2,7 +2,7 @@ import { IGlobalButtonProps } from '@/lib/utils/interfaces/action.button.interfa
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Button } from 'primereact/button';
 
-export default function GlobalActionButton({
+export default function CustomActionActionButton({
   Icon,
   title,
 }: IGlobalButtonProps) {
