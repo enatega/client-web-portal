@@ -5,4 +5,5 @@ export interface IDeleteDialogProps extends IGlobalComponentProps {
   onHide: () => void;
   onConfirm: () => void;
   message?: string;
+  loading?: boolean;
 }

@@ -1,16 +1,5 @@
-// Core
-
-// Prime React
-
-// Icons
-
-// Interfaces
 import { IPasswordTextFieldProps } from '@/lib/utils/interfaces';
 import { Password } from 'primereact/password';
-
-// Prime React
-
-// Styles
 
 export default function CustomPasswordTextField({
   className,

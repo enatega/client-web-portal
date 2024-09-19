@@ -87,7 +87,7 @@ body {
 }
 
 .heading-1 {
-  font-size: 18px;
+  font-size: 30px;
   font-weight: 700;
   line-height: 40px;
 }
@@ -276,6 +276,10 @@ body {
 /* Data Table */
 .p-datatable-table .p-checkbox-box {
   border: 1px solid !important;
+  height: 15px;
+  width: 15px;
+  border-radius: 4px;
+  margin-top: 2px;
 }
 
 .p-datatable-table tbody {
@@ -300,9 +304,8 @@ body {
   border-color: #5ac12f !important;
 }
 
-.p-selectable-row td {
-  padding: 13px 15px; /* Adjust as needed */
-  font-size: 14px;
+.p-datatable-tbody tr td {
+  font-size: 13px;
 }
 
 .p-datatable-header {
@@ -310,7 +313,7 @@ body {
 }
 
 .p-column-title {
-  font-size: 15px;
+  font-size: 14px;
 }
 
 /* Input Mask */
@@ -326,4 +329,102 @@ body {
 .p-inputmask.p-inputtext.p-component.p-filled:active {
   outline: none;
   box-shadow: none;
+}
+
+/* Password */
+.p-password > .p-icon-field {
+  width: 100%;
+}
+.p-password-input {
+  padding-left: 10px;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 0.5rem;
+}
+
+.p-paginator {
+  padding: 0;
+}
+
+.p-datatable-header .p-component::placeholder {
+  font-size: 14px; /* Adjust the font size as needed */
+  color: #888; /* Optional: Change the placeholder text color */
+  font-weight: 500;
+}
+
+.p-datatable-header .p-component {
+  font-size: 14px; /* Adjust the font size as needed */
+  font-weight: 500;
+}
+
+.p-menuitem-content {
+  height: 40px !important;
+}
+
+.p-menu.p-component.p-menu-overlay.p-menu.p-component.p-menu-overlay.p-connected-overlay-enter-done {
+  padding: 2px;
+}
+
+.p-menuitem.p-focus,
+.p-menuitem,
+.p-menuitem-content {
+  font-size: 13px;
+}
+
+.p-datatable-emptymessage {
+  font-size: 14px;
+}
+
+.p-overlaypanel-content .p-checkbox.p-highlight .p-checkbox-box {
+  height: 16px;
+  width: 16px;
+  margin-top: 2px;
+  border-radius: 3px;
+}
+
+.p-overlaypanel-content .p-checkbox-box {
+  height: 16px;
+  width: 16px;
+  margin-top: 2px;
+  border-radius: 3px;
+}
+
+.p-button.p-component.p-fileupload-choose {
+  background-color: black !important;
+  outline: none;
+  box-shadow: none;
+  height: 43px;
+  font-size: 12px;
+  z-index: 100;
+}
+
+.p-button.p-component.p-fileupload-choose svg {
+  height: 12px;
+  width: 12px;
+}
+.p-dropdown-label.p-inputtext,
+.p-paginator-pages button {
+  font-size: 13px;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  background-color: #ccc !important;
+  color: black;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight.p-focus {
+  background: rgba(4, 4, 4, 0.24);
+  color: black;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  padding: 5px 1.5rem;
+  font-size: 14px;
+}
+
+.p-dropdown-label.p-inputtext {
+  margin-top: 2px;
 }

@@ -3,7 +3,7 @@ import { IRiderHeaderProps } from '@/lib/utils/interfaces/rider.interface';
 
 // Components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
-import TextComponent from '@/lib/ui/useable-components/text-field';
+import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 // Icons
@@ -17,7 +17,7 @@ const RiderHeader = ({
   return (
     <div className="flex flex-col mx-[-15px] mb-4 gap-6">
       <div className="flex w-full justify-between">
-        <TextComponent className="text-4xl font-bold" text="Rider" />
+        <HeaderText className="heading" text="Riders" />
         <TextIconClickable
           className="sm:w-auto bg-black text-white border-gray-300 rounded"
           icon={faAdd}

@@ -13,3 +13,4 @@ export * from './stat-card.interface';
 export * from './tabs.interface';
 export * from './text.interface';
 export * from './vendor.interface';
+export * from './toast.interface';

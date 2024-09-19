@@ -1,9 +1,9 @@
-import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+import UsersMain from '@/lib/ui/screen-components/protected/users/view/main';
 
 export default function UsersScreen() {
   return (
-    <div>
-      <ComingSoon />
+    <div className="px-6">
+      <UsersMain />
     </div>
   );
 }

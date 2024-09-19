@@ -1,6 +1,11 @@
 const Toggle = ({ checked }: { checked: boolean }) => {
   return (
-    <label className="ml-2 flex items-center cursor-pointer flex-shrink-0">
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+      className="ml-2 flex items-center cursor-pointer flex-shrink-0"
+    >
       <div className="relative">
         <div className="flex items-center space-x-2">
           <label className="relative inline-flex items-center cursor-pointer">
@@ -10,7 +15,7 @@ const Toggle = ({ checked }: { checked: boolean }) => {
           </label>
         </div>
       </div>
-    </label>
+    </button>
   );
 };
 
