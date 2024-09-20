@@ -1,33 +1,57 @@
 'use client';
-import { CREATE_COUPON } from '@/lib/api/graphql/mutations';
+//queries
+import { CREATE_COUPON, EDIT_COUPON } from '@/lib/api/graphql';
+
+//contexts
 import { ToastContext } from '@/lib/context/toast.context';
+
+//components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
+
+//interfaces
 import {
   IAddCouponProps,
   ICoupon,
 } from '@/lib/utils/interfaces/coupons.interface';
+
+//schema
 import { CouponFormSchema } from '@/lib/utils/schema/coupon';
-import { useMutation } from '@apollo/client';
+
+//formik
 import { ErrorMessage, Form, Formik } from 'formik';
+
+//prime react
 import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { useContext } from 'react';
-// import { useContext } from 'react';
 
-export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
+//hooks
+import { useMutation } from '@apollo/client';
+import { useContext } from 'react';
+
+export default function AddCoupon({
+  setVisible,
+  setCoupons,
+  isEditing,
+  setIsEditing,
+}: IAddCouponProps) {
   //initial values
   const initialValues = {
-    title: '',
-    discount: 0,
-    enabled: true,
+    _id: isEditing.bool ? isEditing?.data?._id : '',
+    title: isEditing.bool ? isEditing?.data?.title : '',
+    discount: isEditing.bool ? isEditing?.data?.discount : 0,
+    enabled: isEditing.bool ? isEditing?.data?.enabled : true,
   };
 
-  //mutation
-  const [CreateCoupon, { loading }] = useMutation(CREATE_COUPON);
+  //mutations
+  const [CreateCoupon, { loading: createCouponLoading }] =
+    useMutation(CREATE_COUPON);
+  const [editCoupon, { loading: editCouponLoading }] = useMutation(EDIT_COUPON);
   //toast
   const { showToast } = useContext(ToastContext);
-
+  //comment to test the values======================================================>
+  // console.log({ discount: isEditing.data.discount });
+  // console.log({ initialValues });
   return (
     <div className="flex flex-col gap-4">
       <Formik
@@ -36,39 +60,70 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             setSubmitting(true);
-            const formData = {
-              title: values.title,
-              discount: values.discount,
-              enabled: values.enabled,
-            };
-            const res = await CreateCoupon({
-              variables: {
-                couponInput: formData,
-              },
-            });
+            let formData;
+            if (!isEditing.bool) {
+              formData = {
+                title: values.title,
+                discount: values.discount,
+                enabled: values.enabled,
+              };
+            } else {
+              formData = {
+                _id: values._id,
+                title: values.title,
+                discount: values.discount,
+                enabled: values.enabled,
+              };
+            }
+            //comment to test the values======================================================>
+            // console.log({ formData });
+            let res;
+            if (!isEditing.bool) {
+              res = await CreateCoupon({
+                variables: {
+                  couponInput: formData,
+                },
+              });
+            } else {
+              res = await editCoupon({
+                variables: {
+                  couponInput: formData,
+                },
+              });
+            }
+
             setVisible(false);
             showToast({
+              title: 'Success',
               type: 'success',
-              title: 'New Coupon',
               message: 'Coupon was added successfully!',
               duration: 2000,
             });
-            const newCoupon: ICoupon = res.data.createCoupon;
+            let newCoupon: ICoupon;
+            if (isEditing.bool) {
+              newCoupon = res?.data?.editCoupon;
+              setIsEditing({
+                bool: false,
+                data: {
+                  __typename: '',
+                  _id: '',
+                  discount: 0,
+                  enabled: false,
+                  title: '',
+                },
+              });
+            } else {
+              newCoupon = res?.data?.createCoupon;
+            }
             setCoupons(newCoupon);
 
             setSubmitting(false);
           } catch (err) {
             setVisible(true);
             showToast({
+              title: 'Error',
               type: 'error',
-              title: 'New Coupon',
-              message:
-                //This will not work
-                /*  error?.message ||
-                error?.networkError?.message ||
-                error?.clientErrors[0].message ||
-                error?.graphQLErrors[0].message || */
-                'An error occured',
+              message: 'Something went wrong',
               duration: 2000,
             });
             setSubmitting(false);
@@ -94,6 +149,7 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
                   <InputSwitch
                     checked={values.enabled}
                     onChange={(e) => setFieldValue('enabled', e.value)}
+                    className={values.enabled ? 'p-inputswitch-checked' : ''}
                   />
                 </div>
               </div>
@@ -133,16 +189,20 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
               />
               <button
                 className="block float-end bg-black rounded-md px-12 py-4 my-2 text-white items-center justify-center"
-                disabled={isSubmitting || loading}
+                disabled={
+                  isSubmitting || editCouponLoading || createCouponLoading
+                }
                 type="submit"
               >
-                {isSubmitting || loading ? (
+                {isSubmitting || editCouponLoading || createCouponLoading ? (
                   <ProgressSpinner
                     className="w-6 h-6 items-center self-center m-0 p-0"
                     strokeWidth="5"
                     style={{ fill: 'white', accentColor: 'white' }}
                     color="white"
                   />
+                ) : isEditing.bool ? (
+                  'Update'
                 ) : (
                   'Add'
                 )}
@@ -151,58 +211,6 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
           );
         }}
       </Formik>
-      {/* <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
-        <div className="flex gap-2">
-          <h2 className="font-bold mb-3 text-xl">Add Coupon</h2>
-          {formData.enabled ? 'Enabled' : 'Disabled'}
-          <InputSwitch
-            checked={formData.enabled}
-            onChange={() =>
-              setFormData((prev) => ({ ...prev, enabled: !prev.enabled }))
-            }
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="name">
-            Title
-          </label>
-          <InputText
-            value={formData.title}
-            onChange={handleFormChange}
-            name="title"
-            id="title"
-            className="w-full py-2 px-1 text-sm"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="discount">
-            Discount
-          </label>
-          <InputNumber
-            value={formData.discount}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, discount: e.value ?? 0 }))
-            }
-            name="discount"
-            id="discount"
-            className="w-full text-sm"
-          />
-        </div>
-        <Button
-          type="submit"
-          className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]"
-        >
-          {loading ? (
-            <FontAwesomeIcon
-              color="white"
-              icon={faSpinner}
-              className="animate-spin self-center items-center"
-            />
-          ) : (
-            'Add'
-          )}
-        </Button>
-      </form> */}
     </div>
   );
 }

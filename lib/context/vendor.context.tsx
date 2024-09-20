@@ -1,7 +1,7 @@
 'use client';
 
 // Core
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 // Interfaces and Types
 import {
   IProvider,
@@ -18,7 +18,8 @@ import { GET_VENDORS } from '@/lib/api/graphql';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 
 // Methods
-import { onFilterObjects } from '@/lib/utils/methods';
+import { onFilterObjects, onUseLocalStorage } from '@/lib/utils/methods';
+import { SELECTED_VENDOR } from '../utils/constants';
 
 export const VendorContext = createContext<IVendorContextProps>(
   {} as IVendorContextProps
@@ -31,6 +32,7 @@ export const VendorProvider = ({ children }: IProvider) => {
   const [vendorId, setVendorId] = useState<string | null>(null);
   const [globalFilter, setGlobalFilter] = useState<string>('');
   const [isEditingVendor, setIsEditing] = useState<boolean>(false);
+  const [isReset, setIsReset] = useState<boolean>(false);
 
   // API
   const vendorResponse = useQueryGQL(
@@ -41,11 +43,12 @@ export const VendorProvider = ({ children }: IProvider) => {
       onCompleted: (data: unknown) => {
         const _data = data as IVendorResponseGraphQL;
         setVendorId(_data?.vendors[0]?._id ?? '');
+        onUseLocalStorage('save', SELECTED_VENDOR, _data?.vendors[0]?.email);
       },
     }
   ) as IQueryResult<IVendorResponseGraphQL | undefined, undefined>;
 
-  // Handler
+  // State Handler
   const onSetVendorFormVisible = (status: boolean, isEdit?: boolean) => {
     setVendorFormVisible(status);
 
@@ -65,6 +68,11 @@ export const VendorProvider = ({ children }: IProvider) => {
     setIsEditing(status);
   };
 
+  const onResetVendor = (state: boolean) => {
+    setIsReset(state);
+  };
+
+  // Data Handler
   const onHandlerFilterData = () => {
     const _filtered: IVendorReponse[] = onFilterObjects(
       vendorResponse?.data?.vendors ?? [],
@@ -75,10 +83,26 @@ export const VendorProvider = ({ children }: IProvider) => {
     setFiltered(_filtered);
   };
 
+  const onVendorReponseFetchCompleted = useCallback(() => {
+    // Only when record is deleted.
+    if (!isReset) return;
+    setVendorId(vendorResponse?.data?.vendors[0]?._id ?? '');
+    onUseLocalStorage(
+      'save',
+      SELECTED_VENDOR,
+      vendorResponse?.data?.vendors[0]?.email
+    );
+    setIsReset(false);
+  }, [vendorResponse?.data?.vendors]);
+
   // Use Effect
   useEffect(() => {
     onHandlerFilterData();
   }, [globalFilter]);
+
+  useEffect(() => {
+    onVendorReponseFetchCompleted();
+  }, [vendorResponse?.data]);
 
   let value: IVendorContextProps = {
     vendorFormVisible,
@@ -94,6 +118,8 @@ export const VendorProvider = ({ children }: IProvider) => {
     // Editing
     isEditingVendor,
     onSetEditingVendor,
+    // Reset
+    onResetVendor,
   };
 
   return (

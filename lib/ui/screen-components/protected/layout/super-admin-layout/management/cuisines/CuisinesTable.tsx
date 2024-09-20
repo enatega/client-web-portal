@@ -10,10 +10,10 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsis
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
-import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
-import GenericTable from '../../../../../../useable-components/global-table';
+import GenericTable from '@/lib/ui/useable-components/global-table';
 
 //hooks
+import Image from 'next/image';
 import { useState } from 'react';
 
 export default function CuisineTable({
@@ -37,7 +37,7 @@ export default function CuisineTable({
       header: 'Image',
       field: 'image',
       body: (data: ICuisine) => (
-        <img
+        <Image
           src={
             'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
           }
@@ -66,11 +66,13 @@ export default function CuisineTable({
       body: (data: ICuisine) => (
         <div className="three-dots">
           {isEditPopupOpen._id === data._id && isEditPopupOpen.bool ? (
-            <EditDeletePopup
-              setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
-              data={data}
-              type={'cuisine'}
-            />
+            // <EditDeletePopup
+            //   setIsDeleting={}
+            //   setIsEditing={}
+            //   setVisible={}
+            //   visible={}
+            // />
+            <></>
           ) : (
             <></>
           )}

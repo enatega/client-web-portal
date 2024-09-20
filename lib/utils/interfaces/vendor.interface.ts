@@ -23,6 +23,7 @@ export interface IVendorContextProps {
   filtered?: IVendorReponse[];
   isEditingVendor: boolean;
   onSetEditingVendor: (status: boolean) => void;
+  onResetVendor: (state: boolean) => void;
 }
 
 export interface IVendorHeaderComponentsProps extends IGlobalComponentProps {

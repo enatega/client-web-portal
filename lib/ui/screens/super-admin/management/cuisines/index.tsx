@@ -1,9 +1,7 @@
 'use client';
-
-// React and hooks
-import { ChangeEvent, useEffect, useState } from 'react';
-
-// Components
+//graphql
+import { GET_CUISINES } from '@/lib/api/graphql';
+//components
 import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/AddCuisine';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
@@ -15,23 +13,27 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { FilterMatchMode } from 'primereact/api';
 import { Sidebar } from 'primereact/sidebar';
 
-// Interfaces
-import { IQueryResult } from '@/lib/utils/interfaces';
+//interfaces
+import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICuisine,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
 
 // Icons
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-// API and hooks
-import { GET_CUISINES } from '@/lib/api/graphql';
-import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+//hooks
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CuisinesScreen() {
   const [visible, setVisible] = useState(false);
   const [cuisinesData, setCuisinesData] = useState<ICuisine[]>([]);
+  const { data, loading, fetch } = useLazyQueryQL(
+    GET_CUISINES,
+    {}
+  ) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
 
   //filters
   const [filters, setFilters] = useState({
@@ -49,10 +51,6 @@ export default function CuisinesScreen() {
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
-  const { data, loading } = useQueryGQL(GET_CUISINES, {}) as IQueryResult<
-    IGetCuisinesData | undefined,
-    undefined
-  >;
 
   //toggle visibility
   const handleButtonClick = () => {
@@ -63,6 +61,11 @@ export default function CuisinesScreen() {
   const addCuisineLocally = (cuisine: ICuisine) => {
     setCuisinesData((prevCuisines) => [cuisine, ...prevCuisines]);
   };
+
+  //useEffects
+  useEffect(() => {
+    fetch();
+  }, []);
 
   //appending cuisines
   useEffect(() => {
@@ -102,7 +105,7 @@ export default function CuisinesScreen() {
           type="text"
           className="w-96"
         />
-        <CustomActionActionButton Icon={faCirclePlus} title="Action" />
+        <CustomActionActionButton Icon={faPlus} title="Action" />
       </div>
       <CuisineTable data={cuisinesData} loading={loading} filters={filters} />
     </div>
