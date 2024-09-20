@@ -11,6 +11,7 @@ import { InputText } from 'primereact/inputtext';
 
 // Styles
 import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
+import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 import classes from './cusom-input.module.css';
 
 export default function CustomNumberTextField({
@@ -18,6 +19,7 @@ export default function CustomNumberTextField({
   placeholder,
   name,
   value,
+  loading = false,
   ...props
 }: ICustomNumberTippingProps) {
   // Formik
@@ -40,7 +42,7 @@ export default function CustomNumberTextField({
     }
   };
 
-  return (
+  return !loading ? (
     <div className="flex flex-col gap-2">
       <label htmlFor={name} className="text-sm font-medium text-gray-600">
         {placeholder}
@@ -70,6 +72,10 @@ export default function CustomNumberTextField({
           <span className="text-gray-500">+</span>
         </div>
       </div>
+    </div>
+  ) : (
+    <div>
+      <InputSkeleton />
     </div>
   );
 }

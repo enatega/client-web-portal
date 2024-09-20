@@ -5,3 +5,4 @@ export * from './restaurant';
 export * from './strings';
 export * from './url';
 export * from './vendor';
+export * from './banners';

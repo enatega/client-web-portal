@@ -100,4 +100,14 @@ export const USERS_TABLE_COLUMNS = [
   },
   { headerName: 'Email', propertyName: 'email' },
   { headerName: 'Phone', propertyName: 'phone' },
+  {
+    headerName: 'Created At',
+    propertyName: 'createdAt',
+    body: (user: IUserResponse) => {
+      const formattedDate = new Date(Number(user.createdAt)).toLocaleDateString(
+        'en-GB'
+      );
+      return <div className="flex gap-2 items-center">{formattedDate}</div>;
+    },
+  },
 ];

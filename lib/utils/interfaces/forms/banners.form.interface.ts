@@ -1,8 +1,10 @@
+import { IDropdownSelectItem } from '../global.interface';
+
 export type IBannersForm = {
   title: string;
   description: string;
-  action: 'navigate' | 'openModal';
-  screen: string;
+  action: IDropdownSelectItem | null;
+  screen: IDropdownSelectItem | null;
   file: string;
 };
 

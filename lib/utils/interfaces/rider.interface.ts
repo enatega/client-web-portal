@@ -42,8 +42,6 @@ export interface IRidersAddFormComponentProps extends IGlobalComponentProps {
 
 export interface IRiderHeaderProps extends IGlobalComponentProps {
   setIsAddRiderVisible: (visible: boolean) => void;
-  globalFilterValue: string;
-  onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface IRiderReponse {
