@@ -1,6 +1,6 @@
 // Components
+import HeaderText from '@/lib/ui/useable-components/header-text';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
-import TextComponent from '@/lib/ui/useable-components/text-field';
 import { IUsersHeaderProps } from '@/lib/utils/interfaces/users.interface';
 
 const UserHeader = ({
@@ -10,7 +10,7 @@ const UserHeader = ({
   return (
     <div className="flex flex-col mx-[-15px] mb-4 gap-6">
       <div className="flex w-full justify-between">
-        <TextComponent className="text-4xl font-bold" text="User" />
+        <HeaderText className="heading" text="Users" />
       </div>
       <div className="w-fit flex flex-colm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
         <CustomTextField

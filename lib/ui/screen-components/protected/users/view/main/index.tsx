@@ -40,7 +40,6 @@ export default function UsersMain() {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IUsersDataResponse | undefined, undefined>;
 
-  console.log(data);
   // For global search
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

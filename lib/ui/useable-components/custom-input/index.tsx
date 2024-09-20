@@ -23,7 +23,7 @@ export default function CustomNumberTextField({
   // Formik
   const { setFieldValue } = useFormikContext<ITippingsForm>();
 
-  const MIN_VALUE = 0;
+  const MIN_VALUE = 1;
   const MAX_VALUE = 100;
 
   const handleIncrease = () => {
