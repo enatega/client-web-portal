@@ -4,7 +4,7 @@
 import { useContext, useState } from 'react';
 
 // Component
-import RestaurantAddForm from '@/lib/ui/screen-components/protected/restaurant/forms/add-form';
+import RestaurantAddForm from '@/lib/ui/screen-components/protected/restaurant(vendor)/forms/add-form';
 import VendorAddForm from '@/lib/ui/screen-components/protected/vendor/add-form';
 import VendorHeader from '@/lib/ui/screen-components/protected/vendor/view/header';
 import VendorMain from '@/lib/ui/screen-components/protected/vendor/view/main';

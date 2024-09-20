@@ -14,6 +14,7 @@ export const GET_RESTAURANTS = gql`
       _id
       name
       image
+      username
       orderPrefix
       slug
       address
@@ -21,10 +22,12 @@ export const GET_RESTAURANTS = gql`
       minimumOrder
       isActive
       commissionRate
+      username
       tax
       owner {
         _id
         email
+        isActive
       }
       shopType
     }

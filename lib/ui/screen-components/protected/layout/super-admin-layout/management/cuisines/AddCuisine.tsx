@@ -18,15 +18,14 @@ import {
 
 //schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
-
-//formik
+import { ApolloError, useMutation } from '@apollo/client';
 import { ErrorMessage, Form, Formik } from 'formik';
 
 //prime react
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 //hooks
-import { useMutation } from '@apollo/client';
+
 import { useContext } from 'react';
 
 export default function AddCuisine({
@@ -47,13 +46,25 @@ export default function AddCuisine({
   const { showToast } = useContext(ToastContext);
 
   //mutation
-  const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE);
-
+  const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE, { onError });
   // shop type options
   const shopTypeOptions = [
     { label: 'Restaurant', code: 'restaurant' },
     { label: 'Shop', code: 'shop' },
   ];
+
+  // API Handlers
+  function onError({ graphQLErrors, networkError }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'New Cuisine',
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        'Cuisine Creation  Failed',
+      duration: 2500,
+    });
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -86,8 +97,8 @@ export default function AddCuisine({
           } catch (err) {
             setVisible(true);
             showToast({
-              title: 'Error',
               type: 'error',
+              title: 'New Cuisine',
               message: 'Something went wrong',
               duration: 2000,
             });

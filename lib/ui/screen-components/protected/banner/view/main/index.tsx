@@ -15,12 +15,12 @@ import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 import BannerTableHeader from '../table-header';
 
 // Interfaces and Types
-import { IQueryResult } from '@/lib/utils/interfaces';
 import {
   IBannersDataResponse,
   IBannersMainComponentsProps,
   IBannersResponse,
-} from '@/lib/utils/interfaces/banner.interface';
+  IQueryResult,
+} from '@/lib/utils/interfaces';
 
 // GraphQL
 import { DELETE_BANNER } from '@/lib/api/graphql';

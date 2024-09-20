@@ -34,9 +34,11 @@ export interface IRestaurantResponse {
   isActive: boolean;
   commissionRate: number;
   tax: number;
+  username: string;
   owner: {
     _id: string;
     email: string;
+    isActive: boolean;
     __typename: string;
   };
   shopType: string;
@@ -74,8 +76,8 @@ export interface IRestaurantsByOwnerResponseGraphQL {
   };
 }
 
-// Create
 interface ICreateRestaurant {
+  _id: string;
   address: string;
   cuisines: string[];
   image: string;
@@ -94,9 +96,18 @@ interface ICreateRestaurant {
   tax: number;
   username: string;
   __typename: string;
-  _id: string;
+  deliveryTime: number;
+  isActive: boolean;
+  commissionRate: number;
+  owner: {
+    _id: string;
+    email: string;
+    isActive: boolean;
+    __typename: string;
+  };
 }
 
+// The two interfaces are identical. There are no differences between them.
 export interface ICreateRestaurantResponse {
   data?: {
     createRestaurant?: ICreateRestaurant;

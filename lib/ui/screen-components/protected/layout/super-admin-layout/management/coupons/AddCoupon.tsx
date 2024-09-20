@@ -26,7 +26,7 @@ import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 //hooks
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
 export default function AddCoupon({
@@ -44,14 +44,27 @@ export default function AddCoupon({
   };
 
   //mutations
-  const [CreateCoupon, { loading: createCouponLoading }] =
-    useMutation(CREATE_COUPON);
+  const [CreateCoupon, { loading: createCouponLoading }] = useMutation(
+    CREATE_COUPON,
+    { onError }
+  );
   const [editCoupon, { loading: editCouponLoading }] = useMutation(EDIT_COUPON);
   //toast
   const { showToast } = useContext(ToastContext);
-  //comment to test the values======================================================>
-  // console.log({ discount: isEditing.data.discount });
-  // console.log({ initialValues });
+
+  // API Handlers
+  function onError({ graphQLErrors, networkError }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'New Coupon',
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        'Coupon Creation   Failed',
+      duration: 2500,
+    });
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <Formik
@@ -121,8 +134,8 @@ export default function AddCoupon({
           } catch (err) {
             setVisible(true);
             showToast({
-              title: 'Error',
               type: 'error',
+              title: 'New Coupon',
               message: 'Something went wrong',
               duration: 2000,
             });
