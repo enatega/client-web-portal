@@ -41,7 +41,6 @@ const CustomDropdownComponent = ({
         className="w-full md:w-20rem h-10 p-0 m-0 border text-sm align-middle border-gray-300 focus:outline-none focus:shadow-none p-dropdown-no-box-shadow"
         panelClassName="border-gray-200 border-2"
         filter={true}
-        editable={true}
         checkmark={true}
         {...props}
       />

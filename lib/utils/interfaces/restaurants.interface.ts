@@ -1,9 +1,14 @@
 import { TSideBarFormPosition } from '../types/sidebar';
 import { IDropdownSelectItem, IGlobalComponentProps } from './global.interface';
-import { IRestaurantResponse } from './restaurant.interface';
 
-export interface IRestaurantsSelectedVendor {
-  _id: IDropdownSelectItem | null;
+export interface IRestaurantsSelectedVendorData {
+  restaurant?: {
+    _id: IDropdownSelectItem | null;
+  };
+  vendor?: {
+    _id: IDropdownSelectItem | null;
+  };
+  isEditing?: boolean;
 }
 
 export interface IRestaurantsContextProps {
@@ -12,9 +17,9 @@ export interface IRestaurantsContextProps {
   activeIndex: number;
   onActiveStepChange: (activeStep: number) => void;
   onClearRestaurntsData: () => void;
-  restaurantsVendor: IRestaurantsSelectedVendor | undefined;
-  onSetRestaurantsVendor: (
-    vendor: IRestaurantsSelectedVendor | undefined
+  restaurantsContextData: IRestaurantsSelectedVendorData | null;
+  onSetRestaurantsContextData: (
+    data: IRestaurantsSelectedVendorData | null
   ) => void;
 }
 
@@ -23,24 +28,16 @@ export interface IRestaurantsProvider extends IGlobalComponentProps {}
 export interface IRestaurantsAddFormComponentProps
   extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
-  isAddRestaurantVisible: boolean;
-  restaurant: IRestaurantResponse | null;
-  onHide: () => void;
 }
 export interface IRestaurantsHeaderProps {
   globalFilterValue: string;
   onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedActions: string[];
   setSelectedActions: (actions: string[]) => void;
-  setIsAddRestaurantVisible: (visible: boolean) => void;
 }
 
-export interface IRestaurantsMainComponentsProps extends IGlobalComponentProps {
-  setIsAddRestaurantVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setRestaurant: React.Dispatch<
-    React.SetStateAction<IRestaurantResponse | null>
-  >;
-}
+export interface IRestaurantsMainComponentsProps
+  extends IGlobalComponentProps {}
 
 // Components
 interface IStepperFormProps {

@@ -6,6 +6,7 @@ export interface IActionMenuItem<T> extends IGlobalComponentProps {
 }
 
 export interface IActionMenuProps<T> extends IGlobalComponentProps {
-  items: IActionMenuItem<T>[];
+  disabled?: boolean;
+  items?: IActionMenuItem<T>[];
   data: T;
 }

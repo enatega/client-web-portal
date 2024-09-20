@@ -27,13 +27,13 @@ const RestaurantsForm = ({
     onRestaurantsFormVisible,
     activeIndex,
     onActiveStepChange,
-    onSetRestaurantsVendor,
+    onSetRestaurantsContextData,
   } = useContext(RestaurantsContext);
 
   // API
   const vendorResponse = useQueryGQL(
     GET_VENDORS,
-    {},
+    { fetchPolicy: 'network-only' },
     {
       debounceMs: 300,
     }
@@ -56,7 +56,7 @@ const RestaurantsForm = ({
     // Clean Context State
     onActiveStepChange(0);
     onRestaurantsFormVisible(false);
-    onSetRestaurantsVendor(undefined);
+    onSetRestaurantsContextData(null);
   };
 
   // Use Effect

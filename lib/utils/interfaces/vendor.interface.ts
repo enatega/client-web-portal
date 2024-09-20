@@ -49,6 +49,7 @@ export interface IVendorReponse {
   _id: string;
   email: string;
   userType: string;
+  isActive: boolean;
   restaurants: {
     _id: string;
   }[];

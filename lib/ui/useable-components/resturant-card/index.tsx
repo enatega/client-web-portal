@@ -37,6 +37,7 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   // Handle checkbox change
   const handleCheckboxChange = async () => {
     try {
+      console.log('restaurant card');
       await deleteRestaurant({ variables: { id: _id } });
 
       showToast({
@@ -47,7 +48,7 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
       });
     } catch (err) {
       showToast({
-        type: 'success',
+        type: 'error',
         title: 'Restaurant Status',
         message: `Restaurant marked as ${isActive ? 'in-active' : 'actie'} failed`,
         duration: 2000,

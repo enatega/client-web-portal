@@ -9,7 +9,7 @@ import {
   ICuisine,
 } from '@/lib/utils/interfaces/cuisine.interface';
 import { CuisineFormSchema } from '@/lib/utils/schema';
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { useContext } from 'react';
@@ -30,12 +30,26 @@ export default function AddCuisine({
   };
   const { showToast } = useContext(ToastContext);
   //mutation
-  const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE);
+  const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE, { onError });
   // shop type options
   const shopTypeOptions = [
     { label: 'Restaurant', code: 'restaurant' },
     { label: 'Shop', code: 'shop' },
   ];
+
+  // API Handlers
+  function onError({ graphQLErrors, networkError }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'New Cuisine',
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        'Cuisine Creation  Failed',
+      duration: 2500,
+    });
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <h2 className="font-bold mb-3 text-xl">Add Cuisine</h2>
@@ -69,13 +83,7 @@ export default function AddCuisine({
             showToast({
               type: 'error',
               title: 'New Cuisine',
-              message:
-                // This will not work (Hamza)
-                /*    err?.message ||
-                err?.networkError?.message ||
-                err?.clientErrors[0].message ||
-                err?.graphQLErrors[0].message || */
-                'An error occured',
+              message: 'An error occured',
               duration: 2000,
             });
             setSubmitting(false);

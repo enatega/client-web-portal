@@ -7,7 +7,7 @@ import { createContext, useState } from 'react';
 import {
   IRestaurantsContextProps,
   IRestaurantsProvider,
-  IRestaurantsSelectedVendor,
+  IRestaurantsSelectedVendorData,
 } from '@/lib/utils/interfaces';
 
 // Types
@@ -19,8 +19,8 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
   const [isRestaurantsFormVisible, setRestaurantsFormVisible] =
     useState<boolean>(false);
 
-  const [restaurantsVendor, setRestaurantsVendor] =
-    useState<IRestaurantsSelectedVendor>();
+  const [restaurantsContextData, setRestaurantsContextData] =
+    useState<IRestaurantsSelectedVendorData | null>(null);
 
   // Form Flow
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -39,10 +39,10 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
   };
 
   // Vendor
-  const onSetRestaurantsVendor = (
-    vendor: IRestaurantsSelectedVendor | undefined
+  const onSetRestaurantsContextData = (
+    vendor: IRestaurantsSelectedVendorData | null
   ) => {
-    setRestaurantsVendor(vendor);
+    setRestaurantsContextData(vendor);
   };
 
   const value: IRestaurantsContextProps = {
@@ -54,9 +54,9 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
     onActiveStepChange,
     // Clear
     onClearRestaurntsData,
-    // Vendor
-    restaurantsVendor,
-    onSetRestaurantsVendor,
+    // Context Data
+    restaurantsContextData,
+    onSetRestaurantsContextData,
   };
 
   return (

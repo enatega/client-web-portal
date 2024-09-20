@@ -10,7 +10,7 @@ import {
   ICreateRestaurantResponse,
   IDropdownSelectItem,
   IQueryResult,
-  IRestaurantsByOwnerResponseGraphQL,
+  IRestaurantsResponseGraphQL,
 } from '@/lib/utils/interfaces';
 
 // Core
@@ -38,7 +38,7 @@ import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import {
   CREATE_RESTAURANT,
   GET_CUISINES,
-  GET_RESTAURANTS_BY_OWNER,
+  GET_RESTAURANTS,
 } from '@/lib/api/graphql';
 import { RestaurantsContext } from '@/lib/context/restaurants.context';
 import { ToastContext } from '@/lib/context/toast.context';
@@ -80,8 +80,7 @@ export default function RestaurantDetailsForm({
   };
   // Context
   const { showToast } = useContext(ToastContext);
-  const { restaurantsVendor } = useContext(RestaurantsContext);
-  const isEditingRestaurant = false;
+  const { restaurantsContextData } = useContext(RestaurantsContext);
 
   // API
   // Mutation
@@ -91,9 +90,11 @@ export default function RestaurantDetailsForm({
       showToast({
         type: 'success',
         title: 'New Restaurant',
-        message: `Restaurant has been ${isEditingRestaurant ? 'edited' : 'added'} successfully`,
+        message: `Restaurant has been added successfully`,
         duration: 3000,
       });
+
+      onStepChange(order + 1);
     },
     update: update,
   });
@@ -115,11 +116,12 @@ export default function RestaurantDetailsForm({
   // Handlers
   const onCreateRestaurant = async (data: IRestaurantForm) => {
     try {
-      if (restaurantsVendor?._id?.code) {
+      const vendorId = restaurantsContextData?.vendor?._id?.code;
+      if (!vendorId) {
         showToast({
           type: 'error',
-          title: `${restaurantsVendor?._id?.code ? 'Edit' : 'Create'} Restaurants`,
-          message: `Restaurant ${isEditingRestaurant ? 'Edit' : 'Create'} Failed - Please select a vendor.`,
+          title: 'Create Restaurants',
+          message: `Restaurant Create Failed - Please select a vendor.`,
           duration: 2500,
         });
         return;
@@ -127,7 +129,7 @@ export default function RestaurantDetailsForm({
 
       await createRestaurant({
         variables: {
-          owner: restaurantsVendor?._id?.code,
+          owner: vendorId,
           restaurant: {
             name: data.name,
             address: data.address,
@@ -147,8 +149,8 @@ export default function RestaurantDetailsForm({
     } catch (error) {
       showToast({
         type: 'error',
-        title: `${restaurantsVendor?._id?.code ? 'Edit' : 'Create'} Restaurants`,
-        message: `Restaurant ${isEditingRestaurant ? 'Edit' : 'Create'} Failed`,
+        title: 'New Restaurant',
+        message: `Restaurant Creation Failed`,
         duration: 2500,
       });
     }
@@ -157,11 +159,11 @@ export default function RestaurantDetailsForm({
   function onError({ graphQLErrors, networkError }: ApolloError) {
     showToast({
       type: 'error',
-      title: `${isEditingRestaurant ? 'Edit' : 'Create'} Restaurant`,
+      title: 'New Restaurant',
       message:
         graphQLErrors[0].message ??
         networkError?.message ??
-        `Restaurant ${restaurantsVendor?._id?.code ? 'Edit' : 'Create'} Failed`,
+        'Restaurant Creation  Failed',
       duration: 2500,
     });
   }
@@ -171,22 +173,19 @@ export default function RestaurantDetailsForm({
   ): void {
     if (!data) return;
 
-    const cachedData: IRestaurantsByOwnerResponseGraphQL | null =
-      cache.readQuery({
-        query: GET_RESTAURANTS_BY_OWNER,
-        variables: { id: restaurantsVendor?._id?.code },
-      });
+    const restaurantId = restaurantsContextData?.restaurant?._id?.code;
 
-    const cachedRestaurants = cachedData?.restaurantByOwner?.restaurants ?? [];
+    const cachedData: IRestaurantsResponseGraphQL | null = cache.readQuery({
+      query: GET_RESTAURANTS,
+    });
+
+    const cachedRestaurants = cachedData?.restaurants ?? [];
 
     cache.writeQuery({
-      query: GET_RESTAURANTS_BY_OWNER,
-      variables: { id: restaurantsVendor?._id?.code },
+      query: GET_RESTAURANTS,
+      variables: { id: restaurantId },
       data: {
-        restaurantByOwner: {
-          ...cachedData?.restaurantByOwner,
-          restaurants: [...(cachedRestaurants ?? []), createRestaurant],
-        },
+        restaurants: [...(cachedRestaurants ?? []), createRestaurant],
       },
     });
   }

@@ -13,10 +13,10 @@ import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 import { IUserResponse } from '@/lib/utils/interfaces/users.interface';
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import CusstomInputSwitch from '../custom-input-switch';
 
 // Icons
@@ -89,16 +89,71 @@ export const BANNERS_TABLE_COLUMNS = ({
   ];
 };
 
-export const RESTAURANT_TABLE_COLUMNS = ({
-  menuItems,
-}: {
-  menuItems: IActionMenuProps<IRestaurantResponse>['items'];
-}) => {
+export const RESTAURANT_TABLE_COLUMNS = () => {
   // Context
   const { showToast } = useContext(ToastContext);
 
+  // State
+  const [deletingRestaurant, setDeletingRestaurant] = useState<{
+    id: string;
+    isActive: boolean;
+  }>({ id: '', isActive: false });
+
   // API
-  const [deleteRestaurant, { loading }] = useMutation(DELETE_RESTAURANT, {});
+  const [deleteRestaurant] = useMutation(DELETE_RESTAURANT, {
+    onCompleted: () => {
+      showToast({
+        type: 'error',
+        title: 'Restaurant Status',
+        message: `Restaurant marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'} failed`,
+        duration: 2000,
+      });
+    },
+    onError,
+  });
+
+  // Handle checkbox change
+  const onHandleRestaurantStatusChange = async (
+    isActive: boolean,
+    id: string
+  ) => {
+    try {
+      setDeletingRestaurant({
+        id,
+        isActive,
+      });
+      await deleteRestaurant({ variables: { id: id } });
+    } catch (err) {
+      showToast({
+        type: 'error',
+        title: 'Restaurant Status',
+        message: `Restaurant marked as ${isActive ? 'in-active' : 'active'} failed`,
+        duration: 2000,
+      });
+    } finally {
+      setDeletingRestaurant({
+        ...deletingRestaurant,
+        id: '',
+      });
+    }
+  };
+
+  function onError({ graphQLErrors, networkError }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'Restaurant Status Change',
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        'Restaurant Status Change Failed',
+      duration: 2500,
+    });
+
+    setDeletingRestaurant({
+      ...deletingRestaurant,
+      id: '',
+    });
+  }
 
   return [
     {
@@ -131,43 +186,19 @@ export const RESTAURANT_TABLE_COLUMNS = ({
       headerName: 'Status',
       propertyName: 'status',
       body: (rowData: IRestaurantResponse) => {
-        // Handle checkbox change
-        const handleCheckboxChange = async (isActive: boolean, id: string) => {
-          try {
-            await deleteRestaurant({ variables: { id: id } });
-
-            showToast({
-              type: 'success',
-              title: 'Restaurant Status',
-              message: `Restaurant has been marked a ${isActive ? 'in-active' : 'actie'}`,
-              duration: 2000,
-            });
-          } catch (err) {
-            showToast({
-              type: 'success',
-              title: 'Restaurant Status',
-              message: `Restaurant marked as ${isActive ? 'in-active' : 'actie'} failed`,
-              duration: 2000,
-            });
-          }
-        };
-
         return (
           <CusstomInputSwitch
-            loading={loading}
+            loading={rowData?._id === deletingRestaurant?.id}
             isActive={rowData.isActive}
-            onChange={async () =>
-              await handleCheckboxChange(rowData.isActive, rowData._id)
-            }
+            onChange={async () => {
+              await onHandleRestaurantStatusChange(
+                rowData.isActive,
+                rowData._id
+              );
+            }}
           />
         );
       },
-    },
-    {
-      propertyName: 'actions',
-      body: (restaurant: IRestaurantResponse) => (
-        <ActionMenu items={menuItems} data={restaurant} />
-      ),
     },
   ];
 };

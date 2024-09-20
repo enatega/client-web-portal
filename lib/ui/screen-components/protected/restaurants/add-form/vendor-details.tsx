@@ -9,11 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 import { ToastContext } from '@/lib/context/toast.context';
 
 // Interface and Types
-import {
-  ICreateVendorResponseGraphQL,
-  IGetVendorResponseGraphQL,
-  ILazyQueryResult,
-} from '@/lib/utils/interfaces';
+import { ICreateVendorResponseGraphQL } from '@/lib/utils/interfaces';
 import { IRestauransVendorDetailsForm } from '@/lib/utils/interfaces/forms';
 
 // Constants and Methods
@@ -27,23 +23,13 @@ import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 
 // Schema
-import {
-  RestaurantsVendorDetails,
-  VendorEditSchema,
-  VendorSchema,
-} from '@/lib/utils/schema';
+import { RestaurantsVendorDetails, VendorSchema } from '@/lib/utils/schema';
 
 // GraphQL
-import {
-  CREATE_VENDOR,
-  EDIT_VENDOR,
-  GET_VENDOR_BY_ID,
-  GET_VENDORS,
-} from '@/lib/api/graphql';
+import { CREATE_VENDOR, GET_VENDORS } from '@/lib/api/graphql';
 
 // Icons
 import { RestaurantsContext } from '@/lib/context/restaurants.context';
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import CusstomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
 import { IRestaurantsVendorDetailsComponentProps } from '@/lib/utils/interfaces/restaurants.interface';
@@ -69,7 +55,7 @@ export default function VendorDetails({
   // Context
 
   const { showToast } = useContext(ToastContext);
-  const { restaurantsVendor, onSetRestaurantsVendor } =
+  const { restaurantsContextData, onSetRestaurantsContextData } =
     useContext(RestaurantsContext);
 
   // States
@@ -80,45 +66,32 @@ export default function VendorDetails({
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
 
   // Constants
-  const isEditingVendor = false;
-  const vendorId = '';
-  const hiddenClass = isEditingVendor ? 'hidden' : '';
 
   // API
   // Mutations
-  const [createVendor] = useMutation(
-    isEditingVendor && vendorId ? EDIT_VENDOR : CREATE_VENDOR,
-    {
-      refetchQueries: [{ query: GET_VENDORS }],
-      onError,
-      onCompleted: (data: ICreateVendorResponseGraphQL) => {
-        showToast({
-          type: 'success',
-          title: 'New Vendor',
-          message: `Vendor has been ${!showAddForm ? 'selected' : isEditingVendor ? 'edited' : 'added'} successfully`,
-          duration: 3000,
-        });
+  const [createVendor] = useMutation(CREATE_VENDOR, {
+    refetchQueries: [{ query: GET_VENDORS }],
+    onError,
+    onCompleted: (data: ICreateVendorResponseGraphQL) => {
+      showToast({
+        type: 'success',
+        title: 'New Vendor',
+        message: `Vendor has been ${!showAddForm ? 'selected' : 'added'} successfully`,
+        duration: 3000,
+      });
 
-        onStepChange(order + 1);
-        onSetRestaurantsVendor({
+      onStepChange(order + 1);
+      onSetRestaurantsContextData({
+        ...restaurantsContextData,
+        vendor: {
           _id: {
             label: data.createVendor?.email,
             code: data.createVendor?._id,
           },
-        });
-      },
-    }
-  );
-
-  const {
-    fetch: fetchVendorById,
-    loading,
-    data,
-  } = useLazyQueryQL(GET_VENDOR_BY_ID, {
-    enabled: isEditingVendor,
-    fetchPolicy: 'network-only',
-    debounceMs: 300,
-  }) as ILazyQueryResult<IGetVendorResponseGraphQL | undefined, { id: string }>;
+        },
+      });
+    },
+  });
 
   // Handlers
   const onVendorSubmitHandler = async (
@@ -129,23 +102,27 @@ export default function VendorDetails({
         await createVendor({
           variables: {
             vendorInput: {
-              _id: isEditingVendor && vendorId ? vendorId : '',
+              _id: '',
               email: formData.email,
               password: formData.password,
             },
           },
         });
       } else {
-        onSetRestaurantsVendor({
-          _id: formData?._id ?? null,
+        onSetRestaurantsContextData({
+          ...restaurantsContextData,
+          vendor: {
+            _id: formData?._id ?? null,
+          },
         });
+
         onStepChange(order + 1);
       }
     } catch (error) {
       showToast({
         type: 'error',
-        title: `${!showAddForm ? 'Select' : isEditingVendor ? 'Edit' : 'Create'} Vendor`,
-        message: `Vendor ${!showAddForm ? 'Selection' : isEditingVendor ? 'Edit' : 'Create'} Failed`,
+        title: `${!showAddForm ? 'Select' : 'Create'} Vendor`,
+        message: `Vendor ${!showAddForm ? 'Selection' : 'Create'} Failed`,
         duration: 2500,
       });
     }
@@ -155,72 +132,42 @@ export default function VendorDetails({
     if (!graphQLErrors && !networkError) return;
     showToast({
       type: 'error',
-      title: `${!showAddForm ? 'Select' : isEditingVendor ? 'Edit' : 'Create'} Vendor`,
+      title: `${!showAddForm ? 'Select' : 'Create'} Vendor`,
       message:
         graphQLErrors[0]?.message ??
         networkError?.message ??
-        `Vendor ${!showAddForm ? 'Selection' : isEditingVendor ? 'Edit' : 'Create'} Failed`,
+        `Vendor ${!showAddForm ? 'Selection' : 'Create'} Failed`,
       duration: 2500,
     });
   }
 
-  const onFetchVendorById = () => {
-    setFormValues(initialValues);
-    if (isEditingVendor && vendorId) {
-      fetchVendorById({ id: vendorId ?? '' });
-    }
-  };
+  const onSelectVendor = () => {
+    const _id = restaurantsContextData?.vendor?._id;
 
-  const onHandleSetFormValue = () => {
-    if (!data) return;
+    console.log({ vendorId: _id });
 
-    setFormValues((prevState) => ({
+    if (!_id) return;
+
+    setFormValues({
       ...initialValues,
-      ...prevState,
-      email: data?.getVendor?.email ?? '',
-    }));
-  };
-
-  const onSetVendorIdFormValue = () => {
-    if (restaurantsVendor) {
-      setFormValues({
-        ...formInitialValues,
-        _id: restaurantsVendor._id,
-      });
-    }
+      _id,
+    });
   };
 
   // Use Effects
   useEffect(() => {
-    onFetchVendorById();
-  }, [isEditingVendor, vendorId]);
-
-  useEffect(() => {
-    onHandleSetFormValue();
-  }, [data]);
-
-  useEffect(() => {
-    onSetVendorIdFormValue();
+    onSelectVendor();
   }, []);
 
   return (
     <div className="w-full h-full flex items-center justify-start">
       <div className="h-full w-full">
         <div className="flex flex-col gap-2">
-          {/*  <div className="flex flex-col mb-2">
-            <span className="text-lg">Add Vendor</span>
-          </div>
- */}
-
           <div>
             <Formik
               initialValues={formInitialValues}
               validationSchema={
-                isEditingVendor && vendorId
-                  ? VendorEditSchema
-                  : showAddForm
-                    ? VendorSchema
-                    : RestaurantsVendorDetails
+                showAddForm ? VendorSchema : RestaurantsVendorDetails
               }
               enableReinitialize={true}
               onSubmit={async (values) => {
@@ -275,7 +222,7 @@ export default function VendorDetails({
                         </div>
                       ) : (
                         <div className="space-y-3">
-                          <div className={`${hiddenClass}`}>
+                          <div>
                             <CustomTextField
                               type="text"
                               name="name"
@@ -308,7 +255,6 @@ export default function VendorDetails({
                                 style: { marginTop: '1px' },
                               }}
                               value={values.email}
-                              isLoading={loading}
                               onChange={handleChange}
                               style={{
                                 borderColor: onErrorMessageMatcher(
@@ -322,7 +268,7 @@ export default function VendorDetails({
                             />
                           </div>
 
-                          <div className={`${hiddenClass}`}>
+                          <div>
                             <CustomPasswordTextField
                               placeholder="Password"
                               name="password"
@@ -342,7 +288,7 @@ export default function VendorDetails({
                             />
                           </div>
 
-                          <div className={`${hiddenClass}`}>
+                          <div>
                             <CustomPasswordTextField
                               placeholder="Confirm Password"
                               name="confirmPassword"

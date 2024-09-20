@@ -8,7 +8,7 @@ import {
   ICoupon,
 } from '@/lib/utils/interfaces/coupons.interface';
 import { CouponFormSchema } from '@/lib/utils/schema/coupon';
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -24,9 +24,24 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
   };
 
   //mutation
-  const [CreateCoupon, { loading }] = useMutation(CREATE_COUPON);
+  const [CreateCoupon, { loading }] = useMutation(CREATE_COUPON, {
+    onError: onError,
+  });
   //toast
   const { showToast } = useContext(ToastContext);
+
+  // API Handlers
+  function onError({ graphQLErrors, networkError }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'New Coupon',
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        'Coupon Creation   Failed',
+      duration: 2500,
+    });
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -62,13 +77,7 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
             showToast({
               type: 'error',
               title: 'New Coupon',
-              message:
-                //This will not work
-                /*  error?.message ||
-                error?.networkError?.message ||
-                error?.clientErrors[0].message ||
-                error?.graphQLErrors[0].message || */
-                'An error occured',
+              message: 'An error occured',
               duration: 2000,
             });
             setSubmitting(false);
