@@ -19,6 +19,7 @@ export default function EditDeletePopup<T>({
   setIsDeleting,
   setIsEditing,
   setVisible,
+  setIsEditDeletePopupOpen,
   visible,
   data,
 }: IEditDeleteInterface<T>) {
@@ -48,12 +49,16 @@ export default function EditDeletePopup<T>({
       className="flex flex-col gap-2 p-2 rounded-lg right-8  bg-white shadow-xl border border-gray-200 w-fit absolute"
     >
       <button
-        onClick={() =>
+        onClick={() => {
           setIsEditing({
             bool: true,
             data: data,
-          })
-        }
+          });
+          setIsEditDeletePopupOpen({
+            _id: '',
+            bool: false,
+          });
+        }}
       >
         <FontAwesomeIcon
           title="Edit"
@@ -69,6 +74,10 @@ export default function EditDeletePopup<T>({
             data: data,
           });
           setVisible(false);
+          setIsEditDeletePopupOpen({
+            _id: '',
+            bool: false,
+          });
         }}
       >
         <FontAwesomeIcon

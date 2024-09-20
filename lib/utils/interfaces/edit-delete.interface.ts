@@ -1,10 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
-import { IEditState } from './coupons.interface';
+import { IEditPopupVal, IEditState } from './coupons.interface';
 
 export interface IEditDeleteInterface<T> {
   setIsEditing: Dispatch<SetStateAction<IEditState<T>>>;
   setIsDeleting: Dispatch<SetStateAction<IEditState<T>>>;
   setVisible: Dispatch<SetStateAction<boolean>>;
+  setIsEditDeletePopupOpen: Dispatch<SetStateAction<IEditPopupVal>>;
   visible: boolean;
   data: T;
 }

@@ -42,6 +42,7 @@ export interface ICouponsTableProps {
   isDeleting: IEditState<ICoupon>;
   setVisible: Dispatch<SetStateAction<boolean>>;
   visible: boolean;
+  setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
 }
 export interface IEditState<T> {
   bool: boolean;

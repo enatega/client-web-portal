@@ -158,6 +158,7 @@ export default function CouponsScreen() {
         setVisible={setVisible}
         visible={visible}
         isDeleting={isDeleting}
+        setCoupons={setCoupons}
       />
     </div>
   );

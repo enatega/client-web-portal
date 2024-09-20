@@ -39,6 +39,7 @@ export default function CouponTable({
   loading,
   filters,
   setIsEditing,
+  setCoupons,
   setIsDeleting,
   setVisible,
   visible,
@@ -48,19 +49,17 @@ export default function CouponTable({
   const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
 
   //delete queries
-  const [
-    deleteCoupon,
-    { data: deleteCouponData, loading: deleteCouponLoading },
-  ] = useMutation(DELETE_COUPON);
+  const [deleteCoupon, { loading: deleteCouponLoading }] =
+    useMutation(DELETE_COUPON);
 
-  const [editCoupon, { data: editCouponData, loading: editCouponLoading }] =
-    useMutation(EDIT_COUPON);
+  const [editCoupon, { loading: editCouponLoading }] = useMutation(EDIT_COUPON);
 
   //states
-  const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<IEditPopupVal>({
-    _id: '',
-    bool: false,
-  });
+  const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
+    useState<IEditPopupVal>({
+      _id: '',
+      bool: false,
+    });
   const [sortedData, setSortedData] = useState<ICoupon[] | null | undefined>();
   const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
 
@@ -115,7 +114,7 @@ export default function CouponTable({
     try {
       await deleteCoupon({
         variables: {
-          id: deleteCouponData?.data?._id,
+          id: isDeleting?.data?._id,
         },
       });
       showToast({
@@ -123,6 +122,16 @@ export default function CouponTable({
         type: 'success',
         message: 'Coupon deletion was successfull',
         duration: 2000,
+      });
+      let filteredCoupons = data?.filter(
+        (coupon) => coupon._id !== isDeleting?.data?._id
+      );
+      if (filteredCoupons) {
+        setCoupons(filteredCoupons);
+      }
+      setIsDeleting({
+        bool: false,
+        data: { ...isDeleting.data },
       });
     } catch (err) {
       console.log(err);
@@ -156,15 +165,13 @@ export default function CouponTable({
         <div className="flex gap-2 items-center w-full justify-between">
           <InputSwitch
             checked={rowData?.enabled}
-            disabled={
-              editCouponLoading &&
-              editCouponData?.editCoupon?._id === rowData?._id
-            }
+            disabled={editCouponLoading}
             className={rowData?.enabled ? 'p-inputswitch-checked' : ''}
             onChange={() => handleEnableField(rowData)}
             onClick={() => optimizedToggleFunction(rowData)}
           />
-          {isEditPopupOpen._id === rowData?._id && isEditPopupOpen.bool ? (
+          {isEditDeletePopupOpen._id === rowData?._id &&
+          isEditDeletePopupOpen.bool ? (
             <div className="editdeletepoup-container" ref={editDeletePopupRef}>
               <EditDeletePopup
                 setIsEditing={setIsEditing}
@@ -172,6 +179,7 @@ export default function CouponTable({
                 setVisible={setVisible}
                 setIsDeleting={setIsDeleting}
                 visible={visible}
+                setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
               />
             </div>
           ) : (
