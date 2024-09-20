@@ -31,7 +31,7 @@ import { CREATE_VENDOR, GET_VENDORS } from '@/lib/api/graphql';
 // Icons
 import { RestaurantsContext } from '@/lib/context/restaurants.context';
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
-import CusstomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
+import CustomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
 import { IRestaurantsVendorDetailsComponentProps } from '@/lib/utils/interfaces/restaurants.interface';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
@@ -188,7 +188,7 @@ export default function VendorDetails({
                     <div className="space-y-3">
                       <div className="flex flex-col sm:flex-row sm:items-center lg:items-center gap-4">
                         <div className="flex items-center justify-end flex-shrink-0">
-                          <CusstomInputSwitch
+                          <CustomInputSwitch
                             label="Add Vendor"
                             isActive={showAddForm}
                             onChange={() => {

@@ -59,7 +59,7 @@ export default function AddCuisine({
       type: 'error',
       title: 'New Cuisine',
       message:
-        graphQLErrors[0].message ??
+        graphQLErrors[0]?.message ??
         networkError?.message ??
         'Cuisine Creation  Failed',
       duration: 2500,

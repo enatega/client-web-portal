@@ -1,7 +1,7 @@
 import { ICustomInputSwitchComponentProps } from '@/lib/utils/interfaces';
 import CustomLoader from '../custom-progress-indicator';
 
-export default function CusstomInputSwitch({
+export default function CustomInputSwitch({
   loading,
   isActive,
   label,

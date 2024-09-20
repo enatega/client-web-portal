@@ -128,7 +128,7 @@ export default function VendorAddForm({
       type: 'error',
       title: `${isEditingVendor ? 'Edit' : 'Create'} Vendor`,
       message:
-        graphQLErrors[0].message ??
+        graphQLErrors[0]?.message ??
         networkError?.message ??
         `Vendor ${isEditingVendor ? 'Edit' : 'Create'} Failed`,
       duration: 2500,
