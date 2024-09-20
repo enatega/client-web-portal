@@ -41,7 +41,7 @@ export default function SendNotification({
   });
 
   //mutation
-  const [sendNotificationUser, { loading, error }] = useMutation(
+  const [sendNotificationUser, { loading }] = useMutation(
     SEND_NOTIFICATION_USER
   );
 
@@ -83,7 +83,7 @@ export default function SendNotification({
       showToast({
         title: 'Error',
         type: 'error',
-        message: error?.message ?? 'Something went wrong',
+        message: 'Something went wrong',
         duration: 2500,
       });
       return console.log(err);

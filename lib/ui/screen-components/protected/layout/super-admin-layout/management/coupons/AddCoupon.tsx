@@ -51,12 +51,9 @@ export default function AddCoupon({
   };
 
   //mutations
-  const [
-    CreateCoupon,
-    { loading: createCouponLoading, error: createCouponError },
-  ] = useMutation(CREATE_COUPON);
-  const [editCoupon, { loading: editCouponLoading, error: editCouponError }] =
-    useMutation(EDIT_COUPON);
+  const [CreateCoupon, { loading: createCouponLoading }] =
+    useMutation(CREATE_COUPON);
+  const [editCoupon, { loading: editCouponLoading }] = useMutation(EDIT_COUPON);
   //toast
   const { showToast } = useContext(ToastContext);
   //comment to test the values======================================================>
@@ -133,16 +130,7 @@ export default function AddCoupon({
             showToast({
               title: 'Error',
               type: 'error',
-              message:
-                createCouponError?.message ||
-                editCouponError?.message ||
-                createCouponError?.networkError?.message ||
-                editCouponError?.networkError?.message ||
-                createCouponError?.clientErrors[0].message ||
-                editCouponError?.clientErrors[0].message ||
-                createCouponError?.graphQLErrors[0].message ||
-                editCouponError?.graphQLErrors[0].message ||
-                'An error occured',
+              message: 'Something went wrong',
               duration: 2000,
             });
             setSubmitting(false);

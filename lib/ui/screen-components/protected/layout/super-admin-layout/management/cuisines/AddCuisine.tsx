@@ -47,7 +47,7 @@ export default function AddCuisine({
   const { showToast } = useContext(ToastContext);
 
   //mutation
-  const [CreateCuisine, { loading, error }] = useMutation(CREATE_CUISINE);
+  const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE);
 
   // shop type options
   const shopTypeOptions = [
@@ -88,12 +88,7 @@ export default function AddCuisine({
             showToast({
               title: 'Error',
               type: 'error',
-              message:
-                error?.message ||
-                error?.networkError?.message ||
-                error?.clientErrors[0].message ||
-                error?.graphQLErrors[0].message ||
-                'An error occured',
+              message: 'Something went wrong',
               duration: 2000,
             });
             setSubmitting(false);

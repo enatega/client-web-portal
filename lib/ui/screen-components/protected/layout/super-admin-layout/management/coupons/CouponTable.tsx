@@ -50,21 +50,11 @@ export default function CouponTable({
   //delete queries
   const [
     deleteCoupon,
-    {
-      error: deleteCouponError,
-      data: deleteCouponData,
-      loading: deleteCouponLoading,
-    },
+    { data: deleteCouponData, loading: deleteCouponLoading },
   ] = useMutation(DELETE_COUPON);
 
-  const [
-    editCoupon,
-    {
-      data: editCouponData,
-      loading: editCouponLoading,
-      error: editCouponError,
-    },
-  ] = useMutation(EDIT_COUPON);
+  const [editCoupon, { data: editCouponData, loading: editCouponLoading }] =
+    useMutation(EDIT_COUPON);
 
   //states
   const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<IEditPopupVal>({
@@ -111,10 +101,7 @@ export default function CouponTable({
       showToast({
         title: 'Error',
         type: 'error',
-        message:
-          editCouponError?.message ||
-          editCouponError?.graphQLErrors[0].message ||
-          'Something went wrong please try again',
+        message: 'Something went wrong please try again',
         duration: 2500,
       });
     }
@@ -142,10 +129,7 @@ export default function CouponTable({
       showToast({
         title: 'Error',
         type: 'error',
-        message:
-          'An unknown error occured, please try again' ||
-          deleteCouponError?.graphQLErrors[0].message ||
-          deleteCouponError?.message,
+        message: 'An unknown error occured, please try again',
         duration: 2000,
       });
     }
