@@ -114,7 +114,7 @@ export default function CuisineForm({
             });
             let newCuisine: ICuisine;
             if (isEditing.bool) {
-              newCuisine = res?.data?.editCoupon;
+              newCuisine = res?.data?.editCuisine;
               setIsEditing({
                 bool: false,
                 data: {
@@ -126,11 +126,11 @@ export default function CuisineForm({
                   image: '',
                 },
               });
-              let filteredCoupons = cuisines.filter(
+              let filteredCuisines = cuisines.filter(
                 (cuisine) => cuisine._id !== isEditing.data._id
               );
-              filteredCoupons.push(newCuisine);
-              setCuisines([newCuisine, ...filteredCoupons]);
+              filteredCuisines.push(newCuisine);
+              setCuisines([newCuisine, ...filteredCuisines]);
             } else {
               newCuisine = res?.data?.createCuisine;
               addCuisineLocally(newCuisine);

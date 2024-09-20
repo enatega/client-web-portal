@@ -1,5 +1,6 @@
 import { DataTableFilterMeta } from 'primereact/datatable';
 import { Dispatch, SetStateAction } from 'react';
+import { IEditState } from './global.interface';
 
 export interface ICoupon {
   discount: number;
@@ -45,10 +46,6 @@ export interface ICouponsTableProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
   visible: boolean;
   setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
-}
-export interface IEditState<T> {
-  bool: boolean;
-  data: T;
 }
 export interface ICouponStatuses {
   enabled: {

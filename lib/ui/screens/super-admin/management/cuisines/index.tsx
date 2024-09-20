@@ -2,7 +2,6 @@
 //graphql
 import { GET_CUISINES } from '@/lib/api/graphql';
 //components
-import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisineForm';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -15,17 +14,18 @@ import { Sidebar } from 'primereact/sidebar';
 
 //interfaces
 import { ILazyQueryResult } from '@/lib/utils/interfaces';
-import { IEditState } from '@/lib/utils/interfaces/coupons.interface';
 import {
   ICuisine,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
+import { IEditState } from '@/lib/utils/interfaces/global.interface';
 
 // Icons
 import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import CuisineForm from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisineForm';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CuisinesScreen() {
@@ -126,7 +126,7 @@ export default function CuisinesScreen() {
         onHide={() => setVisible(false)}
         position="right"
       >
-        <AddCuisine
+        <CuisineForm
           setVisible={setVisible}
           setCuisines={setCuisines}
           addCuisineLocally={addCuisineLocally}

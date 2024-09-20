@@ -1,5 +1,5 @@
 //components
-import AddCoupon from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponForm';
+import CouponForm from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponForm';
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -8,8 +8,12 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 //interfaces
 import {
-  ICoupon,
+  IDropdownSelectItem,
   IEditState,
+  ILazyQueryResult,
+} from '@/lib/utils/interfaces';
+import {
+  ICoupon,
   IGetCouponsData,
 } from '@/lib/utils/interfaces/coupons.interface';
 
@@ -25,7 +29,6 @@ import { GET_COUPONS } from '@/lib/api/graphql';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import { IDropdownSelectItem, ILazyQueryResult } from '@/lib/utils/interfaces';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CouponsScreen() {
@@ -161,8 +164,6 @@ export default function CouponsScreen() {
               : disabledSelected
                 ? !coupon.enabled
                 : bothEnabledAndDisabled
-                  ? true
-                  : false
         )
       );
       setCoupons(filteredCoupons);
@@ -180,7 +181,7 @@ export default function CouponsScreen() {
         onHide={() => setVisible(false)}
         position="right"
       >
-        <AddCoupon
+        <CouponForm
           setVisible={setVisible}
           setCoupons={setCoupons}
           handleAddCouponLocally={handleAddCouponLocally}

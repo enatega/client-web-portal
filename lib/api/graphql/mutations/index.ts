@@ -9,3 +9,4 @@ export * from './riders';
 export * from './taxations';
 export * from './tippings';
 export * from './vendor';
+export * from './withdraw-requests';
