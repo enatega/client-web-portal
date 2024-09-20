@@ -33,6 +33,7 @@ export default function SendNotification({
 }) {
   //toast
   const { showToast } = useContext(ToastContext);
+
   //states
   const [notificationData, setNotificationData] = useState({
     title: '',
@@ -40,7 +41,7 @@ export default function SendNotification({
   });
 
   //mutation
-  const [sendNotificationUser, { loading, error }] = useMutation(
+  const [sendNotificationUser, { loading }] = useMutation(
     SEND_NOTIFICATION_USER
   );
 
@@ -54,6 +55,8 @@ export default function SendNotification({
       [name]: value,
     }));
   };
+
+  //handle
 
   //form submit
   const handleFormSubmit = async (e: FormEvent) => {
@@ -70,17 +73,17 @@ export default function SendNotification({
         title: '',
       });
       return showToast({
+        title: 'Success',
         type: 'success',
-        title: 'Notification',
         message: 'Successfully sent the notification',
         duration: 2500,
       });
     } catch (err) {
       setVisible(true);
       showToast({
+        title: 'Error',
         type: 'error',
-        title: 'Notification',
-        message: error?.message ?? 'Something went wrong',
+        message: 'Something went wrong',
         duration: 2500,
       });
       return console.log(err);

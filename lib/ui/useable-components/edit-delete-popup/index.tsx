@@ -2,9 +2,7 @@
 // queries
 
 //interfaces
-import IEditDeleteInterface, {
-  IEditDeleteProps,
-} from '@/lib/utils/interfaces/edit-delete.interface';
+import { IEditDeleteInterface } from '@/lib/utils/interfaces/edit-delete.interface';
 
 //components
 
@@ -15,16 +13,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //contexts
 
 //hooks
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-export default function EditDeletePopup<T extends IEditDeleteProps>({
+export default function EditDeletePopup<T>({
+  setIsDeleting,
+  setIsEditing,
+  setVisible,
   setIsEditDeletePopupOpen,
+  visible,
   data,
 }: IEditDeleteInterface<T>) {
   //states
-  const [, setIsDeleting] = useState({ _id: '', bool: false });
-  const [, setIsEditing] = useState({ data: {}, bool: false });
-
   //popup ref
   const popupRef = useRef<HTMLDivElement | null>(null);
 
@@ -35,21 +34,14 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
         popupRef.current &&
         !popupRef.current.contains(event.target as Node)
       ) {
-        setIsDeleting({
-          _id: '',
-          bool: false,
-        });
-        setIsEditDeletePopupOpen({
-          bool: false,
-          _id: '',
-        });
+        popupRef.current.classList.add('hidden');
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [setIsEditing, setIsDeleting, setIsEditDeletePopupOpen]);
+  }, [setIsEditing, setIsDeleting, visible, setVisible]);
 
   return (
     <div
@@ -67,7 +59,6 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
             bool: false,
           });
         }}
-        className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition-colors"
       >
         <FontAwesomeIcon
           title="Edit"
@@ -77,11 +68,24 @@ export default function EditDeletePopup<T extends IEditDeleteProps>({
         <span className="text-sm">Edit</span>
       </button>
       <button
-        onClick={() => setIsDeleting({ _id: data._id, bool: true })}
-        className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition-colors"
+        onClick={() => {
+          setIsDeleting({
+            bool: true,
+            data: data,
+          });
+          setVisible(false);
+          setIsEditDeletePopupOpen({
+            _id: '',
+            bool: false,
+          });
+        }}
       >
-        <FontAwesomeIcon icon={faTrash} className="w-4 h-4 text-red-500" />
-        <span className="text-sm text-red-500">Delete</span>
+        <FontAwesomeIcon
+          color="red"
+          width={15}
+          icon={faTrash}
+          className="cursor-pointer"
+        />
       </button>
     </div>
   );

@@ -28,25 +28,14 @@ import { RiderSchema } from '@/lib/utils/schema/rider';
 import useToast from '@/lib/hooks/useToast';
 
 //GraphQL
-import { createRider, editRider, getRiders, getZones } from '@/lib/api/graphql';
+import {
+  CREATE_RIDER,
+  EDIT_RIDER,
+  GET_RIDERS,
+  GET_ZONES,
+} from '@/lib/api/graphql';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { gql, useMutation } from '@apollo/client';
-
-const GET_RIDERS = gql`
-  ${getRiders}
-`;
-
-const CREATE_RIDER = gql`
-  ${createRider}
-`;
-
-const EDIT_RIDER = gql`
-  ${editRider}
-`;
-
-const GET_ZONES = gql`
-  ${getZones}
-`;
+import { useMutation } from '@apollo/client';
 
 export default function RiderAddForm({
   onHide,

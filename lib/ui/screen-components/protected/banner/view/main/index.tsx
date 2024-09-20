@@ -12,7 +12,7 @@ import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 import { BANNERS_TABLE_COLUMNS } from '@/lib/utils/constants';
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
-import BannersHeader from '../header';
+import BannerTableHeader from '../table-header';
 
 // Interfaces and Types
 import {
@@ -23,21 +23,14 @@ import {
 } from '@/lib/utils/interfaces';
 
 // GraphQL
-import { deleteBanner } from '@/lib/api/graphql';
-import { getBanners } from '@/lib/api/graphql/queries/banners';
+import { DELETE_BANNER } from '@/lib/api/graphql';
+import { GET_BANNERS } from '@/lib/api/graphql/queries/banners';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { gql, useMutation } from '@apollo/client';
-
-const GET_BANNERS = gql`
-  ${getBanners}
-`;
-
-const DELETE_BANNER = gql`
-  ${deleteBanner}
-`;
+import { useMutation } from '@apollo/client';
 
 export default function BannersMain({
   setIsAddBannerVisible,
+  setBanner,
 }: IBannersMainComponentsProps) {
   // Hooks
   const { showToast } = useToast();
@@ -59,7 +52,7 @@ export default function BannersMain({
   };
 
   //Query
-  const { data } = useQueryGQL(GET_BANNERS, {
+  const { data, loading } = useQueryGQL(GET_BANNERS, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IBannersDataResponse | undefined, undefined>;
 
@@ -75,7 +68,10 @@ export default function BannersMain({
     {
       label: 'Edit',
       command: (data?: IBannersResponse) => {
-        console.log(data);
+        if (data) {
+          setIsAddBannerVisible(true);
+          setBanner(data);
+        }
       },
     },
     {
@@ -89,15 +85,14 @@ export default function BannersMain({
   ];
 
   return (
-    <div className="p-2 pt-5">
+    <div className="mx-[-14px]">
       <Table
         header={
-          <BannersHeader
+          <BannerTableHeader
             globalFilterValue={globalFilterValue}
             onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
             selectedActions={selectedActions}
             setSelectedActions={setSelectedActions}
-            setIsAddBannerVisible={setIsAddBannerVisible}
           />
         }
         data={data?.banners || []}
@@ -105,6 +100,7 @@ export default function BannersMain({
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
         columns={BANNERS_TABLE_COLUMNS({ menuItems })}
+        loading={loading}
       />
       <DeleteDialog
         loading={mutationLoading}

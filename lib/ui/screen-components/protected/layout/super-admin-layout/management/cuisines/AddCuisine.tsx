@@ -1,19 +1,32 @@
 'use client';
-import { CREATE_CUISINE } from '@/lib/api/graphql/mutations';
+//contexts
+import { CREATE_CUISINE } from '@/lib/api/graphql';
+
+//contexts
 import { ToastContext } from '@/lib/context/toast.context';
+
+//components
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
+
+//interfaces
 import {
   IAddCuisineProps,
   ICuisine,
 } from '@/lib/utils/interfaces/cuisine.interface';
+
+//schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
 import { ApolloError, useMutation } from '@apollo/client';
 import { ErrorMessage, Form, Formik } from 'formik';
+
+//prime react
 import { ProgressSpinner } from 'primereact/progressspinner';
+
+//hooks
+
 import { useContext } from 'react';
-// import { useContext } from 'react';
 
 export default function AddCuisine({
   setVisible,
@@ -28,7 +41,10 @@ export default function AddCuisine({
       code: '',
     },
   };
+
+  //toast
   const { showToast } = useContext(ToastContext);
+
   //mutation
   const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE, { onError });
   // shop type options
@@ -69,8 +85,8 @@ export default function AddCuisine({
             });
             setVisible(false);
             showToast({
+              title: 'Success',
               type: 'success',
-              title: 'New Cuisine',
               message: 'Cuisine was added successfully!',
               duration: 2000,
             });
@@ -83,7 +99,7 @@ export default function AddCuisine({
             showToast({
               type: 'error',
               title: 'New Cuisine',
-              message: 'An error occured',
+              message: 'Something went wrong',
               duration: 2000,
             });
             setSubmitting(false);

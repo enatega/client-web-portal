@@ -58,4 +58,5 @@ export interface ICustomNumberTippingProps extends IGlobalTextFieldProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   min?: number;
   max?: number;
+  loading: boolean;
 }

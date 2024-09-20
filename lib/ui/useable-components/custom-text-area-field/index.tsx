@@ -21,9 +21,10 @@ export default function CustomTextAreaField({
       <InputTextarea
         value={value}
         className={`${className} border border-gray-300 p-1`}
-        id={name ?? 'text-area'}
+        id={name}
         placeholder={placeholder}
         onChange={onChange}
+        name={name}
         {...props}
       />
     </div>

@@ -1,9 +1,9 @@
 import NotificationTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/notifications/NotificationTable';
 import SendNotification from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/notifications/SendNotification';
-import GlobalActionButton from '@/lib/ui/useable-components/custom-action-button';
+import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import GlobalButton from '@/lib/ui/useable-components/custom-icon-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { InputText } from 'primereact/inputtext';
 import { Sidebar } from 'primereact/sidebar';
 import { useState } from 'react';
@@ -25,7 +25,7 @@ export default function NotificationsScreen() {
           <HeaderText text="Notification" className="self-start" />
           <div className="flex gap-1 items-center justify-start">
             <InputText placeholder="Filter tasks..." className="p-2" />
-            <GlobalActionButton Icon={faCirclePlus} title="Action" />
+            <CustomActionActionButton Icon={faCircle} title="Action" />
           </div>
         </div>
 

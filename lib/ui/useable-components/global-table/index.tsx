@@ -1,4 +1,3 @@
-import Loader from '@/lib/ui/screen-components/loader/Loader';
 import {
   IGenericTableExtends,
   IGenericTableProps,
@@ -8,6 +7,7 @@ import {
   DataTable,
   DataTableSelectionMultipleChangeEvent,
 } from 'primereact/datatable';
+import CustomLoader from '../custom-progress-indicator';
 
 const GenericTable = <T extends IGenericTableExtends>({
   data,
@@ -17,7 +17,7 @@ const GenericTable = <T extends IGenericTableExtends>({
   loading,
   filters,
 }: IGenericTableProps<T>) => {
-  if (loading) return <Loader />;
+  if (loading) return <CustomLoader />;
   return (
     <>
       <DataTable

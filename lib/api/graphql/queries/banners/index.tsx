@@ -1,4 +1,7 @@
-export const getBanners = `query Banners{
+import { gql } from '@apollo/client';
+
+export const GET_BANNERS = gql`
+  query Banners {
     banners {
       _id
       title
@@ -8,8 +11,5 @@ export const getBanners = `query Banners{
       file
       parameters
     }
-  }`;
-
-export const getBannerActions = `query BannerActions{
-    bannerActions
-  }`;
+  }
+`;

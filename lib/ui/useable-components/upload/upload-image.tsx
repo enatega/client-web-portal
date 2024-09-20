@@ -14,6 +14,8 @@ function CustomUploadImageComponent({
   name,
   title,
   onSetImageUrl,
+  showExistingImage,
+  existingImageUrl,
 }: IImageUploadComponentProps) {
   // Context
   const configuration: IConfiguration | undefined =
@@ -44,7 +46,7 @@ function CustomUploadImageComponent({
     return images.length ? images[0] : undefined;
   };
 
-  // Cover to Base64
+  // Convert to Base64
   const imageToBase64 = useCallback(
     (imgFile: File): void => {
       setIsUploading(true);
@@ -100,6 +102,21 @@ function CustomUploadImageComponent({
               className="w-full h-full rounded-full border border-gray-300"
               alt="User avatar"
               src={imageFile}
+              width={80}
+              height={80}
+            />
+            {isUploading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+                <CustomLoader />
+              </div>
+            )}
+          </div>
+        ) : showExistingImage && existingImageUrl ? (
+          <div className="relative w-full h-full">
+            <Image
+              className="w-full h-full rounded-full border border-gray-300"
+              alt="Existing avatar"
+              src={existingImageUrl}
               width={80}
               height={80}
             />

@@ -12,20 +12,15 @@ import {
 } from '@/lib/utils/interfaces/users.interface';
 
 // Components
+import CustomTextField from '@/lib/ui/useable-components/input-field';
 import { USERS_TABLE_COLUMNS } from '@/lib/utils/constants';
-import UserHeader from '../header';
 
 //Toast
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import Table from '@/lib/ui/useable-components/table';
 
 // GraphQL
-import { getUsers } from '@/lib/api/graphql';
-import { gql } from '@apollo/client';
-
-const GET_USERS = gql`
-  ${getUsers}
-`;
+import { GET_USERS } from '@/lib/api/graphql';
 
 export default function UsersMain() {
   // State - Table
@@ -36,11 +31,10 @@ export default function UsersMain() {
   });
 
   // Query
-  const { data } = useQueryGQL(GET_USERS, {
+  const { data, loading } = useQueryGQL(GET_USERS, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IUsersDataResponse | undefined, undefined>;
 
-  console.log(data);
   // For global search
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -51,14 +45,22 @@ export default function UsersMain() {
   };
 
   return (
-    <div className="p-2 pt-5">
+    <div className="mx-[-14px]">
       <Table
         header={
-          <UserHeader
-            globalFilterValue={globalFilterValue}
-            onGlobalFilterChange={onGlobalFilterChange}
-          />
+          <div className="w-fit mb-2 ml-[-8px] ">
+            <CustomTextField
+              type="text"
+              name="riderFilter"
+              maxLength={35}
+              showLabel={false}
+              value={globalFilterValue}
+              onChange={onGlobalFilterChange}
+              placeholder="Keyword Search"
+            />
+          </div>
         }
+        loading={loading}
         data={data?.users || []}
         filters={filters}
         setSelectedData={setSelectedProducts}
