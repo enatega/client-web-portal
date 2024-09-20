@@ -24,40 +24,31 @@ export const GET_RIDERS_L = gql`
   }
 `;
 
-export const getRiders = `query{
-  riders{
-    _id
-    name
-    username
-    password
-    phone
-    available
-    zone{
+export const GET_AVAILABLE_RIDERS = gql`
+  query {
+    availableRiders {
+      _id
+      name
+      username
+      phone
+      available
+      zone {
+        _id
+      }
+    }
+  }
+`;
+
+export const GET_ZONES = gql`
+  query Zones {
+    zones {
       _id
       title
+      description
+      location {
+        coordinates
+      }
+      isActive
     }
   }
-}`;
-
-export const getAvailableRiders = `query{
-  availableRiders{
-    _id
-    name
-    username
-    phone
-    available
-    zone{
-      _id
-    }
-  }
-}`;
-
-export const getZones = `query Zones{
-  zones{
-  _id
-  title
-  description
-  location{coordinates}
-  isActive
-  }
-}`;
+`;

@@ -10,6 +10,7 @@ import {
   DataTable,
   DataTableSelectionMultipleChangeEvent,
 } from 'primereact/datatable';
+import TableSkeleton from '../custom-skeletons/table.skeleton';
 
 const Table = <T extends ITableExtends>({
   header,
@@ -28,7 +29,7 @@ const Table = <T extends ITableExtends>({
     setSelectedData(e.value);
   };
 
-  return (
+  return !loading ? (
     <DataTable
       header={header}
       paginator
@@ -42,7 +43,6 @@ const Table = <T extends ITableExtends>({
       tableStyle={{ minWidth: '50rem' }}
       selectionMode="checkbox"
       filters={filters}
-      loading={loading}
     >
       <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
       {columns.map((col, index) => (
@@ -54,6 +54,8 @@ const Table = <T extends ITableExtends>({
         />
       ))}
     </DataTable>
+  ) : (
+    <TableSkeleton />
   );
 };
 

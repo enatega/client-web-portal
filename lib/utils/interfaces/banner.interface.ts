@@ -21,7 +21,11 @@ export type IBannersResponse = {
   _id: string;
   title: string;
   description: string;
-  action: 'navigate' | 'openModal';
+  action:
+    | 'navigate'
+    | 'openModal'
+    | 'Navigate Specific Store'
+    | 'Navigate Specific Page';
   screen: string;
   file: string;
   parameters: string;
@@ -29,4 +33,11 @@ export type IBannersResponse = {
 
 export interface IBannersDataResponse {
   banners: IBannersResponse[];
+}
+
+export interface IBannerTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  selectedActions: string[];
+  setSelectedActions: (actions: string[]) => void;
 }

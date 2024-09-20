@@ -1,10 +1,3 @@
-import { IGlobalComponentProps } from './global.interface';
-
-export interface IUsersHeaderProps extends IGlobalComponentProps {
-  globalFilterValue: string;
-  onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
 interface IAddress {
   __typename: 'Address';
   location: IPoint;
@@ -22,6 +15,7 @@ export interface IUserResponse {
   name: string;
   email: string;
   phone: string;
+  createdAt: string;
   addresses: IAddress[];
 }
 
