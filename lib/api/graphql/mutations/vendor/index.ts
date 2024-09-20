@@ -18,3 +18,9 @@ export const EDIT_VENDOR = gql`
     }
   }
 `;
+
+export const DELETE_VENDOR = gql`
+  mutation DeleteVendor($id: String!) {
+    deleteVendor(id: $id)
+  }
+`;

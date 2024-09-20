@@ -17,12 +17,14 @@ import { VendorContext } from '@/lib/context/vendor.context';
 import { IVendorMainComponentProps } from '@/lib/utils/interfaces';
 
 // Constants
-import { options } from '@/lib/utils/constants';
+import { options, SELECTED_VENDOR } from '@/lib/utils/constants';
 
 // Icons
 import CustomRestaurantCardSkeleton from '@/lib/ui/useable-components/custom-skeletons/restaurant.card.skeleton';
 import CustomVendorSkeleton from '@/lib/ui/useable-components/custom-skeletons/vendor.skeleton';
+import { onUseLocalStorage } from '@/lib/utils/methods';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { Chip } from 'primereact/chip';
 
 export default function VendorMain({
   activeTab,
@@ -125,7 +127,17 @@ export default function VendorMain({
         {/* Header for Restaurants section */}
         <div className="pt-3 pb-2  border-b">
           <div className="flex justify-between items-center mb-4">
-            <TextComponent className="heading-1" text="Restaurants" />
+            <div className="hidden sm:block">
+              <TextComponent className="heading-1" text="Restaurants" />
+            </div>
+            <div className="sm:hidden flex flex-col">
+              <TextComponent className="heading-1" text="Restaurants" />
+
+              <Chip
+                label={`${(onUseLocalStorage('get', SELECTED_VENDOR) ?? '').slice(0, 20)}`}
+                className="w-full"
+              />
+            </div>
             <TextIconClickable
               className="sm:w-auto  bg-black text-white border-gray-300 rounded"
               icon={faAdd}

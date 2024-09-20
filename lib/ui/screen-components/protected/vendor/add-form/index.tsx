@@ -108,7 +108,7 @@ export default function VendorAddForm({
       showToast({
         type: 'success',
         title: 'New Vendor',
-        message: `Vendor has been ${vendorId ? 'edited' : 'added'} successfully`,
+        message: `Vendor has been ${isEditingVendor ? 'edited' : 'added'} successfully`,
         duration: 3000,
       });
 
@@ -116,8 +116,8 @@ export default function VendorAddForm({
     } catch (error) {
       showToast({
         type: 'error',
-        title: `${vendorId ? 'Edit' : 'Create'} Vendor`,
-        message: `Vendor ${vendorId ? 'Edit' : 'Create'} Failed`,
+        title: `${isEditingVendor ? 'Edit' : 'Create'} Vendor`,
+        message: `Vendor ${isEditingVendor ? 'Edit' : 'Create'} Failed`,
         duration: 2500,
       });
     }
@@ -126,11 +126,11 @@ export default function VendorAddForm({
   function onError({ graphQLErrors, networkError }: ApolloError) {
     showToast({
       type: 'error',
-      title: `${vendorId ? 'Edit' : 'Create'} Vendor`,
+      title: `${isEditingVendor ? 'Edit' : 'Create'} Vendor`,
       message:
         graphQLErrors[0].message ??
         networkError?.message ??
-        `Vendor ${vendorId ? 'Edit' : 'Create'} Failed`,
+        `Vendor ${isEditingVendor ? 'Edit' : 'Create'} Failed`,
       duration: 2500,
     });
   }
