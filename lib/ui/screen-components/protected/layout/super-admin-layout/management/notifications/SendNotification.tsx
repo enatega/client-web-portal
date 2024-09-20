@@ -5,8 +5,6 @@ import { SEND_NOTIFICATION_USER } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 
 //icons
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //prime react
 import { Button } from 'primereact/button';
@@ -17,6 +15,7 @@ import CustomTextField from '@/lib/ui/useable-components/input-field';
 
 //hooks & react interfaces
 import { useMutation } from '@apollo/client';
+import { ProgressSpinner } from 'primereact/progressspinner';
 import {
   ChangeEvent,
   Dispatch,
@@ -115,10 +114,11 @@ export default function SendNotification({
           className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]"
         >
           {loading ? (
-            <FontAwesomeIcon
+            <ProgressSpinner
+              className="w-6 h-6 items-center self-center m-0 p-0"
+              strokeWidth="5"
+              style={{ fill: 'white', accentColor: 'white' }}
               color="white"
-              icon={faSpinner}
-              className="animate-spin self-center items-center"
             />
           ) : (
             'Send'

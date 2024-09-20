@@ -3,7 +3,7 @@ import SendNotification from '@/lib/ui/screen-components/protected/layout/super-
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import GlobalButton from '@/lib/ui/useable-components/custom-icon-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
-import { faCircle, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { InputText } from 'primereact/inputtext';
 import { Sidebar } from 'primereact/sidebar';
 import { useState } from 'react';
@@ -25,7 +25,7 @@ export default function NotificationsScreen() {
           <HeaderText text="Notification" className="self-start" />
           <div className="flex gap-1 items-center justify-start">
             <InputText placeholder="Filter tasks..." className="p-2" />
-            <CustomActionActionButton Icon={faCircle} title="Action" />
+            <CustomActionActionButton Icon={faPlus} title="Action" />
           </div>
         </div>
 

@@ -7,7 +7,6 @@ import { ToastContext } from '@/lib/context/toast.context';
 
 //components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
-import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 
 //interfaces
 import {
@@ -26,6 +25,7 @@ import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
 
 //hooks
+import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
@@ -34,6 +34,8 @@ export default function AddCoupon({
   setCoupons,
   isEditing,
   setIsEditing,
+  coupons,
+  handleAddCouponLocally,
 }: IAddCouponProps) {
   //initial values
   const initialValues = {
@@ -49,9 +51,7 @@ export default function AddCoupon({
   const [editCoupon, { loading: editCouponLoading }] = useMutation(EDIT_COUPON);
   //toast
   const { showToast } = useContext(ToastContext);
-  //comment to test the values======================================================>
-  // console.log({ discount: isEditing.data.discount });
-  // console.log({ initialValues });
+
   return (
     <div className="flex flex-col gap-4">
       <Formik
@@ -75,8 +75,7 @@ export default function AddCoupon({
                 enabled: values.enabled,
               };
             }
-            //comment to test the values======================================================>
-            // console.log({ formData });
+            console.log({ formData });
             let res;
             if (!isEditing.bool) {
               res = await CreateCoupon({
@@ -112,10 +111,15 @@ export default function AddCoupon({
                   title: '',
                 },
               });
+              let filteredCoupons = coupons.filter(
+                (coupon) => coupon._id !== isEditing.data._id
+              );
+              filteredCoupons.push(newCoupon);
+              setCoupons([newCoupon, ...filteredCoupons]);
             } else {
               newCoupon = res?.data?.createCoupon;
+              handleAddCouponLocally(newCoupon);
             }
-            setCoupons(newCoupon);
 
             setSubmitting(false);
           } catch (err) {
@@ -159,7 +163,7 @@ export default function AddCoupon({
                 showLabel={true}
                 placeholder={'Title'}
                 type="text"
-                onChange={handleChange}
+                onChange={(e) => setFieldValue('title', e.target.value)}
                 className={
                   errors.title ? 'text-red-600 outline outine-red' : ''
                 }
@@ -174,13 +178,14 @@ export default function AddCoupon({
                 name="discount"
                 showLabel={true}
                 placeholder={'Discount'}
-                onChange={handleChange}
+                onChange={setFieldValue}
                 min={0}
                 max={100}
                 className={
                   errors.discount ? 'text-red-600 outline outine-red' : ''
                 }
               />
+
               {errors.discount}
               <ErrorMessage
                 name="discount"
@@ -188,7 +193,7 @@ export default function AddCoupon({
                 className="text-red-600"
               />
               <button
-                className="block float-end bg-black rounded-md px-12 py-4 my-2 text-white items-center justify-center"
+                className="float-end rounded-md w-fit h-10 bg-black text-white border-gray-300 px-8"
                 disabled={
                   isSubmitting || editCouponLoading || createCouponLoading
                 }

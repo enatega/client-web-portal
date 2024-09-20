@@ -20,13 +20,15 @@ export interface ICouponsStakProps {
 }
 export interface IAddCouponProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  setCoupons: (coupon: ICoupon) => void;
+  handleAddCouponLocally: (coupon: ICoupon) => void;
+  setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
   setIsEditing: Dispatch<
     SetStateAction<{
       bool: boolean;
       data: ICoupon;
     }>
   >;
+  coupons: ICoupon[];
   isEditing: IEditState<ICoupon>;
 }
 export interface IEditPopupVal {

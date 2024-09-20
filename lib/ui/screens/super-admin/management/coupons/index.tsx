@@ -122,9 +122,11 @@ export default function CouponsScreen() {
       >
         <AddCoupon
           setVisible={setVisible}
-          setCoupons={handleAddCouponLocally}
+          setCoupons={setCoupons}
+          handleAddCouponLocally={handleAddCouponLocally}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
+          coupons={coupons}
         />
       </Sidebar>
       <div className="flex justify-between items-center px-5 w-full">

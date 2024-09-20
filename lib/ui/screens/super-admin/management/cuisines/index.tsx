@@ -73,6 +73,7 @@ export default function CuisinesScreen() {
       setCuisinesData(data.cuisines);
     }
   }, [data]);
+
   return (
     <div className="flex flex-col items-center w-full">
       <Sidebar
