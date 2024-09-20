@@ -37,17 +37,10 @@ export default function AddCoupon({
 }: IAddCouponProps) {
   //initial values
   const initialValues = {
-    _id: isEditing.bool && isEditing?.data?._id ? isEditing?.data?._id : '',
-    title:
-      isEditing.bool && isEditing?.data?.title ? isEditing?.data?.title : '',
-    discount:
-      isEditing.bool && isEditing?.data?.discount
-        ? isEditing?.data?.discount
-        : 0,
-    enabled:
-      isEditing.bool && isEditing?.data?.enabled
-        ? isEditing?.data?.enabled
-        : true,
+    _id: isEditing.bool ? isEditing?.data?._id : '',
+    title: isEditing.bool ? isEditing?.data?.title : '',
+    discount: isEditing.bool ? isEditing?.data?.discount : 0,
+    enabled: isEditing.bool ? isEditing?.data?.enabled : true,
   };
 
   //mutations

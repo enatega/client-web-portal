@@ -115,7 +115,7 @@ export default function CouponTable({
     try {
       await deleteCoupon({
         variables: {
-          id: deleteCouponData?._id,
+          id: deleteCouponData?.data?._id,
         },
       });
       showToast({

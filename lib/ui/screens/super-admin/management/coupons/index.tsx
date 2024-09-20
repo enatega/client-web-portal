@@ -90,23 +90,11 @@ export default function CouponsScreen() {
     ]);
     setIsEditing({
       bool: false,
-      data: {
-        __typename: '',
-        _id: '',
-        discount: 0,
-        enabled: true,
-        title: '',
-      },
+      data: { ...isEditing.data },
     });
     setIsDeleting({
       bool: false,
-      data: {
-        __typename: '',
-        _id: '',
-        discount: 0,
-        enabled: true,
-        title: '',
-      },
+      data: { ...isEditing.data },
     });
   };
 
