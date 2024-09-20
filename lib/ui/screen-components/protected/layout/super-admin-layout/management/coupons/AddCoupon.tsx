@@ -1,6 +1,6 @@
 'use client';
-import { CREATE_COUPON } from '@/lib/api/graphql/mutation/coupons';
-// import { ToastContext } from '@/lib/context/toast.context';
+import { CREATE_COUPON } from '@/lib/api/graphql/mutations';
+import { ToastContext } from '@/lib/context/toast.context';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 import {
@@ -12,6 +12,7 @@ import { useMutation } from '@apollo/client';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { useContext } from 'react';
 // import { useContext } from 'react';
 
 export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
@@ -25,7 +26,7 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
   //mutation
   const [CreateCoupon, { loading }] = useMutation(CREATE_COUPON);
   //toast
-  // const { showToast } = useContext(ToastContext);
+  const { showToast } = useContext(ToastContext);
 
   return (
     <div className="flex flex-col gap-4">
@@ -46,31 +47,30 @@ export default function AddCoupon({ setVisible, setCoupons }: IAddCouponProps) {
               },
             });
             setVisible(false);
-            //FIX: commenting due to conflict refer to toast props
-            // showToast({
-            //   type: 'success',
-            //   message: 'Coupon was added successfully!',
-            //   life: 2000,
-            // });
+            showToast({
+              type: 'success',
+              title: 'New Coupon',
+              message: 'Coupon was added successfully!',
+              duration: 2000,
+            });
             const newCoupon: ICoupon = res.data.createCoupon;
             setCoupons(newCoupon);
 
             setSubmitting(false);
           } catch (err) {
             setVisible(true);
-            // TEMPORARY: to fix lint error
-            console.log(err);
-            // FIX: commenting due to conflict refer to toast props
-            // showToast({
-            //   type: 'error',
-            //   message:
-            //     error?.message ||
-            //     error?.networkError?.message ||
-            //     error?.clientErrors[0].message ||
-            //     error?.graphQLErrors[0].message ||
-            //     'An error occured',
-            //   life: 2000,
-            // });
+            showToast({
+              type: 'error',
+              title: 'New Coupon',
+              message:
+                //This will not work
+                /*  error?.message ||
+                error?.networkError?.message ||
+                error?.clientErrors[0].message ||
+                error?.graphQLErrors[0].message || */
+                'An error occured',
+              duration: 2000,
+            });
             setSubmitting(false);
             return console.log(err);
           }

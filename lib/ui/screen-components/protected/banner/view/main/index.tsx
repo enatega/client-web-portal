@@ -23,8 +23,8 @@ import {
 } from '@/lib/utils/interfaces/banner.interface';
 
 // GraphQL
-import { deleteBanner } from '@/lib/api/graphql/mutation/banners';
-import { getBanners } from '@/lib/api/graphql/query/banners';
+import { deleteBanner } from '@/lib/api/graphql';
+import { getBanners } from '@/lib/api/graphql/queries/banners';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { gql, useMutation } from '@apollo/client';
 

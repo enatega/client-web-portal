@@ -3,6 +3,7 @@ import { IDropdownSelectItem, IGlobalComponentProps } from './global.interface';
 
 interface ISelectionComponentProps extends IGlobalComponentProps {
   style?: CSSProperties;
+  isLoading?: boolean;
 }
 
 export interface IMultiSelectComponentProps extends ISelectionComponentProps {

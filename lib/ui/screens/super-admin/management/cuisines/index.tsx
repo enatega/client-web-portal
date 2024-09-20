@@ -1,28 +1,54 @@
 'use client';
-//graphql
-import { GET_CUISINES } from '@/lib/api/graphql/query/cuisines';
-//components
+
+// React and hooks
+import { ChangeEvent, useEffect, useState } from 'react';
+
+// Components
 import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/AddCuisine';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
+import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
-//prime react components
+
+// PrimeReact components
+import { FilterMatchMode } from 'primereact/api';
 import { Sidebar } from 'primereact/sidebar';
-//interfaces
+
+// Interfaces
 import { IQueryResult } from '@/lib/utils/interfaces';
 import {
   ICuisine,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
-//icons
+
+// Icons
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-//hooks
+
+// API and hooks
+import { GET_CUISINES } from '@/lib/api/graphql';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { useEffect, useState } from 'react';
 
 export default function CuisinesScreen() {
   const [visible, setVisible] = useState(false);
   const [cuisinesData, setCuisinesData] = useState<ICuisine[]>([]);
+
+  //filters
+  const [filters, setFilters] = useState({
+    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
+  });
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+  //global filters change
+  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters['global'].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
   const { data, loading } = useQueryGQL(GET_CUISINES, {}) as IQueryResult<
     IGetCuisinesData | undefined,
     undefined
@@ -66,7 +92,19 @@ export default function CuisinesScreen() {
           className="bg-black text-white p-2 rounded-md"
         />
       </div>
-      <CuisineTable data={cuisinesData} loading={loading} />
+      <div className="self-start flex items-center justify-center gap-x-3">
+        <CustomTextField
+          name="searchQuery"
+          onChange={onGlobalFilterChange}
+          value={globalFilterValue}
+          showLabel={false}
+          placeholder="Seach here..."
+          type="text"
+          className="w-96"
+        />
+        <CustomActionActionButton Icon={faCirclePlus} title="Action" />
+      </div>
+      <CuisineTable data={cuisinesData} loading={loading} filters={filters} />
     </div>
   );
 }

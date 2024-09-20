@@ -1,5 +1,5 @@
 // import { createBanner, editBanner } from '@/lib/api/graphql/mutation/banners';
-import { getBannerActions } from '@/lib/api/graphql/query/banners';
+import { getBannerActions } from '@/lib/api/graphql/queries/banners';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 // import useToast from '@/lib/hooks/useToast';
 import CustomButton from '@/lib/ui/useable-components/button';

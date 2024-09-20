@@ -1,36 +1,27 @@
-import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
+//interfaces
 import { ITableColumn } from '@/lib/utils/interfaces';
-import { ICuisine } from '@/lib/utils/interfaces/cuisine.interface';
+import {
+  ICuisine,
+  ICuisineTableProps,
+} from '@/lib/utils/interfaces/cuisine.interface';
+
+//icons
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsisVertical';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+
+//components
+import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import GenericTable from '../../../../../../useable-components/global-table';
+
+//hooks
+import { useState } from 'react';
+
 export default function CuisineTable({
   data,
   loading,
-}: {
-  data: ICuisine[] | undefined | null;
-  loading: boolean;
-}) {
+  filters,
+}: ICuisineTableProps) {
   //state variables
-  const [isEditing, setIsEditing] = useState<{
-    bool: boolean;
-    data: ICuisine;
-  }>({
-    bool: false,
-    data: {
-      _id: '',
-      __typename: '',
-      description: '',
-      image: '',
-      name: '',
-      shopType: '',
-    },
-  });
-  const [isDeleting, setIsDeleting] = useState<{ _id: string; bool: boolean }>({
-    _id: '',
-    bool: false,
-  });
   const [isEditPopupOpen, setIsEditDeletePopupOpen] = useState<{
     _id: string;
     bool: boolean;
@@ -38,10 +29,9 @@ export default function CuisineTable({
     _id: '',
     bool: false,
   });
-  //selected data
   const [selectedData, setSelectedData] = useState<ICuisine[]>([]);
 
-  //column
+  //columns
   const cuisineColums: ITableColumn<ICuisine>[] = [
     {
       header: 'Image',
@@ -52,8 +42,8 @@ export default function CuisineTable({
             'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
           }
           alt={data.description}
-          width={80}
-          height={80}
+          width={30}
+          height={30}
           className="rounded-md"
         />
       ),
@@ -77,28 +67,30 @@ export default function CuisineTable({
         <div className="three-dots">
           {isEditPopupOpen._id === data._id && isEditPopupOpen.bool ? (
             <EditDeletePopup
-              setIsDeleting={setIsDeleting}
-              setIsEditing={setIsEditing}
               setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
               data={data}
+              type={'cuisine'}
             />
           ) : (
-            <FontAwesomeIcon
-              icon={faEllipsisVertical}
-              className="hover:scale-105 p-1"
-              onClick={() =>
+            <></>
+          )}
+          <FontAwesomeIcon
+            icon={faEllipsisVertical}
+            className={`p-1 ${isEditPopupOpen._id === data._id && isEditPopupOpen.bool ? 'text-gray-400' : 'hover:scale-105 cursor-pointer'}`}
+            onClick={() => {
+              if (!(isEditPopupOpen._id === data._id && isEditPopupOpen.bool)) {
                 setIsEditDeletePopupOpen({
                   _id: data._id,
                   bool: true,
-                })
+                });
               }
-            />
-          )}
+            }}
+          />
         </div>
       ),
     },
   ];
-  console.log({ isDeleting, isEditing });
+
   return (
     <GenericTable
       columns={cuisineColums}
@@ -106,6 +98,7 @@ export default function CuisineTable({
       onSelectionChange={(e) => setSelectedData(e as ICuisine[])}
       selection={selectedData}
       loading={loading}
+      filters={filters}
     />
   );
 }

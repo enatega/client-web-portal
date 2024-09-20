@@ -1,6 +1,6 @@
 'use client';
-import { CREATE_CUISINE } from '@/lib/api/graphql/mutation/cuisines';
-// import { ToastContext } from '@/lib/context/toast.context';
+import { CREATE_CUISINE } from '@/lib/api/graphql/mutations';
+import { ToastContext } from '@/lib/context/toast.context';
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
@@ -12,6 +12,7 @@ import { CuisineFormSchema } from '@/lib/utils/schema';
 import { useMutation } from '@apollo/client';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { useContext } from 'react';
 // import { useContext } from 'react';
 
 export default function AddCuisine({
@@ -27,7 +28,7 @@ export default function AddCuisine({
       code: '',
     },
   };
-  // const { showToast } = useContext(ToastContext);
+  const { showToast } = useContext(ToastContext);
   //mutation
   const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE);
   // shop type options
@@ -53,31 +54,30 @@ export default function AddCuisine({
               variables: { cuisineInput: formData },
             });
             setVisible(false);
-            // FIX: commenting due to conflict refer to toast props and use like that look riders
-            // showToast({
-            //   type: 'success',
-            //   message: 'Cuisine was added successfully!',
-            //   life: 2000,
-            // });
+            showToast({
+              type: 'success',
+              title: 'New Cuisine',
+              message: 'Cuisine was added successfully!',
+              duration: 2000,
+            });
             const newCuisine: ICuisine = res.data.createCuisine;
             setCuisinesData(newCuisine);
 
             setSubmitting(false);
           } catch (err) {
             setVisible(true);
-            // TEMPORARY: to fix lint error
-            console.log(err);
-            // FIX: commenting due to conflict refer to toast props and use like that look riders
-            // showToast({
-            //   type: 'error',
-            //   message:
-            //     error?.message ||
-            //     error?.networkError?.message ||
-            //     error?.clientErrors[0].message ||
-            //     error?.graphQLErrors[0].message ||
-            //     'An error occured',
-            //   life: 2000,
-            // });
+            showToast({
+              type: 'error',
+              title: 'New Cuisine',
+              message:
+                // This will not work (Hamza)
+                /*    err?.message ||
+                err?.networkError?.message ||
+                err?.clientErrors[0].message ||
+                err?.graphQLErrors[0].message || */
+                'An error occured',
+              duration: 2000,
+            });
             setSubmitting(false);
             return console.log(err);
           }

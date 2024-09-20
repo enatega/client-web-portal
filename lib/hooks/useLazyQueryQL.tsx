@@ -21,6 +21,7 @@ export const useLazyQueryQL = <
     fetchPolicy?: WatchQueryFetchPolicy;
     retry?: number;
     retryDelayMs?: number;
+    onCompleted?: (data: NoInfer<T>) => void;
   } = {},
   variables?: V
 ) => {
@@ -30,12 +31,14 @@ export const useLazyQueryQL = <
     pollInterval,
     fetchPolicy,
     retry = 3, // Default retry count
-    retryDelayMs = 1000, // Default retry delay
+    retryDelayMs = 1000, // Default retry delay,
+    onCompleted,
   } = options;
   const [fetch, { data, error, loading }] = useLazyQuery<T, V>(query, {
     variables,
     fetchPolicy,
     pollInterval,
+    onCompleted,
   });
 
   const debouncedFetch = useCallback(

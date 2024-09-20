@@ -1,27 +1,38 @@
-import { SEND_NOTIFICATION_USER } from '@/lib/api/graphql/mutants';
-import { useMutation } from '@apollo/client';
+//queries
+import { SEND_NOTIFICATION_USER } from '@/lib/api/graphql';
+
+//contexts
+import { ToastContext } from '@/lib/context/toast.context';
+
+//icons
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+//prime react
 import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Toast } from 'primereact/toast';
+
+//components
+import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
+
+//hooks & react interfaces
+import { useMutation } from '@apollo/client';
 import {
   ChangeEvent,
   Dispatch,
   FormEvent,
-  RefObject,
   SetStateAction,
+  useContext,
   useState,
 } from 'react';
 
 export default function SendNotification({
-  toast,
   setVisible,
 }: {
-  toast: RefObject<Toast>;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }) {
+  //toast
+  const { showToast } = useContext(ToastContext);
   //states
   const [notificationData, setNotificationData] = useState({
     title: '',
@@ -58,17 +69,19 @@ export default function SendNotification({
         body: '',
         title: '',
       });
-      return toast?.current?.show({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Successfully sent the notification',
+      return showToast({
+        type: 'success',
+        title: 'Notification',
+        message: 'Successfully sent the notification',
+        duration: 2500,
       });
     } catch (err) {
       setVisible(true);
-      toast?.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: error?.message,
+      showToast({
+        type: 'error',
+        title: 'Notification',
+        message: error?.message ?? 'Something went wrong',
+        duration: 2500,
       });
       return console.log(err);
     }
@@ -78,31 +91,22 @@ export default function SendNotification({
     <div>
       <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
         <h2 className="font-bold mb-3 text-xl">Send a Notification</h2>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="title">
-            Title
-          </label>
-          <InputText
-            value={notificationData.title}
-            onChange={handleFormChange}
-            name="title"
-            id="title"
-            className="w-full py-2 px-1 text-sm"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className="font-bold" htmlFor="body">
-            Body
-          </label>
-          <InputTextarea
-            value={notificationData.body}
-            onChange={handleFormChange}
-            name="body"
-            id="body"
-            className="w-full text-sm"
-            rows={5}
-          />
-        </div>
+        <CustomTextField
+          value={notificationData.title}
+          onChange={handleFormChange}
+          name="title"
+          className="w-full py-2 px-1 text-sm"
+          showLabel={true}
+          placeholder="Title"
+          type="text"
+        />
+        <CustomTextAreaField
+          value={notificationData.body}
+          onChange={handleFormChange}
+          name="body"
+          className="w-full text-sm"
+          rows={5}
+        />
         <Button
           type="submit"
           className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]"

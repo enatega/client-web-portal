@@ -3,6 +3,7 @@ import { IMultiSelectComponentProps } from '@/lib/utils/interfaces';
 
 // Prime React
 import { MultiSelect, MultiSelectChangeEvent } from 'primereact/multiselect';
+import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 const CustomMultiSelectComponent = ({
   name,
@@ -11,6 +12,7 @@ const CustomMultiSelectComponent = ({
   selectedItems,
   setSelectedItems,
   showLabel,
+  isLoading = false,
   ...props
 }: IMultiSelectComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
@@ -31,7 +33,7 @@ const CustomMultiSelectComponent = ({
     );
   };
 
-  return (
+  return !isLoading ? (
     <div className={`w-full flex flex-col justify-center gap-y-1`}>
       {showLabel && (
         <label htmlFor="username" className="text-sm font-[500]">
@@ -56,6 +58,8 @@ const CustomMultiSelectComponent = ({
         {...props}
       />
     </div>
+  ) : (
+    <InputSkeleton />
   );
 };
 
