@@ -56,6 +56,8 @@ export default function SendNotification({
     }));
   };
 
+  //handle
+
   //form submit
   const handleFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -73,7 +75,6 @@ export default function SendNotification({
       return showToast({
         title: 'Success',
         type: 'success',
-        title: 'Notification',
         message: 'Successfully sent the notification',
         duration: 2500,
       });
@@ -82,7 +83,6 @@ export default function SendNotification({
       showToast({
         title: 'Error',
         type: 'error',
-        title: 'Notification',
         message: error?.message ?? 'Something went wrong',
         duration: 2500,
       });

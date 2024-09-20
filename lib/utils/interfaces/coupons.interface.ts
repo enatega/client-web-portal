@@ -21,10 +21,13 @@ export interface ICouponsStakProps {
 export interface IAddCouponProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
   setCoupons: (coupon: ICoupon) => void;
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
-  setEditData: Dispatch<SetStateAction<ICoupon | undefined>>;
-  isEditing: boolean;
-  editData: ICoupon | undefined;
+  setIsEditing: Dispatch<
+    SetStateAction<{
+      bool: boolean;
+      data: ICoupon;
+    }>
+  >;
+  isEditing: IEditState<ICoupon>;
 }
 export interface IEditPopupVal {
   _id: string;
@@ -34,4 +37,13 @@ export interface ICouponsTableProps {
   data: ICoupon[] | null | undefined;
   loading: boolean;
   filters?: DataTableFilterMeta;
+  setIsEditing: Dispatch<SetStateAction<IEditState<ICoupon>>>;
+  setIsDeleting: Dispatch<SetStateAction<IEditState<ICoupon>>>;
+  isDeleting: IEditState<ICoupon>;
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  visible: boolean;
+}
+export interface IEditState<T> {
+  bool: boolean;
+  data: T;
 }

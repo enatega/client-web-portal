@@ -1,6 +1,6 @@
 'use client';
 //queries
-import { CREATE_COUPON } from '@/lib/api/graphql';
+import { CREATE_COUPON, EDIT_COUPON } from '@/lib/api/graphql';
 
 //contexts
 import { ToastContext } from '@/lib/context/toast.context';
@@ -32,21 +32,36 @@ import { useContext } from 'react';
 export default function AddCoupon({
   setVisible,
   setCoupons,
-  editData,
   isEditing,
+  setIsEditing,
 }: IAddCouponProps) {
   //initial values
   const initialValues = {
-    title: isEditing && editData?.title ? editData?.title : '',
-    discount: isEditing && editData?.discount ? editData?.discount : 0,
-    enabled: isEditing && editData?.enabled ? editData?.enabled : true,
+    _id: isEditing.bool && isEditing?.data?._id ? isEditing?.data?._id : '',
+    title:
+      isEditing.bool && isEditing?.data?.title ? isEditing?.data?.title : '',
+    discount:
+      isEditing.bool && isEditing?.data?.discount
+        ? isEditing?.data?.discount
+        : 0,
+    enabled:
+      isEditing.bool && isEditing?.data?.enabled
+        ? isEditing?.data?.enabled
+        : true,
   };
 
-  //mutation
-  const [CreateCoupon, { loading, error }] = useMutation(CREATE_COUPON);
+  //mutations
+  const [
+    CreateCoupon,
+    { loading: createCouponLoading, error: createCouponError },
+  ] = useMutation(CREATE_COUPON);
+  const [editCoupon, { loading: editCouponLoading, error: editCouponError }] =
+    useMutation(EDIT_COUPON);
   //toast
   const { showToast } = useContext(ToastContext);
-
+  //comment to test the values======================================================>
+  // console.log({ discount: isEditing.data.discount });
+  // console.log({ initialValues });
   return (
     <div className="flex flex-col gap-4">
       <Formik
@@ -55,16 +70,38 @@ export default function AddCoupon({
         onSubmit={async (values, { setSubmitting }) => {
           try {
             setSubmitting(true);
-            const formData = {
-              title: values.title,
-              discount: values.discount,
-              enabled: values.enabled,
-            };
-            const res = await CreateCoupon({
-              variables: {
-                couponInput: formData,
-              },
-            });
+            let formData;
+            if (!isEditing.bool) {
+              formData = {
+                title: values.title,
+                discount: values.discount,
+                enabled: values.enabled,
+              };
+            } else {
+              formData = {
+                _id: values._id,
+                title: values.title,
+                discount: values.discount,
+                enabled: values.enabled,
+              };
+            }
+            //comment to test the values======================================================>
+            // console.log({ formData });
+            let res;
+            if (!isEditing.bool) {
+              res = await CreateCoupon({
+                variables: {
+                  couponInput: formData,
+                },
+              });
+            } else {
+              res = await editCoupon({
+                variables: {
+                  couponInput: formData,
+                },
+              });
+            }
+
             setVisible(false);
             showToast({
               title: 'Success',
@@ -72,7 +109,22 @@ export default function AddCoupon({
               message: 'Coupon was added successfully!',
               duration: 2000,
             });
-            const newCoupon: ICoupon = res.data.createCoupon;
+            let newCoupon: ICoupon;
+            if (isEditing.bool) {
+              newCoupon = res?.data?.editCoupon;
+              setIsEditing({
+                bool: false,
+                data: {
+                  __typename: '',
+                  _id: '',
+                  discount: 0,
+                  enabled: false,
+                  title: '',
+                },
+              });
+            } else {
+              newCoupon = res?.data?.createCoupon;
+            }
             setCoupons(newCoupon);
 
             setSubmitting(false);
@@ -82,10 +134,14 @@ export default function AddCoupon({
               title: 'Error',
               type: 'error',
               message:
-                error?.message ||
-                error?.networkError?.message ||
-                error?.clientErrors[0].message ||
-                error?.graphQLErrors[0].message ||
+                createCouponError?.message ||
+                editCouponError?.message ||
+                createCouponError?.networkError?.message ||
+                editCouponError?.networkError?.message ||
+                createCouponError?.clientErrors[0].message ||
+                editCouponError?.clientErrors[0].message ||
+                createCouponError?.graphQLErrors[0].message ||
+                editCouponError?.graphQLErrors[0].message ||
                 'An error occured',
               duration: 2000,
             });
@@ -152,16 +208,20 @@ export default function AddCoupon({
               />
               <button
                 className="block float-end bg-black rounded-md px-12 py-4 my-2 text-white items-center justify-center"
-                disabled={isSubmitting || loading}
+                disabled={
+                  isSubmitting || editCouponLoading || createCouponLoading
+                }
                 type="submit"
               >
-                {isSubmitting || loading ? (
+                {isSubmitting || editCouponLoading || createCouponLoading ? (
                   <ProgressSpinner
                     className="w-6 h-6 items-center self-center m-0 p-0"
                     strokeWidth="5"
                     style={{ fill: 'white', accentColor: 'white' }}
                     color="white"
                   />
+                ) : isEditing.bool ? (
+                  'Update'
                 ) : (
                   'Add'
                 )}

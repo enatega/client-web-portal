@@ -1,10 +1,12 @@
 import { Dispatch, SetStateAction } from 'react';
+import { IEditState } from './coupons.interface';
 
-export default interface IEditDeleteInterface {
-  setIsEditing: () => void;
-  setIsDeleting: () => void;
+export interface IEditDeleteInterface<T> {
+  setIsEditing: Dispatch<SetStateAction<IEditState<T>>>;
+  setIsDeleting: Dispatch<SetStateAction<IEditState<T>>>;
   setVisible: Dispatch<SetStateAction<boolean>>;
   visible: boolean;
+  data: T;
 }
 export interface IEditDeleteProps {
   _id: string;

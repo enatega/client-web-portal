@@ -9,11 +9,12 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 //interfaces
 import {
   ICoupon,
+  IEditState,
   IGetCouponsData,
 } from '@/lib/utils/interfaces/coupons.interface';
 
 //icons
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //prime react
 import { FilterMatchMode } from 'primereact/api';
@@ -28,6 +29,28 @@ import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CouponsScreen() {
+  // edit/delete states which are to be circulated in the whole coupons module
+  const [isEditing, setIsEditing] = useState<IEditState<ICoupon>>({
+    bool: false,
+    data: {
+      __typename: '',
+      _id: '',
+      discount: 0,
+      enabled: false,
+      title: '',
+    },
+  });
+  const [isDeleting, setIsDeleting] = useState<IEditState<ICoupon>>({
+    bool: false,
+    data: {
+      __typename: '',
+      _id: '',
+      discount: 0,
+      enabled: false,
+      title: '',
+    },
+  });
+
   //filters
   const [filters, setFilters] = useState({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
@@ -48,8 +71,6 @@ export default function CouponsScreen() {
   //states
   const [visible, setVisible] = useState(false);
   const [coupons, setCoupons] = useState<ICoupon[]>([]);
-  const [editData, setEditData] = useState<ICoupon>();
-  const [isEditing, setIsEditing] = useState(false);
 
   //query
   const { data, fetch, loading } = useLazyQueryQL(
@@ -63,18 +84,47 @@ export default function CouponsScreen() {
   };
   //handle add cuisine locally to append child in the cuisine array
   const handleAddCouponLocally = (coupon: ICoupon) => {
-    setCoupons((prevCoupons) => [coupon, ...prevCoupons]);
+    setCoupons((prevCoupons) => [
+      coupon,
+      ...prevCoupons.filter((c) => c._id !== coupon._id),
+    ]);
+    setIsEditing({
+      bool: false,
+      data: {
+        __typename: '',
+        _id: '',
+        discount: 0,
+        enabled: true,
+        title: '',
+      },
+    });
+    setIsDeleting({
+      bool: false,
+      data: {
+        __typename: '',
+        _id: '',
+        discount: 0,
+        enabled: true,
+        title: '',
+      },
+    });
   };
 
   //useEffects
   useEffect(() => {
     fetch();
   }, []);
+
   useEffect(() => {
     if (data) {
       setCoupons(data.coupons);
     }
-  }, [data]);
+    if (isEditing.bool) {
+      setVisible(true);
+    } else {
+      setVisible(false);
+    }
+  }, [data, isEditing.bool]);
   return (
     <div className="flex flex-col items-center w-full h-auto">
       <Sidebar
@@ -85,8 +135,6 @@ export default function CouponsScreen() {
         <AddCoupon
           setVisible={setVisible}
           setCoupons={handleAddCouponLocally}
-          editData={editData}
-          setEditData={setEditData}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
         />
@@ -111,9 +159,18 @@ export default function CouponsScreen() {
           type="text"
           className="w-96"
         />
-        <CustomActionActionButton Icon={faCirclePlus} title="Action" />
+        <CustomActionActionButton Icon={faPlus} title="Action" />
       </div>
-      <CouponTable data={coupons} loading={loading} filters={filters} />
+      <CouponTable
+        data={coupons}
+        loading={loading}
+        filters={filters}
+        setIsEditing={setIsEditing}
+        setIsDeleting={setIsDeleting}
+        setVisible={setVisible}
+        visible={visible}
+        isDeleting={isDeleting}
+      />
     </div>
   );
 }

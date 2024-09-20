@@ -21,7 +21,7 @@ import {
 } from '@/lib/utils/interfaces/cuisine.interface';
 
 // Icons
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
@@ -105,7 +105,7 @@ export default function CuisinesScreen() {
           type="text"
           className="w-96"
         />
-        <CustomActionActionButton Icon={faCirclePlus} title="Action" />
+        <CustomActionActionButton Icon={faPlus} title="Action" />
       </div>
       <CuisineTable data={cuisinesData} loading={loading} filters={filters} />
     </div>
