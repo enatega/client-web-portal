@@ -92,14 +92,14 @@ export default function CouponTable({
         },
       });
       showToast({
-        title: 'Info',
+        title: 'Coupon',
         type: 'info',
         message: 'Operation successfull!',
         duration: 2500,
       });
     } catch (err) {
       showToast({
-        title: 'Error',
+        title: 'Coupon',
         type: 'error',
         message: 'Something went wrong please try again',
         duration: 2500,
@@ -119,7 +119,7 @@ export default function CouponTable({
         },
       });
       showToast({
-        title: 'Success',
+        title: 'New Coupon',
         type: 'success',
         message: 'Coupon deletion was successfull',
         duration: 2000,
@@ -137,7 +137,7 @@ export default function CouponTable({
     } catch (err) {
       console.log(err);
       showToast({
-        title: 'Error',
+        title: 'New Coupon',
         type: 'error',
         message: 'An unknown error occured, please try again',
         duration: 2000,

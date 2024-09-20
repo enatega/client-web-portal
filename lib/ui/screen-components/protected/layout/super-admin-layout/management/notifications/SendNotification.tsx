@@ -72,15 +72,15 @@ export default function SendNotification({
         title: '',
       });
       return showToast({
-        title: 'Success',
+        title: 'New Notification',
         type: 'success',
-        message: 'Successfully sent the notification',
+        message: 'Notification has been sent successfully',
         duration: 2500,
       });
     } catch (err) {
       setVisible(true);
       showToast({
-        title: 'Error',
+        title: 'New Notification',
         type: 'error',
         message: 'Something went wrong',
         duration: 2500,

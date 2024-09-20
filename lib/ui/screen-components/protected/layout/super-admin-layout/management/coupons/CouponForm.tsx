@@ -92,9 +92,9 @@ export default function CouponForm({
 
             setVisible(false);
             showToast({
-              title: 'Success',
+              title: 'New Coupon',
               type: 'success',
-              message: 'Coupon was added successfully!',
+              message: 'Coupon has been added successfully',
               duration: 2000,
             });
             let newCoupon: ICoupon;
@@ -124,9 +124,9 @@ export default function CouponForm({
           } catch (err) {
             setVisible(true);
             showToast({
-              title: 'Error',
+              title: 'New Coupon',
               type: 'error',
-              message: 'Something went wrong',
+              message: `Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
               duration: 2000,
             });
             setSubmitting(false);

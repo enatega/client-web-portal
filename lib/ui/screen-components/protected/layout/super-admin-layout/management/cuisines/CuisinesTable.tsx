@@ -63,9 +63,9 @@ export default function CuisineTable({
         },
       });
       showToast({
-        title: 'Success',
+        title: 'New Cuisine',
         type: 'success',
-        message: 'Cuisine deletion was successfull',
+        message: 'Cuisine has been deleted successfully',
         duration: 2000,
       });
       let filteredCuisines = data?.filter(
@@ -81,9 +81,9 @@ export default function CuisineTable({
     } catch (err) {
       console.log(err);
       showToast({
-        title: 'Error',
+        title: 'New Cuisine',
         type: 'error',
-        message: 'An unknown error occured, please try again',
+        message: 'Cuisine Deletion Failed',
         duration: 2000,
       });
     }

@@ -94,11 +94,6 @@ export default function CouponsScreen() {
 
   //handle status change
   const handleStatusChange = (name: string, items: IDropdownSelectItem[]) => {
-    // temp console=====================================================>
-    console.log({
-      name,
-      items,
-    });
     setSelectedStatuses(items);
   };
 

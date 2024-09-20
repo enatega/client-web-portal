@@ -107,9 +107,9 @@ export default function CuisineForm({
 
             setVisible(false);
             showToast({
-              title: 'Success',
+              title: 'New Cuisine',
               type: 'success',
-              message: 'Cuisine was added successfully!',
+              message: 'Cuisine has been created successfully',
               duration: 2000,
             });
             let newCuisine: ICuisine;
@@ -139,9 +139,9 @@ export default function CuisineForm({
           } catch (err) {
             setVisible(true);
             showToast({
-              title: 'Error',
+              title: 'New Cuisine',
               type: 'error',
-              message: 'Something went wrong',
+              message: `Cuisine ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
               duration: 2000,
             });
             setSubmitting(false);
