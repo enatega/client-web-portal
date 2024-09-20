@@ -67,3 +67,10 @@ export interface IGetVendorReponse
 export interface IGetVendorResponseGraphQL {
   getVendor: IVendorReponse;
 }
+
+export interface ICreateVendorResponse
+  extends Omit<IVendorReponse, 'restaurants'> {}
+
+export interface ICreateVendorResponseGraphQL {
+  createVendor: ICreateVendorResponse;
+}

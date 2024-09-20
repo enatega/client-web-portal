@@ -34,8 +34,8 @@ export const useConfiguration = () => {
   const SKIP_MOBILE_VERIFICATION = configuration?.skipMobileVerification;
 
   return {
-    SERVER_URL: BACKEND_URL.LIVE.SERVER_URL,
-    WS_SERVER_URL: BACKEND_URL.LIVE.WS_SERVER_URL,
+    SERVER_URL: BACKEND_URL.LOCAL.SERVER_URL,
+    WS_SERVER_URL: BACKEND_URL.LOCAL.WS_SERVER_URL,
     GOOGLE_CLIENT_ID,
     COLORS,
     PAYPAL_KEY,

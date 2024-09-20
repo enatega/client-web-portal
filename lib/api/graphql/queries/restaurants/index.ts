@@ -14,6 +14,7 @@ export const GET_RESTAURANTS = gql`
       _id
       name
       image
+      username
       orderPrefix
       slug
       address

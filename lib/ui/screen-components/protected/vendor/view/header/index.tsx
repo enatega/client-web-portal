@@ -8,13 +8,13 @@ import { VendorContext } from '@/lib/context/vendor.context';
 // Components
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
-import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 // Interface
 import { IVendorHeaderComponentsProps } from '@/lib/utils/interfaces';
 
 // Constants
+import HeaderText from '@/lib/ui/useable-components/header-text';
 import { options } from '@/lib/utils/constants';
 
 export default function VendorHeader({
@@ -28,7 +28,7 @@ export default function VendorHeader({
   return (
     <div className="w-full border-b p-3 flex-shrink-0 sm:block hidden">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-        <TextComponent className="heading-1" text="Vendors" />
+        <HeaderText text="Vendors" />
 
         <TextIconClickable
           className="sm:w-auto bg-black text-white border-gray-300 rounded"

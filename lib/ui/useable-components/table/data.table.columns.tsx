@@ -6,12 +6,18 @@ import ActionMenu from '@/lib/ui/useable-components/action-menu';
 import Toggle from '@/lib/ui/useable-components/toggle';
 
 // Interfaces and Types
+import { DELETE_RESTAURANT } from '@/lib/api/graphql';
+import { ToastContext } from '@/lib/context/toast.context';
+import { IRestaurantResponse } from '@/lib/utils/interfaces';
 import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 import { IUserResponse } from '@/lib/utils/interfaces/users.interface';
+import { useMutation } from '@apollo/client';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useContext } from 'react';
+import CusstomInputSwitch from '../custom-input-switch';
 
 // Icons
 
@@ -78,6 +84,89 @@ export const BANNERS_TABLE_COLUMNS = ({
       propertyName: 'actions',
       body: (banner: IBannersResponse) => (
         <ActionMenu items={menuItems} data={banner} />
+      ),
+    },
+  ];
+};
+
+export const RESTAURANT_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IRestaurantResponse>['items'];
+}) => {
+  // Context
+  const { showToast } = useContext(ToastContext);
+
+  // API
+  const [deleteRestaurant, { loading }] = useMutation(DELETE_RESTAURANT, {});
+
+  return [
+    {
+      headerName: 'Image',
+      propertyName: 'image',
+      body: (restaurant: IRestaurantResponse) => {
+        return (
+          <Image
+            width={30}
+            height={30}
+            alt="Restaurant"
+            src={
+              restaurant.image
+                ? restaurant.image
+                : 'https://images.unsplash.com/photo-1595418917831-ef942bd9f9ec?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+            }
+          />
+        );
+      },
+    },
+    { headerName: 'ID', propertyName: '_id' },
+    { headerName: 'Name', propertyName: 'name' },
+    { headerName: 'Email', propertyName: 'username' },
+    {
+      headerName: 'Vendor',
+      propertyName: 'owner.email',
+    },
+    { headerName: 'Address', propertyName: 'address' },
+    {
+      headerName: 'Status',
+      propertyName: 'status',
+      body: (rowData: IRestaurantResponse) => {
+        // Handle checkbox change
+        const handleCheckboxChange = async (isActive: boolean, id: string) => {
+          try {
+            await deleteRestaurant({ variables: { id: id } });
+
+            showToast({
+              type: 'success',
+              title: 'Restaurant Status',
+              message: `Restaurant has been marked a ${isActive ? 'in-active' : 'actie'}`,
+              duration: 2000,
+            });
+          } catch (err) {
+            showToast({
+              type: 'success',
+              title: 'Restaurant Status',
+              message: `Restaurant marked as ${isActive ? 'in-active' : 'actie'} failed`,
+              duration: 2000,
+            });
+          }
+        };
+
+        return (
+          <CusstomInputSwitch
+            loading={loading}
+            isActive={rowData.isActive}
+            onChange={async () =>
+              await handleCheckboxChange(rowData.isActive, rowData._id)
+            }
+          />
+        );
+      },
+    },
+    {
+      propertyName: 'actions',
+      body: (restaurant: IRestaurantResponse) => (
+        <ActionMenu items={menuItems} data={restaurant} />
       ),
     },
   ];

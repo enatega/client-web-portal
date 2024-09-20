@@ -4,49 +4,42 @@ import { useState } from 'react';
 // PrimeReact
 import { FilterMatchMode } from 'primereact/api';
 
-// Hooks
+// Apollo Client
+import { useMutation } from '@apollo/client';
+
+// Custom Hooks
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
 
 // Custom Components
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
-import { BANNERS_TABLE_COLUMNS } from '@/lib/utils/constants';
-import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
-import BannersHeader from '../header';
 
-// Interfaces and Types
+// Constants and Interfaces
+import { RESTAURANT_TABLE_COLUMNS } from '@/lib/utils/constants';
 import {
-  IBannersDataResponse,
-  IBannersMainComponentsProps,
-  IBannersResponse,
   IQueryResult,
+  IRestaurantResponse,
+  IRestaurantsMainComponentsProps,
+  IRestaurantsResponseGraphQL,
 } from '@/lib/utils/interfaces';
+import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 
-// GraphQL
-import { deleteBanner } from '@/lib/api/graphql';
-import { getBanners } from '@/lib/api/graphql/queries/banners';
-import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { gql, useMutation } from '@apollo/client';
-
-const GET_BANNERS = gql`
-  ${getBanners}
-`;
-
-const DELETE_BANNER = gql`
-  ${deleteBanner}
-`;
+// GraphQL Queries and Mutations
+import { DELETE_RESTAURANT, GET_RESTAURANTS } from '@/lib/api/graphql';
+import RestaurantsTableHeader from '../header/table-header';
 
 export default function BannersMain({
-  setIsAddBannerVisible,
-}: IBannersMainComponentsProps) {
+  setIsAddRestaurantVisible,
+}: IRestaurantsMainComponentsProps) {
   // Hooks
   const { showToast } = useToast();
 
   // State - Table
   const [deleteId, setDeleteId] = useState('');
-  const [selectedProducts, setSelectedProducts] = useState<IBannersResponse[]>(
-    []
-  );
+  const [selectedProducts, setSelectedProducts] = useState<
+    IRestaurantResponse[]
+  >([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
 
@@ -59,28 +52,29 @@ export default function BannersMain({
   };
 
   //Query
-  const { data } = useQueryGQL(GET_BANNERS, {
+  const { data } = useQueryGQL(GET_RESTAURANTS, {
     fetchPolicy: 'cache-and-network',
-  }) as IQueryResult<IBannersDataResponse | undefined, undefined>;
+  }) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
 
   //Mutation
   const [mutateDelete, { loading: mutationLoading }] = useMutation(
-    DELETE_BANNER,
+    DELETE_RESTAURANT,
     {
-      refetchQueries: [{ query: GET_BANNERS }],
+      refetchQueries: [{ query: GET_RESTAURANTS }],
     }
   );
 
-  const menuItems: IActionMenuItem<IBannersResponse>[] = [
+  // Menu Items
+  const menuItems: IActionMenuItem<IRestaurantResponse>[] = [
     {
       label: 'Edit',
-      command: (data?: IBannersResponse) => {
+      command: (data?: IRestaurantResponse) => {
         console.log(data);
       },
     },
     {
       label: 'Delete',
-      command: (data?: IBannersResponse) => {
+      command: (data?: IRestaurantResponse) => {
         if (data) {
           setDeleteId(data._id);
         }
@@ -89,22 +83,22 @@ export default function BannersMain({
   ];
 
   return (
-    <div className="p-2 pt-5">
+    <div className="pt-5">
       <Table
         header={
-          <BannersHeader
+          <RestaurantsTableHeader
             globalFilterValue={globalFilterValue}
             onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
             selectedActions={selectedActions}
             setSelectedActions={setSelectedActions}
-            setIsAddBannerVisible={setIsAddBannerVisible}
+            setIsAddRestaurantVisible={setIsAddRestaurantVisible}
           />
         }
-        data={data?.banners || []}
+        data={data?.restaurants || []}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
-        columns={BANNERS_TABLE_COLUMNS({ menuItems })}
+        columns={RESTAURANT_TABLE_COLUMNS({ menuItems })}
       />
       <DeleteDialog
         loading={mutationLoading}

@@ -33,7 +33,7 @@ export default function CustomIconTextField({
           </label>
         )}
         <InputText
-          className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
+          className={`w-full h-10 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
           placeholder={placeholder}
           {...props}
         />
