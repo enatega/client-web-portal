@@ -24,6 +24,7 @@ import { DELETE_VENDOR, GET_VENDORS } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import { SELECTED_VENDOR } from '@/lib/utils/constants';
 import { useMutation } from '@apollo/client';
+import Image from 'next/image';
 import DeleteDialog from '../delete-dialog';
 import CustomPopupMenu from '../popup-menu';
 import TextComponent from '../text-field';
@@ -104,7 +105,9 @@ export default function VendorCard({
       <div
         className={`flex items-center  bg-${vendorId === _id ? 'black' : 'white'} p-2 px-3 cursor-pointer`}
       >
-        <img
+        <Image
+          width={40}
+          height={40}
           src="https://placehold.co/40x40"
           alt="User avatar"
           className="rounded-full mr-3"

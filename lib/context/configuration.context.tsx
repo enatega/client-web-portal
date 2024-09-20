@@ -1,9 +1,9 @@
 'use client';
 
 // Core
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-// Interfaces
+// Interfaces§
 import {
   IConfiguration,
   IConfigurationProviderProps,
@@ -89,7 +89,6 @@ export const ConfigurationProvider: React.FC<IConfigurationProviderProps> = ({
   // API
 
   const { fetch, loading, error, data } = useLazyQueryQL(GET_CONFIGURATION, {
-    fetchPolicy: 'network-only',
     debounceMs: 300,
   }) as ILazyQueryResult<
     { configuration: IConfiguration } | undefined,
@@ -166,9 +165,15 @@ export const ConfigurationProvider: React.FC<IConfigurationProviderProps> = ({
     setConfiguration(configuration);
   };
 
+  const fetchConfiguration = useCallback(() => {
+    fetch();
+  }, [fetch]);
+
   // Use Effect
   useEffect(() => {
-    fetch();
+    fetchConfiguration();
+
+    console.log('configruation context');
   }, []);
 
   useEffect(() => {
