@@ -2,7 +2,7 @@
 //graphql
 import { GET_CUISINES } from '@/lib/api/graphql';
 //components
-import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/AddCuisine';
+import AddCuisine from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisineForm';
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -153,9 +153,15 @@ export default function CuisinesScreen() {
           showLabel={false}
           placeholder="Filter tasks..."
           type="text"
-          className="w-96"
+          className="w-app-bar-search-width h-custom-button"
         />
-        <CustomActionActionButton Icon={faPlus} title="Action" />
+        <CustomActionActionButton
+          Icon={faPlus}
+          title="Action"
+          handleOptionChange={() => {}}
+          selectedOption={null}
+          statusOptions={[{ label: '', code: '' }]}
+        />
       </div>
       <CuisineTable
         data={cuisines}

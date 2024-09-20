@@ -29,7 +29,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
-export default function AddCuisine({
+export default function CuisineForm({
   setVisible,
   setCuisines,
   setIsEditing,

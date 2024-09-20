@@ -29,7 +29,7 @@ import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
-export default function AddCoupon({
+export default function CouponForm({
   setVisible,
   setCoupons,
   isEditing,

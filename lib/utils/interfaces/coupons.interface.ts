@@ -50,3 +50,17 @@ export interface IEditState<T> {
   bool: boolean;
   data: T;
 }
+export interface ICouponStatuses {
+  enabled: {
+    total: null | undefined | number;
+    status: boolean;
+  };
+  disabled: {
+    total: null | undefined | number;
+    status: boolean;
+  };
+  all: {
+    total: null | undefined | number;
+    status: boolean;
+  };
+}

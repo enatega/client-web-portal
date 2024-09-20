@@ -57,9 +57,15 @@ export default function NotificationsScreen() {
               showLabel={false}
               placeholder="Filter tasks..."
               type="text"
-              className="w-96"
+              className="w-app-bar-search-width h-custom-button"
             />
-            <CustomActionActionButton Icon={faPlus} title="Action" />
+            <CustomActionActionButton
+              Icon={faPlus}
+              title="Action"
+              handleOptionChange={() => {}}
+              selectedOption={null}
+              statusOptions={[{ label: '', code: '' }]}
+            />
           </div>
         </div>
 

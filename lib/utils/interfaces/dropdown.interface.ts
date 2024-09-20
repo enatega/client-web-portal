@@ -1,3 +1,4 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { CSSProperties } from 'react';
 import { IDropdownSelectItem, IGlobalComponentProps } from './global.interface';
 
@@ -15,6 +16,7 @@ export interface IMultiSelectComponentProps extends ISelectionComponentProps {
   selectedItems: IDropdownSelectItem[] | null;
   setSelectedItems: (key: string, items: IDropdownSelectItem[]) => void;
   options: IDropdownSelectItem[];
+  dropDownIcon?: IconDefinition;
 }
 
 export interface IDropdownComponentProps extends ISelectionComponentProps {
