@@ -1,19 +1,33 @@
 'use client';
-import { CREATE_CUISINE } from '@/lib/api/graphql/mutations';
+//contexts
+import { CREATE_CUISINE } from '@/lib/api/graphql';
+
+//contexts
 import { ToastContext } from '@/lib/context/toast.context';
+
+//components
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
+
+//interfaces
 import {
   IAddCuisineProps,
   ICuisine,
 } from '@/lib/utils/interfaces/cuisine.interface';
+
+//schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
-import { useMutation } from '@apollo/client';
+
+//formik
 import { ErrorMessage, Form, Formik } from 'formik';
+
+//prime react
 import { ProgressSpinner } from 'primereact/progressspinner';
+
+//hooks
+import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
-// import { useContext } from 'react';
 
 export default function AddCuisine({
   setVisible,
@@ -28,14 +42,19 @@ export default function AddCuisine({
       code: '',
     },
   };
+
+  //toast
   const { showToast } = useContext(ToastContext);
+
   //mutation
   const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE);
+
   // shop type options
   const shopTypeOptions = [
     { label: 'Restaurant', code: 'restaurant' },
     { label: 'Shop', code: 'shop' },
   ];
+
   return (
     <div className="flex flex-col gap-4">
       <h2 className="font-bold mb-3 text-xl">Add Cuisine</h2>
@@ -55,8 +74,8 @@ export default function AddCuisine({
             });
             setVisible(false);
             showToast({
+              title: 'Success',
               type: 'success',
-              title: 'New Cuisine',
               message: 'Cuisine was added successfully!',
               duration: 2000,
             });
@@ -67,15 +86,9 @@ export default function AddCuisine({
           } catch (err) {
             setVisible(true);
             showToast({
+              title: 'Error',
               type: 'error',
-              title: 'New Cuisine',
-              message:
-                // This will not work (Hamza)
-                /*    err?.message ||
-                err?.networkError?.message ||
-                err?.clientErrors[0].message ||
-                err?.graphQLErrors[0].message || */
-                'An error occured',
+              message: 'Something went wrong',
               duration: 2000,
             });
             setSubmitting(false);

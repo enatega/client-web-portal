@@ -6,7 +6,7 @@ export interface ICustomTextAreaField {
   className: string;
   rows: number;
   showLabel?: boolean;
-  value: string;
+  value: string | undefined;
   name?: string;
-  onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
 }
