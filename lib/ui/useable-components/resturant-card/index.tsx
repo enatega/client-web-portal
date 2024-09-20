@@ -18,7 +18,7 @@ import { ToastContext } from '@/lib/context/toast.context';
 import { useMutation } from '@apollo/client';
 import Image from 'next/image';
 import CustomButton from '../button';
-import CusstomInputSwitch from '../custom-input-switch';
+import CustomInputSwitch from '../custom-input-switch';
 import TextComponent from '../text-field';
 
 export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
@@ -74,7 +74,7 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
             text={shopType}
           />
         </div>
-        <CusstomInputSwitch
+        <CustomInputSwitch
           loading={loading}
           isActive={isActive}
           onChange={handleCheckboxChange}

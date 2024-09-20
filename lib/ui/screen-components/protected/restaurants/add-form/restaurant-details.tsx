@@ -161,7 +161,7 @@ export default function RestaurantDetailsForm({
       type: 'error',
       title: 'New Restaurant',
       message:
-        graphQLErrors[0].message ??
+        graphQLErrors[0]?.message ??
         networkError?.message ??
         'Restaurant Creation  Failed',
       duration: 2500,
@@ -376,7 +376,7 @@ export default function RestaurantDetailsForm({
                           max={100}
                           placeholder="Sales Tax"
                           minFractionDigits={2}
-                          maxFractionDigits={5}
+                          maxFractionDigits={2}
                           name="salesTax"
                           maxLength={20}
                           showLabel={true}

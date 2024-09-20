@@ -17,7 +17,7 @@ import { ApolloError, useMutation } from '@apollo/client';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useState } from 'react';
-import CusstomInputSwitch from '../custom-input-switch';
+import CustomInputSwitch from '../custom-input-switch';
 
 // Icons
 
@@ -143,7 +143,7 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
       type: 'error',
       title: 'Restaurant Status Change',
       message:
-        graphQLErrors[0].message ??
+        graphQLErrors[0]?.message ??
         networkError?.message ??
         'Restaurant Status Change Failed',
       duration: 2500,
@@ -187,7 +187,7 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
       propertyName: 'status',
       body: (rowData: IRestaurantResponse) => {
         return (
-          <CusstomInputSwitch
+          <CustomInputSwitch
             loading={rowData?._id === deletingRestaurant?.id}
             isActive={rowData.isActive}
             onChange={async () => {
