@@ -82,6 +82,7 @@ export default function CouponsScreen() {
   const handleButtonClick = () => {
     setVisible(true);
   };
+
   //handle add cuisine locally to append child in the cuisine array
   const handleAddCouponLocally = (coupon: ICoupon) => {
     setCoupons((prevCoupons) => [
@@ -139,7 +140,7 @@ export default function CouponsScreen() {
           className="bg-black text-white p-2 rounded-md"
         />
       </div>
-      <div className="self-start flex items-center justify-center gap-x-3">
+      <div className="self-start flex items-center justify-center gap-x-3 m-3">
         <CustomTextField
           name="searchQuery"
           onChange={onGlobalFilterChange}

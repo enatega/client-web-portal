@@ -75,7 +75,6 @@ export default function AddCoupon({
                 enabled: values.enabled,
               };
             }
-            console.log({ formData });
             let res;
             if (!isEditing.bool) {
               res = await CreateCoupon({
@@ -136,18 +135,11 @@ export default function AddCoupon({
         }}
         validateOnChange={true}
       >
-        {({
-          errors,
-          handleSubmit,
-          handleChange,
-          values,
-          isSubmitting,
-          setFieldValue,
-        }) => {
+        {({ errors, handleSubmit, values, isSubmitting, setFieldValue }) => {
           return (
             <Form onSubmit={handleSubmit}>
               <div className="flex gap-x-2">
-                <h2>Add Coupon</h2>
+                <h2>{isEditing.bool ? 'Edit' : 'Add'} Coupon</h2>
                 <div className="flex gap-x-1 items-center">
                   {values.enabled ? 'Enabled' : 'Disabled'}
                   <InputSwitch

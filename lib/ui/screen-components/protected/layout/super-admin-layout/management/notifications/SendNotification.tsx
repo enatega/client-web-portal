@@ -105,7 +105,10 @@ export default function SendNotification({
         <CustomTextAreaField
           value={notificationData.body}
           onChange={handleFormChange}
+          showLabel={true}
+          label="Description"
           name="body"
+          placeholder="Add description here"
           className="w-full text-sm"
           rows={5}
         />

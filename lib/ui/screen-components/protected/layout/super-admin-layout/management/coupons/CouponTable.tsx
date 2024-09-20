@@ -48,11 +48,10 @@ export default function CouponTable({
   //refs
   const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
 
-  //delete queries
+  //queries
   const [deleteCoupon, { loading: deleteCouponLoading }] =
     useMutation(DELETE_COUPON);
-
-  const [editCoupon, { loading: editCouponLoading }] = useMutation(EDIT_COUPON);
+  const [editCoupon] = useMutation(EDIT_COUPON);
 
   //states
   const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
@@ -66,10 +65,12 @@ export default function CouponTable({
   //toast
   const { showToast } = useContext(ToastContext);
 
-  // handle enabled toggle
+  // handle enabled toggle (locally)
   function handleEnableField(rowData: ICoupon) {
-    const coupon = sortedData?.find((d) => d._id === rowData?._id);
-    const filteredData = sortedData?.filter((d) => d._id !== rowData?._id);
+    const coupon = sortedData?.find((coupon) => coupon._id === rowData?._id);
+    const filteredData = sortedData?.filter(
+      (coupon) => coupon._id !== rowData?._id
+    );
     const updatedCoupon = { ...rowData, enabled: !coupon?.enabled };
     if (filteredData) {
       setSortedData(() => [updatedCoupon, ...filteredData]);
@@ -162,10 +163,9 @@ export default function CouponTable({
       header: 'Status',
       field: 'enabled',
       body: (rowData: ICoupon) => (
-        <div className="flex gap-2 items-center w-full justify-between">
+        <div className="flex gap-2 items-center w-full justify-between cursor-pointer">
           <InputSwitch
             checked={rowData?.enabled}
-            disabled={editCouponLoading}
             className={rowData?.enabled ? 'p-inputswitch-checked' : ''}
             onChange={() => handleEnableField(rowData)}
             onClick={() => optimizedToggleFunction(rowData)}
@@ -185,7 +185,7 @@ export default function CouponTable({
           ) : (
             <FontAwesomeIcon
               icon={faEllipsisVertical}
-              className="hover:scale-105 p-1"
+              className="hover:scale-105 p-1 cursor-pointer"
               onClick={() =>
                 setIsEditDeletePopupOpen({
                   _id: rowData?._id,

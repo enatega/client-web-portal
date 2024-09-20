@@ -1,15 +1,41 @@
+//components
 import NotificationTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/notifications/NotificationTable';
 import SendNotification from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/notifications/SendNotification';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import GlobalButton from '@/lib/ui/useable-components/custom-icon-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
+import CustomTextField from '@/lib/ui/useable-components/input-field';
+
+//icons
 import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { InputText } from 'primereact/inputtext';
+
+//prime react
+import { FilterMatchMode } from 'primereact/api';
 import { Sidebar } from 'primereact/sidebar';
-import { useState } from 'react';
+
+//hooks
+import { ChangeEvent, useState } from 'react';
 
 export default function NotificationsScreen() {
+  //states
   const [visible, setVisible] = useState(false);
+
+  //filters
+  const [filters, setFilters] = useState({
+    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
+  });
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+  //global filters change
+  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    let _filters = { ...filters };
+
+    _filters['global'].value = value;
+
+    setFilters(_filters);
+    setGlobalFilterValue(value);
+  };
   return (
     <div className="flex flex-col items-center w-full justify-between">
       <div className="flex justify-between items-center px-5 w-full">
@@ -24,7 +50,15 @@ export default function NotificationsScreen() {
         <div className="flex flex-col gap-1 items-center justify-start">
           <HeaderText text="Notification" className="self-start" />
           <div className="flex gap-1 items-center justify-start">
-            <InputText placeholder="Filter tasks..." className="p-2" />
+            <CustomTextField
+              name="searchQuery"
+              onChange={onGlobalFilterChange}
+              value={globalFilterValue}
+              showLabel={false}
+              placeholder="Filter tasks..."
+              type="text"
+              className="w-96"
+            />
             <CustomActionActionButton Icon={faPlus} title="Action" />
           </div>
         </div>
