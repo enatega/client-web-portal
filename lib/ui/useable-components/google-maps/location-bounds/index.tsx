@@ -117,7 +117,7 @@ const CustomGoogleMapsLocationBounds: React.FC<
 
   // Ref
   const polygonRef = useRef<google.maps.Polygon | null>(null);
-  const listenersRef = useRef([]);
+  const listenersRef = useRef<google.maps.MapsEventListener[]>([]);
 
   // API
   const { loading: isFetchingRestaurantProfile } = useQuery(
@@ -635,10 +635,12 @@ const CustomGoogleMapsLocationBounds: React.FC<
                     if (matches) {
                       parts = parse(
                         item.structured_formatting.main_text,
-                        matches.map((match) => [
-                          match.offset,
-                          match.offset + match.length,
-                        ])
+                        matches.map(
+                          (match: { offset: number; length: number }) => [
+                            match.offset,
+                            match.offset + match.length,
+                          ]
+                        )
                       );
                     }
 
