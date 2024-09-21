@@ -117,6 +117,7 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
   const handleInputChange = (value: string) => {
     setInputValue(value);
     // setSearch(value);
+    // setSearch(value);
   };
 
   const onHandlerAutoCompleteSelectionChange = (

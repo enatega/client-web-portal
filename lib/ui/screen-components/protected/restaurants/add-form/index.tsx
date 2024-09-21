@@ -4,6 +4,7 @@ import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import {
   IQueryResult,
   IRestaurantsAddFormComponentProps,
+  IRestaurantsContextPropData,
   IVendorReponse,
   IVendorResponseGraphQL,
 } from '@/lib/utils/interfaces';
@@ -56,7 +57,7 @@ const RestaurantsForm = ({
     // Clean Context State
     onActiveStepChange(0);
     onRestaurantsFormVisible(false);
-    onSetRestaurantsContextData(null);
+    onSetRestaurantsContextData({} as IRestaurantsContextPropData);
   };
 
   // Use Effect
