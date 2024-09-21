@@ -129,9 +129,9 @@ export default function CuisineTable({
             <div className="editdeletepoup-container" ref={editDeletePopupRef}>
               <EditDeletePopup
                 setIsEditing={setIsEditing}
-                data={rowData}
                 setVisible={setVisible}
                 setIsDeleting={setIsDeleting}
+                data={rowData}
                 visible={visible}
                 setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
               />

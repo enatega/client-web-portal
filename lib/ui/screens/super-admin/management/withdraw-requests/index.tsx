@@ -62,12 +62,9 @@ export default function WithdrawRequestScreen() {
       ${GET_ALL_WITHDRAW_REQUESTS}
     `);
   //queries
-  const { fetch, data, loading, error } = useLazyQueryQL(
-    GET_ALL_WITHDRAW_REQUESTS,
-    {
-      fetchPolicy: 'cache-and-network',
-    }
-  ) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
+  const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
+    fetchPolicy: 'cache-and-network',
+  }) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
 
   //filters
   const [filters, setFilters] = useState({
@@ -94,12 +91,12 @@ export default function WithdrawRequestScreen() {
     if (data) {
       console.log({
         data: withdraw_request_data.getAllWithdrawRequests,
+        data2: data.withdrawrequests,
         isEditing,
         withdraw_request_loading,
       });
 
-      console.log(error);
-      setRequests(data.withdrawrequests);
+      setRequests(withdraw_request_data.withdrawrequests);
     }
   }, [data]);
 
