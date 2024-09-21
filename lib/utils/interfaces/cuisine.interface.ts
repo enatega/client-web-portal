@@ -1,6 +1,6 @@
 import { DataTableFilterMeta } from 'primereact/datatable';
 import { Dispatch, SetStateAction } from 'react';
-import { IEditState } from './coupons.interface';
+import { IEditState } from './global.interface';
 
 export interface ICuisine {
   _id: string;

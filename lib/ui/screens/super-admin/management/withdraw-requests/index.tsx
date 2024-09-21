@@ -1,7 +1,16 @@
 //components
+import { GET_ALL_WITHDRAW_REQUESTS } from '@/lib/api/graphql';
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import WithdrawTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/withdraw-requests/WithdrawTable';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
+import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
+import {
+  IGetWithDrawRequestsData,
+  IWithDrawRequest,
+} from '@/lib/utils/interfaces/withdraw-request.interface';
+import { gql, useQuery } from '@apollo/client';
 
 //icons
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -10,9 +19,56 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FilterMatchMode } from 'primereact/api';
 
 //hooks
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function WithdrawRequestScreen() {
+  //states
+  const [requests, setRequests] = useState<IWithDrawRequest[]>([]);
+  const [isDeleting, setIsDeleting] = useState<IEditState<IWithDrawRequest>>({
+    bool: false,
+    data: {
+      _id: '',
+      requestAmount: 0,
+      requestId: '',
+      requestTime: '',
+      rider: {
+        _id: '',
+        currentWalletAmount: 0,
+        name: '',
+      },
+      status: false,
+    },
+  });
+  const [isEditing, setIsEditing] = useState<IEditState<IWithDrawRequest>>({
+    bool: false,
+    data: {
+      _id: '',
+      requestAmount: 0,
+      requestId: '',
+      requestTime: '',
+      rider: {
+        _id: '',
+        currentWalletAmount: 0,
+        name: '',
+      },
+      status: false,
+    },
+  });
+  const [visible, setVisible] = useState(false);
+
+  //testing
+  const { loading: withdraw_request_loading, data: withdraw_request_data } =
+    useQuery(gql`
+      ${GET_ALL_WITHDRAW_REQUESTS}
+    `);
+  //queries
+  const { fetch, data, loading, error } = useLazyQueryQL(
+    GET_ALL_WITHDRAW_REQUESTS,
+    {
+      fetchPolicy: 'cache-and-network',
+    }
+  ) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
+
   //filters
   const [filters, setFilters] = useState({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
@@ -29,6 +85,24 @@ export default function WithdrawRequestScreen() {
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
+
+  // useEffects
+  useEffect(() => {
+    fetch();
+  }, []);
+  useEffect(() => {
+    if (data) {
+      console.log({
+        data: withdraw_request_data,
+        isEditing,
+        withdraw_request_loading,
+      });
+
+      console.log(error);
+      setRequests(data.withdrawrequests);
+    }
+  }, [data]);
+
   return (
     <div className="flex flex-col items-center w-full">
       <div className="flex justify-between items-center px-5 w-full">
@@ -52,6 +126,17 @@ export default function WithdrawRequestScreen() {
           statusOptions={[{ label: '', code: '' }]}
         />
       </div>
+      <WithdrawTable
+        data={requests}
+        loading={loading}
+        filters={filters}
+        isDeleting={isDeleting}
+        setRequests={setRequests}
+        setIsDeleting={setIsDeleting}
+        setIsEditing={setIsEditing}
+        setVisible={setVisible}
+        visible={visible}
+      />
     </div>
   );
 }

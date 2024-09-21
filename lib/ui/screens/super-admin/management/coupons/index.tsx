@@ -208,7 +208,7 @@ export default function CouponsScreen() {
           showLabel={false}
           placeholder="Filter tasks..."
           type="text"
-          className="w-app-bar-search-width h-custom-button"
+          className="w-72 h-custom-button"
         />
         <CustomActionActionButton
           Icon={faPlus}
