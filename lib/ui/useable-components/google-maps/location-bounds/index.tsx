@@ -1,7 +1,12 @@
-/* global google */
+'use client';
 
 // Core imports
-import { useQuery } from '@apollo/client';
+import {
+  ApolloCache,
+  ApolloError,
+  useMutation,
+  useQuery,
+} from '@apollo/client';
 import { throttle } from 'lodash';
 import React, {
   useCallback,
@@ -16,6 +21,7 @@ import React, {
 import {
   GET_RESTAURANT_DELIVERY_ZONE_INFO,
   GET_RESTAURANT_PROFILE,
+  UPDATE_DELIVERY_BOUNDS_AND_LOCATION,
 } from '@/lib/api/graphql';
 
 // Context
@@ -23,61 +29,55 @@ import { RestaurantsContext } from '@/lib/context/restaurants.context';
 
 // Interfaces
 import {
+  ICustomGoogleMapsLocationBoundsComponentProps,
   ILocationPoint,
+  IPlaceSelectedOption,
   IRestaurantDeliveryZoneInfo,
   IRestaurantProfile,
+  IRestaurantProfileResponse,
+  IRestaurantsContextPropData,
+  IUpdateRestaurantDeliveryZoneVariables,
 } from '@/lib/utils/interfaces';
 
 // Utilities
-import { transformPolygon } from '@/lib/utils/methods';
+import { transformPath, transformPolygon } from '@/lib/utils/methods';
 
 // Third-party libraries
-import { faMapMarker } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronDown,
+  faMapMarker,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Circle, GoogleMap, Marker, Polygon } from '@react-google-maps/api';
 import parse from 'autosuggest-highlight/parse';
 import { AutoComplete, AutoCompleteSelectEvent } from 'primereact/autocomplete';
 
 // Components
+import { ToastContext } from '@/lib/context/toast.context';
+import { Circle, GoogleMap, Marker, Polygon } from '@react-google-maps/api';
+import CustomButton from '../../button';
+import CustomRadiusInputField from '../../custom-radius-input';
 import CustomShape from './shapes';
 
-interface Option {
-  place_id: string;
-  description: string;
-  matched_substrings: {
-    length: number;
-    offset: number;
-  }[];
-  structured_formatting: {
-    main_text: string;
-    main_text_matched_substrings: {
-      length: number;
-      offset: number;
-    }[];
-    secondary_text: string;
-  };
-  terms: {
-    offset: number;
-    value: string;
-  }[];
-  types: string[];
-  reference: string;
-}
 const autocompleteService: {
   current: google.maps.places.AutocompleteService | null;
 } = { current: null };
 
-const CustomGoogleMapsLocationBounds: React.FC = () => {
+const CustomGoogleMapsLocationBounds: React.FC<
+  ICustomGoogleMapsLocationBoundsComponentProps
+> = ({ onStepChange }) => {
   // Context
-  const { restaurantsContextData, onSetRestaurantsContextData } =
-    useContext(RestaurantsContext);
+  const {
+    restaurantsContextData,
+    onSetRestaurantsContextData,
+    onRestaurantsFormVisible,
+  } = useContext(RestaurantsContext);
+  const { showToast } = useContext(ToastContext);
 
-  const [deliveryZoneType, setDeliveryZoneType] = React.useState('radius');
-  const [, /* locationData */ setLocation] = useState({
-    city: '',
-    postCode: '',
-    address: '',
-  });
+  //Hooks
+  // const { getCurrentLocation } = useLocation();
+
+  const [deliveryZoneType, setDeliveryZoneType] = useState('radius');
   const [center, setCenter] = useState({
     lat: 33.684422,
     lng: 73.047882,
@@ -105,65 +105,18 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     },
   ]);
   const [distance, setDistance] = useState(1);
+  // const [isLoading, setLoading] = useState(false);
 
   // Auto complete
-  const [options, setOptions] = useState<Option[]>([]);
-  // const [search, setSearch] = useState('');
+  const [options, setOptions] = useState<IPlaceSelectedOption[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
-  const [selectedPlaceObject, setSelectedPlaceObject] = useState<Option | null>(
-    null
-  );
+  const [selectedPlaceObject, setSelectedPlaceObject] =
+    useState<IPlaceSelectedOption | null>(null);
 
-  const handleInputChange = (value: string) => {
-    setInputValue(value);
-    // setSearch(value);
-    // setSearch(value);
-  };
+  const [search, setSearch] = useState<string>('');
 
-  const onHandlerAutoCompleteSelectionChange = (
-    event: AutoCompleteSelectEvent
-  ) => {
-    const selectedOption = event?.value as Option;
-    if (selectedOption) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ placeId: selectedOption.place_id }, (results) => {
-        if (
-          results &&
-          results[0] &&
-          results[0].geometry &&
-          results[0].geometry.location
-        ) {
-          const location = results[0].geometry.location;
-
-          onSetRestaurantsContextData({
-            ...restaurantsContextData,
-            restaurant: {
-              _id: restaurantsContextData?.restaurant?._id ?? null,
-              autoCompleteAddress: selectedOption.description,
-            },
-          });
-
-          setCenter({
-            lat: location.lat(),
-            lng: location.lng(),
-          });
-          setMarker({
-            lat: location.lat(),
-            lng: location.lng(),
-          });
-        }
-      });
-      setSelectedPlaceObject(selectedOption);
-    }
-  };
-
-  /* const getCurrentLocation = (callback: (location: Location) => void) => {
-    // Implement getting current location logic here
-  }; */
-
-  // Refs
-
-  const polygonRef = useRef();
+  // Ref
+  const polygonRef = useRef<google.maps.Polygon | null>(null);
   const listenersRef = useRef([]);
 
   // API
@@ -172,8 +125,9 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     {
       variables: { id: restaurantsContextData?.restaurant?._id?.code ?? '' },
       fetchPolicy: 'network-only',
-      onCompleted,
-      onError,
+      skip: !restaurantsContextData?.restaurant?._id?.code,
+      onCompleted: onRestaurantProfileFetchCompleted,
+      onError: onErrorFetchRestaurantProfile,
     }
   );
 
@@ -182,11 +136,13 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     {
       variables: { id: restaurantsContextData?.restaurant?._id?.code ?? '' },
       fetchPolicy: 'network-only',
-      onCompleted: onRestaurantZoneDataCompleted,
+      skip: !restaurantsContextData?.restaurant?._id?.code,
+      onCompleted: onRestaurantZoneInfoFetchCompleted,
+      onError: onErrorFetchRestaurantZoneInfo,
     }
   );
 
-  /*   const [mutate, { loading }] = useMutation(
+  const [updateRestaurantDeliveryZone, { loading: isSubmitting }] = useMutation(
     UPDATE_DELIVERY_BOUNDS_AND_LOCATION,
     {
       update: (cache, { data }) => {
@@ -194,10 +150,11 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
           updateCache(cache, { data } as IRestaurantProfileResponse);
         }
       },
-      onError,
-      onCompleted,
+
+      onCompleted: onRestaurantZoneUpdateCompleted,
+      onError: onErrorLocationZoneUpdate,
     }
-  ); */
+  );
 
   // Memos
   const radiusInMeter = useMemo(() => {
@@ -207,14 +164,13 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
   const fetch = React.useMemo(
     () =>
       throttle((request, callback) => {
-        console.log('debounce at 300');
         autocompleteService?.current?.getPlacePredictions(request, callback);
-      }, 300),
+      }, 1500),
     []
   );
 
   // API Handlers
-  /*  function updateCache(
+  function updateCache(
     cache: ApolloCache<unknown>,
     { data }: IRestaurantProfileResponse
   ) {
@@ -232,9 +188,30 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
         },
       },
     });
-  } */
+  }
 
-  function onCompleted({ restaurant }: { restaurant: IRestaurantProfile }) {
+  // Profile Error
+  function onErrorFetchRestaurantProfile({
+    graphQLErrors,
+    networkError,
+  }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'Restaurant Profile',
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        'Restaurant Profile Fetch Failed',
+      duration: 2500,
+    });
+  }
+
+  // Restaurant Profile Complete
+  function onRestaurantProfileFetchCompleted({
+    restaurant,
+  }: {
+    restaurant: IRestaurantProfile;
+  }) {
     if (restaurant) {
       setCenter({
         lat: +restaurant?.location?.coordinates[1],
@@ -252,15 +229,29 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     }
   }
 
-  function onRestaurantZoneDataCompleted({
+  // Restaurant Zone Info Error
+  function onErrorFetchRestaurantZoneInfo({
+    graphQLErrors,
+    networkError,
+  }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'Restaurant Location & Zone',
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        'Restaurant Location & Zone fetch failed',
+      duration: 2500,
+    });
+  }
+  // Restaurant Zone Info Complete
+  function onRestaurantZoneInfoFetchCompleted({
     getRestaurantDeliveryZoneInfo,
   }: {
     getRestaurantDeliveryZoneInfo: IRestaurantDeliveryZoneInfo;
   }) {
     const {
       address,
-      city,
-      postCode,
       deliveryBounds: polygonBounds,
       circleBounds,
       location,
@@ -272,19 +263,11 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
       lat: location.coordinates[1],
     };
 
-    setLocation((prevLocation) => {
-      return {
-        ...prevLocation,
-        city,
-        address,
-        postCode,
-      };
-    });
-
     setCenter(coordinates);
     setMarker(coordinates);
-    setDeliveryZoneType(boundType);
+    setInputValue(address);
 
+    if (boundType) setDeliveryZoneType(boundType);
     if (circleBounds?.radius) setDistance(circleBounds?.radius);
 
     setPath(
@@ -294,33 +277,137 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     );
   }
 
-  // Handlers
+  // Zone Update Error
+  function onErrorLocationZoneUpdate({
+    graphQLErrors,
+    networkError,
+  }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'Restaurant Location & Zone',
+      message:
+        graphQLErrors[0].message ??
+        networkError?.message ??
+        'Restaurant Location & Zone update failed',
+      duration: 2500,
+    });
+  }
 
-  /* const onLoad = (autocomplete: google.maps.places.Autocomplete | null) => {
-    console.log({ autocomplete });
-    setSearchResult(autocomplete);
+  // Zone Update Complete
+  function onRestaurantZoneUpdateCompleted({
+    restaurant,
+  }: {
+    restaurant: IRestaurantProfile;
+  }) {
+    if (restaurant) {
+      setCenter({
+        lat: +restaurant?.location?.coordinates[1],
+        lng: +restaurant?.location?.coordinates[0],
+      });
+      setMarker({
+        lat: +restaurant?.location?.coordinates[1],
+        lng: +restaurant?.location?.coordinates[0],
+      });
+      setPath(
+        restaurant?.deliveryBounds
+          ? transformPolygon(restaurant?.deliveryBounds?.coordinates[0])
+          : path
+      );
+    }
+
+    showToast({
+      type: 'success',
+      title: 'Zone Update',
+      message: 'Restaurant Zone has been updated successfully.',
+    });
+
+    onStepChange(0);
+    onSetRestaurantsContextData({} as IRestaurantsContextPropData);
+    onRestaurantsFormVisible(false);
+  }
+
+  // Handlers
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
+  };
+
+  const onHandlerAutoCompleteSelectionChange = (
+    event: AutoCompleteSelectEvent
+  ) => {
+    const selectedOption = event?.value as IPlaceSelectedOption;
+    if (selectedOption) {
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ placeId: selectedOption.place_id }, (results) => {
+        if (
+          results &&
+          results[0] &&
+          results[0].geometry &&
+          results[0].geometry.location
+        ) {
+          const location = results[0].geometry.location;
+
+          onSetRestaurantsContextData({
+            ...restaurantsContextData,
+            restaurant: {
+              ...restaurantsContextData?.restaurant,
+              _id: restaurantsContextData?.restaurant?._id ?? null,
+              autoCompleteAddress: selectedOption.description,
+            },
+          });
+
+          setCenter({
+            lat: location.lat(),
+            lng: location.lng(),
+          });
+          setMarker({
+            lat: location.lat(),
+            lng: location.lng(),
+          });
+
+          setInputValue(selectedOption.description);
+        }
+      });
+      setSelectedPlaceObject(selectedOption);
+    }
+  };
+
+  /*
+  const locationCallback = (error: string | null, data?: ILocation) => {
+    setLoading(false);
+    if (error) {
+      showToast({
+        type: 'error',
+        title: 'Current Location',
+        message: 'Current location fetch failed.',
+      });
+      return;
+    }
+
+    setCenter({
+      lat: data?.latitude ?? 0,
+      lng: data?.longitude ?? 0,
+    });
+    setMarker({
+      lat: data?.latitude ?? 0,
+      lng: data?.longitude ?? 0,
+    });
+
+    setInputValue(data?.deliveryAddress ?? '');
+    setSearch(data?.deliveryAddress ?? '');
+    onSetRestaurantsContextData({
+      ...restaurantsContextData,
+      restaurant: {
+        _id: restaurantsContextData?.restaurant?._id ?? null,
+        autoCompleteAddress: data?.deliveryAddress,
+      },
+    });
+  };
+
+   const handleLocationButtonClick = () => {
+    setLoading(true);
+    getCurrentLocation(locationCallback);
   };
  */
-  /*  const extractCityAndPostalCode = (
-    place
-  ): { city: string; postCode: string } => {
-    const addressComponents = place.address_components;
-
-    const cityComponent = addressComponents.find((component) =>
-      component?.types?.includes('locality')
-    );
-    const postalCodeComponent = addressComponents.find((component) =>
-      component?.types?.includes('postal_code')
-    );
-
-    const city: string = cityComponent ? cityComponent?.long_name : '';
-    const postalCode: string = postalCodeComponent
-      ? postalCodeComponent?.long_name
-      : '';
-
-    return { city, postCode: postalCode };
-  }; */
-
   const getPolygonPathFromCircle = (center: ILocationPoint, radius: number) => {
     const points = 4;
     const angleStep = (2 * Math.PI) / points;
@@ -339,13 +426,12 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     return path;
   };
 
-  /*   function getPolygonPath(
+  function getPolygonPath(
     center: ILocationPoint,
     radius: number,
     numPoints: number = 4
   ) {
     const path = [];
-  
 
     for (let i = 0; i < numPoints; i++) {
       const angle = (i * 2 * Math.PI) / numPoints;
@@ -360,11 +446,11 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     path.push(path[0]);
     return [path];
   }
- */
-  /*  const handleDistanceChange = (event) => {
-    const newDistance = parseFloat(event.target.value) || 0;
+
+  const handleDistanceChange = (val: number) => {
+    const newDistance = val || 0;
     setDistance(newDistance);
-  }; */
+  };
 
   const onEdit = useCallback(() => {
     if (polygonRef.current) {
@@ -392,7 +478,9 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
   }, [setPath, setCenter, setMarker]);
 
   const onLoadPolygon = useCallback(
-    (polygon) => {
+    (polygon: google.maps.Polygon) => {
+      if (!polygon) return;
+
       polygonRef.current = polygon;
       const path = polygon.getPath();
       listenersRef.current.push(
@@ -413,10 +501,6 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     setMarker(null);
   };
 
-  function onError() {
-    setTimeout(() => {}, 5000);
-  }
-
   const onDragEnd = (mapMouseEvent: google.maps.MapMouseEvent) => {
     const newLatLng = {
       lat: mapMouseEvent?.latLng?.lat() ?? 0,
@@ -433,6 +517,47 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     }
   };
 
+  // Submit Handler
+  const onLocationSubmitHandler = () => {
+    if (!restaurantsContextData?.restaurant?._id?.code) {
+      showToast({
+        type: 'error',
+        title: 'Location & Zone',
+        message: 'No restaurnat is selected',
+      });
+
+      return;
+    }
+
+    const location = {
+      latitude: marker.lat,
+      longitude: marker.lng,
+    };
+
+    let bounds = transformPath(path);
+    if (deliveryZoneType === 'radius') {
+      bounds = getPolygonPath(center, radiusInMeter);
+    }
+
+    let variables: IUpdateRestaurantDeliveryZoneVariables = {
+      id: restaurantsContextData?.restaurant?._id?.code ?? '',
+      location,
+      boundType: deliveryZoneType,
+      address: restaurantsContextData?.restaurant?.autoCompleteAddress,
+      bounds: [[[]]],
+    };
+
+    variables = {
+      ...variables,
+      bounds,
+      circleBounds: {
+        radius: distance, // Convert kilometers to meters
+      },
+    };
+
+    updateRestaurantDeliveryZone({ variables: variables });
+  };
+
   // Use Effects
   useEffect(() => {
     let active = true;
@@ -445,14 +570,14 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
       return undefined;
     }
 
-    if (inputValue === '') {
+    if (search === '') {
       setOptions(selectedPlaceObject ? [selectedPlaceObject] : []);
       return undefined;
     }
 
-    fetch({ input: inputValue }, (results: Option[]) => {
+    fetch({ input: search }, (results: IPlaceSelectedOption[]) => {
       if (active) {
-        let newOptions: Option[] = [];
+        let newOptions: IPlaceSelectedOption[] = [];
         if (selectedPlaceObject) {
           newOptions = [selectedPlaceObject];
         }
@@ -466,12 +591,12 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
     return () => {
       active = false;
     };
-  }, [selectedPlaceObject, inputValue, fetch]);
+  }, [selectedPlaceObject, search, fetch]);
 
   return (
     <div>
       <div className="overflow-hidden relative">
-        <div className="w-full h-[400px] object-cover">
+        <div className="w-full h-[600px] object-cover">
           <div className="absolute top-0 left-0 right-0 z-10">
             <div className={`w-full flex flex-col justify-center gap-y-1 p-2`}>
               <div className="relative">
@@ -481,16 +606,26 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
                     isFetchingRestaurantDeliveryZoneInfo ||
                     isFetchingRestaurantProfile
                   }
-                  className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none pr-16`}
+                  className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none p`}
                   value={inputValue}
+                  dropdownIcon={
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      style={{ fontSize: '1rem', color: 'gray' }}
+                    />
+                  }
                   completeMethod={(event) => {
-                    handleInputChange(event.query);
+                    setSearch(event.query);
+                  }}
+                  onChange={(e) => {
+                    if (typeof e.value === 'string') handleInputChange(e.value);
                   }}
                   onSelect={onHandlerAutoCompleteSelectionChange}
                   suggestions={options}
                   forceSelection={false}
                   dropdown={true}
                   multiple={false}
+                  loadingIcon={null}
                   placeholder="Enter your full address"
                   style={{ width: '100%' }}
                   itemTemplate={(item) => {
@@ -535,6 +670,23 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
                     );
                   }}
                 />
+                <div className="absolute right-8 top-0 h-full flex items-center pr-2">
+                  {inputValue && (
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      className="text-gray-400 cursor-pointer mr-2"
+                      onClick={() => {
+                        setInputValue('');
+                        setSearch('');
+                      }}
+                    />
+                  )}
+                  {/*  <FontAwesomeIcon
+                    icon={faLocationCrosshairs}
+                    className="text-gray-400 cursor-pointer"
+                    onClick={handleLocationButtonClick}
+                  /> */}
+                </div>
               </div>
             </div>
           </div>
@@ -549,6 +701,13 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
             id="google-map"
             zoom={14}
             center={center}
+            options={{
+              disableDefaultUI: true,
+              zoomControl: true,
+              streetViewControl: false,
+              mapTypeControl: false,
+              fullscreenControl: false,
+            }}
           >
             <Polygon
               editable
@@ -593,6 +752,23 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
         </div>
       </div>
 
+      {deliveryZoneType === 'radius' && (
+        <div className="w-[8rem] mt-2">
+          <CustomRadiusInputField
+            type="number"
+            name="radius"
+            placeholder="Radius"
+            maxLength={35}
+            min={0}
+            max={100}
+            value={distance}
+            onChange={handleDistanceChange}
+            showLabel={true}
+            loading={false}
+          />
+        </div>
+      )}
+
       <CustomShape
         selected={deliveryZoneType}
         onClick={(val: string) => {
@@ -601,6 +777,16 @@ const CustomGoogleMapsLocationBounds: React.FC = () => {
           setDeliveryZoneType(val);
         }}
       />
+
+      <div className="flex justify-end mt-4">
+        <CustomButton
+          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+          label="Save"
+          type="submit"
+          loading={isSubmitting}
+          onClick={onLocationSubmitHandler}
+        />
+      </div>
     </div>
   );
 };

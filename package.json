@@ -33,6 +33,7 @@
     "primereact": "10.8.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-geocode": "^0.2.2",
     "tailwind-merge": "^2.5.2",
     "yup": "^1.4.0"
   },
@@ -44,6 +45,7 @@
     "@types/node": "^20.14.12",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-geocode": "^0.2.4",
     "@typescript-eslint/eslint-plugin": "^7.17.0",
     "@typescript-eslint/parser": "^7.17.0",
     "autoprefixer": "^10.4.19",

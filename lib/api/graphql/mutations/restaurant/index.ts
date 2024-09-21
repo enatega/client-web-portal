@@ -33,7 +33,7 @@ export const CREATE_RESTAURANT = gql`
 `;
 
 export const UPDATE_DELIVERY_BOUNDS_AND_LOCATION = gql`
-  mutation UPDATE_DELIVERY_BOUNDS_AND_LOCATION(
+  mutation updateDeliveryBoundsAndLocation(
     $id: ID!
     $boundType: String!
     $bounds: [[[Float!]]]

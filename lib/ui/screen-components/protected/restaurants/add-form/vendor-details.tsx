@@ -1,3 +1,5 @@
+'use client';
+
 // Core
 import { ApolloError, useMutation } from '@apollo/client';
 import { Form, Formik } from 'formik';

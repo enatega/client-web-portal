@@ -1,6 +1,18 @@
+'use client';
+
+// Core imports
+import { useContext, useMemo, useRef } from 'react';
+
+// API and GraphQL
 import { GET_VENDORS } from '@/lib/api/graphql';
-import { RestaurantsContext } from '@/lib/context/restaurants.context';
+
+// Hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+
+// Context
+import { RestaurantsContext } from '@/lib/context/restaurants.context';
+
+// Interfaces
 import {
   IQueryResult,
   IRestaurantsAddFormComponentProps,
@@ -8,10 +20,13 @@ import {
   IVendorReponse,
   IVendorResponseGraphQL,
 } from '@/lib/utils/interfaces';
+
+// PrimeReact components
 import { Sidebar } from 'primereact/sidebar';
 import { Stepper } from 'primereact/stepper';
 import { StepperPanel } from 'primereact/stepperpanel';
-import { useContext, useMemo, useRef } from 'react';
+
+// Local components
 import RestaurantDetailsForm from './restaurant-details';
 import RestaurantLocation from './restaurant-location';
 import VendorDetails from './vendor-details';
@@ -70,7 +85,7 @@ const RestaurantsForm = ({
       className="w-full sm:w-[600px]"
     >
       <div ref={stepperRef}>
-        <Stepper linear headerPosition="bottom" activeStep={activeIndex + 2}>
+        <Stepper linear headerPosition="bottom" activeStep={activeIndex}>
           <StepperPanel header="Set Vendor">
             <VendorDetails
               vendorsDropdown={vendorsDropdown ?? []}

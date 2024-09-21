@@ -423,9 +423,11 @@ body {
 .p-autocomplete-input {
   width: 100%;
   padding-left: 10px;
+  padding-right: 35px;
   outline: none;
   box-shadow: none;
   border: 1px solid lightgray;
+  border-right: 0;
 }
 
 .p-autocomplete-panel {
@@ -434,4 +436,10 @@ body {
 
 .p-autocomplete-item:hover {
   background-color: var(--secondary-color);
+}
+
+.p-autocomplete-dropdown {
+  background-color: white;
+  height: 2.62rem;
+  margin-top: 1px;
 }

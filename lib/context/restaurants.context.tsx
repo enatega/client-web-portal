@@ -22,10 +22,7 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
   const [restaurantsContextData, setRestaurantsContextData] =
     useState<IRestaurantsContextPropData | null>({
       restaurant: {
-        _id: {
-          label: 'Restaurants',
-          code: localStorage.getItem('restaurantId') ?? '',
-        },
+        _id: null,
       },
       vendor: {
         _id: null,

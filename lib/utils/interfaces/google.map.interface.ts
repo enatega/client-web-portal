@@ -10,13 +10,8 @@ export interface IAutoCompleteItem {
   name: string;
 }
 
-export interface CustomGoogleMapsAutoCompleteComponentProps
-  extends IGlobalComponentProps {
-  fetchSuggestions: (query: string) => Promise<IAutoCompleteItem[]>;
-  onSelect: (item: IAutoCompleteItem) => void;
-  minLength: number;
-  placeholder: string;
-  debounceTimeout?: number; // optional debounce timeout in milliseconds
+export interface ICustomGoogleMapsLocationBoundsComponentProps {
+  onStepChange: (step: number) => void;
 }
 
 export interface IGoogleMapsContext {
@@ -38,4 +33,50 @@ export interface ICustomShapeComponentProps extends IGlobalComponentProps {
 export interface ILocationPoint {
   lat: number;
   lng: number;
+}
+
+export interface ILocation {
+  label: string;
+  latitude: number;
+  longitude: number;
+  deliveryAddress: string;
+}
+
+export interface IPlaceSelectedOption {
+  place_id: string;
+  description: string;
+  matched_substrings: {
+    length: number;
+    offset: number;
+  }[];
+  structured_formatting: {
+    main_text: string;
+    main_text_matched_substrings: {
+      length: number;
+      offset: number;
+    }[];
+    secondary_text: string;
+  };
+  terms: {
+    offset: number;
+    value: string;
+  }[];
+  types: string[];
+  reference: string;
+}
+
+export interface IUpdateRestaurantDeliveryZoneVariables {
+  id: string;
+  boundType: string;
+  bounds: number[][][];
+  circleBounds?: {
+    radius: number;
+  };
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+  address?: string;
+  postCode?: string;
+  city?: string;
 }

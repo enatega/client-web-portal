@@ -1,8 +1,17 @@
+'use client';
+
+// React imports
+import { useContext } from 'react';
+
+// Context imports
 import { RestaurantsContext } from '@/lib/context/restaurants.context';
+
+// Component imports
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
+
+// Icon imports
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { useContext } from 'react';
 
 export default function RestaurantsScreenHeader() {
   // Context

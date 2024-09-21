@@ -139,6 +139,7 @@ export default function RestaurantAddForm({
             username: data.username,
             password: data.password,
             shopType: data.shopType?.code,
+            tax: data.salesTax,
             cuisines: data.cuisines.map(
               (cuisin: IDropdownSelectItem) => cuisin.code
             ),

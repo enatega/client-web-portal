@@ -76,7 +76,7 @@ export interface IRestaurantsByOwnerResponseGraphQL {
   };
 }
 
-interface ICreateRestaurant {
+export interface ICreateRestaurant {
   _id: string;
   address: string;
   cuisines: string[];

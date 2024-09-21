@@ -60,3 +60,12 @@ export interface ICustomNumberTippingProps extends IGlobalTextFieldProps {
   max?: number;
   loading: boolean;
 }
+
+export interface ICustomRadiusInputFieldComponentProps
+  extends Omit<IGlobalTextFieldProps, 'value' | 'onChange'> {
+  value: number;
+  onChange?: (val: number) => void;
+  min?: number;
+  max?: number;
+  loading: boolean;
+}

@@ -1,25 +1,17 @@
+'use client';
+
 // Core
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 
-// Prime React
-
-// Context
-
 // Interface and Types
-import { IVendorForm } from '@/lib/utils/interfaces/forms';
-
-// Constants and Methods
-
-// Components
-
-// Schema
-
-// GraphQL
+import {
+  IRestaurantsRestaurantLocationComponentProps,
+  IVendorForm,
+} from '@/lib/utils/interfaces';
 
 // Icons
 import CustomGoogleMapsLocationBounds from '@/lib/ui/useable-components/google-maps/location-bounds';
-import { IRestaurantsRestaurantLocationComponentProps } from '@/lib/utils/interfaces';
 
 const initialValues: IVendorForm = {
   name: '',
@@ -31,14 +23,9 @@ const initialValues: IVendorForm = {
 export default function RestaurantLocation({
   stepperProps,
 }: IRestaurantsRestaurantLocationComponentProps) {
-  const { order } = stepperProps ?? {
+  const { onStepChange } = stepperProps ?? {
     onStepChange: () => {},
-    type: '',
-    order: -1,
   };
-
-  // Just to bypass eslint.
-  console.log(order);
 
   // States
   const [formInitialValues] = useState<IVendorForm>({
@@ -57,17 +44,13 @@ export default function RestaurantLocation({
               onSubmit={() => {}}
               validateOnChange
             >
-              {({
-                //    values,
-                //    errors,
-                //    handleChange,
-                handleSubmit,
-                // isSubmitting,
-              }) => {
+              {({ handleSubmit }) => {
                 return (
                   <Form onSubmit={handleSubmit}>
                     <div className="space-y-3 mb-2 ">
-                      <CustomGoogleMapsLocationBounds />
+                      <CustomGoogleMapsLocationBounds
+                        onStepChange={onStepChange}
+                      />
                     </div>
                   </Form>
                 );
