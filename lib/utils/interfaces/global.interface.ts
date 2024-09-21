@@ -52,3 +52,7 @@ export interface INotificationComponentProps {
   title: string;
   message: string;
 }
+export interface IEditState<T> {
+  bool: boolean;
+  data: T;
+}
