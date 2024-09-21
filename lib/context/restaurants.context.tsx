@@ -5,9 +5,9 @@ import { createContext, useState } from 'react';
 
 // Interface
 import {
+  IRestaurantsContextPropData,
   IRestaurantsContextProps,
   IRestaurantsProvider,
-  IRestaurantsSelectedVendorData,
 } from '@/lib/utils/interfaces';
 
 // Types
@@ -20,7 +20,18 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
     useState<boolean>(false);
 
   const [restaurantsContextData, setRestaurantsContextData] =
-    useState<IRestaurantsSelectedVendorData | null>(null);
+    useState<IRestaurantsContextPropData | null>({
+      restaurant: {
+        _id: {
+          label: 'Restaurants',
+          code: localStorage.getItem('restaurantId') ?? '',
+        },
+      },
+      vendor: {
+        _id: null,
+      },
+      isEditing: false,
+    });
 
   // Form Flow
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -39,9 +50,7 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
   };
 
   // Vendor
-  const onSetRestaurantsContextData = (
-    vendor: IRestaurantsSelectedVendorData | null
-  ) => {
+  const onSetRestaurantsContextData = (vendor: IRestaurantsContextPropData) => {
     setRestaurantsContextData(vendor);
   };
 

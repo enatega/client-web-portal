@@ -18,8 +18,7 @@ import { IVendorForm } from '@/lib/utils/interfaces/forms';
 // GraphQL
 
 // Icons
-import CustomButton from '@/lib/ui/useable-components/button';
-import { IRestaurantsRestaurantLocationComponentProps } from '@/lib/utils/interfaces/restaurants.interface';
+import CustomGoogleMapsLocationBounds from '@/lib/ui/useable-components/google-maps/location-bounds';
 
 const initialValues: IVendorForm = {
   name: '',
@@ -28,17 +27,7 @@ const initialValues: IVendorForm = {
   confirmPassword: '',
 };
 
-export default function RestaurantLocation({
-  stepperProps,
-}: IRestaurantsRestaurantLocationComponentProps) {
-  // Props
-  const { onStepChange, order, isLastStep } = stepperProps ?? {
-    onStepChange: () => {},
-    type: '',
-    order: -1,
-    isLastStep: false,
-  };
-
+export default function RestaurantLocation() {
   // States
   const [formInitialValues] = useState<IVendorForm>({
     ...initialValues,
@@ -61,25 +50,12 @@ export default function RestaurantLocation({
                 //    errors,
                 //    handleChange,
                 handleSubmit,
-                isSubmitting,
+                // isSubmitting,
               }) => {
                 return (
                   <Form onSubmit={handleSubmit}>
-                    <div className="space-y-3 mb-2">
-                      <div className="flex justify-between mt-4">
-                        <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
-                          label="Back"
-                          type="button"
-                          onClick={() => onStepChange(order - 1)}
-                        />
-                        <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
-                          label={isLastStep ? 'Save' : 'Next'}
-                          type="submit"
-                          loading={isSubmitting}
-                        />
-                      </div>
+                    <div className="space-y-3 mb-2 ">
+                      <CustomGoogleMapsLocationBounds />
                     </div>
                   </Form>
                 );

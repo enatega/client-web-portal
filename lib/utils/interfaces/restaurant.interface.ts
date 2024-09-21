@@ -113,3 +113,78 @@ export interface ICreateRestaurantResponse {
     createRestaurant?: ICreateRestaurant;
   };
 }
+
+/* Get Restaurant By ID Profile */
+export interface IRestaurantProfile {
+  _id: string;
+  orderId: number;
+  orderPrefix: string;
+  slug: string;
+  name: string;
+  image: string;
+  logo: string;
+  address: string;
+  location: {
+    coordinates: string[];
+    __typename: string;
+  };
+  deliveryBounds: {
+    coordinates: number[][][];
+    __typename: string;
+  };
+  username: string;
+  password: string;
+  deliveryTime: number;
+  minimumOrder: number;
+  tax: number;
+  isAvailable: boolean;
+  stripeDetailsSubmitted: boolean;
+  openingTimes: {
+    day: string;
+    times: {
+      startTime: string[];
+      endTime: string[];
+      __typename: string;
+    }[];
+    __typename: string;
+  }[];
+  owner: {
+    _id: string;
+    email: string;
+    __typename: string;
+  };
+  shopType: string;
+  cuisines: string[];
+  __typename: string;
+}
+export interface IRestaurantProfileResponse {
+  data: {
+    restaurant: IRestaurantProfile;
+  };
+}
+
+export interface IRestaurantDeliveryZoneInfo {
+  boundType: string;
+  deliveryBounds: {
+    coordinates: number[][][];
+    __typename: string;
+  };
+  location: {
+    coordinates: number[];
+    __typename: string;
+  };
+  circleBounds: {
+    radius: number;
+    __typename: string;
+  };
+  address: string;
+  city: string;
+  postCode: string;
+  __typename: string;
+}
+
+export interface IRestaurantDeliveryZoneInfoResponse {
+  data: {
+    getRestaurantDeliveryZoneInfo: IRestaurantDeliveryZoneInfo;
+  };
+}

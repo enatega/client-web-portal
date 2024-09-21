@@ -4,6 +4,7 @@ export * from './configuration.interface';
 export * from './dropdown.interface';
 export * from './forms';
 export * from './global.interface';
+export * from './google.map.interface';
 export * from './image-upload.interface';
 export * from './input-field.interface';
 export * from './input-switch.interface';

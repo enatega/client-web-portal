@@ -409,3 +409,29 @@ body {
 .p-stepper-number {
   font-size: 16px;
 }
+
+/* Sidebar */
+.p-stepper-panels {
+  padding: 0;
+}
+
+/* Auto Complet */
+.p-autocomplete {
+  padding: 0;
+  border: 0;
+}
+.p-autocomplete-input {
+  width: 100%;
+  padding-left: 10px;
+  outline: none;
+  box-shadow: none;
+  border: 1px solid lightgray;
+}
+
+.p-autocomplete-panel {
+  margin-top: 2px;
+}
+
+.p-autocomplete-item:hover {
+  background-color: var(--secondary-color);
+}

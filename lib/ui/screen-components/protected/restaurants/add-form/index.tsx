@@ -69,7 +69,7 @@ const RestaurantsForm = ({
       className="w-full sm:w-[600px]"
     >
       <div ref={stepperRef}>
-        <Stepper linear headerPosition="bottom" activeStep={activeIndex}>
+        <Stepper linear headerPosition="bottom" activeStep={activeIndex + 2}>
           <StepperPanel header="Set Vendor">
             <VendorDetails
               vendorsDropdown={vendorsDropdown ?? []}
