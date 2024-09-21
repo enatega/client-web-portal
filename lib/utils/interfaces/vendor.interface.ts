@@ -23,6 +23,7 @@ export interface IVendorContextProps {
   filtered?: IVendorReponse[];
   isEditingVendor: boolean;
   onSetEditingVendor: (status: boolean) => void;
+  onResetVendor: (state: boolean) => void;
 }
 
 export interface IVendorHeaderComponentsProps extends IGlobalComponentProps {
@@ -48,6 +49,7 @@ export interface IVendorReponse {
   _id: string;
   email: string;
   userType: string;
+  isActive: boolean;
   restaurants: {
     _id: string;
   }[];
@@ -65,4 +67,11 @@ export interface IGetVendorReponse
 
 export interface IGetVendorResponseGraphQL {
   getVendor: IVendorReponse;
+}
+
+export interface ICreateVendorResponse
+  extends Omit<IVendorReponse, 'restaurants'> {}
+
+export interface ICreateVendorResponseGraphQL {
+  createVendor: ICreateVendorResponse;
 }

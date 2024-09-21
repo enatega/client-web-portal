@@ -6,6 +6,7 @@ export const GET_VENDORS = gql`
       _id
       email
       userType
+      isActive
       restaurants {
         _id
       }

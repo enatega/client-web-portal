@@ -12,30 +12,22 @@ import {
 } from '@/lib/utils/interfaces/rider.interface';
 
 // Components
+import CustomTextField from '@/lib/ui/useable-components/input-field';
 import Table from '@/lib/ui/useable-components/table';
 import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants';
-import RiderHeader from '../header';
 
 // Utilities and Data
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
-
-// GraphQL
-import { deleteRider, getRiders } from '@/lib/api/graphql';
-import { gql, useMutation } from '@apollo/client';
 
 //Toast
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
 import { IQueryResult } from '@/lib/utils/interfaces';
 
-const GET_RIDERS = gql`
-  ${getRiders}
-`;
-
-const DELETE_RIDER = gql`
-  ${deleteRider}
-`;
+// GraphQL
+import { DELETE_RIDER, GET_RIDERS } from '@/lib/api/graphql';
+import { useMutation } from '@apollo/client';
 
 export default function RidersMain({
   setIsAddRiderVisible,
@@ -55,7 +47,7 @@ export default function RidersMain({
   });
 
   // Query
-  const { data } = useQueryGQL(GET_RIDERS, {
+  const { data, loading } = useQueryGQL(GET_RIDERS, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IRidersDataResponse | undefined, undefined>;
 
@@ -97,19 +89,26 @@ export default function RidersMain({
   ];
 
   return (
-    <div className="p-2 pt-5">
+    <div className="mx-[-14px]">
       <Table
         header={
-          <RiderHeader
-            setIsAddRiderVisible={setIsAddRiderVisible}
-            globalFilterValue={globalFilterValue}
-            onGlobalFilterChange={onGlobalFilterChange}
-          />
+          <div className="w-fit mb-2 ml-[-8px] ">
+            <CustomTextField
+              type="text"
+              name="riderFilter"
+              maxLength={35}
+              showLabel={false}
+              value={globalFilterValue}
+              onChange={onGlobalFilterChange}
+              placeholder="Keyword Search"
+            />
+          </div>
         }
         data={data?.riders || []}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
+        loading={loading}
         columns={RIDER_TABLE_COLUMNS({ menuItems })}
       />
       <DeleteDialog

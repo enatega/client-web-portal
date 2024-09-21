@@ -25,6 +25,9 @@ export interface IDropdownComponentProps extends ISelectionComponentProps {
   optionValue?: string;
   placeholder: string;
   showLabel?: boolean;
+  invalid?: boolean;
+  filter?: boolean;
+  loading?: boolean;
   selectedItem: IDropdownSelectItem | null;
   setSelectedItem: (key: string, item: IDropdownSelectItem) => void;
   options: IDropdownSelectItem[];

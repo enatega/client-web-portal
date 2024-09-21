@@ -1,10 +1,10 @@
 'use client';
 
 // Core
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 // Component
-import RestaurantAddForm from '@/lib/ui/screen-components/protected/restaurant/forms/add-form';
+import RestaurantAddForm from '@/lib/ui/screen-components/protected/restaurant(vendor)/forms/add-form';
 import VendorAddForm from '@/lib/ui/screen-components/protected/vendor/add-form';
 import VendorHeader from '@/lib/ui/screen-components/protected/vendor/view/header';
 import VendorMain from '@/lib/ui/screen-components/protected/vendor/view/main';
@@ -14,6 +14,8 @@ import VendorMobilesTabs from '@/lib/ui/screen-components/protected/vendor/view/
 import { options } from '@/lib/utils/constants';
 
 // Interface & Type
+import { RestaurantContext } from '@/lib/context/restaurant.context';
+import { VendorContext } from '@/lib/context/vendor.context';
 import { TVendorMobileTabs } from '@/lib/utils/types';
 
 export default function VendorsScreen() {
@@ -24,6 +26,10 @@ export default function VendorsScreen() {
   const [selectedRestaurantFilter, setSelectedResturantFilter] =
     useState<string>(options[1]);
   const [activeTab, setActiveTab] = useState<TVendorMobileTabs>('vendors');
+
+  // Context
+  const { vendorFormVisible } = useContext(VendorContext);
+  const { restaurantFormVisible } = useContext(RestaurantContext);
 
   return (
     <div className="flex flex-col h-screen">
@@ -45,8 +51,8 @@ export default function VendorsScreen() {
         setSelectedVendorFilter={setSelectedVendorFilter}
       />
 
-      <VendorAddForm />
-      <RestaurantAddForm />
+      {vendorFormVisible && <VendorAddForm />}
+      {restaurantFormVisible && <RestaurantAddForm />}
     </div>
   );
 }

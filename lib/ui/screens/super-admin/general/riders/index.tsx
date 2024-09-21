@@ -6,6 +6,7 @@ import RiderAddForm from '@/lib/ui/screen-components/protected/riders/add-form';
 import RidersMain from '@/lib/ui/screen-components/protected/riders/view/main';
 
 // Interfaces and Types
+import RiderHeader from '@/lib/ui/screen-components/protected/riders/view/header';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 
 export default function RidersScreen() {
@@ -14,7 +15,8 @@ export default function RidersScreen() {
   const [rider, setRider] = useState<null | IRiderResponse>(null);
 
   return (
-    <div className="px-6">
+    <div className="px-10 pt-5">
+      <RiderHeader setIsAddRiderVisible={setIsAddRiderVisible} />
       <RidersMain
         setIsAddRiderVisible={setIsAddRiderVisible}
         setRider={setRider}

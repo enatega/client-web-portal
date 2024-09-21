@@ -4,7 +4,11 @@ import {
   faUsers,
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
-import { IDropdownSelectItem, IStatsCardProps } from '../interfaces';
+import {
+  IDropdownSelectItem,
+  IRestaurantResponse,
+  IStatsCardProps,
+} from '../interfaces';
 
 export const dummyStatsData: IStatsCardProps[] = [
   {
@@ -89,4 +93,37 @@ export const generateRandomUserCounts = () => {
   }
 
   return Array.from(randomNumbers);
+};
+
+export const generateDummyRestaurants = (
+  count: number = 10
+): IRestaurantResponse[] => {
+  const restaurants: IRestaurantResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    restaurants.push({
+      _id: `restaurant_${i + 1}`,
+      name: `Restaurant ${i + 1}`,
+      username: `restaurant${i + 1}example`,
+      owner: {
+        _id: '',
+        email: `vendor${i + 1}-something`,
+        isActive: false,
+        __typename: '',
+      },
+      address: `${i + 1} Main Street, City`,
+      isActive: Math.random() > 0.5,
+      image: `/images/restaurant${i + 1}.jpg`,
+      orderPrefix: '',
+      slug: '',
+      deliveryTime: 0,
+      minimumOrder: 0,
+      commissionRate: 0,
+      tax: 0,
+      shopType: '',
+      __typename: '',
+    });
+  }
+
+  return restaurants;
 };

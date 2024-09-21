@@ -85,6 +85,11 @@ export default function MakeSidebar() {
           route: '/general/users',
           isParent: false,
         },
+        {
+          text: 'Staff',
+          route: '/general/staff',
+          isParent: false,
+        },
       ],
     },
     {

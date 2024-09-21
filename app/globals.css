@@ -83,6 +83,11 @@ body {
   font-weight: 700;
   line-height: 40px;
 }
+.heading-2 {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 40px;
+}
 
 /* Card */
 .card {
@@ -237,6 +242,15 @@ body {
 }
 
 /* Data Table */
+.p-datatable-header {
+  padding: 0;
+}
+
+.p-datatable-header {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .p-datatable-table .p-checkbox-box {
   border: 1px solid !important;
   height: 15px;
@@ -314,13 +328,13 @@ body {
 
 .p-datatable-header .p-component::placeholder {
   font-size: 14px; /* Adjust the font size as needed */
-  color: #888; /* Optional: Change the placeholder text color */
-  font-weight: 500;
+  color: #adacac;
+  /* font-weight: 500; */
 }
 
 .p-datatable-header .p-component {
   font-size: 14px; /* Adjust the font size as needed */
-  font-weight: 500;
+  font-weight: lighter;
 }
 
 .p-menuitem-content {
@@ -355,19 +369,6 @@ body {
   border-radius: 3px;
 }
 
-.p-button.p-component.p-fileupload-choose {
-  background-color: black !important;
-  outline: none;
-  box-shadow: none;
-  height: 43px;
-  font-size: 12px;
-  z-index: 100;
-}
-
-.p-button.p-component.p-fileupload-choose svg {
-  height: 12px;
-  width: 12px;
-}
 .p-dropdown-label.p-inputtext,
 .p-paginator-pages button {
   font-size: 13px;
@@ -388,6 +389,23 @@ body {
   font-size: 14px;
 }
 
-.p-dropdown-label.p-inputtext {
-  margin-top: 2px;
+.p-dropdown-label {
+  margin-top: -2px;
+}
+
+.p-dropdown-label > .p-inputtext {
+  margin-top: 10px;
+}
+
+.p-multiselect-label {
+  margin-top: -2px;
+}
+
+/* Stepper */
+.p-stepper-title {
+  font-size: 12px;
+}
+
+.p-stepper-number {
+  font-size: 16px;
 }

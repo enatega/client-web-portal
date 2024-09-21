@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { PasswordErrors } from '../constants';
+import { IDropdownSelectItem } from '../interfaces';
 
 export const VendorSchema = Yup.object().shape({
   name: Yup.string().min(2).max(35).required('Required'),
@@ -45,4 +46,8 @@ export const VendorEditSchema = Yup.object().shape({
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string(),
   confirmPassword: Yup.string(),
+});
+
+export const RestaurantsVendorDetails = Yup.object().shape({
+  _id: Yup.mixed<IDropdownSelectItem>().required('Required'),
 });
