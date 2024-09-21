@@ -92,14 +92,14 @@ export default function CouponTable({
         },
       });
       showToast({
-        title: 'Coupon',
+        title: 'Edit Coupon',
         type: 'info',
-        message: 'Operation successfull!',
+        message: 'Coupon Status has been edited successfully',
         duration: 2500,
       });
     } catch (err) {
       showToast({
-        title: 'Coupon',
+        title: 'Edit Coupon',
         type: 'error',
         message: 'Something went wrong please try again',
         duration: 2500,
@@ -119,9 +119,9 @@ export default function CouponTable({
         },
       });
       showToast({
-        title: 'New Coupon',
+        title: 'Delete Coupon',
         type: 'success',
-        message: 'Coupon deletion was successfull',
+        message: 'Coupon has been deleted successfully',
         duration: 2000,
       });
       let filteredCoupons = data?.filter(
@@ -137,7 +137,7 @@ export default function CouponTable({
     } catch (err) {
       console.log(err);
       showToast({
-        title: 'New Coupon',
+        title: 'Delete Coupon',
         type: 'error',
         message: 'An unknown error occured, please try again',
         duration: 2000,

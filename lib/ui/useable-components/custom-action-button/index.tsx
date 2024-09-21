@@ -7,10 +7,11 @@ export default function CustomActionActionButton({
   statusOptions,
   selectedOption,
   handleOptionChange,
+  name,
 }: IGlobalButtonProps) {
   return (
     <CustomMultiSelectComponent
-      name="status"
+      name={name}
       options={statusOptions}
       selectedItems={selectedOption}
       setSelectedItems={handleOptionChange}

@@ -82,7 +82,7 @@ export default function CuisineTable({
     } catch (err) {
       console.log(err);
       showToast({
-        title: 'New Cuisine',
+        title: 'Delete Cuisine',
         type: 'error',
         message: 'Cuisine Deletion Failed',
         duration: 2000,

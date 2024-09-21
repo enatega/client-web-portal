@@ -161,7 +161,7 @@ export default function CuisineForm({
             showToast({
               title: 'New Cuisine',
               type: 'error',
-              message: `Cuisine ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
+              message: `New Cuisine ${isEditing.bool ? 'Edition' : 'Creation'} has been failed`,
               duration: 2000,
             });
             setSubmitting(false);

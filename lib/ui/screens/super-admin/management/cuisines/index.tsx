@@ -161,6 +161,7 @@ export default function CuisinesScreen() {
           handleOptionChange={() => {}}
           selectedOption={null}
           statusOptions={[{ label: '', code: '' }]}
+          name="cuisine"
         />
       </div>
       <CuisineTable

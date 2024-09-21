@@ -216,6 +216,7 @@ export default function CouponsScreen() {
           handleOptionChange={handleStatusChange}
           selectedOption={selectedStatuses}
           statusOptions={statusOptions}
+          name="coupon"
         />
       </div>
       <CouponTable

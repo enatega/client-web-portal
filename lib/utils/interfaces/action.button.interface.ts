@@ -7,4 +7,5 @@ export interface IGlobalButtonProps {
   statusOptions: IDropdownSelectItem[];
   selectedOption: IDropdownSelectItem[] | null;
   handleOptionChange: (key: string, items: IDropdownSelectItem[]) => void;
+  name: string;
 }

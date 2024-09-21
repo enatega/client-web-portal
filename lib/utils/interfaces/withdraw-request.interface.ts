@@ -21,8 +21,8 @@ export interface IGetWithDrawRequestsData {
 
 export interface IWithDrawRequestFormProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  setCuisines: Dispatch<SetStateAction<IWithDrawRequest[]>>;
-  cuisines: IWithDrawRequest[];
+  setWithDrawRequests: Dispatch<SetStateAction<IWithDrawRequest[]>>;
+  withdrawRequests: IWithDrawRequest[];
   isEditing: IEditState<IWithDrawRequest>;
   setIsEditing: Dispatch<
     SetStateAction<{
@@ -30,7 +30,7 @@ export interface IWithDrawRequestFormProps {
       data: IWithDrawRequest;
     }>
   >;
-  addCuisineLocally: (withdraw_request: IWithDrawRequest) => void;
+  addWithdrawRequestsLocally: (withdraw_request: IWithDrawRequest) => void;
 }
 
 export interface IWithDrawRequestsTableProps {

@@ -93,7 +93,7 @@ export default function WithdrawRequestScreen() {
   useEffect(() => {
     if (data) {
       console.log({
-        data: withdraw_request_data,
+        data: withdraw_request_data.getAllWithdrawRequests,
         isEditing,
         withdraw_request_loading,
       });
@@ -124,6 +124,7 @@ export default function WithdrawRequestScreen() {
           handleOptionChange={() => {}}
           selectedOption={null}
           statusOptions={[{ label: '', code: '' }]}
+          name="withdraw_requests"
         />
       </div>
       <WithdrawTable

@@ -65,6 +65,7 @@ export default function NotificationsScreen() {
               handleOptionChange={() => {}}
               selectedOption={null}
               statusOptions={[{ label: '', code: '' }]}
+              name="notification"
             />
           </div>
         </div>
