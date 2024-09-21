@@ -190,14 +190,14 @@ export default function CouponsScreen() {
           coupons={coupons}
         />
       </Sidebar>
-      <div className="flex justify-between items-center px-5 w-full">
+      <div className="flex justify-between items-center p-5 w-full">
         <HeaderText text="Coupons" className="mx-5" />
         <TextIconClickable
           icon={faCirclePlus}
           iconStyles={{ color: 'white' }}
           onClick={handleButtonClick}
           title="Add Coupon"
-          className="bg-black text-white p-2 rounded-md"
+          className="sm:w-auto bg-black text-white border-gray-300 rounded"
         />
       </div>
       <div className="self-start flex items-center justify-center gap-x-3 m-3">
@@ -208,7 +208,7 @@ export default function CouponsScreen() {
           showLabel={false}
           placeholder="Filter tasks..."
           type="text"
-          className="w-72 h-custom-button"
+          className="w-84"
         />
         <CustomActionActionButton
           Icon={faPlus}
