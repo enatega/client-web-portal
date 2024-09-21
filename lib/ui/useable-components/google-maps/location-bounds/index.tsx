@@ -496,9 +496,8 @@ const CustomGoogleMapsLocationBounds: React.FC<
     listenersRef.current.forEach((lis) => lis.remove());
     polygonRef.current = null;
   }, []);
-
   const removeMarker = () => {
-    setMarker(null);
+    setMarker({ lat: 0, lng: 0 });
   };
 
   const onDragEnd = (mapMouseEvent: google.maps.MapMouseEvent) => {
