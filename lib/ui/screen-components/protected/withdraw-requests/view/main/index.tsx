@@ -25,15 +25,14 @@ export default function WithdrawRequestsMain() {
         currentWalletAmount: 0,
         name: '',
       },
-      status: false,
+      status: '',
     },
   });
 
   //queries
-  const { fetch, data, loading } = useLazyQueryQL(
-    GET_ALL_WITHDRAW_REQUESTS,
-    {}
-  ) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
+  const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
+    fetchPolicy: 'network-only',
+  }) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
 
   //options
   let statusOptions = [
@@ -67,12 +66,8 @@ export default function WithdrawRequestsMain() {
 
   useEffect(() => {
     if (data) {
-      console.log({
-        data: data.getAllWithdrawRequests.data,
-        isEditing,
-        loading,
-      });
-
+      //temp console ========================>
+      console.log({ isEditing });
       setRequests(data.getAllWithdrawRequests?.data);
     }
   }, [data]);

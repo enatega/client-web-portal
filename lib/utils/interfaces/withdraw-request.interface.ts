@@ -12,7 +12,7 @@ export interface IWithDrawRequest {
     name: string;
     currentWalletAmount: number;
   };
-  status: boolean;
+  status: string;
 }
 
 export interface IGetWithDrawRequestsData {
