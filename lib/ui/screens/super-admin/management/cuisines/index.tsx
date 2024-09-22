@@ -127,7 +127,7 @@ export default function CuisinesScreen() {
     }
   }, [data, isEditing.bool]);
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col mb-3 gap-6">
       <Sidebar
         visible={visible}
         onHide={() => setVisible(false)}
@@ -142,8 +142,8 @@ export default function CuisinesScreen() {
           cuisines={cuisines}
         />
       </Sidebar>
-      <div className="flex justify-between items-center px-5 w-full">
-        <HeaderText text="Cuisines" className="mx-5" />
+      <div className="flex justify-between items-center p-2 w-full">
+        <HeaderText text="Cuisines" />
         <TextIconClickable
           icon={faAdd}
           iconStyles={{ color: 'white' }}
