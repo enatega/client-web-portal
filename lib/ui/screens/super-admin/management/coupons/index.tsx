@@ -1,8 +1,5 @@
 //components
-import CouponForm from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponForm';
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
-import HeaderText from '@/lib/ui/useable-components/header-text';
-import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 //interfaces
 import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
@@ -12,17 +9,16 @@ import {
 } from '@/lib/utils/interfaces/coupons.interface';
 
 //icons
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 //prime react
 import { FilterMatchMode } from 'primereact/api';
-import { Sidebar } from 'primereact/sidebar';
 
 //queries
 import { GET_COUPONS } from '@/lib/api/graphql';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import CouponScreenHeader from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponScreenHeader';
 import { IFilterType } from '@/lib/utils/interfaces/table.interface';
 import { ChangeEvent, useEffect, useState } from 'react';
 
@@ -163,47 +159,33 @@ export default function CouponsScreen() {
   }, [selectedStatuses]);
 
   return (
-    <div className="flex flex-col mb-3 gap-6">
-      <Sidebar
+    <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
+      <CouponScreenHeader
         visible={visible}
-        onHide={() => setVisible(false)}
-        position="right"
-      >
-        <CouponForm
-          setVisible={setVisible}
-          setCoupons={setCoupons}
-          handleAddCouponLocally={handleAddCouponLocally}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          coupons={coupons}
-        />
-      </Sidebar>
-      <div className="flex justify-between items-center p-2 w-full">
-        <HeaderText text="Coupons" />
-        <TextIconClickable
-          icon={faAdd}
-          iconStyles={{ color: 'white' }}
-          onClick={handleButtonClick}
-          title="Add Coupon"
-          className="sm:w-auto bg-black text-white border-gray-300 rounded"
-        />
-      </div>
+        coupons={coupons}
+        isEditing={isEditing}
+        handleButtonClick={handleButtonClick}
+        handleAddCouponLocally={handleAddCouponLocally}
+        setCoupons={setCoupons}
+        setIsEditing={setIsEditing}
+        setVisible={setVisible}
+      />
 
       <CouponTable
         data={coupons}
         loading={loading}
         filters={filters}
-        setIsEditing={setIsEditing}
-        setIsDeleting={setIsDeleting}
-        setVisible={setVisible}
         visible={visible}
         isDeleting={isDeleting}
-        setCoupons={setCoupons}
         globalFilterValue={globalFilterValue}
-        onGlobalFilterChange={onGlobalFilterChange}
         statusOptions={statusOptions}
-        setSelectedStatuses={setSelectedStatuses}
         selectedStatuses={selectedStatuses}
+        setCoupons={setCoupons}
+        onGlobalFilterChange={onGlobalFilterChange}
+        setIsEditing={setIsEditing}
+        setSelectedStatuses={setSelectedStatuses}
+        setIsDeleting={setIsDeleting}
+        setVisible={setVisible}
       />
     </div>
   );

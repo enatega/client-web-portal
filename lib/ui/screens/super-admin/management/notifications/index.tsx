@@ -37,7 +37,7 @@ export default function NotificationsScreen() {
     setGlobalFilterValue(value);
   };
   return (
-    <div className="flex flex-col items-center w-full justify-between">
+    <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
       <div className="flex justify-between items-center px-5 w-full">
         <Sidebar
           visible={visible}

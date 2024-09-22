@@ -66,3 +66,14 @@ export interface ICouponStatuses {
     status: boolean;
   };
 }
+
+export interface ICouponScreenHeaderProps {
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
+  handleAddCouponLocally: (coupon: ICoupon) => void;
+  setIsEditing: Dispatch<SetStateAction<IEditState<ICoupon>>>;
+  visible: boolean;
+  isEditing: IEditState<ICoupon>;
+  coupons: ICoupon[];
+  handleButtonClick: () => void;
+}

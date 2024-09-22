@@ -193,21 +193,13 @@ export default function CuisineTable({
         loading={deleteCuisineLoading}
         message="Are you sure to delete the cuisine?"
       />
-      {/* <GenericTable
-        columns={cuisineColums}
-        data={data ?? []}
-        onSelectionChange={(e) => setSelectedData(e as ICuisine[])}
-        selection={selectedData}
-        loading={loading}
-        filters={filters}
-      /> */}
       <Table
         columns={cuisineColums}
         data={data ?? []}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e as ICuisine[])}
         filters={filters}
-        loading={loading}
+        loading={loading ?? deleteCuisineLoading}
         header={
           <TableHeader
             globalFilterValue={globalFilterValue}

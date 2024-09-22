@@ -47,3 +47,13 @@ export interface ICuisineTableProps {
   setSelectedStatuses: Dispatch<SetStateAction<string[]>>;
   selectedStatuses: string[];
 }
+export interface ICuisineScreenHeaderProps {
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  setCuisines: Dispatch<SetStateAction<ICuisine[]>>;
+  handleAddCuisineLocally: (cuisine: ICuisine) => void;
+  setIsEditing: Dispatch<SetStateAction<IEditState<ICuisine>>>;
+  visible: boolean;
+  isEditing: IEditState<ICuisine>;
+  cuisines: ICuisine[];
+  handleButtonClick: () => void;
+}

@@ -3,12 +3,9 @@
 import { GET_CUISINES } from '@/lib/api/graphql';
 //components
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
-import HeaderText from '@/lib/ui/useable-components/header-text';
-import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 // PrimeReact components
 import { FilterMatchMode } from 'primereact/api';
-import { Sidebar } from 'primereact/sidebar';
 
 //interfaces
 import { ILazyQueryResult } from '@/lib/utils/interfaces';
@@ -19,11 +16,10 @@ import {
 import { IEditState } from '@/lib/utils/interfaces/global.interface';
 
 // Icons
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import CuisineForm from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisineForm';
+import CuisineScreenHeader from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisineScreenHeader';
 import { IFilterType } from '@/lib/utils/interfaces/table.interface';
 import { ChangeEvent, useEffect, useState } from 'react';
 
@@ -127,31 +123,17 @@ export default function CuisinesScreen() {
     }
   }, [data, isEditing.bool]);
   return (
-    <div className="flex flex-col mb-3 gap-6">
-      <Sidebar
+    <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
+      <CuisineScreenHeader
+        cuisines={cuisines}
+        handleAddCuisineLocally={addCuisineLocally}
+        handleButtonClick={handleButtonClick}
+        isEditing={isEditing}
+        setCuisines={setCuisines}
+        setIsEditing={setIsEditing}
+        setVisible={setVisible}
         visible={visible}
-        onHide={() => setVisible(false)}
-        position="right"
-      >
-        <CuisineForm
-          setVisible={setVisible}
-          setCuisines={setCuisines}
-          addCuisineLocally={addCuisineLocally}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-          cuisines={cuisines}
-        />
-      </Sidebar>
-      <div className="flex justify-between items-center p-2 w-full">
-        <HeaderText text="Cuisines" />
-        <TextIconClickable
-          icon={faAdd}
-          iconStyles={{ color: 'white' }}
-          onClick={handleButtonClick}
-          title="Add Cuisine"
-          className="sm:w-auto bg-black text-white border-gray-300 rounded"
-        />
-      </div>
+      />
       <CuisineTable
         data={cuisines}
         loading={loading}

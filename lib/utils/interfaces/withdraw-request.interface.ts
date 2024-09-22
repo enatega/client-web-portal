@@ -16,7 +16,9 @@ export interface IWithDrawRequest {
 }
 
 export interface IGetWithDrawRequestsData {
-  withdrawrequests: IWithDrawRequest[];
+  getAllWithdrawRequests: {
+    data: IWithDrawRequest[];
+  };
 }
 
 export interface IWithDrawRequestFormProps {

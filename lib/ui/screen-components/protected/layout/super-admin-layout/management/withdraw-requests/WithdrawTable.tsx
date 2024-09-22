@@ -1,32 +1,24 @@
 //components
-import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 
 //contexts
 
 //interfaces
-import { IEditPopupVal } from '@/lib/utils/interfaces/coupons.interface';
 import {
   IWithDrawRequest,
   IWithDrawRequestsTableProps,
 } from '@/lib/utils/interfaces/withdraw-request.interface';
 
 //hooks
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 //icons
 import Table from '@/lib/ui/useable-components/table';
 import TableHeader from '@/lib/ui/useable-components/table-header';
 import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tag } from 'primereact/tag';
 
 export default function WithdrawTable({
   data,
-  setIsEditing,
-  setIsDeleting,
-  setVisible,
-  // isDeleting,
-  visible,
   loading,
   filters,
   globalFilterValue,
@@ -38,61 +30,36 @@ export default function WithdrawTable({
   //toast
   //   const { showToast } = useContext(ToastContext);
 
-  //refs
-  const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
-
-  //states
-  const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
-    useState<IEditPopupVal>({
-      _id: '',
-      bool: false,
-    });
   const [selectedData, setSelectedData] = useState<IWithDrawRequest[]>([]);
 
   //columns
   const requestsColumns: IColumnConfig<IWithDrawRequest>[] = [
     {
-      headerName: 'Name',
-      propertyName: 'name',
+      headerName: 'Request ID',
+      propertyName: 'requestId',
     },
     {
-      headerName: 'Vendor',
-      propertyName: 'description',
+      headerName: 'Rider',
+      propertyName: 'rider.name',
     },
     {
-      headerName: 'Shop Type',
-      propertyName: 'shopType',
+      headerName: 'Amount',
+      propertyName: 'requestAmount',
     },
     {
-      headerName: 'Action',
-      propertyName: 'action',
+      headerName: 'Date',
+      propertyName: 'requestTime',
+    },
+    {
+      headerName: 'Status',
+      propertyName: 'status',
       body: (rowData: IWithDrawRequest) => (
-        <div className="three-dots">
-          {isEditDeletePopupOpen._id === rowData?._id &&
-          isEditDeletePopupOpen.bool ? (
-            <div className="editdeletepoup-container" ref={editDeletePopupRef}>
-              <EditDeletePopup
-                setIsEditing={setIsEditing}
-                data={rowData}
-                setVisible={setVisible}
-                setIsDeleting={setIsDeleting}
-                visible={visible}
-                setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
-              />
-            </div>
-          ) : (
-            <FontAwesomeIcon
-              icon={faEllipsisVertical}
-              className="hover:scale-105 p-1 cursor-pointer"
-              onClick={() =>
-                setIsEditDeletePopupOpen({
-                  _id: rowData?._id,
-                  bool: true,
-                })
-              }
-            />
-          )}
-        </div>
+        <Tag
+          className="mr-2"
+          icon="pi pi-user"
+          value={rowData.status}
+          rounded
+        />
       ),
     },
   ];

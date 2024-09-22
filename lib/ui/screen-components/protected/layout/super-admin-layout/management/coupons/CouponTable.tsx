@@ -169,7 +169,7 @@ export default function CouponTable({
       headerName: 'Status',
       propertyName: 'enabled',
       body: (rowData: ICoupon) => (
-        <div className="flex gap-2 items-center w-full justify-between cursor-pointer">
+        <div className="flex gap-2 items-center w-full justify-between cursor-pointer overflow-y-auto">
           <InputSwitch
             checked={rowData?.enabled}
             className={rowData?.enabled ? 'p-inputswitch-checked' : ''}

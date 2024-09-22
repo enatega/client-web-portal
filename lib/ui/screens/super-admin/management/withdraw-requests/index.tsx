@@ -1,20 +1,22 @@
 //components
-import { GET_ALL_WITHDRAW_REQUESTS } from '@/lib/api/graphql';
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import WithdrawTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/withdraw-requests/WithdrawTable';
 import HeaderText from '@/lib/ui/useable-components/header-text';
+
+//interfaces
 import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   IGetWithDrawRequestsData,
   IWithDrawRequest,
 } from '@/lib/utils/interfaces/withdraw-request.interface';
 
-//icons
+//queries
+import { GET_ALL_WITHDRAW_REQUESTS } from '@/lib/api/graphql';
 
 //prime react
 import { FilterMatchMode } from 'primereact/api';
 
 //hooks
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function WithdrawRequestScreen() {
@@ -54,9 +56,10 @@ export default function WithdrawRequestScreen() {
   const [visible, setVisible] = useState(false);
 
   //queries
-  const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
-    fetchPolicy: 'cache-and-network',
-  }) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
+  const { fetch, data, loading } = useLazyQueryQL(
+    GET_ALL_WITHDRAW_REQUESTS,
+    {}
+  ) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
 
   //options
   let statusOptions = [
@@ -91,18 +94,17 @@ export default function WithdrawRequestScreen() {
   useEffect(() => {
     if (data) {
       console.log({
-        data: data.withdrawrequests,
-        data2: data.withdrawrequests,
+        data: data.getAllWithdrawRequests.data,
         isEditing,
         loading,
       });
 
-      setRequests(data.withdrawrequests);
+      setRequests(data.getAllWithdrawRequests?.data);
     }
   }, [data]);
 
   return (
-    <div className="flex flex-col mb-3 gap-6">
+    <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
       <div className="flex justify-between items-center p-2 w-full">
         <HeaderText text="Withdraw Requests" className="mx-5" />
       </div>
