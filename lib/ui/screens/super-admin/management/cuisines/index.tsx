@@ -3,9 +3,7 @@
 import { GET_CUISINES } from '@/lib/api/graphql';
 //components
 import CuisineTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisinesTable';
-import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 // PrimeReact components
@@ -21,11 +19,12 @@ import {
 import { IEditState } from '@/lib/utils/interfaces/global.interface';
 
 // Icons
-import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import CuisineForm from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/cuisines/CuisineForm';
+import { IFilterType } from '@/lib/utils/interfaces/table.interface';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CuisinesScreen() {
@@ -56,16 +55,24 @@ export default function CuisinesScreen() {
   //states
   const [visible, setVisible] = useState(false);
   const [cuisines, setCuisines] = useState<ICuisine[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const { data, loading, fetch } = useLazyQueryQL(
     GET_CUISINES,
     {}
   ) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
 
   //filters
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<IFilterType>({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
   });
   const [globalFilterValue, setGlobalFilterValue] = useState('');
+  //options
+  let statusOptions = [
+    {
+      label: '',
+      code: '',
+    },
+  ];
 
   //global filters change
   const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -138,30 +145,11 @@ export default function CuisinesScreen() {
       <div className="flex justify-between items-center px-5 w-full">
         <HeaderText text="Cuisines" className="mx-5" />
         <TextIconClickable
-          icon={faCirclePlus}
+          icon={faAdd}
           iconStyles={{ color: 'white' }}
           onClick={handleButtonClick}
           title="Add Cuisine"
-          className="bg-black text-white p-2 rounded-md"
-        />
-      </div>
-      <div className="self-start flex items-center justify-center gap-x-3 m-3">
-        <CustomTextField
-          name="searchQuery"
-          onChange={onGlobalFilterChange}
-          value={globalFilterValue}
-          showLabel={false}
-          placeholder="Filter tasks..."
-          type="text"
-          className="w-72 h-custom-button"
-        />
-        <CustomActionActionButton
-          Icon={faPlus}
-          title="Action"
-          handleOptionChange={() => {}}
-          selectedOption={null}
-          statusOptions={[{ label: '', code: '' }]}
-          name="cuisine"
+          className="sm:w-auto bg-black text-white border-gray-300 rounded"
         />
       </div>
       <CuisineTable
@@ -174,6 +162,11 @@ export default function CuisinesScreen() {
         setIsEditing={setIsEditing}
         setVisible={setVisible}
         visible={visible}
+        globalFilterValue={globalFilterValue}
+        onGlobalFilterChange={onGlobalFilterChange}
+        selectedStatuses={selectedStatuses}
+        setSelectedStatuses={setSelectedStatuses}
+        statusOptions={statusOptions}
       />
     </div>
   );

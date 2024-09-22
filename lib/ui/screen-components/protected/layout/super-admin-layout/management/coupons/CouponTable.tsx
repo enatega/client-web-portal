@@ -2,7 +2,6 @@
 import './index.css';
 
 //interfaces
-import { ITableColumn } from '@/lib/utils/interfaces';
 import {
   ICoupon,
   ICouponsTableProps,
@@ -14,7 +13,6 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsis
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
-import GenericTable from '../../../../../../useable-components/global-table';
 
 //prime react
 import { InputSwitch } from 'primereact/inputswitch';
@@ -31,6 +29,9 @@ import { debounce } from 'lodash';
 //hooks
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
+import Table from '@/lib/ui/useable-components/table';
+import TableHeader from '@/lib/ui/useable-components/table-header';
+import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 import { useMutation } from '@apollo/client';
 import { useContext, useEffect, useRef, useState } from 'react';
 
@@ -44,6 +45,11 @@ export default function CouponTable({
   setVisible,
   visible,
   isDeleting,
+  globalFilterValue,
+  onGlobalFilterChange,
+  statusOptions,
+  setSelectedStatuses,
+  selectedStatuses,
 }: ICouponsTableProps) {
   //refs
   const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
@@ -146,22 +152,22 @@ export default function CouponTable({
   }
 
   //column
-  const columns: ITableColumn<ICoupon>[] = [
+  const columns: IColumnConfig<ICoupon>[] = [
     {
-      header: 'Name',
-      field: '__typename',
+      headerName: 'Name',
+      propertyName: '__typename',
     },
     {
-      header: 'Code',
-      field: 'title',
+      headerName: 'Code',
+      propertyName: 'title',
     },
     {
-      header: 'Discount',
-      field: 'discount',
+      headerName: 'Discount',
+      propertyName: 'discount',
     },
     {
-      header: 'Status',
-      field: 'enabled',
+      headerName: 'Status',
+      propertyName: 'enabled',
       body: (rowData: ICoupon) => (
         <div className="flex gap-2 items-center w-full justify-between cursor-pointer">
           <InputSwitch
@@ -241,14 +247,25 @@ export default function CouponTable({
         loading={deleteCouponLoading}
         message="Are you sure to delete the coupon?"
       />
-      <GenericTable
-        columns={columns}
-        data={sortedData}
-        onSelectionChange={(e) => setSelectedData(e as ICoupon[])}
-        selection={selectedData}
-        loading={loading ?? deleteCouponLoading}
-        filters={filters}
-      />
+      {sortedData && (
+        <Table
+          columns={columns}
+          data={sortedData}
+          selectedData={selectedData}
+          setSelectedData={(e) => setSelectedData(e)}
+          loading={loading ?? deleteCouponLoading}
+          header={
+            <TableHeader
+              globalFilterValue={globalFilterValue}
+              onGlobalFilterChange={onGlobalFilterChange}
+              selectedStatuses={selectedStatuses}
+              setSelectedStatuses={setSelectedStatuses}
+              statusOptions={statusOptions}
+            />
+          }
+          filters={filters}
+        />
+      )}
     </>
   );
 }

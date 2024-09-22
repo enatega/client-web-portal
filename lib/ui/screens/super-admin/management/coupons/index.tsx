@@ -1,24 +1,18 @@
 //components
 import CouponForm from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponForm';
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
-import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 //interfaces
-import {
-  IDropdownSelectItem,
-  IEditState,
-  ILazyQueryResult,
-} from '@/lib/utils/interfaces';
+import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICoupon,
   IGetCouponsData,
 } from '@/lib/utils/interfaces/coupons.interface';
 
 //icons
-import { faCirclePlus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 //prime react
 import { FilterMatchMode } from 'primereact/api';
@@ -29,6 +23,7 @@ import { GET_COUPONS } from '@/lib/api/graphql';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { IFilterType } from '@/lib/utils/interfaces/table.interface';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CouponsScreen() {
@@ -55,7 +50,7 @@ export default function CouponsScreen() {
   });
 
   //filters
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<IFilterType>({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
   });
 
@@ -75,9 +70,7 @@ export default function CouponsScreen() {
   //states
   const [visible, setVisible] = useState(false);
   const [coupons, setCoupons] = useState<ICoupon[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<
-    IDropdownSelectItem[]
-  >([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
   //options
   let statusOptions = [
@@ -94,11 +87,6 @@ export default function CouponsScreen() {
       code: 'all',
     },
   ];
-
-  //handle status change
-  const handleStatusChange = (name: string, items: IDropdownSelectItem[]) => {
-    setSelectedStatuses(items);
-  };
 
   //query
   const { data, fetch, loading } = useLazyQueryQL(
@@ -148,16 +136,16 @@ export default function CouponsScreen() {
 
     if (selectedStatuses.length > 0) {
       const enabledSelected = selectedStatuses.some(
-        (status) => status.code === 'enabled'
+        (status) => status === 'enabled'
       );
       const disabledSelected = selectedStatuses.some(
-        (status) => status.code === 'disabled'
+        (status) => status === 'disabled'
       );
       const bothEnabledAndDisabled = enabledSelected && disabledSelected;
 
       filteredCoupons = coupons.filter((coupon) =>
         selectedStatuses.some((status) =>
-          status.code === 'all'
+          status === 'all'
             ? true
             : enabledSelected
               ? coupon.enabled
@@ -175,7 +163,7 @@ export default function CouponsScreen() {
   }, [selectedStatuses]);
 
   return (
-    <div className="flex flex-col items-center w-full h-auto">
+    <div className="flex flex-col mb-3 gap-6">
       <Sidebar
         visible={visible}
         onHide={() => setVisible(false)}
@@ -190,35 +178,17 @@ export default function CouponsScreen() {
           coupons={coupons}
         />
       </Sidebar>
-      <div className="flex justify-between items-center p-5 w-full">
-        <HeaderText text="Coupons" className="mx-5" />
+      <div className="flex justify-between items-center p-2 w-full">
+        <HeaderText text="Coupons" />
         <TextIconClickable
-          icon={faCirclePlus}
+          icon={faAdd}
           iconStyles={{ color: 'white' }}
           onClick={handleButtonClick}
           title="Add Coupon"
           className="sm:w-auto bg-black text-white border-gray-300 rounded"
         />
       </div>
-      <div className="self-start flex items-center justify-center gap-x-3 m-3">
-        <CustomTextField
-          name="searchQuery"
-          onChange={onGlobalFilterChange}
-          value={globalFilterValue}
-          showLabel={false}
-          placeholder="Filter tasks..."
-          type="text"
-          className="w-84"
-        />
-        <CustomActionActionButton
-          Icon={faPlus}
-          title="Status"
-          handleOptionChange={handleStatusChange}
-          selectedOption={selectedStatuses}
-          statusOptions={statusOptions}
-          name="coupon"
-        />
-      </div>
+
       <CouponTable
         data={coupons}
         loading={loading}
@@ -229,6 +199,11 @@ export default function CouponsScreen() {
         visible={visible}
         isDeleting={isDeleting}
         setCoupons={setCoupons}
+        globalFilterValue={globalFilterValue}
+        onGlobalFilterChange={onGlobalFilterChange}
+        statusOptions={statusOptions}
+        setSelectedStatuses={setSelectedStatuses}
+        selectedStatuses={selectedStatuses}
       />
     </div>
   );

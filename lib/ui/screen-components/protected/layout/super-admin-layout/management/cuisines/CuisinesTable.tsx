@@ -1,5 +1,4 @@
 //interfaces
-import { ITableColumn } from '@/lib/utils/interfaces';
 import {
   ICuisine,
   ICuisineTableProps,
@@ -10,7 +9,6 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsis
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
-import GenericTable from '@/lib/ui/useable-components/global-table';
 
 //hooks
 import { ToastContext } from '@/lib/context/toast.context';
@@ -22,6 +20,9 @@ import { DELETE_CUISINE } from '@/lib/api/graphql';
 
 //hooks
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import Table from '@/lib/ui/useable-components/table';
+import TableHeader from '@/lib/ui/useable-components/table-header';
+import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 import { useMutation } from '@apollo/client';
 import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -36,6 +37,11 @@ export default function CuisineTable({
   setVisible,
   visible,
   isDeleting,
+  globalFilterValue,
+  onGlobalFilterChange,
+  selectedStatuses,
+  setSelectedStatuses,
+  statusOptions,
 }: ICuisineTableProps) {
   //mutations
   const [deleteCuisine, { loading: deleteCuisineLoading }] =
@@ -91,10 +97,10 @@ export default function CuisineTable({
   }
 
   //columns
-  const cuisineColums: ITableColumn<ICuisine>[] = [
+  const cuisineColums: IColumnConfig<ICuisine>[] = [
     {
-      header: 'Image',
-      field: 'image',
+      headerName: 'Image',
+      propertyName: 'image',
       body: (data: ICuisine) => (
         <Image
           src={
@@ -108,20 +114,20 @@ export default function CuisineTable({
       ),
     },
     {
-      header: 'Name',
-      field: 'name',
+      headerName: 'Name',
+      propertyName: 'name',
     },
     {
-      header: 'Vendor',
-      field: 'description',
+      headerName: 'Vendor',
+      propertyName: 'description',
     },
     {
-      header: 'Shop Type',
-      field: 'shopType',
+      headerName: 'Shop Type',
+      propertyName: 'shopType',
     },
     {
-      header: 'Action',
-      field: 'action',
+      headerName: 'Action',
+      propertyName: 'action',
       body: (rowData: ICuisine) => (
         <div className="three-dots">
           {isEditDeletePopupOpen._id === rowData?._id &&
@@ -170,6 +176,7 @@ export default function CuisineTable({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setIsEditDeletePopupOpen]);
+
   return (
     <>
       <DeleteDialog
@@ -186,13 +193,30 @@ export default function CuisineTable({
         loading={deleteCuisineLoading}
         message="Are you sure to delete the cuisine?"
       />
-      <GenericTable
+      {/* <GenericTable
         columns={cuisineColums}
         data={data ?? []}
         onSelectionChange={(e) => setSelectedData(e as ICuisine[])}
         selection={selectedData}
         loading={loading}
         filters={filters}
+      /> */}
+      <Table
+        columns={cuisineColums}
+        data={data ?? []}
+        selectedData={selectedData}
+        setSelectedData={(e) => setSelectedData(e as ICuisine[])}
+        filters={filters}
+        loading={loading}
+        header={
+          <TableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={onGlobalFilterChange}
+            selectedStatuses={selectedStatuses}
+            setSelectedStatuses={setSelectedStatuses}
+            statusOptions={statusOptions}
+          />
+        }
       />
     </>
   );
