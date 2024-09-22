@@ -8,7 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
+
+// Utilities
 import { twMerge } from 'tailwind-merge';
+
+// Components
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 // Styles

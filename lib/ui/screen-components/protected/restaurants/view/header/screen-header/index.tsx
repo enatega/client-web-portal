@@ -17,7 +17,7 @@ export default function RestaurantsScreenHeader() {
   // Context
   const { onRestaurantsFormVisible } = useContext(RestaurantsContext);
   return (
-    <div className="w-full flex-shrink-0 sm:block hidden">
+    <div className="w-full flex-shrink-0">
       <div className="flex w-full justify-between">
         <HeaderText text="Restaurants" />
         <TextIconClickable

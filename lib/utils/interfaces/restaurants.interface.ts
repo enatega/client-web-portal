@@ -28,7 +28,7 @@ export interface IRestaurantsAddFormComponentProps
   extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
 }
-export interface IRestaurantsHeaderProps {
+export interface IRestaurantsTableHeaderProps {
   globalFilterValue: string;
   onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedActions: string[];

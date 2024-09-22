@@ -12,7 +12,6 @@ import {
 } from '@/lib/utils/interfaces/users.interface';
 
 // Components
-import CustomTextField from '@/lib/ui/useable-components/input-field';
 import { USERS_TABLE_COLUMNS } from '@/lib/utils/constants';
 
 //Toast
@@ -21,6 +20,8 @@ import Table from '@/lib/ui/useable-components/table';
 
 // GraphQL
 import { GET_USERS } from '@/lib/api/graphql';
+import { generateDummyUsers } from '@/lib/utils/dummy';
+import UsersTableHeader from '../header/table-header';
 
 export default function UsersMain() {
   // State - Table
@@ -45,23 +46,16 @@ export default function UsersMain() {
   };
 
   return (
-    <div className="mx-[-14px]">
+    <div className="pt-5">
       <Table
         header={
-          <div className="w-fit mb-2 ml-[-8px] ">
-            <CustomTextField
-              type="text"
-              name="riderFilter"
-              maxLength={35}
-              showLabel={false}
-              value={globalFilterValue}
-              onChange={onGlobalFilterChange}
-              placeholder="Keyword Search"
-            />
-          </div>
+          <UsersTableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={onGlobalFilterChange}
+          />
         }
         loading={loading}
-        data={data?.users || []}
+        data={data?.users || (loading ? generateDummyUsers() : [])}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}

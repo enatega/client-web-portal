@@ -146,8 +146,6 @@ export default function VendorDetails({
   const onSelectVendor = () => {
     const _id = restaurantsContextData?.vendor?._id;
 
-    console.log({ vendorId: _id });
-
     if (!_id) return;
 
     setFormValues({

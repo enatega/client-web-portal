@@ -40,9 +40,14 @@ const Table = <T extends ITableExtends>({
       selection={selectedData}
       onSelectionChange={handleSelectionChange}
       dataKey="_id"
-      tableStyle={{ minWidth: '50rem' }}
+      tableStyle={{
+        minWidth: '50rem',
+        minHeight: 'auto',
+        maxHeight: '500px',
+      }}
       selectionMode="checkbox"
       filters={filters}
+      scrollable={true}
     >
       <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
       {columns.map((col, index) => (

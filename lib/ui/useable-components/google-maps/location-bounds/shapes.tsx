@@ -1,4 +1,5 @@
 import { CircleSVG } from '@/lib/utils/assets/svgs/circle';
+import { PointLineSVG } from '@/lib/utils/assets/svgs/point-line';
 import { PolygonSVG } from '@/lib/utils/assets/svgs/polygon';
 import { ICustomShapeComponentProps } from '@/lib/utils/interfaces';
 
@@ -7,6 +8,17 @@ export default function CustomShape({
   onClick,
 }: ICustomShapeComponentProps) {
   const items = [
+    {
+      value: 'point',
+      child: (
+        <>
+          <PointLineSVG
+            strokeColor={selected === 'point' ? 'white' : 'black'}
+          />
+          <p className="mt-2 text-center">Point</p>
+        </>
+      ),
+    },
     {
       value: 'radius',
       child: (

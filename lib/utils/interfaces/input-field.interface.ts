@@ -1,6 +1,6 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { InputMaskChangeEvent } from 'primereact/inputmask';
-import { CSSProperties } from 'react';
+import { CSSProperties, HTMLInputAutoCompleteAttribute } from 'react';
 import { TNumberMode } from '../types';
 import { IGlobalComponentProps } from './global.interface';
 // Global
@@ -50,6 +50,7 @@ export interface INumberTextFieldProps
 }
 export interface IPasswordTextFieldProps
   extends Omit<IGlobalTextFieldProps, 'type'> {
+  autoComplete?: HTMLInputAutoCompleteAttribute | undefined;
   feedback?: boolean;
   iconProperties?: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;

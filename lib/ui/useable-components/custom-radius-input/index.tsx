@@ -18,6 +18,7 @@ export default function CustomRadiusInputField({
   name,
   value,
   loading = false,
+  showLabel,
   onChange,
   ...props
 }: ICustomRadiusInputFieldComponentProps) {
@@ -40,9 +41,11 @@ export default function CustomRadiusInputField({
 
   return !loading ? (
     <div className="flex flex-col gap-2">
-      <label htmlFor={name} className="text-sm font-medium text-gray-600">
-        {placeholder}
-      </label>
+      {showLabel && (
+        <label htmlFor={name} className="text-sm font-medium text-gray-600">
+          {placeholder}
+        </label>
+      )}
 
       <div className="relative flex items-center">
         {/* Decrease */}

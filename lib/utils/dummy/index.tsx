@@ -9,6 +9,8 @@ import {
   IRestaurantResponse,
   IStatsCardProps,
 } from '../interfaces';
+import { IRiderResponse } from '../interfaces/rider.interface';
+import { IUserResponse } from '../interfaces/users.interface';
 
 export const dummyStatsData: IStatsCardProps[] = [
   {
@@ -126,4 +128,48 @@ export const generateDummyRestaurants = (
   }
 
   return restaurants;
+};
+
+export const generateDummyRiders = (count: number = 10): IRiderResponse[] => {
+  const riders: IRiderResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    riders.push({
+      _id: `rider_${i + 1}`,
+      name: `Rider ${i + 1}`,
+      username: `rider${i + 1}`,
+      password: `password${i + 1}`,
+      phone: `+1234567890${i}`,
+      zone: {
+        title: `Zone ${(i % 5) + 1}`,
+        _id: `zone_${(i % 5) + 1}`,
+        __typename: 'Zone',
+      },
+      available: Math.random() > 0.5,
+      __typename: 'Rider',
+    });
+  }
+
+  return riders;
+};
+
+export const generateDummyUsers = (count: number = 10): IUserResponse[] => {
+  const users: IUserResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    users.push({
+      _id: `user_${i + 1}`,
+      name: `User ${i + 1}`,
+      email: `user${i + 1}@example.com`,
+      phone: `+1${Math.floor(1000000000 + Math.random() * 9000000000)}`,
+      addresses: [],
+
+      createdAt: (
+        Date.now() - Math.floor(Math.random() * 31536000000)
+      ).toString(),
+      __typename: 'User',
+    });
+  }
+
+  return users;
 };
