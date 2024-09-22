@@ -178,7 +178,7 @@ export default function CuisineTable({
   }, [setIsEditDeletePopupOpen]);
 
   return (
-    <>
+    <div>
       <DeleteDialog
         onConfirm={deleteItem}
         onHide={() =>
@@ -210,6 +210,6 @@ export default function CuisineTable({
           />
         }
       />
-    </>
+    </div>
   );
 }

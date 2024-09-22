@@ -31,11 +31,15 @@ export interface IAddCouponProps {
   >;
   coupons: ICoupon[];
   isEditing: IEditState<ICoupon>;
+
+  visible: boolean;
 }
+
 export interface IEditPopupVal {
   _id: string;
   bool: boolean;
 }
+
 export interface ICouponsTableProps {
   data: ICoupon[] | null | undefined;
   loading: boolean;
@@ -68,12 +72,10 @@ export interface ICouponStatuses {
 }
 
 export interface ICouponScreenHeaderProps {
-  setVisible: Dispatch<SetStateAction<boolean>>;
-  setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
-  handleAddCouponLocally: (coupon: ICoupon) => void;
-  setIsEditing: Dispatch<SetStateAction<IEditState<ICoupon>>>;
-  visible: boolean;
-  isEditing: IEditState<ICoupon>;
-  coupons: ICoupon[];
   handleButtonClick: () => void;
+}
+
+export interface ICouponMainProps {
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }

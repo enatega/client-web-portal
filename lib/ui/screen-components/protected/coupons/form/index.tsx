@@ -27,15 +27,17 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 //hooks
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 import { useMutation } from '@apollo/client';
+import { Sidebar } from 'primereact/sidebar';
 import { useContext } from 'react';
 
 export default function CouponForm({
+  setIsEditing,
   setVisible,
   setCoupons,
-  isEditing,
-  setIsEditing,
-  coupons,
   handleAddCouponLocally,
+  isEditing,
+  visible,
+  coupons,
 }: IAddCouponProps) {
   //initial values
   const initialValues = {
@@ -53,7 +55,11 @@ export default function CouponForm({
   const { showToast } = useContext(ToastContext);
 
   return (
-    <div className="flex flex-col gap-4">
+    <Sidebar
+      visible={visible}
+      onHide={() => setVisible(false)}
+      position="right"
+    >
       <Formik
         initialValues={initialValues}
         validationSchema={CouponFormSchema}
@@ -208,6 +214,6 @@ export default function CouponForm({
           );
         }}
       </Formik>
-    </div>
+    </Sidebar>
   );
 }

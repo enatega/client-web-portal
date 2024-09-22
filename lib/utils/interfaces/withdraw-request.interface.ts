@@ -39,15 +39,11 @@ export interface IWithDrawRequestsTableProps {
   data: IWithDrawRequest[] | undefined | null;
   loading: boolean;
   filters?: IFilterType;
-  setIsEditing: Dispatch<SetStateAction<IEditState<IWithDrawRequest>>>;
-  setIsDeleting: Dispatch<SetStateAction<IEditState<IWithDrawRequest>>>;
-  isDeleting: IEditState<IWithDrawRequest>;
-  setVisible: Dispatch<SetStateAction<boolean>>;
-  visible: boolean;
-  setRequests: Dispatch<SetStateAction<IWithDrawRequest[]>>;
   globalFilterValue: string;
-  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
   statusOptions: IDropdownSelectItem[];
-  setSelectedStatuses: Dispatch<SetStateAction<string[]>>;
   selectedStatuses: string[];
+  setIsEditing: Dispatch<SetStateAction<IEditState<IWithDrawRequest>>>;
+  setRequests: Dispatch<SetStateAction<IWithDrawRequest[]>>;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  setSelectedStatuses: Dispatch<SetStateAction<string[]>>;
 }
