@@ -1,6 +1,6 @@
-import { DataTableFilterMeta } from 'primereact/datatable';
-import { Dispatch, SetStateAction } from 'react';
-import { IEditState } from './global.interface';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { IDropdownSelectItem, IEditState } from './global.interface';
+import { IFilterType } from './table.interface';
 
 export interface IWithDrawRequest {
   _id: string;
@@ -36,11 +36,16 @@ export interface IWithDrawRequestFormProps {
 export interface IWithDrawRequestsTableProps {
   data: IWithDrawRequest[] | undefined | null;
   loading: boolean;
-  filters?: DataTableFilterMeta;
+  filters?: IFilterType;
   setIsEditing: Dispatch<SetStateAction<IEditState<IWithDrawRequest>>>;
   setIsDeleting: Dispatch<SetStateAction<IEditState<IWithDrawRequest>>>;
   isDeleting: IEditState<IWithDrawRequest>;
   setVisible: Dispatch<SetStateAction<boolean>>;
   visible: boolean;
   setRequests: Dispatch<SetStateAction<IWithDrawRequest[]>>;
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  statusOptions: IDropdownSelectItem[];
+  setSelectedStatuses: Dispatch<SetStateAction<string[]>>;
+  selectedStatuses: string[];
 }

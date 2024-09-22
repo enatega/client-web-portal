@@ -2,18 +2,14 @@
 import { GET_ALL_WITHDRAW_REQUESTS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import WithdrawTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/withdraw-requests/WithdrawTable';
-import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
-import CustomTextField from '@/lib/ui/useable-components/input-field';
 import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   IGetWithDrawRequestsData,
   IWithDrawRequest,
 } from '@/lib/utils/interfaces/withdraw-request.interface';
-import { gql, useQuery } from '@apollo/client';
 
 //icons
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 //prime react
 import { FilterMatchMode } from 'primereact/api';
@@ -23,6 +19,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function WithdrawRequestScreen() {
   //states
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [requests, setRequests] = useState<IWithDrawRequest[]>([]);
   const [isDeleting, setIsDeleting] = useState<IEditState<IWithDrawRequest>>({
     bool: false,
@@ -56,15 +53,18 @@ export default function WithdrawRequestScreen() {
   });
   const [visible, setVisible] = useState(false);
 
-  //testing
-  const { loading: withdraw_request_loading, data: withdraw_request_data } =
-    useQuery(gql`
-      ${GET_ALL_WITHDRAW_REQUESTS}
-    `);
   //queries
   const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
     fetchPolicy: 'cache-and-network',
   }) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
+
+  //options
+  let statusOptions = [
+    {
+      label: '',
+      code: '',
+    },
+  ];
 
   //filters
   const [filters, setFilters] = useState({
@@ -87,42 +87,24 @@ export default function WithdrawRequestScreen() {
   useEffect(() => {
     fetch();
   }, []);
+
   useEffect(() => {
     if (data) {
       console.log({
-        data: withdraw_request_data.getAllWithdrawRequests,
+        data: data.withdrawrequests,
         data2: data.withdrawrequests,
         isEditing,
-        withdraw_request_loading,
+        loading,
       });
 
-      setRequests(withdraw_request_data.withdrawrequests);
+      setRequests(data.withdrawrequests);
     }
   }, [data]);
 
   return (
-    <div className="flex flex-col items-center w-full">
-      <div className="flex justify-between items-center px-5 w-full">
+    <div className="flex flex-col mb-3 gap-6">
+      <div className="flex justify-between items-center p-2 w-full">
         <HeaderText text="Withdraw Requests" className="mx-5" />
-      </div>
-      <div className="self-start flex items-center justify-center gap-x-3 m-3">
-        <CustomTextField
-          name="searchQuery"
-          onChange={onGlobalFilterChange}
-          value={globalFilterValue}
-          showLabel={false}
-          placeholder="Filter tasks..."
-          type="text"
-          className="w-app-bar-search-width h-custom-button"
-        />
-        <CustomActionActionButton
-          Icon={faPlus}
-          title="Action"
-          handleOptionChange={() => {}}
-          selectedOption={null}
-          statusOptions={[{ label: '', code: '' }]}
-          name="withdraw_requests"
-        />
       </div>
       <WithdrawTable
         data={requests}
@@ -134,6 +116,11 @@ export default function WithdrawRequestScreen() {
         setIsEditing={setIsEditing}
         setVisible={setVisible}
         visible={visible}
+        globalFilterValue={globalFilterValue}
+        onGlobalFilterChange={onGlobalFilterChange}
+        selectedStatuses={selectedStatuses}
+        setSelectedStatuses={setSelectedStatuses}
+        statusOptions={statusOptions}
       />
     </div>
   );

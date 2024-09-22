@@ -1,11 +1,9 @@
 //components
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
-import GenericTable from '@/lib/ui/useable-components/global-table';
 
 //contexts
 
 //interfaces
-import { ITableColumn } from '@/lib/utils/interfaces';
 import { IEditPopupVal } from '@/lib/utils/interfaces/coupons.interface';
 import {
   IWithDrawRequest,
@@ -16,6 +14,9 @@ import {
 import { useRef, useState } from 'react';
 
 //icons
+import Table from '@/lib/ui/useable-components/table';
+import TableHeader from '@/lib/ui/useable-components/table-header';
+import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -24,10 +25,15 @@ export default function WithdrawTable({
   setIsEditing,
   setIsDeleting,
   setVisible,
-  //   isDeleting,
+  // isDeleting,
   visible,
   loading,
   filters,
+  globalFilterValue,
+  onGlobalFilterChange,
+  statusOptions,
+  setSelectedStatuses,
+  selectedStatuses,
 }: IWithDrawRequestsTableProps) {
   //toast
   //   const { showToast } = useContext(ToastContext);
@@ -44,22 +50,22 @@ export default function WithdrawTable({
   const [selectedData, setSelectedData] = useState<IWithDrawRequest[]>([]);
 
   //columns
-  const requestsColumns: ITableColumn<IWithDrawRequest>[] = [
+  const requestsColumns: IColumnConfig<IWithDrawRequest>[] = [
     {
-      header: 'Name',
-      field: 'name',
+      headerName: 'Name',
+      propertyName: 'name',
     },
     {
-      header: 'Vendor',
-      field: 'description',
+      headerName: 'Vendor',
+      propertyName: 'description',
     },
     {
-      header: 'Shop Type',
-      field: 'shopType',
+      headerName: 'Shop Type',
+      propertyName: 'shopType',
     },
     {
-      header: 'Action',
-      field: 'action',
+      headerName: 'Action',
+      propertyName: 'action',
       body: (rowData: IWithDrawRequest) => (
         <div className="three-dots">
           {isEditDeletePopupOpen._id === rowData?._id &&
@@ -91,15 +97,22 @@ export default function WithdrawTable({
     },
   ];
   return (
-    <div>
-      <GenericTable
-        columns={requestsColumns}
-        data={data}
-        loading={loading}
-        filters={filters}
-        onSelectionChange={(e) => setSelectedData(e as IWithDrawRequest[])}
-        selection={selectedData}
-      />
-    </div>
+    <Table
+      columns={requestsColumns}
+      data={data ?? []}
+      selectedData={selectedData}
+      setSelectedData={(e) => setSelectedData(e as IWithDrawRequest[])}
+      filters={filters}
+      loading={loading}
+      header={
+        <TableHeader
+          globalFilterValue={globalFilterValue}
+          onGlobalFilterChange={onGlobalFilterChange}
+          selectedStatuses={selectedStatuses}
+          setSelectedStatuses={setSelectedStatuses}
+          statusOptions={statusOptions}
+        />
+      }
+    />
   );
 }

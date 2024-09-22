@@ -32,7 +32,7 @@ export default function TableHeader({
   };
 
   return (
-    <div className="w-fit flex flex-colm:flex-row items-center gap-2 mx-2">
+    <div className="w-fit flex flex-colm:flex-row items-center gap-2 mx-2 my-2">
       <div className="w-60">
         <CustomTextField
           name="searchQuery"
