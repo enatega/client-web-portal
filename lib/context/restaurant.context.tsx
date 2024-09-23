@@ -83,7 +83,7 @@ export const RestaurantProvider = ({ children }: IProvider) => {
   const onHandlerFilterData = () => {
     const _filtered: IRestaurantByOwner[] = onFilterObjects(
       restaurantByOwnerResponse?.data?.restaurantByOwner?.restaurants ?? [],
-      restaurantContextData.globalFilter,
+      restaurantContextData?.globalFilter ?? '',
       ['name', 'address', 'shopType']
     );
 
@@ -95,7 +95,7 @@ export const RestaurantProvider = ({ children }: IProvider) => {
   // Use Effect
   useEffect(() => {
     onHandlerFilterData();
-  }, [restaurantContextData.globalFilter]);
+  }, [restaurantContextData?.globalFilter]);
 
   useEffect(() => {
     restaurantByOwnerResponse.refetch();
