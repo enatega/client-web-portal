@@ -24,15 +24,19 @@ export default function CustomCommissionTextField({
   };
 
   const handleIncrease = () => {
-    const currentValue = parseFloat(value as string) || 0;
-    if (currentValue < MAX_VALUE) {
+    const currentValue = parseFloat(value as string);
+    if (isNaN(currentValue)) {
+      handleChange(MIN_VALUE.toString());
+    } else if (currentValue < MAX_VALUE) {
       handleChange((currentValue + 1).toString());
     }
   };
 
   const handleDecrease = () => {
-    const currentValue = parseFloat(value as string) || 0;
-    if (currentValue > MIN_VALUE) {
+    const currentValue = parseFloat(value as string);
+    if (isNaN(currentValue)) {
+      handleChange(MIN_VALUE.toString());
+    } else if (currentValue > MIN_VALUE) {
       handleChange((currentValue - 1).toString());
     }
   };

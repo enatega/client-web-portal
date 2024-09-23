@@ -162,24 +162,26 @@ export const generateDummyCommissionRates = (
     dummyCommissionRates.push({
       _id: `restaurant_${i + 1}`,
       name: `Restaurant ${i + 1}`,
-      commissionRate: Math.floor(Math.random() * 20) + 1, // Random commission rate between 1 and 20
+      commissionRate: Math.floor(Math.random() * 10) + 5, // Random commission rate between 5 and 15
+      isActive: Math.random() > 0.2, // 80% chance of being active
       __typename: 'Restaurant',
       image: '',
       orderPrefix: '',
       slug: '',
       address: '',
-      deliveryTime: 0,
-      minimumOrder: 0,
-      isActive: false,
-      tax: 0,
-      username: '',
+      deliveryTime: Math.floor(Math.random() * 60) + 15, // Random delivery time between 15 and 75 minutes
+      minimumOrder: Math.floor(Math.random() * 20) + 5, // Random minimum order between $5 and $25
+      tax: Math.floor(Math.random() * 10) + 5, // Random tax between 5% and 15%
+      username: `restaurant${i + 1}`,
       owner: {
-        _id: '',
-        email: '',
-        isActive: false,
-        __typename: '',
+        _id: `owner_${i + 1}`,
+        email: `owner${i + 1}@example.com`,
+        isActive: true,
+        __typename: 'Owner',
       },
-      shopType: '',
+      shopType: ['Fast Food', 'Casual Dining', 'Fine Dining'][
+        Math.floor(Math.random() * 3)
+      ],
     });
   }
 

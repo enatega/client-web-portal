@@ -1,7 +1,5 @@
 .next
 dist
 node_modules
-package
 build
 coverage
-*.html

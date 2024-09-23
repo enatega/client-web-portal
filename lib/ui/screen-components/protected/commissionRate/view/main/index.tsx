@@ -34,11 +34,24 @@ export default function CommissionRateMain() {
 
   const [updateCommissionMutation] = useMutation(updateCommission);
 
+  const COMMISSION_RATE_ACTIONS = {
+    MORE_THAN_5: 'More than 5%',
+    MORE_THAN_10: 'More than 10%',
+    MORE_THAN_20: 'More than 20%',
+  };
+
   useEffect(() => {
     if (data?.restaurants) {
       setRestaurants(data.restaurants);
     } else if (error) {
       console.error('Error fetching restaurants:', error);
+      showToast({
+        type: 'error',
+        title: 'Error Fetching Restaurants',
+        message:
+          'An error occurred while fetching restaurants. Please try again later.',
+        duration: 2000,
+      });
     }
   }, [data, error]);
 
@@ -87,7 +100,11 @@ export default function CommissionRateMain() {
           : restaurant
       )
     );
-    setEditingRestaurantIds((prev) => new Set(prev).add(restaurantId));
+    setEditingRestaurantIds((prev) => {
+      const newSet = new Set(prev);
+      newSet.add(restaurantId);
+      return newSet;
+    });
   };
 
   const getFilteredRestaurants = () => {
@@ -114,11 +131,11 @@ export default function CommissionRateMain() {
       // Apply commission rate filters
       return selectedActions.some((action) => {
         switch (action) {
-          case 'More than 5%':
+          case COMMISSION_RATE_ACTIONS.MORE_THAN_5:
             return restaurant.commissionRate > 5;
-          case 'More than 10%':
+          case COMMISSION_RATE_ACTIONS.MORE_THAN_10:
             return restaurant.commissionRate > 10;
-          case 'More than 20%':
+          case COMMISSION_RATE_ACTIONS.MORE_THAN_20:
             return restaurant.commissionRate > 20;
           default:
             return false;
