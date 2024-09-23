@@ -16,12 +16,14 @@ export default function BannerScreen() {
   const [banner, setBanner] = useState<IBannersResponse | null>(null);
 
   return (
-    <div className="px-10 pt-5">
+    <div className="flex flex-col p-3 h-screen overflow-hidden">
       <BannersHeader setIsAddBannerVisible={setIsAddBannerVisible} />
-      <BannersMain
-        setIsAddBannerVisible={setIsAddBannerVisible}
-        setBanner={setBanner}
-      />
+      <div className="flex-grow overflow-y-auto">
+        <BannersMain
+          setIsAddBannerVisible={setIsAddBannerVisible}
+          setBanner={setBanner}
+        />
+      </div>
       <BannersAddForm
         banner={banner}
         onHide={() => {

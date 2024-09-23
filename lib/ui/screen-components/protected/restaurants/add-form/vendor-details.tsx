@@ -1,3 +1,5 @@
+'use client';
+
 // Core
 import { ApolloError, useMutation } from '@apollo/client';
 import { Form, Formik } from 'formik';
@@ -143,8 +145,6 @@ export default function VendorDetails({
 
   const onSelectVendor = () => {
     const _id = restaurantsContextData?.vendor?._id;
-
-    console.log({ vendorId: _id });
 
     if (!_id) return;
 

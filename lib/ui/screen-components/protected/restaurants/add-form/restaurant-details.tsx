@@ -1,19 +1,18 @@
+'use client';
+
 // Core
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from 'formik';
 import { useContext, useMemo } from 'react';
 
-// Prime React
-
 // Interface and Types
 import {
+  ICreateRestaurant,
   ICreateRestaurantResponse,
   IDropdownSelectItem,
   IQueryResult,
   IRestaurantsResponseGraphQL,
 } from '@/lib/utils/interfaces';
-
-// Core
 
 // Component
 import CustomButton from '@/lib/ui/useable-components/button';
@@ -25,8 +24,6 @@ import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-
 
 // Constants
 import { RestaurantErrors, SHOP_TYPE } from '@/lib/utils/constants';
-
-// Dummy
 
 // Interface
 import { IRestaurantForm } from '@/lib/utils/interfaces';
@@ -80,18 +77,34 @@ export default function RestaurantDetailsForm({
   };
   // Context
   const { showToast } = useContext(ToastContext);
-  const { restaurantsContextData } = useContext(RestaurantsContext);
+  const { restaurantsContextData, onSetRestaurantsContextData } =
+    useContext(RestaurantsContext);
 
   // API
   // Mutation
   const [createRestaurant] = useMutation(CREATE_RESTAURANT, {
     onError,
-    onCompleted: () => {
+    onCompleted: ({
+      createRestaurant,
+    }: {
+      createRestaurant?: ICreateRestaurant;
+    }) => {
       showToast({
         type: 'success',
         title: 'New Restaurant',
         message: `Restaurant has been added successfully`,
         duration: 3000,
+      });
+
+      onSetRestaurantsContextData({
+        ...restaurantsContextData,
+        restaurant: {
+          ...restaurantsContextData?.restaurant,
+          _id: {
+            label: createRestaurant?.username ?? '',
+            code: createRestaurant?._id ?? '',
+          },
+        },
       });
 
       onStepChange(order + 1);
@@ -140,6 +153,7 @@ export default function RestaurantDetailsForm({
             username: data.username,
             password: data.password,
             shopType: data.shopType?.code,
+            salesTax: data.salesTax,
             cuisines: data.cuisines.map(
               (cuisin: IDropdownSelectItem) => cuisin.code
             ),
@@ -336,7 +350,7 @@ export default function RestaurantDetailsForm({
                           name="deliveryTime"
                           showLabel={true}
                           value={values.deliveryTime}
-                          onChange={handleChange}
+                          onChange={setFieldValue}
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'deliveryTime',
@@ -438,12 +452,30 @@ export default function RestaurantDetailsForm({
                           name="logo"
                           title="Upload Logo"
                           onSetImageUrl={setFieldValue}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'logo',
+                              errors?.logo as string,
+                              RestaurantErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
                         />
                         <CustomUploadImageComponent
                           key={'image'}
                           name="image"
                           title="Upload Image"
                           onSetImageUrl={setFieldValue}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'image',
+                              errors?.image as string,
+                              RestaurantErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
                         />
                       </div>
 

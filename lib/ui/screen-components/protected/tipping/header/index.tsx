@@ -1,14 +1,16 @@
+// Interface and Types
+
 // Components
 import HeaderText from '@/lib/ui/useable-components/header-text';
 
-const UserHeader = () => {
+const TippingHeader = () => {
   return (
-    <div className="flex flex-col mx-[-15px] mb-4 gap-6">
+    <div className="w-full flex-shrink-0">
       <div className="flex w-full justify-between">
-        <HeaderText className="heading" text="Users" />
+        <HeaderText text="Tipping" />
       </div>
     </div>
   );
 };
 
-export default UserHeader;
+export default TippingHeader;

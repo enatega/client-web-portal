@@ -51,11 +51,7 @@ export default function RootLayout({
             <ConfigurationProvider>
               <LayoutProvider>
                 <SidebarProvider>
-                  {/*   <VendorProvider>
-                    <RestaurantProvider> */}
                   <ToastProvider>{children}</ToastProvider>
-                  {/*   </RestaurantProvider>
-                  </VendorProvider> */}
                 </SidebarProvider>
               </LayoutProvider>
             </ConfigurationProvider>

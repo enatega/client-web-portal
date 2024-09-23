@@ -245,6 +245,7 @@ export default function VendorAddForm({
 
                         <div className={`${hiddenClass}`}>
                           <CustomPasswordTextField
+                            autoComplete="new-password"
                             placeholder="Password"
                             name="password"
                             maxLength={20}
@@ -265,6 +266,7 @@ export default function VendorAddForm({
 
                         <div className={`${hiddenClass}`}>
                           <CustomPasswordTextField
+                            autoComplete="new-password"
                             placeholder="Confirm Password"
                             name="confirmPassword"
                             maxLength={20}

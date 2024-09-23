@@ -13,7 +13,7 @@ import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 // Interfaces
-import { IRestaurantsHeaderProps } from '@/lib/utils/interfaces';
+import { IRestaurantsTableHeaderProps } from '@/lib/utils/interfaces';
 
 // Styles
 import classes from '../restaurants.module.css';
@@ -23,7 +23,7 @@ export default function RestaurantsTableHeader({
   onGlobalFilterChange,
   selectedActions,
   setSelectedActions,
-}: IRestaurantsHeaderProps) {
+}: IRestaurantsTableHeaderProps) {
   // States
   const [searchValue, setSearchValue] = useState<string>('');
   const overlayPanelRef = useRef<OverlayPanel>(null);

@@ -42,6 +42,8 @@ export const RestaurantErrors: IRestaurantFormErrors = {
   salesTax: ['Required'],
   shopType: ['Required'],
   cuisines: ['Required', 'Cuisines field must have at least 1 items'],
+  image: ['Required', 'Invalid image URL'],
+  logo: ['Required', 'Invalid logo URL'],
 };
 
 export const RiderErrors: IRiderErrors = {

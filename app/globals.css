@@ -408,4 +408,39 @@ body {
 
 .p-stepper-number {
   font-size: 16px;
+  background-color: var(--primary-color);
+}
+
+/* Sidebar */
+.p-stepper-panels {
+  padding: 0;
+}
+
+/* Auto Complet */
+.p-autocomplete {
+  padding: 0;
+  border: 0;
+}
+.p-autocomplete-input {
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 35px;
+  outline: none;
+  box-shadow: none;
+  border: 1px solid lightgray;
+  border-right: 0;
+}
+
+.p-autocomplete-panel {
+  margin-top: 2px;
+}
+
+.p-autocomplete-item:hover {
+  background-color: var(--secondary-color);
+}
+
+.p-autocomplete-dropdown {
+  background-color: white;
+  height: 2.62rem;
+  margin-top: 1px;
 }

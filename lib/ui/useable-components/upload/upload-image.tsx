@@ -16,6 +16,7 @@ function CustomUploadImageComponent({
   onSetImageUrl,
   showExistingImage,
   existingImageUrl,
+  style,
 }: IImageUploadComponentProps) {
   // Context
   const configuration: IConfiguration | undefined =
@@ -95,9 +96,9 @@ function CustomUploadImageComponent({
 
   return (
     <div className="flex flex-col gap-y-2 items-center justify-center mt-3 p-4">
-      <div className="relative w-20 h-20">
+      <div className="relative w-20 h-20" style={style}>
         {imageFile ? (
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-full borde">
             <Image
               className="w-full h-full rounded-full border border-gray-300"
               alt="User avatar"
@@ -131,6 +132,7 @@ function CustomUploadImageComponent({
             <Avatar
               label="Image"
               className="w-full h-full rounded-full border border-gray-300"
+              style={style}
             />
             {isUploading && (
               <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
