@@ -345,7 +345,7 @@ export default function RestaurantAddForm({
                             name="deliveryTime"
                             showLabel={true}
                             value={values.deliveryTime}
-                            onChange={handleChange}
+                            onChange={setFieldValue}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'deliveryTime',
