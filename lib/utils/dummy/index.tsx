@@ -153,6 +153,39 @@ export const generateDummyRiders = (count: number = 10): IRiderResponse[] => {
   return riders;
 };
 
+export const generateDummyCommissionRates = (
+  count: number = 10
+): IRestaurantResponse[] => {
+  const dummyCommissionRates: IRestaurantResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    dummyCommissionRates.push({
+      _id: `restaurant_${i + 1}`,
+      name: `Restaurant ${i + 1}`,
+      commissionRate: Math.floor(Math.random() * 20) + 1, // Random commission rate between 1 and 20
+      __typename: 'Restaurant',
+      image: '',
+      orderPrefix: '',
+      slug: '',
+      address: '',
+      deliveryTime: 0,
+      minimumOrder: 0,
+      isActive: false,
+      tax: 0,
+      username: '',
+      owner: {
+        _id: '',
+        email: '',
+        isActive: false,
+        __typename: '',
+      },
+      shopType: '',
+    });
+  }
+
+  return dummyCommissionRates;
+};
+
 export const generateDummyUsers = (count: number = 10): IUserResponse[] => {
   const users: IUserResponse[] = [];
 
