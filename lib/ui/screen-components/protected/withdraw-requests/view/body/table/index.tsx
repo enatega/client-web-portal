@@ -9,13 +9,19 @@ import {
 } from '@/lib/utils/interfaces/withdraw-request.interface';
 
 //hooks
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
-//icons
 import Table from '@/lib/ui/useable-components/table';
 import TableHeader from '@/lib/ui/useable-components/table-header';
+
+//interfaces
 import { IDropdownSelectItem } from '@/lib/utils/interfaces';
 import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
+
+//icons
+import { UPDATE_WITHDRAW_REQUEST } from '@/lib/api/graphql';
+import { ToastContext } from '@/lib/context/toast.context';
+import { useMutation } from '@apollo/client';
 import {
   faArrowsRotate,
   faCircleXmark,
@@ -23,6 +29,7 @@ import {
   faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { debounce } from 'lodash';
 import { Dropdown, DropdownProps } from 'primereact/dropdown';
 import { Tag } from 'primereact/tag';
 
@@ -38,7 +45,7 @@ export default function WithdrawTable({
   setRequests,
 }: IWithDrawRequestsTableProps) {
   //toast
-  //   const { showToast } = useContext(ToastContext);
+  const { showToast } = useContext(ToastContext);
 
   const [selectedData, setSelectedData] = useState<IWithDrawRequest[]>([]);
   const options = [
@@ -58,6 +65,19 @@ export default function WithdrawTable({
       body: () => <Tag value="Cancelled" severity="danger" rounded />,
     },
   ];
+  //mutation
+  const [updateWithdrawReqStatus] = useMutation(UPDATE_WITHDRAW_REQUEST, {
+    onError: (err) => {
+      showToast({
+        type: 'error',
+        title: 'Update Withdraw Request',
+        message:
+          err.graphQLErrors[0].message ||
+          err.networkError?.message ||
+          'Failed to update the request',
+      });
+    },
+  });
 
   // find severity
   function findSeverity(code: string) {
@@ -102,6 +122,7 @@ export default function WithdrawTable({
       </div>
     );
   };
+
   // handle drop down change
   const handleDropDownChange = (
     e: DropdownProps,
@@ -119,7 +140,22 @@ export default function WithdrawTable({
       status: e.value.code,
     };
     if (filteredRequests) {
+      debounce(
+        async () =>
+          await updateWithdrawReqStatus({
+            variables: {
+              id: rowData._id,
+              status: e.value.code,
+            },
+          }),
+        2000
+      );
       setRequests([newRequest, ...filteredRequests]);
+      showToast({
+        type: 'success',
+        title: 'Update Withdraw Request',
+        message: 'The withdraw request has been updated successfully',
+      });
     }
   };
 

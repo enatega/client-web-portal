@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //components
 
 //prime react
-import { InputSwitch } from 'primereact/inputswitch';
 
 //queries
 import { DELETE_COUPON, EDIT_COUPON } from '@/lib/api/graphql';
@@ -24,9 +23,9 @@ import { DELETE_COUPON, EDIT_COUPON } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 
 //lodash
-import { debounce } from 'lodash';
 
 //hooks
+import CustomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import Table from '@/lib/ui/useable-components/table';
@@ -65,6 +64,10 @@ export default function CouponTable({
       _id: '',
       bool: false,
     });
+  const [editCouponLoading, setEditCouponLoading] = useState({
+    _id: '',
+    bool: false,
+  });
   const [sortedData, setSortedData] = useState<ICoupon[] | null | undefined>();
   const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
 
@@ -72,19 +75,11 @@ export default function CouponTable({
   const { showToast } = useContext(ToastContext);
 
   // handle enabled toggle (locally)
-  function handleEnableField(rowData: ICoupon) {
-    const coupon = sortedData?.find((coupon) => coupon._id === rowData?._id);
-    const filteredData = sortedData?.filter(
-      (coupon) => coupon._id !== rowData?._id
-    );
-    const updatedCoupon = { ...rowData, enabled: !coupon?.enabled };
-    if (filteredData) {
-      setSortedData(() => [updatedCoupon, ...filteredData]);
-    }
-  }
-
-  //handle toggle mutation (edit)
-  async function handleSubmitToggleState(rowData: ICoupon) {
+  async function handleEnableField(rowData: ICoupon) {
+    setEditCouponLoading({
+      bool: true,
+      _id: rowData._id,
+    });
     try {
       const updatedCoupon = {
         _id: rowData?._id,
@@ -97,12 +92,24 @@ export default function CouponTable({
           couponInput: updatedCoupon,
         },
       });
+      setEditCouponLoading({
+        bool: false,
+        _id: '',
+      });
       showToast({
         title: 'Edit Coupon',
         type: 'info',
         message: 'Coupon Status has been edited successfully',
         duration: 2500,
       });
+      const coupon = sortedData?.find((coupon) => coupon._id === rowData?._id);
+      const filteredData = sortedData?.filter(
+        (coupon) => coupon._id !== rowData?._id
+      );
+      const newUpdatedCoupon = { ...rowData, enabled: !coupon?.enabled };
+      if (filteredData) {
+        setSortedData(() => [newUpdatedCoupon, ...filteredData]);
+      }
     } catch (err) {
       showToast({
         title: 'Edit Coupon',
@@ -110,11 +117,12 @@ export default function CouponTable({
         message: 'Something went wrong please try again',
         duration: 2500,
       });
+      setEditCouponLoading({
+        bool: false,
+        _id: '',
+      });
     }
   }
-
-  //debounce toggle state
-  const optimizedToggleFunction = debounce(handleSubmitToggleState, 2000);
 
   //handle final delete
   async function deleteItem() {
@@ -169,13 +177,19 @@ export default function CouponTable({
       headerName: 'Status',
       propertyName: 'enabled',
       body: (rowData: ICoupon) => (
-        <div className="flex gap-2 items-center w-full justify-between cursor-pointer overflow-y-auto">
-          <InputSwitch
-            checked={rowData?.enabled}
-            className={rowData?.enabled ? 'p-inputswitch-checked' : ''}
-            onChange={() => handleEnableField(rowData)}
-            onClick={() => optimizedToggleFunction(rowData)}
-          />
+        <div className="flex gap-2 items-center w-full justify-between cursor-pointer">
+          <div className="w-20 flex items-start">
+            <CustomInputSwitch
+              isActive={rowData.enabled}
+              className={
+                rowData?.enabled ? 'p-inputswitch-checked absolute' : 'absolute'
+              }
+              onChange={() => handleEnableField(rowData)}
+              loading={
+                editCouponLoading.bool && rowData._id === editCouponLoading._id
+              }
+            />
+          </div>
           {isEditDeletePopupOpen._id === rowData?._id &&
           isEditDeletePopupOpen.bool ? (
             <div className="editdeletepoup-container" ref={editDeletePopupRef}>
