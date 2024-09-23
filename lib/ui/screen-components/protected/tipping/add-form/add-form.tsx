@@ -31,8 +31,6 @@ const TippingAddForm = () => {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<ITippingResponse | undefined, undefined>;
 
-  console.log(data?.tips.tipVariations);
-
   // State
   const initialValues: ITippingsForm = {
     tip1: data?.tips?.tipVariations[0].toString() ?? '',

@@ -5,6 +5,7 @@ import {
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 import {
+  IBannersResponse,
   IDropdownSelectItem,
   IRestaurantResponse,
   IStatsCardProps,
@@ -172,4 +173,24 @@ export const generateDummyUsers = (count: number = 10): IUserResponse[] => {
   }
 
   return users;
+};
+
+export const generateDummyBanners = (
+  count: number = 10
+): IBannersResponse[] => {
+  const banners: IBannersResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    banners.push({
+      _id: `banner_${i + 1}`,
+      title: `Banner ${i + 1}`,
+      description: `Description for Banner ${i + 1}`,
+      file: `https://example.com/banner${i + 1}.jpg`,
+      screen: `Screen ${(i % 3) + 1}`,
+      action: 'navigate',
+      parameters: '',
+    });
+  }
+
+  return banners;
 };

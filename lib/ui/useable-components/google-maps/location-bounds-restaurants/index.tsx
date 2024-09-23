@@ -57,7 +57,7 @@ import { AutoComplete, AutoCompleteSelectEvent } from 'primereact/autocomplete';
 // Components
 import CustomButton from '../../button';
 import CustomRadiusInputField from '../../custom-radius-input';
-import CustomShape from './shapes';
+import CustomShape from '../shapes';
 
 const autocompleteService: {
   current: google.maps.places.AutocompleteService | null;

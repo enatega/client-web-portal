@@ -49,7 +49,7 @@ export default function VendorHeader({
             maxLength={35}
             placeholder="Search Vendors"
             showLabel={false}
-            value={globalFilter}
+            value={globalFilter ?? ''}
             onChange={(e) => onSetGlobalFilter(e.target.value)}
           />
         </div>

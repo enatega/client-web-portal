@@ -408,6 +408,7 @@ body {
 
 .p-stepper-number {
   font-size: 16px;
+  background-color: var(--primary-color);
 }
 
 /* Sidebar */

@@ -51,6 +51,6 @@ export const RestaurantSchema = Yup.object().shape({
     .min(1, 'Cuisines field must have at least 1 items')
     .required('Required'),
 
-  image: Yup.string().nullable(),
-  logo: Yup.string().nullable(),
+  image: Yup.string().url('Invalid image URL').required('Required'),
+  logo: Yup.string().url('Invalid logo URL').required('Required'),
 });

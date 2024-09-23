@@ -52,6 +52,14 @@ export interface INotificationComponentProps {
   title: string;
   message: string;
 }
+
+/* Stepper */
+
+export interface IStepperFormProps {
+  order: number;
+  isLastStep?: boolean;
+  onStepChange: (order: number) => void;
+}
 export interface IEditState<T> {
   bool: boolean;
   data: T;
