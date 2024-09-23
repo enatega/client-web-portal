@@ -1,25 +1,17 @@
+'use client';
+
 // Core
 import { Form, Formik } from 'formik';
 import { useState } from 'react';
 
-// Prime React
-
-// Context
-
 // Interface and Types
-import { IVendorForm } from '@/lib/utils/interfaces/forms';
-
-// Constants and Methods
-
-// Components
-
-// Schema
-
-// GraphQL
+import {
+  IRestaurantsRestaurantLocationComponentProps,
+  IVendorForm,
+} from '@/lib/utils/interfaces';
 
 // Icons
-import CustomButton from '@/lib/ui/useable-components/button';
-import { IRestaurantsRestaurantLocationComponentProps } from '@/lib/utils/interfaces/restaurants.interface';
+import CustomGoogleMapsLocationBounds from '@/lib/ui/useable-components/google-maps/location-bounds';
 
 const initialValues: IVendorForm = {
   name: '',
@@ -31,12 +23,8 @@ const initialValues: IVendorForm = {
 export default function RestaurantLocation({
   stepperProps,
 }: IRestaurantsRestaurantLocationComponentProps) {
-  // Props
-  const { onStepChange, order, isLastStep } = stepperProps ?? {
+  const { onStepChange } = stepperProps ?? {
     onStepChange: () => {},
-    type: '',
-    order: -1,
-    isLastStep: false,
   };
 
   // States
@@ -56,30 +44,13 @@ export default function RestaurantLocation({
               onSubmit={() => {}}
               validateOnChange
             >
-              {({
-                //    values,
-                //    errors,
-                //    handleChange,
-                handleSubmit,
-                isSubmitting,
-              }) => {
+              {({ handleSubmit }) => {
                 return (
                   <Form onSubmit={handleSubmit}>
-                    <div className="space-y-3 mb-2">
-                      <div className="flex justify-between mt-4">
-                        <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
-                          label="Back"
-                          type="button"
-                          onClick={() => onStepChange(order - 1)}
-                        />
-                        <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
-                          label={isLastStep ? 'Save' : 'Next'}
-                          type="submit"
-                          loading={isSubmitting}
-                        />
-                      </div>
+                    <div className="space-y-3 mb-2 ">
+                      <CustomGoogleMapsLocationBounds
+                        onStepChange={onStepChange}
+                      />
                     </div>
                   </Form>
                 );

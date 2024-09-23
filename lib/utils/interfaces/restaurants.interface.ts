@@ -1,9 +1,10 @@
 import { TSideBarFormPosition } from '../types/sidebar';
 import { IDropdownSelectItem, IGlobalComponentProps } from './global.interface';
 
-export interface IRestaurantsSelectedVendorData {
+export interface IRestaurantsContextPropData {
   restaurant?: {
     _id: IDropdownSelectItem | null;
+    autoCompleteAddress?: string;
   };
   vendor?: {
     _id: IDropdownSelectItem | null;
@@ -17,10 +18,8 @@ export interface IRestaurantsContextProps {
   activeIndex: number;
   onActiveStepChange: (activeStep: number) => void;
   onClearRestaurntsData: () => void;
-  restaurantsContextData: IRestaurantsSelectedVendorData | null;
-  onSetRestaurantsContextData: (
-    data: IRestaurantsSelectedVendorData | null
-  ) => void;
+  restaurantsContextData: IRestaurantsContextPropData | null;
+  onSetRestaurantsContextData: (data: IRestaurantsContextPropData) => void;
 }
 
 export interface IRestaurantsProvider extends IGlobalComponentProps {}
@@ -29,7 +28,7 @@ export interface IRestaurantsAddFormComponentProps
   extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
 }
-export interface IRestaurantsHeaderProps {
+export interface IRestaurantsTableHeaderProps {
   globalFilterValue: string;
   onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   selectedActions: string[];

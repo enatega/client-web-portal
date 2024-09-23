@@ -139,6 +139,7 @@ export default function RestaurantAddForm({
             username: data.username,
             password: data.password,
             shopType: data.shopType?.code,
+            tax: data.salesTax,
             cuisines: data.cuisines.map(
               (cuisin: IDropdownSelectItem) => cuisin.code
             ),
@@ -344,7 +345,7 @@ export default function RestaurantAddForm({
                             name="deliveryTime"
                             showLabel={true}
                             value={values.deliveryTime}
-                            onChange={handleChange}
+                            onChange={setFieldValue}
                             style={{
                               borderColor: onErrorMessageMatcher(
                                 'deliveryTime',

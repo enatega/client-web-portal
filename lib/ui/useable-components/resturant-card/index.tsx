@@ -10,13 +10,14 @@ import { IRestaurantCardProps } from '@/lib/utils/interfaces';
 import { onUseLocalStorage } from '@/lib/utils/methods';
 
 // Icons
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faStore } from '@fortawesome/free-solid-svg-icons';
 
 // Componetn
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import { useMutation } from '@apollo/client';
 import Image from 'next/image';
+import { Avatar } from 'primereact/avatar';
 import CustomButton from '../button';
 import CustomInputSwitch from '../custom-input-switch';
 import TextComponent from '../text-field';
@@ -59,13 +60,22 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-md border-2 border-[#F4F4F5] flex flex-col">
       <div className="flex items-center mb-4 rounded-t-lg bg-gray-200 p-4">
-        <Image
-          src={image}
-          alt="Restaurant logo"
-          className="rounded-full mr-3 w-10 h-10 flex-shrink-0"
-          width={40}
-          height={40}
-        />
+        {image ? (
+          <Image
+            src={image}
+            alt="Restaurant logo"
+            className="rounded-full mr-3 w-10 h-10 flex-shrink-0"
+            width={40}
+            height={40}
+          />
+        ) : (
+          <Avatar
+            icon={<FontAwesomeIcon icon={faStore} />}
+            className="mr-3"
+            size="large"
+            shape="circle"
+          />
+        )}
         <div className="flex-grow min-w-0">
           <TextComponent className={`card-h2 truncate`} text={name} />
 

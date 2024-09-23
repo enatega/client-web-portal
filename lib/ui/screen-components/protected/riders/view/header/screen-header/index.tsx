@@ -10,7 +10,7 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 const RiderHeader = ({ setIsAddRiderVisible }: IRiderHeaderProps) => {
   return (
-    <div className="flex flex-col mx-[-15px] mb-4 gap-6">
+    <div className="w-full flex-shrink-0">
       <div className="flex w-full justify-between">
         <HeaderText className="heading" text="Riders" />
         <TextIconClickable

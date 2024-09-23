@@ -28,6 +28,8 @@ const GenericTable = <T extends IGenericTableExtends>({
         onSelectionChange={(e: DataTableSelectionMultipleChangeEvent<T[]>) => {
           onSelectionChange && onSelectionChange(e.value);
         }}
+        scrollable={true}
+        scrollHeight="200px"
         dataKey="_id"
         selectionMode="checkbox"
         className="w-full"

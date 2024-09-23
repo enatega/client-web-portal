@@ -69,3 +69,66 @@ export const DELETE_RESTAURANT = gql`
     }
   }
 `;
+
+export const GET_RESTAURANT_DELIVERY_ZONE_INFO = gql`
+  query RestaurantDeliveryZoneInfo($id: ID!) {
+    getRestaurantDeliveryZoneInfo(id: $id) {
+      boundType
+      deliveryBounds {
+        coordinates
+      }
+      location {
+        coordinates
+      }
+
+      circleBounds {
+        radius
+      }
+
+      address
+      city
+      postCode
+    }
+  }
+`;
+
+export const GET_RESTAURANT_PROFILE = gql`
+  query Restaurant($id: String) {
+    restaurant(id: $id) {
+      _id
+      orderId
+      orderPrefix
+      slug
+      name
+      image
+      logo
+      address
+      location {
+        coordinates
+      }
+      deliveryBounds {
+        coordinates
+      }
+      username
+      password
+      deliveryTime
+      minimumOrder
+      tax
+      isAvailable
+      stripeDetailsSubmitted
+      openingTimes {
+        day
+        times {
+          startTime
+          endTime
+        }
+      }
+      owner {
+        _id
+        email
+      }
+      shopType
+      cuisines
+    }
+  }
+`;

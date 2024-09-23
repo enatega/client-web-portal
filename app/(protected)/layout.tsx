@@ -1,5 +1,7 @@
 'use client';
 
+import { GoogleMapsProvider } from '@/lib/context/google-maps.context';
+import { useConfiguration } from '@/lib/hooks/useConfiguration';
 // Layout
 import GlobalLayout from '@/lib/ui/layouts/protected/global';
 
@@ -8,5 +10,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <GlobalLayout>{children}</GlobalLayout>;
+  const { GOOGLE_MAPS_KEY, LIBRARIES } = useConfiguration();
+
+  return GOOGLE_MAPS_KEY ? (
+    <GoogleMapsProvider apiKey={GOOGLE_MAPS_KEY} libraries={LIBRARIES}>
+      <GlobalLayout>{children}</GlobalLayout>
+    </GoogleMapsProvider>
+  ) : (
+    <GlobalLayout>{children}</GlobalLayout>
+  );
 }
