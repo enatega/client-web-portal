@@ -1,27 +1,28 @@
 'use client';
 
 // Interface and Types
-import { ICustomNumberTippingProps } from '@/lib/utils/interfaces';
+import { INumberTextFieldProps } from '@/lib/utils/interfaces';
+import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
 
 // Hooks
 import { useFormikContext } from 'formik';
 
 // Components
-import { InputText } from 'primereact/inputtext';
+import { InputNumber, InputNumberChangeEvent } from 'primereact/inputnumber';
+import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 // Styles
-import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
-import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
-import classes from './cusom-input.module.css';
+import classes from './custom-input.module.css';
 
 export default function CustomNumberTextField({
   className,
   placeholder,
   name,
   value,
-  loading = false,
+  isLoading = false,
+  onChange,
   ...props
-}: ICustomNumberTippingProps) {
+}: INumberTextFieldProps) {
   // Formik
   const { setFieldValue } = useFormikContext<ITippingsForm>();
 
@@ -29,44 +30,49 @@ export default function CustomNumberTextField({
   const MAX_VALUE = 100;
 
   const handleIncrease = () => {
-    const currentValue = parseFloat(value as string) || 0;
+    const currentValue = value || 0;
     if (currentValue < MAX_VALUE) {
       setFieldValue(name, currentValue + 1);
     }
   };
 
   const handleDecrease = () => {
-    const currentValue = parseFloat(value as string) || 0;
+    const currentValue = value || 0;
     if (currentValue > MIN_VALUE) {
       setFieldValue(name, currentValue - 1);
     }
   };
 
-  return !loading ? (
+  return !isLoading ? (
     <div className="flex flex-col gap-2">
       <label htmlFor={name} className="text-sm font-medium text-gray-600">
         {placeholder}
       </label>
 
-      <div className="relative flex items-center">
+      <div className="relative flex items-center justify-between">
         {/* Decrease */}
         <div
-          className="absolute left-2 h-6 w-6 rounded-full border flex items-center justify-center hover:bg-slate-200 border-[#E4E4E7]"
+          className="absolute cursor-pointer left-2 h-6 w-6 rounded-full border flex items-center justify-center hover:bg-slate-200 border-[#E4E4E7]"
           onClick={handleDecrease}
         >
           <span className="text-gray-500">-</span>
         </div>
 
-        <InputText
-          className={`${classes.numberInput} w-full h-11 border px-8 text-center focus:outline-none focus:shadow-none border-inherit ${className}`}
+        <InputNumber
+          className={`${classes.inputNumber} bg-white w-full h-11 border px-10 text-center focus:outline-none focus:shadow-none border-inherit ${className}`}
           name={name}
           value={value}
+          suffix=" %"
+          useGrouping={false}
+          onChange={(e: InputNumberChangeEvent) => {
+            setFieldValue(name, e.value); // Update Formik field with the correct value from the event
+          }}
           {...props}
         />
 
         {/* Increase */}
         <div
-          className="absolute right-2 h-6 w-6 rounded-full border flex items-center justify-center hover:bg-slate-200 border-[#E4E4E7]"
+          className="absolute cursor-pointer right-2 h-6 w-6 rounded-full border flex items-center justify-center hover:bg-slate-200 border-[#E4E4E7]"
           onClick={handleIncrease}
         >
           <span className="text-gray-500">+</span>

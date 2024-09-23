@@ -14,7 +14,7 @@ import {
 // Components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import Table from '@/lib/ui/useable-components/table';
-import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants';
+import { RIDER_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/rider-columns';
 
 // Utilities and Data
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';

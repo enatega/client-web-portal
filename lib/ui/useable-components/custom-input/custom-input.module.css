@@ -6,7 +6,7 @@
 }
 
 /* Firefox */
-.numberInput {
-  -moz-appearance: textfield;
-  appearance: textfield;
+.inputNumber :global(.p-inputnumber-input) {
+  padding: 0;
+  text-align: center;
 }

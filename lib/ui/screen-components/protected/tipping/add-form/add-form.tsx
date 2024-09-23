@@ -35,9 +35,9 @@ const TippingAddForm = () => {
 
   // State
   const initialValues: ITippingsForm = {
-    tip1: data?.tips?.tipVariations[0].toString() ?? '',
-    tip2: data?.tips?.tipVariations[1].toString() ?? '',
-    tip3: data?.tips?.tipVariations[2].toString() ?? '',
+    tip1: data?.tips?.tipVariations[0] ?? 1,
+    tip2: data?.tips?.tipVariations[1] ?? 2,
+    tip3: data?.tips?.tipVariations[2] ?? 3,
   };
 
   // Hooks
@@ -102,28 +102,26 @@ const TippingAddForm = () => {
           {({ values, errors, touched, handleChange }) => (
             <Form className="grid grid-cols-2 gap-3  items-center sm:grid-cols-4">
               <CustomNumberTextField
-                type="number"
                 name="tip1"
                 placeholder="Tip 1 e.g 10"
                 maxLength={35}
-                min={0}
+                min={1}
                 max={100}
                 value={values.tip1}
                 onChange={handleChange}
-                loading={loading}
+                isLoading={loading}
                 showLabel={true}
                 style={{
                   borderColor: errors?.tip1 && touched.tip1 ? 'red' : '',
                 }}
               />
               <CustomNumberTextField
-                type="number"
                 name="tip2"
                 placeholder="Tip 2 e.g 20"
                 maxLength={35}
-                min={0}
+                min={1}
                 max={100}
-                loading={loading}
+                isLoading={loading}
                 showLabel={true}
                 value={values.tip2}
                 onChange={handleChange}
@@ -132,13 +130,11 @@ const TippingAddForm = () => {
                 }}
               />
               <CustomNumberTextField
-                type="number"
                 name="tip3"
-                placeholder="Tip 3 e.g 30"
-                maxLength={35}
-                min={0}
+                min={1}
                 max={100}
-                loading={loading}
+                placeholder="Tip 3 e.g 30"
+                isLoading={loading}
                 showLabel={true}
                 value={values.tip3}
                 onChange={handleChange}

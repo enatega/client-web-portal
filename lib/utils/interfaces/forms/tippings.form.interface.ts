@@ -1,13 +1,13 @@
 export interface ITippingsForm {
-  tip1: string;
-  tip2: string;
-  tip3: string;
+  tip1: number;
+  tip2: number;
+  tip3: number;
 }
 
 export interface ITippingErrors {
-  tip1?: string[];
-  tip2?: string[];
-  tip3?: string[];
+  tip1?: number[];
+  tip2?: number[];
+  tip3?: number[];
 }
 
 export interface ITippingResponse {
