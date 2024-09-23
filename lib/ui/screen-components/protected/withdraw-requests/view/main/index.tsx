@@ -1,3 +1,4 @@
+//interfaces
 import { GET_ALL_WITHDRAW_REQUESTS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { ILazyQueryResult } from '@/lib/utils/interfaces';
@@ -5,9 +6,15 @@ import {
   IGetWithDrawRequestsData,
   IWithDrawRequest,
 } from '@/lib/utils/interfaces/withdraw-request.interface';
-import { FilterMatchMode } from 'primereact/api';
+
+//hooks
 import { ChangeEvent, useEffect, useState } from 'react';
+
+//components
 import WithdrawTable from '../body/table';
+
+//prime react
+import { FilterMatchMode } from 'primereact/api';
 
 export default function WithdrawRequestsMain() {
   //states

@@ -29,7 +29,6 @@ import {
   faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { debounce } from 'lodash';
 import { Dropdown, DropdownProps } from 'primereact/dropdown';
 import { Tag } from 'primereact/tag';
 
@@ -140,16 +139,12 @@ export default function WithdrawTable({
       status: e.value.code,
     };
     if (filteredRequests) {
-      debounce(
-        async () =>
-          await updateWithdrawReqStatus({
-            variables: {
-              id: rowData._id,
-              status: e.value.code,
-            },
-          }),
-        2000
-      );
+      updateWithdrawReqStatus({
+        variables: {
+          id: rowData._id,
+          status: e.value.code,
+        },
+      });
       setRequests([newRequest, ...filteredRequests]);
       showToast({
         type: 'success',
