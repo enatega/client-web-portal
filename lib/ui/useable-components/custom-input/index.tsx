@@ -2,13 +2,12 @@
 
 // Interface and Types
 import { INumberTextFieldProps } from '@/lib/utils/interfaces';
-import { ITippingsForm } from '@/lib/utils/interfaces/forms/tippings.form.interface';
 
 // Hooks
 import { useFormikContext } from 'formik';
 
 // Components
-import { InputNumber, InputNumberChangeEvent } from 'primereact/inputnumber';
+import { InputNumber } from 'primereact/inputnumber';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 // Styles
@@ -24,7 +23,7 @@ export default function CustomNumberTextField({
   ...props
 }: INumberTextFieldProps) {
   // Formik
-  const { setFieldValue } = useFormikContext<ITippingsForm>();
+  const { setFieldValue } = useFormikContext();
 
   const MIN_VALUE = 1;
   const MAX_VALUE = 100;
@@ -64,9 +63,7 @@ export default function CustomNumberTextField({
           value={value}
           suffix=" %"
           useGrouping={false}
-          onChange={(e: InputNumberChangeEvent) => {
-            setFieldValue(name, e.value); // Update Formik field with the correct value from the event
-          }}
+          onChange={(e) => onChange(name, e.value)}
           {...props}
         />
 

@@ -8,9 +8,12 @@ const TableSkeleton = () => {
         <Skeleton width="100%" height="2.47rem" />
         <div className="flex flex-col  divide-y divide-[#cccccc9c]">
           {Array.from({ length: 5 }).map((_, colIndex) => (
-            <div className="flex gap-2 h-10 items-center justify-between">
-              {[1, 2, 3, 4, 5].map(() => {
-                return <Skeleton key={colIndex} width="18%" height="1rem" />;
+            <div
+              key={colIndex}
+              className="flex gap-2 h-10 items-center justify-between"
+            >
+              {[1, 2, 3, 4, 5].map((_, i) => {
+                return <Skeleton key={i} width="18%" height="1rem" />;
               })}
             </div>
           ))}

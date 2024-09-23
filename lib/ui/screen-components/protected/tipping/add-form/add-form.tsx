@@ -99,7 +99,7 @@ const TippingAddForm = () => {
           validateOnChange
           enableReinitialize
         >
-          {({ values, errors, touched, handleChange }) => (
+          {({ values, errors, touched, setFieldValue }) => (
             <Form className="grid grid-cols-2 gap-3  items-center sm:grid-cols-4">
               <CustomNumberTextField
                 name="tip1"
@@ -108,7 +108,7 @@ const TippingAddForm = () => {
                 min={1}
                 max={100}
                 value={values.tip1}
-                onChange={handleChange}
+                onChange={setFieldValue}
                 isLoading={loading}
                 showLabel={true}
                 style={{
@@ -124,7 +124,7 @@ const TippingAddForm = () => {
                 isLoading={loading}
                 showLabel={true}
                 value={values.tip2}
-                onChange={handleChange}
+                onChange={setFieldValue}
                 style={{
                   borderColor: errors.tip2 && touched.tip2 ? 'red' : '',
                 }}
@@ -137,7 +137,7 @@ const TippingAddForm = () => {
                 isLoading={loading}
                 showLabel={true}
                 value={values.tip3}
-                onChange={handleChange}
+                onChange={setFieldValue}
                 style={{
                   borderColor: errors.tip3 && touched.tip3 ? 'red' : '',
                 }}
