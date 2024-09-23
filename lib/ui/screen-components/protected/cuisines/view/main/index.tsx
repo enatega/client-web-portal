@@ -10,7 +10,7 @@ import { IFilterType } from '@/lib/utils/interfaces/table.interface';
 import { FilterMatchMode } from 'primereact/api';
 import { ChangeEvent, useEffect, useState } from 'react';
 import CuisineForm from '../../form';
-import CuisineTable from '../../table';
+import CuisineTable from '../body/table';
 
 export default function CuisinesMain({
   visible,

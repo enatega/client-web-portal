@@ -138,6 +138,9 @@ export default function WithdrawTable({
     {
       headerName: 'Date',
       propertyName: 'requestTime',
+      body: (rowData: IWithDrawRequest) => (
+        <span>{new Date(rowData.requestTime).toLocaleDateString()}</span>
+      ),
     },
     {
       headerName: 'Status',
@@ -163,6 +166,7 @@ export default function WithdrawTable({
       setSelectedData={(e) => setSelectedData(e as IWithDrawRequest[])}
       filters={filters}
       loading={loading}
+      className="w-full"
       header={
         <TableHeader
           globalFilterValue={globalFilterValue}

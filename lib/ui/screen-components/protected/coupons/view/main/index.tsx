@@ -10,7 +10,7 @@ import { IFilterType } from '@/lib/utils/interfaces/table.interface';
 import { FilterMatchMode } from 'primereact/api';
 import { ChangeEvent, useEffect, useState } from 'react';
 import CouponForm from '../../form';
-import CouponTable from '../../table';
+import CouponTable from '../body/table';
 
 export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
   // edit/delete states which are to be circulated in the whole coupons module
@@ -160,12 +160,12 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
       />
       <CouponForm
         coupons={coupons}
-        handleAddCouponLocally={handleAddCouponLocally}
         isEditing={isEditing}
+        visible={visible}
+        handleAddCouponLocally={handleAddCouponLocally}
         setCoupons={setCoupons}
         setIsEditing={setIsEditing}
         setVisible={setVisible}
-        visible={visible}
       />
     </div>
   );

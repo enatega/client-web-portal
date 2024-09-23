@@ -7,7 +7,7 @@ import {
 } from '@/lib/utils/interfaces/withdraw-request.interface';
 import { FilterMatchMode } from 'primereact/api';
 import { ChangeEvent, useEffect, useState } from 'react';
-import WithdrawTable from '../../table';
+import WithdrawTable from '../body/table';
 
 export default function WithdrawRequestsMain() {
   //states
@@ -72,7 +72,7 @@ export default function WithdrawRequestsMain() {
     }
   }, [data]);
   return (
-    <div>
+    <div className="w-full">
       <WithdrawTable
         data={requests ?? []}
         globalFilterValue={globalFilterValue}
