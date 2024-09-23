@@ -1,6 +1,6 @@
-import { DataTableFilterMeta } from 'primereact/datatable';
-import { Dispatch, SetStateAction } from 'react';
-import { IEditState } from './global.interface';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { IDropdownSelectItem, IEditState } from './global.interface';
+import { IFilterType } from './table.interface';
 
 export interface ICoupon {
   discount: number;
@@ -31,21 +31,30 @@ export interface IAddCouponProps {
   >;
   coupons: ICoupon[];
   isEditing: IEditState<ICoupon>;
+
+  visible: boolean;
 }
+
 export interface IEditPopupVal {
   _id: string;
   bool: boolean;
 }
+
 export interface ICouponsTableProps {
   data: ICoupon[] | null | undefined;
   loading: boolean;
-  filters?: DataTableFilterMeta;
+  filters?: IFilterType | undefined;
   setIsEditing: Dispatch<SetStateAction<IEditState<ICoupon>>>;
   setIsDeleting: Dispatch<SetStateAction<IEditState<ICoupon>>>;
   isDeleting: IEditState<ICoupon>;
   setVisible: Dispatch<SetStateAction<boolean>>;
   visible: boolean;
   setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  statusOptions: IDropdownSelectItem[];
+  setSelectedStatuses: Dispatch<SetStateAction<string[]>>;
+  selectedStatuses: string[];
 }
 export interface ICouponStatuses {
   enabled: {
@@ -60,4 +69,13 @@ export interface ICouponStatuses {
     total: null | undefined | number;
     status: boolean;
   };
+}
+
+export interface ICouponScreenHeaderProps {
+  handleButtonClick: () => void;
+}
+
+export interface ICouponMainProps {
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }

@@ -1,6 +1,6 @@
-import { DataTableFilterMeta } from 'primereact/datatable';
-import { Dispatch, SetStateAction } from 'react';
-import { IEditState } from './global.interface';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { IDropdownSelectItem, IEditState } from './global.interface';
+import { IFilterType } from './table.interface';
 
 export interface IWithDrawRequest {
   _id: string;
@@ -12,11 +12,13 @@ export interface IWithDrawRequest {
     name: string;
     currentWalletAmount: number;
   };
-  status: boolean;
+  status: string;
 }
 
 export interface IGetWithDrawRequestsData {
-  withdrawrequests: IWithDrawRequest[];
+  getAllWithdrawRequests: {
+    data: IWithDrawRequest[];
+  };
 }
 
 export interface IWithDrawRequestFormProps {
@@ -36,11 +38,11 @@ export interface IWithDrawRequestFormProps {
 export interface IWithDrawRequestsTableProps {
   data: IWithDrawRequest[] | undefined | null;
   loading: boolean;
-  filters?: DataTableFilterMeta;
-  setIsEditing: Dispatch<SetStateAction<IEditState<IWithDrawRequest>>>;
-  setIsDeleting: Dispatch<SetStateAction<IEditState<IWithDrawRequest>>>;
-  isDeleting: IEditState<IWithDrawRequest>;
-  setVisible: Dispatch<SetStateAction<boolean>>;
-  visible: boolean;
+  filters?: IFilterType;
+  globalFilterValue: string;
+  statusOptions: IDropdownSelectItem[];
+  selectedStatuses: string[];
   setRequests: Dispatch<SetStateAction<IWithDrawRequest[]>>;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  setSelectedStatuses: Dispatch<SetStateAction<string[]>>;
 }

@@ -18,6 +18,7 @@ export * from './rider.interface';
 export * from './ripple.interface';
 export * from './sidebar.interface';
 export * from './stat-card.interface';
+export * from './table-header.interface';
 export * from './tabs.interface';
 export * from './text.interface';
 export * from './tipping.interface';
