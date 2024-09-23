@@ -11,7 +11,7 @@ import {
 } from '@/lib/utils/interfaces';
 
 // Icons
-import CustomGoogleMapsLocationBounds from '@/lib/ui/useable-components/google-maps/location-bounds-restaurants';
+import CustomGoogleMapsLocationBounds from '@/lib/ui/useable-components/google-maps/location-bounds-restaurant(vendor)';
 
 const initialValues: IVendorForm = {
   name: '',

@@ -46,7 +46,7 @@ const Table = <T extends ITableExtends>({
         minHeight: 'auto',
         maxHeight: '500px',
       }}
-      selectionMode="checkbox"
+      selectionMode={isSelectable ? 'checkbox' : null}
       filters={filters}
       scrollable={true}
       scrollHeight="500px"

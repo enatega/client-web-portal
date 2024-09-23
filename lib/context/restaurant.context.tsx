@@ -8,6 +8,7 @@ import {
   IProvider,
   IQueryResult,
   IRestaurantByOwner,
+  IRestaurantContextData,
   IRestaurantContextProps,
   IRestaurantsByOwnerResponseGraphQL,
 } from '@/lib/utils/interfaces';
@@ -26,14 +27,19 @@ export const RestaurantProvider = ({ children }: IProvider) => {
   // Context
   const { vendorId } = useContext(VendorContext);
   // States
-  const [restaurantFormVisible, setRestaurantFormVisible] =
+  const [restaurantContextData, setRestaurantContextData] =
+    useState<IRestaurantContextData>({
+      id: '',
+      filtered: [] as IRestaurantByOwner[] | undefined,
+      globalFilter: '',
+      isEditing: false,
+      autoCompleteAddress: '',
+    });
+
+  const [isRestaurantFormVisible, setRestaurantFormVisible] =
     useState<boolean>(false);
-  const [restaurantId, setRestaurantId] = useState<string | null>(null);
-  const [restaurantFiltered, setRestaurantFiltered] =
-    useState<IRestaurantByOwner[]>();
-  const [restaurantGlobalFilter, setRestaurantGlobalFilter] =
-    useState<string>('');
-  const [isEditingRestaurant, setIsEditing] = useState(false);
+  // Form Flow
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   // API
   const restaurantByOwnerResponse = useQueryGQL(
@@ -42,65 +48,73 @@ export const RestaurantProvider = ({ children }: IProvider) => {
       id: vendorId,
     },
     {
-      enabled: vendorId ? true : false,
+      enabled: !!vendorId,
       debounceMs: 300,
       onCompleted: (data: unknown) => {
         const _data = data as IRestaurantsByOwnerResponseGraphQL;
-        setRestaurantId(_data?.restaurantByOwner?.restaurants[0]?._id ?? '');
+        onSetRestaurantContextData({
+          id: _data?.restaurantByOwner?.restaurants[0]?._id ?? '',
+        });
       },
     }
   ) as IQueryResult<IRestaurantsByOwnerResponseGraphQL | undefined, undefined>;
+
+  const onActiveStepChange = (activeStep: number) => {
+    setActiveIndex(activeStep);
+  };
+
+  const onClearRestaurntsData = () => {
+    setActiveIndex(0);
+  };
 
   const onSetRestaurantFormVisible = (status: boolean) => {
     setRestaurantFormVisible(status);
   };
 
-  const onSetRestaurantId = (id: string) => {
-    setRestaurantId(id);
-  };
-
-  const onSetRestaurantGlobalFilter = (filter: string) => {
-    setRestaurantGlobalFilter(filter);
-  };
-
-  const onSetEditingRestaurant = (status: boolean) => {
-    setIsEditing(status);
+  const onSetRestaurantContextData = (
+    data: Partial<IRestaurantContextData>
+  ) => {
+    setRestaurantContextData((prevData) => ({
+      ...prevData,
+      ...data,
+    }));
   };
 
   const onHandlerFilterData = () => {
     const _filtered: IRestaurantByOwner[] = onFilterObjects(
       restaurantByOwnerResponse?.data?.restaurantByOwner?.restaurants ?? [],
-      restaurantGlobalFilter,
+      restaurantContextData.globalFilter,
       ['name', 'address', 'shopType']
     );
 
-    setRestaurantFiltered(_filtered);
+    onSetRestaurantContextData({
+      filtered: _filtered,
+    });
   };
 
   // Use Effect
   useEffect(() => {
     onHandlerFilterData();
-  }, [restaurantGlobalFilter]);
+  }, [restaurantContextData.globalFilter]);
 
   useEffect(() => {
     restaurantByOwnerResponse.refetch();
   }, [vendorId]);
 
   const value: IRestaurantContextProps = {
+    // Vendor Information
     vendorId,
-    restaurantFormVisible,
+    // Form Visibility
+    isRestaurantFormVisible,
     onSetRestaurantFormVisible,
-    restaurantId,
-    onSetRestaurantId,
     // Restaurant Data
     restaurantByOwnerResponse,
-    // Filter
-    restaurantGlobalFilter,
-    onSetRestaurantGlobalFilter,
-    restaurantFiltered,
-    // Editing,
-    isEditingRestaurant,
-    onSetEditingRestaurant,
+    restaurantContextData,
+    onSetRestaurantContextData,
+    // Navigation and State Management
+    activeIndex,
+    onActiveStepChange,
+    onClearRestaurntsData,
   };
 
   return (

@@ -1,5 +1,9 @@
 import { TSideBarFormPosition } from '../types/sidebar';
-import { IDropdownSelectItem, IGlobalComponentProps } from './global.interface';
+import {
+  IDropdownSelectItem,
+  IGlobalComponentProps,
+  IStepperFormProps,
+} from './global.interface';
 
 export interface IRestaurantsContextPropData {
   restaurant?: {
@@ -39,12 +43,6 @@ export interface IRestaurantsMainComponentsProps
   extends IGlobalComponentProps {}
 
 // Components
-interface IStepperFormProps {
-  order: number;
-  isLastStep?: boolean;
-  onStepChange: (order: number) => void;
-}
-
 export interface IRestaurantsVendorDetailsComponentProps
   extends IGlobalComponentProps {
   stepperProps?: IStepperFormProps;

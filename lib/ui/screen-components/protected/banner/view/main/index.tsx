@@ -26,6 +26,7 @@ import {
 import { DELETE_BANNER } from '@/lib/api/graphql';
 import { GET_BANNERS } from '@/lib/api/graphql/queries/banners';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import { generateDummyBanners } from '@/lib/utils/dummy';
 import { useMutation } from '@apollo/client';
 
 export default function BannersMain({
@@ -95,7 +96,7 @@ export default function BannersMain({
             setSelectedActions={setSelectedActions}
           />
         }
-        data={data?.banners || []}
+        data={data?.banners || (loading ? generateDummyBanners() : [])}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}

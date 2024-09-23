@@ -1,18 +1,22 @@
-'use client';
-
 // Core
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Form, Formik } from 'formik';
 import { useContext, useMemo } from 'react';
 
+// Prime React
+
 // Interface and Types
 import {
+  IAddRestaurantComponentProps,
   ICreateRestaurant,
   ICreateRestaurantResponse,
   IDropdownSelectItem,
   IQueryResult,
-  IRestaurantsResponseGraphQL,
+  IRestaurantsByOwnerResponseGraphQL,
 } from '@/lib/utils/interfaces';
+
+// Core
+import { RestaurantContext } from '@/lib/context/restaurant.context';
 
 // Component
 import CustomButton from '@/lib/ui/useable-components/button';
@@ -25,6 +29,8 @@ import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-
 // Constants
 import { RestaurantErrors, SHOP_TYPE } from '@/lib/utils/constants';
 
+// Dummy
+
 // Interface
 import { IRestaurantForm } from '@/lib/utils/interfaces';
 
@@ -35,9 +41,8 @@ import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 import {
   CREATE_RESTAURANT,
   GET_CUISINES,
-  GET_RESTAURANTS,
+  GET_RESTAURANTS_BY_OWNER,
 } from '@/lib/api/graphql';
-import { RestaurantsContext } from '@/lib/context/restaurants.context';
 import { ToastContext } from '@/lib/context/toast.context';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
@@ -46,7 +51,6 @@ import {
   ICuisine,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
-import { IRestaurantsAddRestaurantComponentProps } from '@/lib/utils/interfaces/restaurants.interface';
 import { toTextCase } from '@/lib/utils/methods';
 import { RestaurantSchema } from '@/lib/utils/schema/restaurant';
 import { ApolloCache, ApolloError, useMutation } from '@apollo/client';
@@ -66,19 +70,19 @@ const initialValues: IRestaurantForm = {
   logo: '',
 };
 
-export default function RestaurantDetailsForm({
+export default function RestaurantDetails({
   stepperProps,
-}: IRestaurantsAddRestaurantComponentProps) {
-  // Props
+}: IAddRestaurantComponentProps) {
   const { onStepChange, order } = stepperProps ?? {
     onStepChange: () => {},
     type: '',
     order: -1,
   };
+
   // Context
   const { showToast } = useContext(ToastContext);
-  const { restaurantsContextData, onSetRestaurantsContextData } =
-    useContext(RestaurantsContext);
+  const { vendorId, onSetRestaurantContextData } =
+    useContext(RestaurantContext);
 
   // API
   // Mutation
@@ -96,15 +100,8 @@ export default function RestaurantDetailsForm({
         duration: 3000,
       });
 
-      onSetRestaurantsContextData({
-        ...restaurantsContextData,
-        restaurant: {
-          ...restaurantsContextData?.restaurant,
-          _id: {
-            label: createRestaurant?.username ?? '',
-            code: createRestaurant?._id ?? '',
-          },
-        },
+      onSetRestaurantContextData({
+        id: createRestaurant?._id ?? '',
       });
 
       onStepChange(order + 1);
@@ -129,11 +126,10 @@ export default function RestaurantDetailsForm({
   // Handlers
   const onCreateRestaurant = async (data: IRestaurantForm) => {
     try {
-      const vendorId = restaurantsContextData?.vendor?._id?.code;
       if (!vendorId) {
         showToast({
           type: 'error',
-          title: 'Create Restaurants',
+          title: `${vendorId ? 'Edit' : 'Create'} Vendor`,
           message: `Restaurant Create Failed - Please select a vendor.`,
           duration: 2500,
         });
@@ -163,8 +159,8 @@ export default function RestaurantDetailsForm({
     } catch (error) {
       showToast({
         type: 'error',
-        title: 'New Restaurant',
-        message: `Restaurant Creation Failed`,
+        title: `${vendorId ? 'Edit' : 'Create'} Vendor`,
+        message: `Restaurant Create Failed`,
         duration: 2500,
       });
     }
@@ -173,11 +169,11 @@ export default function RestaurantDetailsForm({
   function onError({ graphQLErrors, networkError }: ApolloError) {
     showToast({
       type: 'error',
-      title: 'New Restaurant',
+      title: 'Create Restaurant',
       message:
         graphQLErrors[0]?.message ??
         networkError?.message ??
-        'Restaurant Creation  Failed',
+        `Restaurant Create Failed`,
       duration: 2500,
     });
   }
@@ -187,19 +183,22 @@ export default function RestaurantDetailsForm({
   ): void {
     if (!data) return;
 
-    const restaurantId = restaurantsContextData?.restaurant?._id?.code;
+    const cachedData: IRestaurantsByOwnerResponseGraphQL | null =
+      cache.readQuery({
+        query: GET_RESTAURANTS_BY_OWNER,
+        variables: { id: vendorId },
+      });
 
-    const cachedData: IRestaurantsResponseGraphQL | null = cache.readQuery({
-      query: GET_RESTAURANTS,
-    });
-
-    const cachedRestaurants = cachedData?.restaurants ?? [];
+    const cachedRestaurants = cachedData?.restaurantByOwner?.restaurants ?? [];
 
     cache.writeQuery({
-      query: GET_RESTAURANTS,
-      variables: { id: restaurantId },
+      query: GET_RESTAURANTS_BY_OWNER,
+      variables: { id: vendorId },
       data: {
-        restaurants: [...(cachedRestaurants ?? []), createRestaurant],
+        restaurantByOwner: {
+          ...cachedData?.restaurantByOwner,
+          restaurants: [...(cachedRestaurants ?? []), createRestaurant],
+        },
       },
     });
   }
@@ -208,10 +207,10 @@ export default function RestaurantDetailsForm({
     <div className="w-full h-full flex items-center justify-start">
       <div className="h-full w-full">
         <div className="flex flex-col gap-2">
-          {/* <div className="flex flex-col mb-2">
+          <div className="flex flex-col mb-2">
             <span className="text-lg">Add Restaurant</span>
           </div>
- */}
+
           <div>
             <Formik
               initialValues={initialValues}
@@ -479,16 +478,10 @@ export default function RestaurantDetailsForm({
                         />
                       </div>
 
-                      <div className="flex justify-between mt-4">
+                      <div className="flex justify-end mt-4">
                         <CustomButton
                           className="w-fit h-10 bg-black text-white border-gray-300 px-8"
-                          label="Back"
-                          type="button"
-                          onClick={() => onStepChange(order - 1)}
-                        />
-                        <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
-                          label="Save & Next"
+                          label="Add"
                           type="submit"
                           loading={isSubmitting}
                         />

@@ -49,15 +49,17 @@ export default function BannerTableHeader({
   return (
     <div className="flex flex-col mb-4 gap-6">
       <div className="w-fit flex flex-colm:flex-row items-center gap-2">
-        <CustomTextField
-          type="text"
-          name="vendorFilter"
-          maxLength={35}
-          showLabel={false}
-          value={globalFilterValue}
-          onChange={onGlobalFilterChange}
-          placeholder="Keyword Search"
-        />
+        <div className="w-60">
+          <CustomTextField
+            type="text"
+            name="vendorFilter"
+            maxLength={35}
+            showLabel={false}
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+            placeholder="Keyword Search"
+          />
+        </div>
         <div className="flex items-center">
           <OverlayPanel ref={overlayPanelRef} dismissable>
             <div className="w-60">
