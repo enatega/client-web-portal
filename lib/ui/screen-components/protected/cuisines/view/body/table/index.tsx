@@ -1,30 +1,28 @@
-//interfaces
-import {
-  ICuisine,
-  ICuisineTableProps,
-} from '@/lib/utils/interfaces/cuisine.interface';
-
 //icons
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsisVertical';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //components
+import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import Table from '@/lib/ui/useable-components/table';
+import TableHeader from '@/lib/ui/useable-components/table-header';
+import Image from 'next/image';
 
-//hooks
+//interfaces
 import { ToastContext } from '@/lib/context/toast.context';
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import { IEditPopupVal } from '@/lib/utils/interfaces/coupons.interface';
+import {
+  ICuisine,
+  ICuisineTableProps,
+} from '@/lib/utils/interfaces/cuisine.interface';
+import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 
 //queries
 import { DELETE_CUISINE } from '@/lib/api/graphql';
 
 //hooks
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
-import Table from '@/lib/ui/useable-components/table';
-import TableHeader from '@/lib/ui/useable-components/table-header';
-import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 import { useMutation } from '@apollo/client';
-import Image from 'next/image';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 export default function CuisineTable({

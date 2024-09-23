@@ -12,17 +12,11 @@ import {
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons/faEllipsisVertical';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-//components
-
-//prime react
-
 //queries
 import { DELETE_COUPON, EDIT_COUPON } from '@/lib/api/graphql';
 
 //contexts
 import { ToastContext } from '@/lib/context/toast.context';
-
-//lodash
 
 //hooks
 import CustomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
@@ -242,7 +236,7 @@ export default function CouponTable({
   }, [data]);
 
   return (
-    <>
+    <div className="ml-2">
       <DeleteDialog
         onConfirm={deleteItem}
         onHide={() =>
@@ -280,6 +274,6 @@ export default function CouponTable({
           filters={filters}
         />
       )}
-    </>
+    </div>
   );
 }

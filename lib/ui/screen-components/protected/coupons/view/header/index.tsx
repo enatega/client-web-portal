@@ -1,6 +1,11 @@
+//components
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
+
+//interfaces
 import { ICouponScreenHeaderProps } from '@/lib/utils/interfaces/coupons.interface';
+
+//icons
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 export default function CouponScreenHeader({

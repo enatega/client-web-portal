@@ -18,7 +18,6 @@ import {
 
 //schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
-import { ApolloError, useMutation } from '@apollo/client';
 import { ErrorMessage, Form, Formik } from 'formik';
 
 //prime react
@@ -26,7 +25,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { Sidebar } from 'primereact/sidebar';
 
 //hooks
-
+import { ApolloError, useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
 export default function CuisineForm({

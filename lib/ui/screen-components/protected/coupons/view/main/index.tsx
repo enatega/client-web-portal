@@ -1,5 +1,8 @@
+//graphQL
 import { GET_COUPONS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+
+//interfaces
 import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICoupon,
@@ -7,8 +10,14 @@ import {
   IGetCouponsData,
 } from '@/lib/utils/interfaces/coupons.interface';
 import { IFilterType } from '@/lib/utils/interfaces/table.interface';
+
+//prime react
 import { FilterMatchMode } from 'primereact/api';
+
+//hooks
 import { ChangeEvent, useEffect, useState } from 'react';
+
+//components
 import CouponForm from '../../form';
 import CouponTable from '../body/table';
 

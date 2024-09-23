@@ -1,5 +1,7 @@
+//graphQL
 import { GET_CUISINES } from '@/lib/api/graphql';
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+
+//intefaces
 import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICuisine,
@@ -8,9 +10,14 @@ import {
 } from '@/lib/utils/interfaces/cuisine.interface';
 import { IFilterType } from '@/lib/utils/interfaces/table.interface';
 import { FilterMatchMode } from 'primereact/api';
-import { ChangeEvent, useEffect, useState } from 'react';
+
+//components
 import CuisineForm from '../../form';
 import CuisineTable from '../body/table';
+
+// hooks
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CuisinesMain({
   visible,

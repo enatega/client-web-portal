@@ -7,6 +7,7 @@ import { ToastContext } from '@/lib/context/toast.context';
 
 //components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
+import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 
 //interfaces
 import {
@@ -23,11 +24,10 @@ import { ErrorMessage, Form, Formik } from 'formik';
 //prime react
 import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { Sidebar } from 'primereact/sidebar';
 
 //hooks
-import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 import { useMutation } from '@apollo/client';
-import { Sidebar } from 'primereact/sidebar';
 import { useContext } from 'react';
 
 export default function CouponForm({
