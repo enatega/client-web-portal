@@ -48,6 +48,7 @@ const Table = <T extends ITableExtends>({
       selectionMode="checkbox"
       filters={filters}
       scrollable={true}
+      scrollHeight="500px"
     >
       <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
       {columns.map((col, index) => (
