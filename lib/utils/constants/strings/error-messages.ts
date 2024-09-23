@@ -1,5 +1,6 @@
 import {
   IBannersErrors,
+  ICategoryErrors,
   ISignFormErrors,
   IVendorErrors,
 } from '../../interfaces/forms';
@@ -61,4 +62,10 @@ export const BannersErrors: IBannersErrors = {
   action: ['Required'],
   screen: ['Required'],
   file: ['Required'],
+};
+
+export const CategoryErrors: ICategoryErrors = {
+  restaurantId: ['Required'],
+  _id: [],
+  title: ['Required'],
 };

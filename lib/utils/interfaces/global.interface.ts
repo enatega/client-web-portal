@@ -64,3 +64,8 @@ export interface IEditState<T> {
   bool: boolean;
   data: T;
 }
+
+export interface IGlobalTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}

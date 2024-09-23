@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {
   IBannersResponse,
+  ICategoryResponse,
   IDropdownSelectItem,
   IRestaurantResponse,
   IStatsCardProps,
@@ -152,6 +153,21 @@ export const generateDummyRiders = (count: number = 10): IRiderResponse[] => {
   }
 
   return riders;
+};
+
+export const generateDummyCategories = (
+  count: number = 10
+): ICategoryResponse[] => {
+  const categories: ICategoryResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    categories.push({
+      _id: `category_${i + 1}`,
+      title: `Category ${i + 1}`,
+    });
+  }
+
+  return categories;
 };
 
 export const generateDummyUsers = (count: number = 10): IUserResponse[] => {

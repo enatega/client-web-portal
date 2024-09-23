@@ -1,5 +1,6 @@
 export * from './banner.interface';
 export * from './button.interface';
+export * from './category.interface';
 export * from './configuration.interface';
 export * from './dropdown.interface';
 export * from './forms';
