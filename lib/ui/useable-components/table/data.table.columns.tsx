@@ -25,22 +25,6 @@ import CustomButton from '../button';
 import CustomCommissionTextField from '../custom-commission-input';
 import CustomInputSwitch from '../custom-input-switch';
 
-// Icons
-
-interface CommissionFormValues {
-  [key: string]: string;
-}
-
-const FormikWrapper: React.FC<{
-  children: React.ReactNode;
-  initialValues: CommissionFormValues;
-  onSubmit: (values: CommissionFormValues) => void;
-}> = ({ children, initialValues, onSubmit }) => (
-  <Formik initialValues={initialValues} onSubmit={onSubmit}>
-    <Form>{children}</Form>
-  </Formik>
-);
-
 export const COMMISSION_RATE_COLUMNS = ({
   handleSave,
   handleCommissionRateChange,
@@ -57,45 +41,58 @@ export const COMMISSION_RATE_COLUMNS = ({
     headerName: 'Set Commission Rate',
     propertyName: 'commissionRate',
     body: (restaurant: IRestaurantResponse) => (
-      <div className="flex">
-        <FormikWrapper
-          initialValues={{
-            [`commissionRate-${restaurant._id}`]:
-              restaurant.commissionRate.toString(),
-          }}
-          onSubmit={() => {}}
-        >
-          <CustomCommissionTextField
-            type="number"
-            name={`commissionRate-${restaurant._id}`}
-            value={restaurant.commissionRate.toString()}
-            onChange={(e) =>
-              handleCommissionRateChange(
-                restaurant._id,
-                parseFloat(e.target.value)
-              )
-            }
-            min={0}
-            max={100}
-            showLabel={false}
-            loading={false}
-          />
-        </FormikWrapper>
-      </div>
+      <Formik
+        initialValues={{
+          [`commissionRate-${restaurant._id}`]:
+            restaurant.commissionRate.toString(),
+        }}
+        onSubmit={() => {
+          handleSave(restaurant._id);
+        }}
+      >
+        {({ values, handleChange, handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <div className="flex">
+              <CustomCommissionTextField
+                type="number"
+                name={`commissionRate-${restaurant._id}`}
+                value={values[`commissionRate-${restaurant._id}`]}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleCommissionRateChange(
+                    restaurant._id,
+                    parseFloat(e.target.value)
+                  );
+                }}
+                min={0}
+                max={100}
+                showLabel={false}
+                loading={false}
+              />
+            </div>
+          </Form>
+        )}
+      </Formik>
     ),
   },
   {
     headerName: 'Action',
     propertyName: 'action',
     body: (restaurant: IRestaurantResponse) => (
-      <CustomButton
-        onClick={() => handleSave(restaurant._id)}
-        className="h-10 w-24 flex px-4 mt-2 text-black border border-gray-500 bg-white rounded-md hover:bg-black hover:text-white transition-colors duration-200"
-        label="Save"
-        rounded={false}
-        loading={loadingRestaurant === restaurant._id}
-        disabled={loadingRestaurant === restaurant._id}
-      />
+      <Formik initialValues={{}} onSubmit={() => handleSave(restaurant._id)}>
+        {({ handleSubmit, isSubmitting }) => (
+          <Form onSubmit={handleSubmit}>
+            <CustomButton
+              type="submit"
+              className="h-10 w-24 flex px-4 mt-2 text-black border border-gray-500 bg-white rounded-md hover:bg-black hover:text-white transition-colors duration-200"
+              label="Save"
+              rounded={false}
+              loading={loadingRestaurant === restaurant._id || isSubmitting}
+              disabled={loadingRestaurant === restaurant._id || isSubmitting}
+            />
+          </Form>
+        )}
+      </Formik>
     ),
   },
 ];
