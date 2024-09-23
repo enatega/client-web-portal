@@ -1,8 +1,6 @@
 import { ApolloError } from '@apollo/client';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
-import { ICouponsData } from './coupons.interface';
-import { ICuisinesData } from './cuisine.interface';
 
 export interface IGlobalProps {
   children?: React.ReactNode;
@@ -14,10 +12,7 @@ export interface IDropdownSelectItem {
   label: string;
   code: string;
 }
-export interface IQueryResponse {
-  coupons: ICouponsData[] | undefined;
-  cuisines: ICuisinesData[] | undefined;
-}
+
 export interface QueryState {
   data: {}[];
   loading: boolean;
@@ -29,15 +24,15 @@ export interface IGlobalButtonProps {
   title: string;
   setVisible: Dispatch<SetStateAction<boolean>>;
 }
+
 export interface ILazyQueryResult<T, V> {
   data: T | null;
   error: Error | null;
   loading: boolean;
-  fetch: (variables?: V) => void;
+  fetch: (variables?: V) => void; // for useLazyQuery
   isError: boolean;
   isSuccess: boolean;
 }
-
 export interface IQueryResult<T, V> {
   data: T | null;
   error: Error | null;
@@ -46,6 +41,7 @@ export interface IQueryResult<T, V> {
   isError: boolean;
   isSuccess: boolean;
 }
+
 export interface ITableColumn<T> {
   field?: string;
   header?: string;
@@ -55,4 +51,8 @@ export interface INotificationComponentProps {
   type: 'success' | 'error' | 'warn' | 'info';
   title: string;
   message: string;
+}
+export interface IEditState<T> {
+  bool: boolean;
+  data: T;
 }

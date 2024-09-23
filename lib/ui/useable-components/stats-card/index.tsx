@@ -7,6 +7,7 @@ import { IStatsCardProps } from '@/lib/utils/interfaces';
 
 // Methods
 import { formatCurrency } from '@/lib/utils/methods';
+import DashboardStatsCardSkeleton from '../custom-skeletons/dasboard.stats.card.skeleton';
 
 export default function StatsCard({
   label,
@@ -14,8 +15,11 @@ export default function StatsCard({
   description,
   icon,
   route,
+  loading = false,
 }: IStatsCardProps) {
-  return (
+  return loading ? (
+    <DashboardStatsCardSkeleton />
+  ) : (
     <Link href={route}>
       <div className="card cursor-pointer">
         <div className="flex justify-between items-center mb-2">

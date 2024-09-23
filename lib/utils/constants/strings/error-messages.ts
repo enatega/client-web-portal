@@ -24,6 +24,7 @@ export const SignUpErrors: ISignFormErrors = {
 };
 
 export const VendorErrors: IVendorErrors = {
+  _id: ['Required'],
   name: ['Required'],
   email: ['Required', 'Invalid email'],
   password: ['Required', ...PasswordErrors],

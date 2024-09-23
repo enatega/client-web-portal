@@ -13,19 +13,15 @@ import {
 
 // Components
 import { USERS_TABLE_COLUMNS } from '@/lib/utils/constants';
-import UserHeader from '../header';
 
 //Toast
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import Table from '@/lib/ui/useable-components/table';
 
 // GraphQL
-import { getUsers } from '@/lib/api/graphql';
-import { gql } from '@apollo/client';
-
-const GET_USERS = gql`
-  ${getUsers}
-`;
+import { GET_USERS } from '@/lib/api/graphql';
+import { generateDummyUsers } from '@/lib/utils/dummy';
+import UsersTableHeader from '../header/table-header';
 
 export default function UsersMain() {
   // State - Table
@@ -36,11 +32,10 @@ export default function UsersMain() {
   });
 
   // Query
-  const { data } = useQueryGQL(GET_USERS, {
+  const { data, loading } = useQueryGQL(GET_USERS, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IUsersDataResponse | undefined, undefined>;
 
-  console.log(data);
   // For global search
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -51,15 +46,16 @@ export default function UsersMain() {
   };
 
   return (
-    <div className="p-2 pt-5">
+    <div className="pt-5">
       <Table
         header={
-          <UserHeader
+          <UsersTableHeader
             globalFilterValue={globalFilterValue}
             onGlobalFilterChange={onGlobalFilterChange}
           />
         }
-        data={data?.users || []}
+        loading={loading}
+        data={data?.users || (loading ? generateDummyUsers() : [])}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}

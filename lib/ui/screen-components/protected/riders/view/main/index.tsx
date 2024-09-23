@@ -14,29 +14,21 @@ import {
 // Components
 import Table from '@/lib/ui/useable-components/table';
 import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants';
-import RiderHeader from '../header';
 
 // Utilities and Data
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
-
-// GraphQL
-import { getRiders } from '@/lib/api/graphql';
-import { deleteRider } from '@/lib/api/graphql/mutation';
-import { gql, useMutation } from '@apollo/client';
 
 //Toast
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
 import { IQueryResult } from '@/lib/utils/interfaces';
 
-const GET_RIDERS = gql`
-  ${getRiders}
-`;
-
-const DELETE_RIDER = gql`
-  ${deleteRider}
-`;
+// GraphQL
+import { DELETE_RIDER, GET_RIDERS } from '@/lib/api/graphql';
+import { generateDummyRiders } from '@/lib/utils/dummy';
+import { useMutation } from '@apollo/client';
+import RidersTableHeader from '../header/table-header';
 
 export default function RidersMain({
   setIsAddRiderVisible,
@@ -56,7 +48,7 @@ export default function RidersMain({
   });
 
   // Query
-  const { data } = useQueryGQL(GET_RIDERS, {
+  const { data, loading } = useQueryGQL(GET_RIDERS, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IRidersDataResponse | undefined, undefined>;
 
@@ -98,19 +90,19 @@ export default function RidersMain({
   ];
 
   return (
-    <div className="p-2 pt-5">
+    <div className="pt-5">
       <Table
         header={
-          <RiderHeader
-            setIsAddRiderVisible={setIsAddRiderVisible}
+          <RidersTableHeader
             globalFilterValue={globalFilterValue}
             onGlobalFilterChange={onGlobalFilterChange}
           />
         }
-        data={data?.riders || []}
+        data={data?.riders || (loading ? generateDummyRiders() : [])}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
+        loading={loading}
         columns={RIDER_TABLE_COLUMNS({ menuItems })}
       />
       <DeleteDialog

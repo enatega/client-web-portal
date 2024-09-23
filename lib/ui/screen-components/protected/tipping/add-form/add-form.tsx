@@ -17,42 +17,31 @@ import CustomNumberTextField from '@/lib/ui/useable-components/custom-input';
 // Formik
 import { Form, Formik, FormikHelpers } from 'formik';
 
-// GraphQL
-import { getTipping } from '@/lib/api/graphql';
-import { createTipping, editTipping } from '@/lib/api/graphql/mutation';
-import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { gql, useMutation } from '@apollo/client';
-
 //Toast
 import useToast from '@/lib/hooks/useToast';
 
-const CREATE_TIPPING = gql`
-  ${createTipping}
-`;
-
-const GET_TIPPING = gql`
-  ${getTipping}
-`;
-
-const EDIT_TIPPING = gql`
-  ${editTipping}
-`;
+// GraphQL
+import { CREATE_TIPPING, EDIT_TIPPING, GET_TIPPING } from '@/lib/api/graphql';
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import { useMutation } from '@apollo/client';
 
 const TippingAddForm = () => {
-  // State
-  const initialValues: ITippingsForm = {
-    tip1: '',
-    tip2: '',
-    tip3: '',
-  };
-
-  // Hooks
-  const { showToast } = useToast();
-
   // Query
   const { refetch, loading, data } = useQueryGQL(GET_TIPPING, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<ITippingResponse | undefined, undefined>;
+
+  console.log(data?.tips.tipVariations);
+
+  // State
+  const initialValues: ITippingsForm = {
+    tip1: data?.tips?.tipVariations[0].toString() ?? '',
+    tip2: data?.tips?.tipVariations[1].toString() ?? '',
+    tip3: data?.tips?.tipVariations[2].toString() ?? '',
+  };
+
+  // Hooks
+  const { showToast } = useToast();
 
   // Mutation
   const mutation = data && data.tips._id ? EDIT_TIPPING : CREATE_TIPPING;
@@ -68,7 +57,7 @@ const TippingAddForm = () => {
         variables: {
           tippingInput: {
             _id: data.tips._id,
-            tipVariations: [values.tip1, values.tip2, values.tip3],
+            tipVariations: [+values.tip1, +values.tip2, +values.tip3],
             enabled: true,
           },
         },
@@ -85,7 +74,7 @@ const TippingAddForm = () => {
         onError: (error) => {
           let message = '';
           try {
-            message = error.graphQLErrors[0].message;
+            message = error.graphQLErrors[0]?.message;
           } catch (err) {
             message = 'ActionFailedTryAgain';
           }
@@ -108,9 +97,10 @@ const TippingAddForm = () => {
           validationSchema={TippingSchema}
           onSubmit={handleSubmit}
           validateOnChange
+          enableReinitialize
         >
           {({ values, errors, touched, handleChange }) => (
-            <Form className="grid grid-cols-2 gap-3 items-end sm:grid-cols-4">
+            <Form className="grid grid-cols-2 gap-3  items-center sm:grid-cols-4">
               <CustomNumberTextField
                 type="number"
                 name="tip1"
@@ -120,6 +110,7 @@ const TippingAddForm = () => {
                 max={100}
                 value={values.tip1}
                 onChange={handleChange}
+                loading={loading}
                 showLabel={true}
                 style={{
                   borderColor: errors?.tip1 && touched.tip1 ? 'red' : '',
@@ -132,6 +123,7 @@ const TippingAddForm = () => {
                 maxLength={35}
                 min={0}
                 max={100}
+                loading={loading}
                 showLabel={true}
                 value={values.tip2}
                 onChange={handleChange}
@@ -146,6 +138,7 @@ const TippingAddForm = () => {
                 maxLength={35}
                 min={0}
                 max={100}
+                loading={loading}
                 showLabel={true}
                 value={values.tip3}
                 onChange={handleChange}
@@ -154,12 +147,12 @@ const TippingAddForm = () => {
                 }}
               />
               <CustomButton
-                className="h-11 flex px-10 text-white border-gray-300 bg-[black] rounded-md"
-                label={'Add'}
+                className="h-11 flex mt-auto mb-[2px] px-10 text-white border-gray-300 bg-[black] rounded-md"
+                label={data?.tips._id ? 'Update' : 'Add'}
                 rounded={false}
                 type="submit"
                 loading={mutationLoading}
-                disabled={mutationLoading || loading}
+                disabled={mutationLoading}
               />
             </Form>
           )}

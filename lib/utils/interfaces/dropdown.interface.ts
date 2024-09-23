@@ -1,8 +1,10 @@
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { CSSProperties } from 'react';
 import { IDropdownSelectItem, IGlobalComponentProps } from './global.interface';
 
 interface ISelectionComponentProps extends IGlobalComponentProps {
   style?: CSSProperties;
+  isLoading?: boolean;
 }
 
 export interface IMultiSelectComponentProps extends ISelectionComponentProps {
@@ -14,6 +16,7 @@ export interface IMultiSelectComponentProps extends ISelectionComponentProps {
   selectedItems: IDropdownSelectItem[] | null;
   setSelectedItems: (key: string, items: IDropdownSelectItem[]) => void;
   options: IDropdownSelectItem[];
+  dropDownIcon?: IconDefinition;
 }
 
 export interface IDropdownComponentProps extends ISelectionComponentProps {
@@ -22,6 +25,9 @@ export interface IDropdownComponentProps extends ISelectionComponentProps {
   optionValue?: string;
   placeholder: string;
   showLabel?: boolean;
+  invalid?: boolean;
+  filter?: boolean;
+  loading?: boolean;
   selectedItem: IDropdownSelectItem | null;
   setSelectedItem: (key: string, item: IDropdownSelectItem) => void;
   options: IDropdownSelectItem[];

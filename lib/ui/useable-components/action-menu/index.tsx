@@ -10,7 +10,7 @@ const ActionMenu = <T,>({ items, data }: IActionMenuProps<T>) => {
   return (
     <div>
       <Menu
-        model={items.map((item) => ({
+        model={items?.map((item) => ({
           label: item.label,
           command: () => {
             item.command?.(data);

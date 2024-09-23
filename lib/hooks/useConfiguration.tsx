@@ -10,6 +10,7 @@ import { IConfiguration } from '@/lib/utils/interfaces';
 // Interface
 import { ConfigurationContext } from '@/lib/context/configuration.context';
 import { BACKEND_URL } from '@/lib/utils/constants';
+import { Libraries } from '@react-google-maps/api';
 
 // Third-Party
 //import { Libraries } from '@react-google-maps/api';
@@ -23,9 +24,9 @@ export const useConfiguration = () => {
   const PAYPAL_KEY = configuration?.clientId;
   const GOOGLE_MAPS_KEY = configuration?.googleApiKey;
   const AMPLITUDE_API_KEY = configuration?.webAmplitudeApiKey;
-  /*   const LIBRARIES = 'places,drawing,geometry,localContext,visualization'.split(
+  const LIBRARIES = 'places,drawing,geometry,localContext,visualization'.split(
     ','
-  ) as Libraries; */
+  ) as Libraries;
   const COLORS = {
     GOOGLE: configuration?.googleColor,
   };
@@ -42,7 +43,7 @@ export const useConfiguration = () => {
     STRIPE_PUBLIC_KEY,
     GOOGLE_MAPS_KEY,
     AMPLITUDE_API_KEY,
-    //LIBRARIES,
+    LIBRARIES,
     SENTRY_DSN,
     SKIP_EMAIL_VERIFICATION,
     SKIP_MOBILE_VERIFICATION,

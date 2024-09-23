@@ -58,9 +58,7 @@ export default function LoginEmailPasswordScreen() {
               <Formik
                 initialValues={account}
                 validationSchema={SignupSchema}
-                onSubmit={(e) => {
-                  console.log(e);
-                }}
+                onSubmit={() => {}}
                 validateOnChange
               >
                 {({ values, errors, handleChange }) => {

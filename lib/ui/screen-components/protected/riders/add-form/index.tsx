@@ -28,26 +28,14 @@ import { RiderSchema } from '@/lib/utils/schema/rider';
 import useToast from '@/lib/hooks/useToast';
 
 //GraphQL
-import { getRiders, getZones } from '@/lib/api/graphql';
-import { createRider, editRider } from '@/lib/api/graphql/mutation';
+import {
+  CREATE_RIDER,
+  EDIT_RIDER,
+  GET_RIDERS,
+  GET_ZONES,
+} from '@/lib/api/graphql';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { gql, useMutation } from '@apollo/client';
-
-const GET_RIDERS = gql`
-  ${getRiders}
-`;
-
-const CREATE_RIDER = gql`
-  ${createRider}
-`;
-
-const EDIT_RIDER = gql`
-  ${editRider}
-`;
-
-const GET_ZONES = gql`
-  ${getZones}
-`;
+import { useMutation } from '@apollo/client';
 
 export default function RiderAddForm({
   onHide,
@@ -111,7 +99,7 @@ export default function RiderAddForm({
         onError: (error) => {
           let message = '';
           try {
-            message = error.graphQLErrors[0].message;
+            message = error.graphQLErrors[0]?.message;
           } catch (err) {
             message = 'ActionFailedTryAgain';
           }

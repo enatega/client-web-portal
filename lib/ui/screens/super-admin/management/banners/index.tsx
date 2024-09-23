@@ -1,19 +1,23 @@
 'use client';
-import BannersAddForm from '@/lib/ui/screen-components/protected/banner/add-form';
-import BannersMain from '@/lib/ui/screen-components/protected/banner/view/main';
-import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
+// Core
 import { useState } from 'react';
 
-export default function BannerScreen() {
-  //Hooks
-  const [isAddBannerVisible, setIsAddBannerVisible] = useState(false);
-  const [banner, setBanner] = useState<null | IBannersResponse>(null);
+//Components
+import BannersAddForm from '@/lib/ui/screen-components/protected/banner/add-form';
+import BannersHeader from '@/lib/ui/screen-components/protected/banner/view/header';
+import BannersMain from '@/lib/ui/screen-components/protected/banner/view/main';
 
-  // to prevent lint error until the add feat is added
-  console.log(isAddBannerVisible);
+// Interface
+import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
+
+export default function BannerScreen() {
+  // State
+  const [isAddBannerVisible, setIsAddBannerVisible] = useState(false);
+  const [banner, setBanner] = useState<IBannersResponse | null>(null);
 
   return (
-    <div className="px-6">
+    <div className="px-10 pt-5">
+      <BannersHeader setIsAddBannerVisible={setIsAddBannerVisible} />
       <BannersMain
         setIsAddBannerVisible={setIsAddBannerVisible}
         setBanner={setBanner}

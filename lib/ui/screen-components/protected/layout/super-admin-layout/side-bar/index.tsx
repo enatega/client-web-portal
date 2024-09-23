@@ -85,6 +85,11 @@ export default function MakeSidebar() {
           route: '/general/users',
           isParent: false,
         },
+        {
+          text: 'Staff',
+          route: '/general/staff',
+          isParent: false,
+        },
       ],
     },
     {
@@ -104,7 +109,7 @@ export default function MakeSidebar() {
           isParent: false,
         },
         {
-          text: 'Cousins',
+          text: 'Cuisine',
           route: '/management/cuisines',
           isParent: false,
         },

@@ -1,3 +1,4 @@
+// Imports for Apollo Client setup and configuration
 import { useConfiguration } from '@/lib/hooks/useConfiguration';
 import {
   ApolloClient,
@@ -12,9 +13,14 @@ import {
 } from '@apollo/client';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
+
+// GraphQL related imports
 import { DefinitionNode } from 'graphql';
 import { createClient } from 'graphql-ws';
+
+// Utility imports
 import { Subscription } from 'zen-observable-ts';
+import { APP_NAME } from '../utils/constants';
 
 export const useSetupApollo = (): ApolloClient<NormalizedCacheObject> => {
   const { SERVER_URL, WS_SERVER_URL } = useConfiguration();
@@ -42,8 +48,13 @@ export const useSetupApollo = (): ApolloClient<NormalizedCacheObject> => {
   );
 
   const request = async (operation: Operation): Promise<void> => {
-    const data = localStorage.getItem('token');
-    const token = data ? data : null;
+    const data = localStorage.getItem(`user-${APP_NAME}`);
+
+    let token = process.env.NEXT_PUBLIC_AUTH_TOKEN;
+    if (data) {
+      token = JSON.parse(data).token;
+    }
+
     operation.setContext({
       headers: {
         authorization: token ? `Bearer ${token}` : '',

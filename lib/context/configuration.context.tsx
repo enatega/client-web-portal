@@ -1,9 +1,9 @@
 'use client';
 
 // Core
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-// Interfaces
+// Interfaces§
 import {
   IConfiguration,
   IConfigurationProviderProps,
@@ -19,20 +19,65 @@ import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 export const ConfigurationContext = React.createContext<
   IConfiguration | undefined
 >({
+  _id: '',
+  pushToken: '',
   webClientID: '',
   publishableKey: '',
   clientId: '',
   googleApiKey: '',
   webAmplitudeApiKey: '',
+  appAmplitudeApiKey: '',
   googleColor: '',
   webSentryUrl: '',
+  apiSentryUrl: '',
+  customerAppSentryUrl: '',
+  restaurantAppSentryUrl: '',
+  riderAppSentryUrl: '',
   skipEmailVerification: false,
   skipMobileVerification: false,
   currency: '',
   currencySymbol: '',
-  deliveryRate: '',
+  deliveryRate: 0,
   googleMapLibraries: '',
-  twilioEnabled: '',
+  twilioEnabled: false,
+  twilioAccountSid: '',
+  twilioAuthToken: '',
+  twilioPhoneNumber: '',
+  firebaseKey: '',
+  appId: '',
+  authDomain: '',
+  storageBucket: '',
+  msgSenderId: '',
+  measurementId: '',
+  projectId: '',
+  dashboardSentryUrl: '',
+  cloudinaryUploadUrl: '',
+  cloudinaryApiKey: '',
+  vapidKey: '',
+  isPaidVersion: false,
+  email: '',
+  emailName: '',
+  password: '',
+  enableEmail: false,
+  clientSecret: '',
+  sandbox: false,
+  secretKey: '',
+  formEmail: '',
+  sendGridApiKey: '',
+  sendGridEnabled: false,
+  sendGridEmail: '',
+  sendGridEmailName: '',
+  sendGridPassword: '',
+  androidClientID: '',
+  iOSClientID: '',
+  expoClientID: '',
+  termsAndConditions: '',
+  privacyPolicy: '',
+  testOtp: '',
+  costType: '',
+  enableRiderDemo: false,
+  enableRestaurantDemo: false,
+  enableAdminDemo: false,
 });
 
 export const ConfigurationProvider: React.FC<IConfigurationProviderProps> = ({
@@ -44,38 +89,91 @@ export const ConfigurationProvider: React.FC<IConfigurationProviderProps> = ({
   // API
 
   const { fetch, loading, error, data } = useLazyQueryQL(GET_CONFIGURATION, {
-    fetchPolicy: 'network-only',
     debounceMs: 300,
-  }) as ILazyQueryResult<IConfiguration | undefined, undefined>;
+  }) as ILazyQueryResult<
+    { configuration: IConfiguration } | undefined,
+    undefined
+  >;
 
   // Handlers
-  const onFetchConfiguration = async () => {
-    fetch();
-
+  const onFetchConfiguration = () => {
     let configuration: IConfiguration | undefined =
       loading || error || !data
         ? {
+            _id: '',
+            pushToken: '',
             webClientID: '',
             publishableKey: '',
             clientId: '',
             googleApiKey: '',
             webAmplitudeApiKey: '',
+            appAmplitudeApiKey: '',
             googleColor: '',
             webSentryUrl: '',
+            apiSentryUrl: '',
+            customerAppSentryUrl: '',
+            restaurantAppSentryUrl: '',
+            riderAppSentryUrl: '',
             skipEmailVerification: false,
             skipMobileVerification: false,
             currency: '',
             currencySymbol: '',
-            deliveryRate: '',
+            deliveryRate: 0,
             googleMapLibraries: '',
-            twilioEnabled: '',
+            twilioEnabled: false,
+            twilioAccountSid: '',
+            twilioAuthToken: '',
+            twilioPhoneNumber: '',
+            firebaseKey: '',
+            appId: '',
+            authDomain: '',
+            storageBucket: '',
+            msgSenderId: '',
+            measurementId: '',
+            projectId: '',
+            dashboardSentryUrl: '',
+            cloudinaryUploadUrl: '',
+            cloudinaryApiKey: '',
+            vapidKey: '',
+            isPaidVersion: false,
+            email: '',
+            emailName: '',
+            password: '',
+            enableEmail: false,
+            clientSecret: '',
+            sandbox: false,
+            secretKey: '',
+            formEmail: '',
+            sendGridApiKey: '',
+            sendGridEnabled: false,
+            sendGridEmail: '',
+            sendGridEmailName: '',
+            sendGridPassword: '',
+            androidClientID: '',
+            iOSClientID: '',
+            expoClientID: '',
+            termsAndConditions: '',
+            privacyPolicy: '',
+            testOtp: '',
+            costType: '',
+            enableRiderDemo: false,
+            enableRestaurantDemo: false,
+            enableAdminDemo: false,
           }
-        : data;
+        : data?.configuration;
 
     setConfiguration(configuration);
   };
 
+  const fetchConfiguration = useCallback(() => {
+    fetch();
+  }, [fetch]);
+
   // Use Effect
+  useEffect(() => {
+    fetchConfiguration();
+  }, []);
+
   useEffect(() => {
     onFetchConfiguration();
   }, [data]);

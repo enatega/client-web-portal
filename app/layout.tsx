@@ -48,13 +48,13 @@ export default function RootLayout({
       <body className={inter.className}>
         <PrimeReactProvider value={value}>
           <ApolloProvider client={client}>
-            <ToastProvider>
-              <ConfigurationProvider>
-                <LayoutProvider>
-                  <SidebarProvider>{children}</SidebarProvider>
-                </LayoutProvider>
-              </ConfigurationProvider>
-            </ToastProvider>
+            <ConfigurationProvider>
+              <LayoutProvider>
+                <SidebarProvider>
+                  <ToastProvider>{children}</ToastProvider>
+                </SidebarProvider>
+              </LayoutProvider>
+            </ConfigurationProvider>
           </ApolloProvider>
         </PrimeReactProvider>
       </body>

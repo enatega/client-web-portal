@@ -71,14 +71,6 @@ body {
   gap: 10px;
 }
 
-/* Card */
-.card {
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  background-color: white;
-}
-
 /* Text Component */
 .custom-text {
   font-feature-settings:
@@ -90,6 +82,19 @@ body {
   font-size: 30px;
   font-weight: 700;
   line-height: 40px;
+}
+.heading-2 {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 40px;
+}
+
+/* Card */
+.card {
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  background-color: white;
 }
 
 .card-h1 {
@@ -104,6 +109,33 @@ body {
   line-height: 20px;
   letter-spacing: 3%;
   font-weight: 400;
+}
+
+.card-h3 {
+  font-size: 11px;
+  line-height: 20px;
+  letter-spacing: 3%;
+  font-weight: 400;
+}
+
+/* Scroll Bar  */
+::-webkit-scrollbar {
+  width: 7px;
+  background: rgba(177, 177, 177, 0.171);
+}
+::-webkit-scrollbar-thumb {
+  background: #050505dc;
+  border-radius: 7px;
+}
+
+/* Scroll Bar  */
+::-webkit-scrollbar {
+  width: 7px;
+  background: rgba(177, 177, 177, 0.171);
+}
+::-webkit-scrollbar-thumb {
+  background: #050505dc;
+  border-radius: 7px;
 }
 
 /* ------------- Prime React ------------- */
@@ -192,50 +224,6 @@ body {
 }
 /* ------------------------ */
 
-.buttons {
-  display: flex;
-  gap: 10px;
-}
-
-/* Card */
-.card {
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  background-color: white;
-}
-
-/* Text Component */
-.custom-text {
-  font-feature-settings:
-    'liga' off,
-    'clig' off;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-}
-
-.heading-1 {
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 40px;
-}
-
-.card-h1 {
-  font-size: 15px;
-  line-height: 20px;
-  letter-spacing: 3%;
-  font-weight: 700;
-}
-
-.card-h2 {
-  font-size: 13px;
-  line-height: 20px;
-  letter-spacing: 3%;
-  font-weight: 400;
-}
-
 /* Text Icon Clickable */
 .text-icon-clickable-container {
   height: 40px;
@@ -253,27 +241,16 @@ body {
   line-height: 1.5rem; /* equivalent to leading-6 */
 }
 
-/* Scroll Bar  */
-::-webkit-scrollbar {
-  width: 7px;
-  background: rgba(177, 177, 177, 0.171);
-}
-::-webkit-scrollbar-thumb {
-  background: #050505dc;
-  border-radius: 7px;
-}
-
-/* Scroll Bar  */
-::-webkit-scrollbar {
-  width: 7px;
-  background: rgba(177, 177, 177, 0.171);
-}
-::-webkit-scrollbar-thumb {
-  background: #050505dc;
-  border-radius: 7px;
-}
-
 /* Data Table */
+.p-datatable-header {
+  padding: 0;
+}
+
+.p-datatable-header {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .p-datatable-table .p-checkbox-box {
   border: 1px solid !important;
   height: 15px;
@@ -351,13 +328,13 @@ body {
 
 .p-datatable-header .p-component::placeholder {
   font-size: 14px; /* Adjust the font size as needed */
-  color: #888; /* Optional: Change the placeholder text color */
-  font-weight: 500;
+  color: #adacac;
+  /* font-weight: 500; */
 }
 
 .p-datatable-header .p-component {
   font-size: 14px; /* Adjust the font size as needed */
-  font-weight: 500;
+  font-weight: lighter;
 }
 
 .p-menuitem-content {
@@ -392,19 +369,6 @@ body {
   border-radius: 3px;
 }
 
-.p-button.p-component.p-fileupload-choose {
-  background-color: black !important;
-  outline: none;
-  box-shadow: none;
-  height: 43px;
-  font-size: 12px;
-  z-index: 100;
-}
-
-.p-button.p-component.p-fileupload-choose svg {
-  height: 12px;
-  width: 12px;
-}
 .p-dropdown-label.p-inputtext,
 .p-paginator-pages button {
   font-size: 13px;
@@ -425,6 +389,57 @@ body {
   font-size: 14px;
 }
 
-.p-dropdown-label.p-inputtext {
+.p-dropdown-label {
+  margin-top: -2px;
+}
+
+.p-dropdown-label > .p-inputtext {
+  margin-top: 10px;
+}
+
+.p-multiselect-label {
+  margin-top: -2px;
+}
+
+/* Stepper */
+.p-stepper-title {
+  font-size: 12px;
+}
+
+.p-stepper-number {
+  font-size: 16px;
+}
+
+/* Sidebar */
+.p-stepper-panels {
+  padding: 0;
+}
+
+/* Auto Complet */
+.p-autocomplete {
+  padding: 0;
+  border: 0;
+}
+.p-autocomplete-input {
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 35px;
+  outline: none;
+  box-shadow: none;
+  border: 1px solid lightgray;
+  border-right: 0;
+}
+
+.p-autocomplete-panel {
   margin-top: 2px;
+}
+
+.p-autocomplete-item:hover {
+  background-color: var(--secondary-color);
+}
+
+.p-autocomplete-dropdown {
+  background-color: white;
+  height: 2.62rem;
+  margin-top: 1px;
 }

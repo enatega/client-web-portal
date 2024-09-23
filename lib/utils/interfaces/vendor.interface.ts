@@ -1,8 +1,11 @@
 import { TVendorFormPosition, TVendorMobileTabs } from '@/lib/utils/types';
-import { IGlobalComponentProps } from './global.interface';
+import { IGlobalComponentProps, IQueryResult } from './global.interface';
 
 export interface IVendorCardProps extends IGlobalComponentProps {
-  index: number;
+  _id: string;
+  userType: string;
+  email: string;
+  totalRestaurants: number;
 }
 
 export interface IVendorAddFormComponentProps extends IGlobalComponentProps {
@@ -11,9 +14,16 @@ export interface IVendorAddFormComponentProps extends IGlobalComponentProps {
 
 export interface IVendorContextProps {
   vendorFormVisible: boolean;
-  onSetVendorFormVisible: (status: boolean) => void;
-  vendorId: number | null;
-  onSetVendorId: (val: number) => void;
+  onSetVendorFormVisible: (status: boolean, isEdit?: boolean) => void;
+  vendorId: string | null;
+  onSetVendorId: (val: string) => void;
+  vendorResponse: IQueryResult<IVendorResponseGraphQL | undefined, undefined>;
+  globalFilter: string;
+  onSetGlobalFilter: (filter: string) => void;
+  filtered?: IVendorReponse[];
+  isEditingVendor: boolean;
+  onSetEditingVendor: (status: boolean) => void;
+  onResetVendor: (state: boolean) => void;
 }
 
 export interface IVendorHeaderComponentsProps extends IGlobalComponentProps {
@@ -31,4 +41,37 @@ export interface IVendorMainComponentProps
     IVendorMobileTabsComponentProps {
   selectedRestaurantFilter: string;
   setSelectedResturantFilter: (val: string) => void;
+}
+
+// Vendors Respect
+
+export interface IVendorReponse {
+  _id: string;
+  email: string;
+  userType: string;
+  isActive: boolean;
+  restaurants: {
+    _id: string;
+  }[];
+}
+
+export interface IVendorResponseGraphQL {
+  vendors: IVendorReponse[];
+}
+
+export interface IGetVendorReponse
+  extends Omit<IVendorReponse, 'restaurants' | 'userType'> {
+  _id: string;
+  email: string;
+}
+
+export interface IGetVendorResponseGraphQL {
+  getVendor: IVendorReponse;
+}
+
+export interface ICreateVendorResponse
+  extends Omit<IVendorReponse, 'restaurants'> {}
+
+export interface ICreateVendorResponseGraphQL {
+  createVendor: ICreateVendorResponse;
 }

@@ -1,23 +1,15 @@
 import { Dispatch, SetStateAction } from 'react';
+import { IEditPopupVal } from './coupons.interface';
+import { IEditState } from './global.interface';
 
-export default interface IEditDeleteInterface<T> {
-  setIsEditing: Dispatch<
-    SetStateAction<{
-      bool: boolean;
-      data: T;
-    }>
-  >;
-  setIsDeleting: Dispatch<
-    SetStateAction<{
-      _id: string;
-      bool: boolean;
-    }>
-  >;
-  setIsEditDeletePopupOpen: Dispatch<
-    SetStateAction<{
-      _id: string;
-      bool: boolean;
-    }>
-  >;
+export interface IEditDeleteInterface<T> {
+  setIsEditing: Dispatch<SetStateAction<IEditState<T>>>;
+  setIsDeleting: Dispatch<SetStateAction<IEditState<T>>>;
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  setIsEditDeletePopupOpen: Dispatch<SetStateAction<IEditPopupVal>>;
+  visible: boolean;
   data: T;
+}
+export interface IEditDeleteProps {
+  _id: string;
 }
