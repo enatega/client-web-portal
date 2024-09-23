@@ -35,12 +35,13 @@ export default function WithdrawTable({
   statusOptions,
   setSelectedStatuses,
   selectedStatuses,
+  setRequests,
 }: IWithDrawRequestsTableProps) {
   //toast
   //   const { showToast } = useContext(ToastContext);
 
   const [selectedData, setSelectedData] = useState<IWithDrawRequest[]>([]);
-  const [options, setOptions] = useState<IDropdownSelectItem[]>([
+  const options = [
     {
       code: 'REQUESTED',
       label: 'Requested',
@@ -56,7 +57,7 @@ export default function WithdrawTable({
       label: 'Cancelled',
       body: () => <Tag value="Cancelled" severity="danger" rounded />,
     },
-  ]);
+  ];
 
   // find severity
   function findSeverity(code: string) {
@@ -72,7 +73,6 @@ export default function WithdrawTable({
 
   //templates
   const valueTemplate = (option: IDropdownSelectItem) => {
-    console.log({ option });
     return (
       <Tag
         severity={findSeverity(option?.code)}
@@ -82,7 +82,6 @@ export default function WithdrawTable({
     );
   };
   const itemTemplate = (option: IDropdownSelectItem) => {
-    console.log({ option });
     return (
       <div className="flex gap-2">
         <FontAwesomeIcon
@@ -100,6 +99,26 @@ export default function WithdrawTable({
         <span>{option.label}</span>
       </div>
     );
+  };
+  // handle drop down change
+  const handleDropDownChange = (
+    e: DropdownProps,
+    rowData: IWithDrawRequest
+  ) => {
+    const filteredRequests: IWithDrawRequest[] | undefined = data?.filter(
+      (request) => request._id !== rowData._id
+    );
+    const newRequest: IWithDrawRequest = {
+      _id: rowData._id,
+      requestAmount: rowData.requestAmount,
+      requestId: rowData.requestId,
+      requestTime: rowData.requestTime,
+      rider: rowData.rider,
+      status: e.value.code,
+    };
+    if (filteredRequests) {
+      setRequests([newRequest, ...filteredRequests]);
+    }
   };
 
   //columns
@@ -128,7 +147,7 @@ export default function WithdrawTable({
           <Dropdown
             value={options?.find((option) => option?.code === rowData.status)}
             options={options}
-            onChange={(e: DropdownProps) => setOptions(e.value)}
+            onChange={(e) => handleDropDownChange(e, rowData)}
             itemTemplate={itemTemplate}
             valueTemplate={valueTemplate}
           />
