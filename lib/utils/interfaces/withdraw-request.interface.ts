@@ -42,7 +42,6 @@ export interface IWithDrawRequestsTableProps {
   globalFilterValue: string;
   statusOptions: IDropdownSelectItem[];
   selectedStatuses: string[];
-  setIsEditing: Dispatch<SetStateAction<IEditState<IWithDrawRequest>>>;
   setRequests: Dispatch<SetStateAction<IWithDrawRequest[]>>;
   onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
   setSelectedStatuses: Dispatch<SetStateAction<string[]>>;

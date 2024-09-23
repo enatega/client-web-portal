@@ -97,7 +97,7 @@ export default function CuisineTable({
   }
 
   //columns
-  const cuisineColums: IColumnConfig<ICuisine>[] = [
+  const cuisineColumns: IColumnConfig<ICuisine>[] = [
     {
       headerName: 'Image',
       propertyName: 'image',
@@ -194,7 +194,7 @@ export default function CuisineTable({
         message="Are you sure to delete the cuisine?"
       />
       <Table
-        columns={cuisineColums}
+        columns={cuisineColumns}
         data={data ?? []}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e as ICuisine[])}

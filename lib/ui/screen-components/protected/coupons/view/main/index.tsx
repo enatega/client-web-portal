@@ -26,13 +26,7 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
   });
   const [isDeleting, setIsDeleting] = useState<IEditState<ICoupon>>({
     bool: false,
-    data: {
-      __typename: '',
-      _id: '',
-      discount: 0,
-      enabled: false,
-      title: '',
-    },
+    data: isEditing.data,
   });
 
   //filters
@@ -139,7 +133,7 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
         setCoupons(data.coupons);
       }
     }
-  }, [selectedStatuses]);
+  }, [selectedStatuses, coupons]);
   return (
     <div>
       <CouponTable

@@ -68,6 +68,8 @@ export default function WithdrawTable({
         return 'success';
       case 'CANCELLED':
         return 'danger';
+      default:
+        return 'warning';
     }
   }
 

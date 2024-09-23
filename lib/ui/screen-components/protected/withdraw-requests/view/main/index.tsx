@@ -1,6 +1,6 @@
 import { GET_ALL_WITHDRAW_REQUESTS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
+import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   IGetWithDrawRequestsData,
   IWithDrawRequest,
@@ -13,21 +13,6 @@ export default function WithdrawRequestsMain() {
   //states
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [requests, setRequests] = useState<IWithDrawRequest[]>([]);
-  const [isEditing, setIsEditing] = useState<IEditState<IWithDrawRequest>>({
-    bool: false,
-    data: {
-      _id: '',
-      requestAmount: 0,
-      requestId: '',
-      requestTime: '',
-      rider: {
-        _id: '',
-        currentWalletAmount: 0,
-        name: '',
-      },
-      status: '',
-    },
-  });
 
   //queries
   const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
@@ -66,8 +51,6 @@ export default function WithdrawRequestsMain() {
 
   useEffect(() => {
     if (data) {
-      //temp console ========================>
-      console.log({ isEditing });
       setRequests(data.getAllWithdrawRequests?.data);
     }
   }, [data]);
@@ -79,7 +62,6 @@ export default function WithdrawRequestsMain() {
         loading={loading}
         onGlobalFilterChange={onGlobalFilterChange}
         selectedStatuses={selectedStatuses}
-        setIsEditing={setIsEditing}
         setRequests={setRequests}
         setSelectedStatuses={setSelectedStatuses}
         statusOptions={statusOptions}
