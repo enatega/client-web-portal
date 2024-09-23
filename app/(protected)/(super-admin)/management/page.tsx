@@ -1,8 +1,18 @@
 'use client';
 
+// Core
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 // Screen
-import VendorsScreen from '@/lib/ui/screens/super-admin/general/vendors';
 
 export default function GeneralPage() {
-  return <VendorsScreen />;
+  // Hooks
+  const router = useRouter();
+
+  // Effects
+  useEffect(() => {
+    router.push('/management/configurations');
+  }, []);
+
+  return <></>;
 }
