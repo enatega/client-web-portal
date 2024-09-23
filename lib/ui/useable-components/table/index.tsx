@@ -21,6 +21,7 @@ const Table = <T extends ITableExtends>({
   filters,
   size = 'small',
   loading,
+  isSelectable = false,
 }: IDataTableProps<T>) => {
   //For checkbox selection of column
   const handleSelectionChange = (
@@ -50,7 +51,12 @@ const Table = <T extends ITableExtends>({
       scrollable={true}
       scrollHeight="500px"
     >
-      <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+      {isSelectable && (
+        <Column
+          selectionMode="multiple"
+          headerStyle={{ width: '3rem' }}
+        ></Column>
+      )}
       {columns.map((col, index) => (
         <Column
           key={index}

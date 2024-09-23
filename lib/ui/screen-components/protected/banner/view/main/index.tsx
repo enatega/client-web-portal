@@ -85,7 +85,7 @@ export default function BannersMain({
   ];
 
   return (
-    <div className="mx-[-14px]">
+    <div className="pt-5">
       <Table
         header={
           <BannerTableHeader
