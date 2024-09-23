@@ -1,6 +1,6 @@
 'use client';
 //contexts
-import { CREATE_CUISINE } from '@/lib/api/graphql';
+import { CREATE_CUISINE, EDIT_CUISINE } from '@/lib/api/graphql';
 
 //contexts
 import { ToastContext } from '@/lib/context/toast.context';
@@ -28,25 +28,42 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 
 import { useContext } from 'react';
 
-export default function AddCuisine({
+export default function CuisineForm({
   setVisible,
-  setCuisinesData,
+  setCuisines,
+  setIsEditing,
+  cuisines,
+  isEditing,
+  addCuisineLocally,
 }: IAddCuisineProps) {
   // initial values
   const initialValues = {
-    name: '',
-    description: '',
+    _id: isEditing.bool ? isEditing?.data?._id : '',
+    name: isEditing.bool ? isEditing?.data?.name : '',
+    description: isEditing.bool ? isEditing?.data?.description : '',
     shopType: {
-      label: '',
-      code: '',
+      label: isEditing.bool ? isEditing?.data?.shopType : '',
+      code: isEditing.bool ? isEditing?.data?.shopType.toLowerCase() : '',
     },
   };
 
   //toast
   const { showToast } = useContext(ToastContext);
 
-  //mutation
-  const [CreateCuisine, { loading }] = useMutation(CREATE_CUISINE, { onError });
+  //mutations
+  const [CreateCuisine, { loading: createCuisineLoading }] = useMutation(
+    CREATE_CUISINE,
+    {
+      onError,
+    }
+  );
+  const [editCuisine, { loading: editCuisineLoading }] = useMutation(
+    EDIT_CUISINE,
+    {
+      onError,
+    }
+  );
+
   // shop type options
   const shopTypeOptions = [
     { label: 'Restaurant', code: 'restaurant' },
@@ -68,38 +85,83 @@ export default function AddCuisine({
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="font-bold mb-3 text-xl">Add Cuisine</h2>
+      <h2 className="font-bold mb-3 text-xl">
+        {isEditing.bool ? 'Edit' : 'Add'} Cuisine
+      </h2>
       <Formik
         initialValues={initialValues}
         validationSchema={CuisineFormSchema}
         onSubmit={async (values, { setSubmitting }) => {
           try {
             setSubmitting(true);
-            const formData = {
-              name: values.name,
-              description: values.description,
-              shopType: values.shopType.label,
-            };
-            const res = await CreateCuisine({
-              variables: { cuisineInput: formData },
-            });
+
+            let formData;
+            if (!isEditing.bool) {
+              formData = {
+                name: values.name,
+                description: values.description,
+                shopType: values.shopType.label,
+              };
+            } else {
+              formData = {
+                _id: values._id,
+                name: values.name,
+                description: values.description,
+                shopType: values.shopType.label,
+              };
+            }
+            let res;
+            if (!isEditing.bool) {
+              res = await CreateCuisine({
+                variables: {
+                  cuisineInput: formData,
+                },
+              });
+            } else {
+              res = await editCuisine({
+                variables: {
+                  cuisineInput: formData,
+                },
+              });
+            }
+
             setVisible(false);
             showToast({
-              title: 'Success',
+              title: 'New Cuisine',
               type: 'success',
-              message: 'Cuisine was added successfully!',
+              message: 'Cuisine has been created successfully',
               duration: 2000,
             });
-            const newCuisine: ICuisine = res.data.createCuisine;
-            setCuisinesData(newCuisine);
-
+            let newCuisine: ICuisine;
+            if (isEditing.bool) {
+              newCuisine = res?.data?.editCuisine;
+              setIsEditing({
+                bool: false,
+                data: {
+                  __typename: '',
+                  _id: '',
+                  description: '',
+                  name: '',
+                  shopType: '',
+                  image: '',
+                },
+              });
+              let filteredCuisines = cuisines.filter(
+                (cuisine) => cuisine._id !== isEditing.data._id
+              );
+              filteredCuisines.push(newCuisine);
+              setCuisines([newCuisine, ...filteredCuisines]);
+            } else {
+              newCuisine = res?.data?.createCuisine;
+              addCuisineLocally(newCuisine);
+            }
             setSubmitting(false);
           } catch (err) {
             setVisible(true);
             showToast({
-              type: 'error',
               title: 'New Cuisine',
-              message: 'Something went wrong',
+              type: 'error',
+              message: `New Cuisine ${isEditing.bool ? 'Edition' : 'Creation'} has been failed`,
               duration: 2000,
             });
             setSubmitting(false);
@@ -165,16 +227,20 @@ export default function AddCuisine({
 
               <button
                 className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"
-                disabled={isSubmitting || loading}
+                disabled={
+                  isSubmitting || createCuisineLoading || editCuisineLoading
+                }
                 type="submit"
               >
-                {isSubmitting || loading ? (
+                {isSubmitting || createCuisineLoading || editCuisineLoading ? (
                   <ProgressSpinner
                     className="w-6 h-6 items-center self-center m-0 p-0"
                     strokeWidth="5"
                     style={{ fill: 'white', accentColor: 'white' }}
                     color="white"
                   />
+                ) : isEditing.bool ? (
+                  'Update'
                 ) : (
                   'Add'
                 )}

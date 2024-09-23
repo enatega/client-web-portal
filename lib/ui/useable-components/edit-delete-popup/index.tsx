@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //contexts
 
 //hooks
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 export default function EditDeletePopup<T>({
   setIsDeleting,
@@ -26,7 +26,17 @@ export default function EditDeletePopup<T>({
   //states
   //popup ref
   const popupRef = useRef<HTMLDivElement | null>(null);
-
+  //handle edit trigger
+  const handleEditTrigger = useCallback(() => {
+    setIsEditing({
+      bool: true,
+      data: data,
+    });
+    setIsEditDeletePopupOpen({
+      _id: '',
+      bool: false,
+    });
+  }, []);
   //handle blur
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -42,24 +52,12 @@ export default function EditDeletePopup<T>({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setIsEditing, setIsDeleting, visible, setVisible]);
-
   return (
     <div
       ref={popupRef}
-      className="flex flex-col gap-2 p-2 rounded-lg right-8  bg-white shadow-xl border border-gray-200 w-fit absolute"
+      className="flex flex-col gap-2 p-2 rounded-lg right-8  bg-white shadow-xl border border-gray-200 w-fit items-start justify-start absolute"
     >
-      <button
-        onClick={() => {
-          setIsEditing({
-            bool: true,
-            data: data,
-          });
-          setIsEditDeletePopupOpen({
-            _id: '',
-            bool: false,
-          });
-        }}
-      >
+      <button onClick={handleEditTrigger} className="flex gap-x-1 items-center">
         <FontAwesomeIcon
           title="Edit"
           icon={faEdit}
@@ -79,6 +77,7 @@ export default function EditDeletePopup<T>({
             bool: false,
           });
         }}
+        className="flex gap-x-1 items-center"
       >
         <FontAwesomeIcon
           color="red"
@@ -86,6 +85,7 @@ export default function EditDeletePopup<T>({
           icon={faTrash}
           className="cursor-pointer"
         />
+        <span className="text-sm">Delete</span>
       </button>
     </div>
   );

@@ -1,5 +1,6 @@
 import { DataTableFilterMeta } from 'primereact/datatable';
 import { Dispatch, SetStateAction } from 'react';
+import { IEditState } from './global.interface';
 
 export interface ICoupon {
   discount: number;
@@ -20,13 +21,15 @@ export interface ICouponsStakProps {
 }
 export interface IAddCouponProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  setCoupons: (coupon: ICoupon) => void;
+  handleAddCouponLocally: (coupon: ICoupon) => void;
+  setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
   setIsEditing: Dispatch<
     SetStateAction<{
       bool: boolean;
       data: ICoupon;
     }>
   >;
+  coupons: ICoupon[];
   isEditing: IEditState<ICoupon>;
 }
 export interface IEditPopupVal {
@@ -44,7 +47,17 @@ export interface ICouponsTableProps {
   visible: boolean;
   setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
 }
-export interface IEditState<T> {
-  bool: boolean;
-  data: T;
+export interface ICouponStatuses {
+  enabled: {
+    total: null | undefined | number;
+    status: boolean;
+  };
+  disabled: {
+    total: null | undefined | number;
+    status: boolean;
+  };
+  all: {
+    total: null | undefined | number;
+    status: boolean;
+  };
 }

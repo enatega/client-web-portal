@@ -1,5 +1,5 @@
 //components
-import AddCoupon from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/AddCoupon';
+import CouponForm from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponForm';
 import CouponTable from '@/lib/ui/screen-components/protected/layout/super-admin-layout/management/coupons/CouponTable';
 import CustomActionActionButton from '@/lib/ui/useable-components/custom-action-button';
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -8,8 +8,12 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 //interfaces
 import {
-  ICoupon,
+  IDropdownSelectItem,
   IEditState,
+  ILazyQueryResult,
+} from '@/lib/utils/interfaces';
+import {
+  ICoupon,
   IGetCouponsData,
 } from '@/lib/utils/interfaces/coupons.interface';
 
@@ -25,7 +29,6 @@ import { GET_COUPONS } from '@/lib/api/graphql';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 export default function CouponsScreen() {
@@ -55,6 +58,7 @@ export default function CouponsScreen() {
   const [filters, setFilters] = useState({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
   });
+
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
   //global filters change
@@ -71,6 +75,30 @@ export default function CouponsScreen() {
   //states
   const [visible, setVisible] = useState(false);
   const [coupons, setCoupons] = useState<ICoupon[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<
+    IDropdownSelectItem[]
+  >([]);
+
+  //options
+  let statusOptions = [
+    {
+      label: 'Enabled',
+      code: 'enabled',
+    },
+    {
+      label: 'Disabled',
+      code: 'disabled',
+    },
+    {
+      label: 'All',
+      code: 'all',
+    },
+  ];
+
+  //handle status change
+  const handleStatusChange = (name: string, items: IDropdownSelectItem[]) => {
+    setSelectedStatuses(items);
+  };
 
   //query
   const { data, fetch, loading } = useLazyQueryQL(
@@ -82,6 +110,7 @@ export default function CouponsScreen() {
   const handleButtonClick = () => {
     setVisible(true);
   };
+
   //handle add cuisine locally to append child in the cuisine array
   const handleAddCouponLocally = (coupon: ICoupon) => {
     setCoupons((prevCoupons) => [
@@ -113,6 +142,38 @@ export default function CouponsScreen() {
       setVisible(false);
     }
   }, [data, isEditing.bool]);
+
+  useEffect(() => {
+    let filteredCoupons: ICoupon[];
+
+    if (selectedStatuses.length > 0) {
+      const enabledSelected = selectedStatuses.some(
+        (status) => status.code === 'enabled'
+      );
+      const disabledSelected = selectedStatuses.some(
+        (status) => status.code === 'disabled'
+      );
+      const bothEnabledAndDisabled = enabledSelected && disabledSelected;
+
+      filteredCoupons = coupons.filter((coupon) =>
+        selectedStatuses.some((status) =>
+          status.code === 'all'
+            ? true
+            : enabledSelected
+              ? coupon.enabled
+              : disabledSelected
+                ? !coupon.enabled
+                : bothEnabledAndDisabled
+        )
+      );
+      setCoupons(filteredCoupons);
+    } else {
+      if (data?.coupons) {
+        setCoupons(data.coupons);
+      }
+    }
+  }, [selectedStatuses]);
+
   return (
     <div className="flex flex-col items-center w-full h-auto">
       <Sidebar
@@ -120,11 +181,13 @@ export default function CouponsScreen() {
         onHide={() => setVisible(false)}
         position="right"
       >
-        <AddCoupon
+        <CouponForm
           setVisible={setVisible}
-          setCoupons={handleAddCouponLocally}
+          setCoupons={setCoupons}
+          handleAddCouponLocally={handleAddCouponLocally}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
+          coupons={coupons}
         />
       </Sidebar>
       <div className="flex justify-between items-center px-5 w-full">
@@ -137,7 +200,7 @@ export default function CouponsScreen() {
           className="bg-black text-white p-2 rounded-md"
         />
       </div>
-      <div className="self-start flex items-center justify-center gap-x-3">
+      <div className="self-start flex items-center justify-center gap-x-3 m-3">
         <CustomTextField
           name="searchQuery"
           onChange={onGlobalFilterChange}
@@ -145,9 +208,16 @@ export default function CouponsScreen() {
           showLabel={false}
           placeholder="Filter tasks..."
           type="text"
-          className="w-96"
+          className="w-72 h-custom-button"
         />
-        <CustomActionActionButton Icon={faPlus} title="Action" />
+        <CustomActionActionButton
+          Icon={faPlus}
+          title="Status"
+          handleOptionChange={handleStatusChange}
+          selectedOption={selectedStatuses}
+          statusOptions={statusOptions}
+          name="coupon"
+        />
       </div>
       <CouponTable
         data={coupons}

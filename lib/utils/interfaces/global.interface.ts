@@ -60,3 +60,7 @@ export interface IStepperFormProps {
   isLastStep?: boolean;
   onStepChange: (order: number) => void;
 }
+export interface IEditState<T> {
+  bool: boolean;
+  data: T;
+}
