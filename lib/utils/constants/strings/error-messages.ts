@@ -65,7 +65,6 @@ export const BannersErrors: IBannersErrors = {
 };
 
 export const CategoryErrors: ICategoryErrors = {
-  restaurantId: ['Required'],
   _id: [],
   title: ['Required'],
 };
