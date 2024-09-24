@@ -2,6 +2,8 @@
 import { IMultiSelectComponentProps } from '@/lib/utils/interfaces';
 
 // Prime React
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MultiSelect, MultiSelectChangeEvent } from 'primereact/multiselect';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
@@ -12,6 +14,7 @@ const CustomMultiSelectComponent = ({
   selectedItems,
   setSelectedItems,
   showLabel,
+  dropDownIcon,
   isLoading = false,
   onChange,
   ...props
@@ -55,9 +58,12 @@ const CustomMultiSelectComponent = ({
         placeholder={placeholder}
         itemTemplate={itemTemplate}
         panelFooterTemplate={panelFooterTemplate}
-        className="w-full md:w-20rem h-11 p-0 m-0 border text-sm align-middle border-gray-300 focus:outline-none focus:shadow-none"
+        className="w-full md:w-20rem h-10 p-0 m-0 border text-sm align-middle border-gray-300 focus:outline-none focus:shadow-none"
         panelClassName="border-gray-200 border-2"
         display="chip"
+        dropdownIcon={(options) => (
+          <FontAwesomeIcon icon={dropDownIcon ?? faArrowDown} {...options} />
+        )}
         filter={true}
         {...props}
       />

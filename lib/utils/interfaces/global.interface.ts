@@ -11,6 +11,7 @@ export interface IGlobalComponentProps extends IGlobalProps {
 export interface IDropdownSelectItem {
   label: string;
   code: string;
+  body?: () => void;
 }
 
 export interface QueryState {
@@ -51,4 +52,16 @@ export interface INotificationComponentProps {
   type: 'success' | 'error' | 'warn' | 'info';
   title: string;
   message: string;
+}
+
+/* Stepper */
+
+export interface IStepperFormProps {
+  order: number;
+  isLastStep?: boolean;
+  onStepChange: (order: number) => void;
+}
+export interface IEditState<T> {
+  bool: boolean;
+  data: T;
 }

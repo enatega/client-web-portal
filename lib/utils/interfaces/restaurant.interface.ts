@@ -1,25 +1,44 @@
-import { IGlobalComponentProps, IQueryResult } from './global.interface';
+import {
+  IGlobalComponentProps,
+  IQueryResult,
+  IStepperFormProps,
+} from './global.interface';
 
+export interface IAddRestaurantComponentProps extends IGlobalComponentProps {
+  stepperProps?: IStepperFormProps;
+}
 export interface IRestaurantCardProps extends IGlobalComponentProps {
   restaurant: IRestaurantByOwner;
 }
 
 export interface IRestaurantContextProps {
+  // Vendor and Restaurant Data
   vendorId: string | null;
-  restaurantFormVisible: boolean;
-  onSetRestaurantFormVisible: (status: boolean) => void;
-  restaurantId: string | null;
-  onSetRestaurantId: (id: string) => void;
+  restaurantContextData: IRestaurantContextData;
   restaurantByOwnerResponse: IQueryResult<
     IRestaurantsByOwnerResponseGraphQL | undefined,
     undefined
   >;
-  restaurantGlobalFilter: string;
-  onSetRestaurantGlobalFilter: (filter: string) => void;
-  restaurantFiltered?: IRestaurantByOwner[];
-  // Editing,
-  isEditingRestaurant: boolean;
-  onSetEditingRestaurant: (status: boolean) => void;
+
+  // Form Visibility
+  isRestaurantFormVisible: boolean;
+  onSetRestaurantFormVisible: (status: boolean) => void;
+
+  // Form Navigation
+  activeIndex: number;
+  onActiveStepChange: (activeStep: number) => void;
+  onClearRestaurntsData: () => void;
+
+  // Context Data Management
+  onSetRestaurantContextData: (data: Partial<IRestaurantContextData>) => void;
+}
+
+export interface IRestaurantContextData {
+  id: string | null;
+  filtered: IRestaurantByOwner[] | undefined;
+  globalFilter: string;
+  isEditing: boolean;
+  autoCompleteAddress: string;
 }
 
 export interface IRestaurantResponse {
@@ -34,9 +53,11 @@ export interface IRestaurantResponse {
   isActive: boolean;
   commissionRate: number;
   tax: number;
+  username: string;
   owner: {
     _id: string;
     email: string;
+    isActive: boolean;
     __typename: string;
   };
   shopType: string;
@@ -47,7 +68,6 @@ export interface IRestaurantsResponseGraphQL {
   restaurants: IRestaurantResponse[];
 }
 
-// By OWner
 export interface IRestaurantByOwner {
   _id: string;
   orderId: string;
@@ -74,8 +94,8 @@ export interface IRestaurantsByOwnerResponseGraphQL {
   };
 }
 
-// Create
-interface ICreateRestaurant {
+export interface ICreateRestaurant {
+  _id: string;
   address: string;
   cuisines: string[];
   image: string;
@@ -94,11 +114,95 @@ interface ICreateRestaurant {
   tax: number;
   username: string;
   __typename: string;
-  _id: string;
+  deliveryTime: number;
+  isActive: boolean;
+  commissionRate: number;
+  owner: {
+    _id: string;
+    email: string;
+    isActive: boolean;
+    __typename: string;
+  };
 }
 
+// The two interfaces are identical. There are no differences between them.
 export interface ICreateRestaurantResponse {
   data?: {
     createRestaurant?: ICreateRestaurant;
+  };
+}
+
+/* Get Restaurant By ID Profile */
+export interface IRestaurantProfile {
+  _id: string;
+  orderId: number;
+  orderPrefix: string;
+  slug: string;
+  name: string;
+  image: string;
+  logo: string;
+  address: string;
+  location: {
+    coordinates: string[];
+    __typename: string;
+  };
+  deliveryBounds: {
+    coordinates: number[][][];
+    __typename: string;
+  };
+  username: string;
+  password: string;
+  deliveryTime: number;
+  minimumOrder: number;
+  tax: number;
+  isAvailable: boolean;
+  stripeDetailsSubmitted: boolean;
+  openingTimes: {
+    day: string;
+    times: {
+      startTime: string[];
+      endTime: string[];
+      __typename: string;
+    }[];
+    __typename: string;
+  }[];
+  owner: {
+    _id: string;
+    email: string;
+    __typename: string;
+  };
+  shopType: string;
+  cuisines: string[];
+  __typename: string;
+}
+export interface IRestaurantProfileResponse {
+  data: {
+    restaurant: IRestaurantProfile;
+  };
+}
+
+export interface IRestaurantDeliveryZoneInfo {
+  boundType: string;
+  deliveryBounds: {
+    coordinates: number[][][];
+    __typename: string;
+  };
+  location: {
+    coordinates: number[];
+    __typename: string;
+  };
+  circleBounds: {
+    radius: number;
+    __typename: string;
+  };
+  address: string;
+  city: string;
+  postCode: string;
+  __typename: string;
+}
+
+export interface IRestaurantDeliveryZoneInfoResponse {
+  data: {
+    getRestaurantDeliveryZoneInfo: IRestaurantDeliveryZoneInfo;
   };
 }

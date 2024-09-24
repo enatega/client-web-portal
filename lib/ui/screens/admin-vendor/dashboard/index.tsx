@@ -1,8 +1,8 @@
 'use client';
 
 // Component
-import GrowthOverView from '@/lib/ui/screen-components/protected/restaurant/dashboard/growth-overview';
-import OrderStats from '@/lib/ui/screen-components/protected/restaurant/dashboard/order-stats';
+import GrowthOverView from '@/lib/ui/screen-components/protected/restaurant(vendor)/dashboard/growth-overview';
+import OrderStats from '@/lib/ui/screen-components/protected/restaurant(vendor)/dashboard/order-stats';
 
 export default function AdminVendorDashboard() {
   return (

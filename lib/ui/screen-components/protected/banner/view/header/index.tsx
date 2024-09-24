@@ -12,9 +12,9 @@ const BannersHeader = ({
   setIsAddBannerVisible,
 }: IBannersHeaderComponentsProps) => {
   return (
-    <div className="flex flex-col mx-[-15px] mb-4 gap-6">
+    <div className="w-full flex-shrink-0">
       <div className="flex w-full justify-between">
-        <HeaderText className="heading" text="Banners" />
+        <HeaderText text="Banners" />
         <TextIconClickable
           className="sm:w-auto bg-black text-white border-gray-300 rounded"
           icon={faAdd}

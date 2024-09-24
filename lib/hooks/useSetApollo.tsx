@@ -50,7 +50,7 @@ export const useSetupApollo = (): ApolloClient<NormalizedCacheObject> => {
   const request = async (operation: Operation): Promise<void> => {
     const data = localStorage.getItem(`user-${APP_NAME}`);
 
-    let token = null;
+    let token = process.env.NEXT_PUBLIC_AUTH_TOKEN;
     if (data) {
       token = JSON.parse(data).token;
     }

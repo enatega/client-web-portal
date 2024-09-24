@@ -6,7 +6,6 @@ import { RestaurantContext } from '@/lib/context/restaurant.context';
 import CustomTab from '@/lib/ui/useable-components/custom-tab';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import RestaurantCard from '@/lib/ui/useable-components/resturant-card';
-import TextComponent from '@/lib/ui/useable-components/text-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import VendorCard from '@/lib/ui/useable-components/vendor-card';
 
@@ -22,6 +21,7 @@ import { options, SELECTED_VENDOR } from '@/lib/utils/constants';
 // Icons
 import CustomRestaurantCardSkeleton from '@/lib/ui/useable-components/custom-skeletons/restaurant.card.skeleton';
 import CustomVendorSkeleton from '@/lib/ui/useable-components/custom-skeletons/vendor.skeleton';
+import HeaderText from '@/lib/ui/useable-components/header-text';
 import { onUseLocalStorage } from '@/lib/utils/methods';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { Chip } from 'primereact/chip';
@@ -44,15 +44,15 @@ export default function VendorMain({
 
   const {
     onSetRestaurantFormVisible,
-    restaurantGlobalFilter,
-    restaurantFiltered,
-    onSetRestaurantGlobalFilter,
     restaurantByOwnerResponse,
+
+    restaurantContextData,
+    onSetRestaurantContextData,
   } = useContext(RestaurantContext);
 
   const vendors = globalFilter ? filtered : vendorResponse?.data?.vendors;
-  const restaurants = restaurantGlobalFilter
-    ? restaurantFiltered
+  const restaurants = restaurantContextData.globalFilter
+    ? restaurantContextData?.filtered
     : restaurantByOwnerResponse?.data?.restaurantByOwner?.restaurants;
 
   return (
@@ -65,7 +65,7 @@ export default function VendorMain({
         {/* Mobile-only header for Vendors section */}
         <div className="sm:hidden mt-3 p-3 border-b">
           <div className="flex justify-between items-center mb-4">
-            <TextComponent className="heading-1" text="Vendors" />
+            <HeaderText text="Vendors" />
             <TextIconClickable
               className="sm:w-auto  bg-black text-white border-gray-300 rounded"
               icon={faAdd}
@@ -128,10 +128,10 @@ export default function VendorMain({
         <div className="pt-3 pb-2  border-b">
           <div className="flex justify-between items-center mb-4">
             <div className="hidden sm:block">
-              <TextComponent className="heading-1" text="Restaurants" />
+              <HeaderText text="Restaurants" />
             </div>
             <div className="sm:hidden flex flex-col">
-              <TextComponent className="heading-1" text="Restaurants" />
+              <HeaderText text="Restaurants" />
 
               <Chip
                 label={`${(onUseLocalStorage('get', SELECTED_VENDOR) ?? '').slice(0, 20)}`}
@@ -154,8 +154,12 @@ export default function VendorMain({
                 maxLength={35}
                 placeholder="Search Restaurants"
                 showLabel={false}
-                value={restaurantGlobalFilter}
-                onChange={(e) => onSetRestaurantGlobalFilter(e.target.value)}
+                value={restaurantContextData.globalFilter}
+                onChange={(e) =>
+                  onSetRestaurantContextData({
+                    globalFilter: e.target.value,
+                  })
+                }
               />
             </div>
             <CustomTab

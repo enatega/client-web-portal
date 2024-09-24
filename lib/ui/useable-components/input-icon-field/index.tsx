@@ -8,6 +8,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
 import { InputText } from 'primereact/inputtext';
+
+// Utilities
+import { twMerge } from 'tailwind-merge';
+
+// Components
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 // Styles
@@ -33,7 +38,10 @@ export default function CustomIconTextField({
           </label>
         )}
         <InputText
-          className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
+          className={twMerge(
+            `w-full h-10 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit`,
+            className
+          )}
           placeholder={placeholder}
           {...props}
         />

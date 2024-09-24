@@ -12,6 +12,8 @@ export interface IRestaurantFormErrors {
   salesTax: string[];
   shopType: string[];
   cuisines: string[];
+  image: string[];
+  logo: string[];
 }
 
 export interface IRestaurantForm {

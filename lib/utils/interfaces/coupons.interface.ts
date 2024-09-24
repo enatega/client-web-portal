@@ -1,5 +1,6 @@
-import { DataTableFilterMeta } from 'primereact/datatable';
-import { Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { IDropdownSelectItem, IEditState } from './global.interface';
+import { IFilterType } from './table.interface';
 
 export interface ICoupon {
   discount: number;
@@ -20,31 +21,61 @@ export interface ICouponsStakProps {
 }
 export interface IAddCouponProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  setCoupons: (coupon: ICoupon) => void;
+  handleAddCouponLocally: (coupon: ICoupon) => void;
+  setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
   setIsEditing: Dispatch<
     SetStateAction<{
       bool: boolean;
       data: ICoupon;
     }>
   >;
+  coupons: ICoupon[];
   isEditing: IEditState<ICoupon>;
+
+  visible: boolean;
 }
+
 export interface IEditPopupVal {
   _id: string;
   bool: boolean;
 }
+
 export interface ICouponsTableProps {
   data: ICoupon[] | null | undefined;
   loading: boolean;
-  filters?: DataTableFilterMeta;
+  filters?: IFilterType | undefined;
   setIsEditing: Dispatch<SetStateAction<IEditState<ICoupon>>>;
   setIsDeleting: Dispatch<SetStateAction<IEditState<ICoupon>>>;
   isDeleting: IEditState<ICoupon>;
   setVisible: Dispatch<SetStateAction<boolean>>;
   visible: boolean;
   setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  statusOptions: IDropdownSelectItem[];
+  setSelectedStatuses: Dispatch<SetStateAction<string[]>>;
+  selectedStatuses: string[];
 }
-export interface IEditState<T> {
-  bool: boolean;
-  data: T;
+export interface ICouponStatuses {
+  enabled: {
+    total: null | undefined | number;
+    status: boolean;
+  };
+  disabled: {
+    total: null | undefined | number;
+    status: boolean;
+  };
+  all: {
+    total: null | undefined | number;
+    status: boolean;
+  };
+}
+
+export interface ICouponScreenHeaderProps {
+  handleButtonClick: () => void;
+}
+
+export interface ICouponMainProps {
+  visible: boolean;
+  setVisible: Dispatch<SetStateAction<boolean>>;
 }

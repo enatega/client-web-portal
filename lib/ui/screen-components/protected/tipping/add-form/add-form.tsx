@@ -31,8 +31,6 @@ const TippingAddForm = () => {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<ITippingResponse | undefined, undefined>;
 
-  console.log(data?.tips.tipVariations);
-
   // State
   const initialValues: ITippingsForm = {
     tip1: data?.tips?.tipVariations[0] ?? 1,
@@ -74,7 +72,7 @@ const TippingAddForm = () => {
         onError: (error) => {
           let message = '';
           try {
-            message = error.graphQLErrors[0].message;
+            message = error.graphQLErrors[0]?.message;
           } catch (err) {
             message = 'ActionFailedTryAgain';
           }

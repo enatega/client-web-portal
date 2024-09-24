@@ -25,6 +25,7 @@ export const SignUpErrors: ISignFormErrors = {
 };
 
 export const VendorErrors: IVendorErrors = {
+  _id: ['Required'],
   name: ['Required'],
   email: ['Required', 'Invalid email'],
   password: ['Required', ...PasswordErrors],
@@ -42,6 +43,8 @@ export const RestaurantErrors: IRestaurantFormErrors = {
   salesTax: ['Required'],
   shopType: ['Required'],
   cuisines: ['Required', 'Cuisines field must have at least 1 items'],
+  image: ['Required', 'Invalid image URL'],
+  logo: ['Required', 'Invalid logo URL'],
 };
 
 export const RiderErrors: IRiderErrors = {

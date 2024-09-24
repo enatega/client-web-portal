@@ -10,7 +10,7 @@ import {
   DataTable,
   DataTableSelectionMultipleChangeEvent,
 } from 'primereact/datatable';
-import TableSkeleton from '../custom-skeletons/table.skeleton';
+import DataTableColumnSkeleton from '../custom-skeletons/datatable.column.skeleton';
 
 const Table = <T extends ITableExtends>({
   header,
@@ -21,6 +21,7 @@ const Table = <T extends ITableExtends>({
   filters,
   size = 'small',
   loading,
+  isSelectable = false,
 }: IDataTableProps<T>) => {
   //For checkbox selection of column
   const handleSelectionChange = (
@@ -29,33 +30,42 @@ const Table = <T extends ITableExtends>({
     setSelectedData(e.value);
   };
 
-  return !loading ? (
+  return (
     <DataTable
       header={header}
       paginator
-      rows={5}
-      rowsPerPageOptions={[5, 10, 25, 50]}
+      rows={10}
+      rowsPerPageOptions={[10, 15, 25, 50]}
       value={data}
       size={size}
       selection={selectedData}
       onSelectionChange={handleSelectionChange}
       dataKey="_id"
-      tableStyle={{ minWidth: '50rem' }}
-      selectionMode="checkbox"
+      tableStyle={{
+        minWidth: '50rem',
+        minHeight: 'auto',
+        maxHeight: '500px',
+      }}
+      selectionMode={isSelectable ? 'checkbox' : null}
       filters={filters}
+      scrollable={true}
+      scrollHeight="500px"
     >
-      <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+      {isSelectable && (
+        <Column
+          selectionMode="multiple"
+          headerStyle={{ width: '3rem' }}
+        ></Column>
+      )}
       {columns.map((col, index) => (
         <Column
           key={index}
           field={col.propertyName}
           header={col.headerName}
-          body={col.body}
+          body={loading ? <DataTableColumnSkeleton /> : col.body}
         />
       ))}
     </DataTable>
-  ) : (
-    <TableSkeleton />
   );
 };
 

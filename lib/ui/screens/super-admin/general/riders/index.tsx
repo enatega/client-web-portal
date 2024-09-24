@@ -6,7 +6,8 @@ import RiderAddForm from '@/lib/ui/screen-components/protected/riders/add-form';
 import RidersMain from '@/lib/ui/screen-components/protected/riders/view/main';
 
 // Interfaces and Types
-import RiderHeader from '@/lib/ui/screen-components/protected/riders/view/header';
+
+import RiderHeader from '@/lib/ui/screen-components/protected/riders/view/header/screen-header';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 
 export default function RidersScreen() {
@@ -15,12 +16,15 @@ export default function RidersScreen() {
   const [rider, setRider] = useState<null | IRiderResponse>(null);
 
   return (
-    <div className="px-10 pt-5">
+    <div className="flex flex-col p-3 h-screen overflow-hidden">
       <RiderHeader setIsAddRiderVisible={setIsAddRiderVisible} />
-      <RidersMain
-        setIsAddRiderVisible={setIsAddRiderVisible}
-        setRider={setRider}
-      />
+      <div className="flex-grow overflow-y-auto">
+        <RidersMain
+          setIsAddRiderVisible={setIsAddRiderVisible}
+          setRider={setRider}
+        />
+      </div>
+
       <RiderAddForm
         rider={rider}
         onHide={() => {

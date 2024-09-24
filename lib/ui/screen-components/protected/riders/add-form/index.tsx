@@ -99,7 +99,7 @@ export default function RiderAddForm({
         onError: (error) => {
           let message = '';
           try {
-            message = error.graphQLErrors[0].message;
+            message = error.graphQLErrors[0]?.message;
           } catch (err) {
             message = 'ActionFailedTryAgain';
           }

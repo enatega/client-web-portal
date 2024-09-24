@@ -12,7 +12,6 @@ import {
 } from '@/lib/utils/interfaces/rider.interface';
 
 // Components
-import CustomTextField from '@/lib/ui/useable-components/input-field';
 import Table from '@/lib/ui/useable-components/table';
 import { RIDER_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/rider-columns';
 
@@ -27,7 +26,9 @@ import { IQueryResult } from '@/lib/utils/interfaces';
 
 // GraphQL
 import { DELETE_RIDER, GET_RIDERS } from '@/lib/api/graphql';
+import { generateDummyRiders } from '@/lib/utils/dummy';
 import { useMutation } from '@apollo/client';
+import RidersTableHeader from '../header/table-header';
 
 export default function RidersMain({
   setIsAddRiderVisible,
@@ -89,22 +90,15 @@ export default function RidersMain({
   ];
 
   return (
-    <div className="mx-[-14px]">
+    <div className="pt-5">
       <Table
         header={
-          <div className="w-fit mb-2 ml-[-8px] ">
-            <CustomTextField
-              type="text"
-              name="riderFilter"
-              maxLength={35}
-              showLabel={false}
-              value={globalFilterValue}
-              onChange={onGlobalFilterChange}
-              placeholder="Keyword Search"
-            />
-          </div>
+          <RidersTableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={onGlobalFilterChange}
+          />
         }
-        data={data?.riders || []}
+        data={data?.riders || (loading ? generateDummyRiders() : [])}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}

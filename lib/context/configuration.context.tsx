@@ -172,8 +172,6 @@ export const ConfigurationProvider: React.FC<IConfigurationProviderProps> = ({
   // Use Effect
   useEffect(() => {
     fetchConfiguration();
-
-    console.log('configruation context');
   }, []);
 
   useEffect(() => {

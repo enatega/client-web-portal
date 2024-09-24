@@ -22,3 +22,8 @@ export interface IUserResponse {
 export interface IUsersDataResponse {
   users: IUserResponse[];
 }
+
+export interface IUsersTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}

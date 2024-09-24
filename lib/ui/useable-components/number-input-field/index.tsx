@@ -8,6 +8,7 @@ import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 export default function CustomNumberField({
   className,
   placeholder,
+  name,
   showLabel,
   onChange,
   isLoading = false,
@@ -22,9 +23,9 @@ export default function CustomNumberField({
       )}
 
       <InputNumber
-        className={`w-full h-11 border text-sm border-gray-300 rounded-lg focus:outline-none focus:shadow-none ${className}`}
+        className={`w-full h-10 border text-sm border-gray-300 rounded-lg focus:outline-none focus:shadow-none ${className}`}
         placeholder={placeholder}
-        onChange={(e) => onChange(props.name, e.value)}
+        onChange={(e) => onChange(name, e.value)}
         {...props}
       />
     </div>

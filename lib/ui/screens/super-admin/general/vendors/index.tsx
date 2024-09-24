@@ -4,7 +4,7 @@
 import { useContext, useState } from 'react';
 
 // Component
-import RestaurantAddForm from '@/lib/ui/screen-components/protected/restaurant/forms/add-form';
+import RestaurantForm from '@/lib/ui/screen-components/protected/restaurant(vendor)/forms/add-form';
 import VendorAddForm from '@/lib/ui/screen-components/protected/vendor/add-form';
 import VendorHeader from '@/lib/ui/screen-components/protected/vendor/view/header';
 import VendorMain from '@/lib/ui/screen-components/protected/vendor/view/main';
@@ -29,7 +29,7 @@ export default function VendorsScreen() {
 
   // Context
   const { vendorFormVisible } = useContext(VendorContext);
-  const { restaurantFormVisible } = useContext(RestaurantContext);
+  const { isRestaurantFormVisible } = useContext(RestaurantContext);
 
   return (
     <div className="flex flex-col h-screen">
@@ -52,7 +52,7 @@ export default function VendorsScreen() {
       />
 
       {vendorFormVisible && <VendorAddForm />}
-      {restaurantFormVisible && <RestaurantAddForm />}
+      {isRestaurantFormVisible && <RestaurantForm />}
     </div>
   );
 }
