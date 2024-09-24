@@ -6,8 +6,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {
   IBannersResponse,
-  ICategoryResponse,
+  ICategory,
   IDropdownSelectItem,
+  IOptions,
   IRestaurantResponse,
   IStatsCardProps,
 } from '../interfaces';
@@ -155,10 +156,8 @@ export const generateDummyRiders = (count: number = 10): IRiderResponse[] => {
   return riders;
 };
 
-export const generateDummyCategories = (
-  count: number = 10
-): ICategoryResponse[] => {
-  const categories: ICategoryResponse[] = [];
+export const generateDummyCategories = (count: number = 10): ICategory[] => {
+  const categories: ICategory[] = [];
 
   for (let i = 0; i < count; i++) {
     categories.push({
@@ -168,6 +167,21 @@ export const generateDummyCategories = (
   }
 
   return categories;
+};
+export const generateDummyOptions = (count: number = 10): IOptions[] => {
+  const options: IOptions[] = [];
+
+  for (let i = 0; i < count; i++) {
+    options.push({
+      _id: `option_${i + 1}`,
+      title: `Option ${i + 1}`,
+      description: `Description for Option ${i + 1}`,
+      price: Math.floor(Math.random() * 100) + 1,
+      __typename: '',
+    });
+  }
+
+  return options;
 };
 
 export const generateDummyUsers = (count: number = 10): IUserResponse[] => {

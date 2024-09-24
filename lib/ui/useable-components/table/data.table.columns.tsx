@@ -8,7 +8,11 @@ import Toggle from '@/lib/ui/useable-components/toggle';
 // Interfaces and Types
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
-import { ICategoryResponse, IRestaurantResponse } from '@/lib/utils/interfaces';
+import {
+  ICategory,
+  IOptions,
+  IRestaurantResponse,
+} from '@/lib/utils/interfaces';
 import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
@@ -235,14 +239,28 @@ export const USERS_TABLE_COLUMNS = [
 export const CATEGORY_TABLE_COLUMNS = ({
   menuItems,
 }: {
-  menuItems: IActionMenuProps<ICategoryResponse>['items'];
+  menuItems: IActionMenuProps<ICategory>['items'];
 }) => {
   return [
     { headerName: 'Title', propertyName: 'title' },
     {
       propertyName: 'actions',
-      body: (rider: ICategoryResponse) => (
-        <ActionMenu items={menuItems} data={rider} />
+      body: (rider: ICategory) => <ActionMenu items={menuItems} data={rider} />,
+    },
+  ];
+};
+
+export const OPTION_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IOptions>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    {
+      propertyName: 'actions',
+      body: (option: IOptions) => (
+        <ActionMenu items={menuItems} data={option} />
       ),
     },
   ];

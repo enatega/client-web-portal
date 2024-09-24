@@ -10,6 +10,7 @@ export * from './image-upload.interface';
 export * from './input-field.interface';
 export * from './input-switch.interface';
 export * from './layout.interface';
+export * from './options.interface';
 export * from './panel-menu.interface';
 export * from './popup-menu.interface';
 export * from './progress-indicator.interface';

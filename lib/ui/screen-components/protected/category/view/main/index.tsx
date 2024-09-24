@@ -18,9 +18,9 @@ import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
 import {
+  ICategory,
   ICategoryByRestaurantResponse,
   ICategoryMainComponentsProps,
-  ICategoryResponse,
   IQueryResult,
 } from '@/lib/utils/interfaces';
 
@@ -47,9 +47,7 @@ export default function CategoryMain({
 
   // State - Table
   const [deleteId, setDeleteId] = useState('');
-  const [selectedProducts, setSelectedProducts] = useState<ICategoryResponse[]>(
-    []
-  );
+  const [selectedProducts, setSelectedProducts] = useState<ICategory[]>([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
     global: { value: '' as string | null, matchMode: FilterMatchMode.CONTAINS },
@@ -99,17 +97,17 @@ export default function CategoryMain({
   function onErrorFetchCategoriesByRestaurant() {
     showToast({
       type: 'error',
-      title: 'Catgeory Fetch',
+      title: 'Category Fetch',
       message: 'Categories fetch failed',
       duration: 2500,
     });
   }
 
   // Constants
-  const menuItems: IActionMenuItem<ICategoryResponse>[] = [
+  const menuItems: IActionMenuItem<ICategory>[] = [
     {
       label: 'Edit',
-      command: (data?: ICategoryResponse) => {
+      command: (data?: ICategory) => {
         if (data) {
           setIsAddCategoryVisible(true);
           setCategory(data);
@@ -118,7 +116,7 @@ export default function CategoryMain({
     },
     {
       label: 'Delete',
-      command: (data?: ICategoryResponse) => {
+      command: (data?: ICategory) => {
         if (data) {
           setDeleteId(data._id);
         }

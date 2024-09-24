@@ -1,11 +1,13 @@
 import {
   IBannersErrors,
   ICategoryErrors,
+  IOptionErrors,
+  IRiderErrors,
   ISignFormErrors,
   IVendorErrors,
-} from '../../interfaces/forms';
-import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
-import { IRiderErrors } from '../../interfaces/forms/riders.form.interface';
+} from '@/lib/utils/interfaces/forms';
+
+import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -67,4 +69,11 @@ export const BannersErrors: IBannersErrors = {
 export const CategoryErrors: ICategoryErrors = {
   _id: [],
   title: ['Required'],
+};
+
+export const OptionErrors: IOptionErrors = {
+  _id: [],
+  title: ['Required'],
+  description: [],
+  price: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
 };

@@ -30,9 +30,11 @@ export const useConfiguration = () => {
   const COLORS = {
     GOOGLE: configuration?.googleColor,
   };
+
   const SENTRY_DSN = configuration?.webSentryUrl;
   const SKIP_EMAIL_VERIFICATION = configuration?.skipEmailVerification;
   const SKIP_MOBILE_VERIFICATION = configuration?.skipMobileVerification;
+  const CURRENT_SYMBOL = configuration?.currencySymbol;
 
   return {
     SERVER_URL: BACKEND_URL.LOCAL.SERVER_URL,
@@ -47,5 +49,6 @@ export const useConfiguration = () => {
     SENTRY_DSN,
     SKIP_EMAIL_VERIFICATION,
     SKIP_MOBILE_VERIFICATION,
+    CURRENT_SYMBOL,
   };
 };

@@ -14,16 +14,16 @@ export interface ICategoryAddFormComponentProps extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
   isAddCategoryVisible: boolean;
   onHide: () => void;
-  category: ICategoryResponse | null;
+  category: ICategory | null;
 }
 
 export interface ICategoryMainComponentsProps extends IGlobalComponentProps {
   setIsAddCategoryVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setCategory: React.Dispatch<React.SetStateAction<ICategoryResponse | null>>;
+  setCategory: React.Dispatch<React.SetStateAction<ICategory | null>>;
 }
 
 /* API */
-export interface ICategoryResponse {
+export interface ICategory {
   _id: string;
   title: string;
 }
@@ -34,10 +34,4 @@ export interface ICategoryByRestaurantResponse {
     categories: ICategory[];
     __typename: string;
   };
-}
-
-export interface ICategory {
-  _id: string;
-  title: string;
-  __typename: string;
 }

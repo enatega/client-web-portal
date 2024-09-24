@@ -2,6 +2,7 @@ export * from './category';
 export * from './configuration';
 export * from './coupons';
 export * from './cuisines';
+export * from './options';
 export * from './restaurants';
 export * from './riders';
 export * from './tippings';

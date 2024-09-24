@@ -8,7 +8,7 @@ import { FilterMatchMode } from 'primereact/api';
 
 // Components
 import Table from '@/lib/ui/useable-components/table';
-import { CATEGORY_TABLE_COLUMNS } from '@/lib/utils/constants';
+import { OPTION_TABLE_COLUMNS } from '@/lib/utils/constants';
 
 // Utilities and Data
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
@@ -18,26 +18,23 @@ import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
 import {
-  ICategoryByRestaurantResponse,
-  ICategoryMainComponentsProps,
-  ICategoryResponse,
+  IOptions,
+  IOptionsByRestaurantResponse,
+  IOptionsMainComponentsProps,
   IQueryResult,
 } from '@/lib/utils/interfaces';
 
 // GraphQL
-import {
-  DELETE_CATEGORY,
-  GET_CATEGORY_BY_RESTAURANT_ID,
-} from '@/lib/api/graphql';
+import { DELETE_OPTION, GET_OPTIONS_BY_RESTAURANT_ID } from '@/lib/api/graphql';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
-import { generateDummyCategories } from '@/lib/utils/dummy';
+import { generateDummyOptions } from '@/lib/utils/dummy';
 import { useMutation } from '@apollo/client';
 import CategoryTableHeader from '../header/table-header';
 
 export default function OptionMain({
-  setIsAddCategoryVisible,
-  setCategory,
-}: ICategoryMainComponentsProps) {
+  setIsAddOptionsVisible,
+  setOption,
+}: IOptionsMainComponentsProps) {
   // Context
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
   const restaurantId = restaurantLayoutContextData?.restaurantId || '';
@@ -47,9 +44,7 @@ export default function OptionMain({
 
   // State - Table
   const [deleteId, setDeleteId] = useState('');
-  const [selectedProducts, setSelectedProducts] = useState<ICategoryResponse[]>(
-    []
-  );
+  const [selectedProducts, setSelectedProducts] = useState<IOptions[]>([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
     global: { value: '' as string | null, matchMode: FilterMatchMode.CONTAINS },
@@ -57,7 +52,7 @@ export default function OptionMain({
 
   // Query
   const { data, loading } = useQueryGQL(
-    GET_CATEGORY_BY_RESTAURANT_ID,
+    GET_OPTIONS_BY_RESTAURANT_ID,
     { id: restaurantId },
     {
       fetchPolicy: 'network-only',
@@ -65,11 +60,11 @@ export default function OptionMain({
       onCompleted: onFetchCategoriesByRestaurantCompleted,
       onError: onErrorFetchCategoriesByRestaurant,
     }
-  ) as IQueryResult<ICategoryByRestaurantResponse | undefined, undefined>;
+  ) as IQueryResult<IOptionsByRestaurantResponse | undefined, undefined>;
 
   //Mutation
   const [deleteCategory, { loading: mutationLoading }] = useMutation(
-    DELETE_CATEGORY,
+    DELETE_OPTION,
     {
       variables: {
         id: deleteId,
@@ -77,7 +72,7 @@ export default function OptionMain({
       },
       refetchQueries: [
         {
-          query: GET_CATEGORY_BY_RESTAURANT_ID,
+          query: GET_OPTIONS_BY_RESTAURANT_ID,
           variables: { id: restaurantId },
         },
       ],
@@ -99,26 +94,26 @@ export default function OptionMain({
   function onErrorFetchCategoriesByRestaurant() {
     showToast({
       type: 'error',
-      title: 'Catgeory Fetch',
+      title: 'Option Fetch',
       message: 'Categories fetch failed',
       duration: 2500,
     });
   }
 
   // Constants
-  const menuItems: IActionMenuItem<ICategoryResponse>[] = [
+  const menuItems: IActionMenuItem<IOptions>[] = [
     {
       label: 'Edit',
-      command: (data?: ICategoryResponse) => {
+      command: (data?: IOptions) => {
         if (data) {
-          setIsAddCategoryVisible(true);
-          setCategory(data);
+          setIsAddOptionsVisible(true);
+          setOption(data);
         }
       },
     },
     {
       label: 'Delete',
-      command: (data?: ICategoryResponse) => {
+      command: (data?: IOptions) => {
         if (data) {
           setDeleteId(data._id);
         }
@@ -136,14 +131,13 @@ export default function OptionMain({
           />
         }
         data={
-          data?.restaurant?.categories ||
-          (loading ? generateDummyCategories() : [])
+          data?.restaurant?.options || (loading ? generateDummyOptions() : [])
         }
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
         loading={loading}
-        columns={CATEGORY_TABLE_COLUMNS({ menuItems })}
+        columns={OPTION_TABLE_COLUMNS({ menuItems })}
       />
       <DeleteDialog
         loading={mutationLoading}
@@ -157,15 +151,15 @@ export default function OptionMain({
             onCompleted: () => {
               showToast({
                 type: 'success',
-                title: 'Delete Category',
-                message: 'Category has been deleted successfully.',
+                title: 'Delete Option',
+                message: 'Option has been deleted successfully.',
                 duration: 3000,
               });
               setDeleteId('');
             },
           });
         }}
-        message="Are you sure you want to delete this category?"
+        message="Are you sure you want to delete this option?"
       />
     </div>
   );
