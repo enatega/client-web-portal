@@ -3,11 +3,11 @@
 import { useState } from 'react';
 
 // Components
+import StaffAddForm from '@/lib/ui/screen-components/protected/staff/add-form';
 import StaffHeader from '@/lib/ui/screen-components/protected/staff/view/header';
 import StaffMain from '@/lib/ui/screen-components/protected/staff/view/main';
 
 // Interfaces and Types
-import StaffAddForm from '@/lib/ui/screen-components/protected/staff/add-form';
 import { IStaffResponse } from '@/lib/utils/interfaces';
 
 export default function StaffScreen() {

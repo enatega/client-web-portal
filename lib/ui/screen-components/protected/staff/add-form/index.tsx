@@ -5,7 +5,10 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import { Sidebar } from 'primereact/sidebar';
 
 // Interface and Types
-import { IStaffAddFormComponentProps } from '@/lib/utils/interfaces';
+import {
+  IDropdownSelectItem,
+  IStaffAddFormComponentProps,
+} from '@/lib/utils/interfaces';
 import { IStaffForm } from '@/lib/utils/interfaces/forms/staff.form.interface';
 
 // Components
@@ -142,19 +145,6 @@ export default function StaffAddForm({
                   handleSubmit,
                   setFieldValue,
                 }) => {
-                  const handlePermissionsChange = (selected: any[]) => {
-                    // Check if "Admin" is selected
-                    const isAdminSelected = selected.some(
-                      (perm) => perm.code === 'Admin'
-                    );
-
-                    // If "Admin" is selected, check all other permissions; otherwise, keep the selected ones
-                    const newPermissions = isAdminSelected
-                      ? PERMISSIONS // Select all permissions if Admin is selected
-                      : selected; // Otherwise, keep the current selection
-
-                    setFieldValue('permissions', newPermissions);
-                  };
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-4">
@@ -263,7 +253,7 @@ export default function StaffAddForm({
 
                         <div>
                           <CustomMultiSelectComponent
-                            onChange={(selected: any[]) => {
+                            onChange={(selected: IDropdownSelectItem[]) => {
                               // Check if "Admin" is currently selected
                               const isAdminSelected = selected.some(
                                 (perm) => perm.code === 'Admin'
@@ -272,7 +262,8 @@ export default function StaffAddForm({
                               // Check if "Admin" was previously selected
                               const wasAdminPreviouslySelected =
                                 values.permissions.some(
-                                  (perm) => perm.code === 'Admin'
+                                  (perm: IDropdownSelectItem) =>
+                                    perm.code === 'Admin'
                                 );
 
                               // If "Admin" is selected, select all permissions

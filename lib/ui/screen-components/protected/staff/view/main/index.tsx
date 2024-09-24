@@ -20,9 +20,6 @@ import { STAFF_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/s
 // Utilities and Data
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 
-//Toast
-import useToast from '@/lib/hooks/useToast';
-
 // GraphQL
 import { GET_STAFFS } from '@/lib/api/graphql/queries/staff';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
@@ -31,10 +28,7 @@ export default function StaffMain({
   setIsAddStaffVisible,
   setStaff,
 }: IStaffMainComponentsProps) {
-  // Hooks
-  const { showToast } = useToast();
-
-  // State - Table
+  // States (Data Table)
   const [selectedProducts, setSelectedProducts] = useState<IStaffResponse[]>(
     []
   );
