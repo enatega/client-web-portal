@@ -1,8 +1,20 @@
-import { INotificationMainProps } from '@/lib/utils/interfaces/notification.interface';
+//interfaces
+import {
+  INotification,
+  INotificationMainProps,
+} from '@/lib/utils/interfaces/notification.interface';
+import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
+
+//prime react
 import { FilterMatchMode } from 'primereact/api';
+
+//hooks
 import { ChangeEvent, useState } from 'react';
+
+//components
+import Table from '@/lib/ui/useable-components/table';
+import TableHeader from '@/lib/ui/useable-components/table-header';
 import NotificationForm from '../../form';
-import NotificationTable from '../../table';
 
 export default function NotificationMain({
   visible,
@@ -24,13 +36,43 @@ export default function NotificationMain({
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
+  //columns
+  const columns: IColumnConfig<INotification>[] = [
+    {
+      propertyName: 'title',
+      headerName: 'Title',
+    },
+    {
+      propertyName: 'description',
+      headerName: 'description',
+    },
+    {
+      propertyName: 'createdAt',
+      headerName: 'Date',
+    },
+    {
+      propertyName: 'status',
+      headerName: 'Status',
+    },
+  ];
   return (
     <div>
       <NotificationForm setVisible={setVisible} visible={visible} />
-      <NotificationTable
-        onGlobalFilterChange={onGlobalFilterChange}
+      <Table
+        columns={columns}
+        data={[]}
+        selectedData={[]}
+        setSelectedData={() => {}}
+        header={
+          <TableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={onGlobalFilterChange}
+            selectedStatuses={[]}
+            setSelectedStatuses={() => {}}
+            statusOptions={[]}
+          />
+        }
         filters={filters}
-        globalFilterValue={globalFilterValue}
       />
     </div>
   );

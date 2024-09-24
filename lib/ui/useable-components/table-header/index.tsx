@@ -71,12 +71,12 @@ export default function TableHeader({
                     key={index}
                     className={` flex justify-between items-center my-2`}
                   >
-                    <div className="flex">
+                    <div className={`flex ${classes.filter}`}>
                       <Checkbox
                         inputId={`action-${item.code}`}
                         checked={selectedStatuses.includes(item?.code)}
                         onChange={() => toggleAction(item.code)}
-                        className={`${classes.checkbox}`}
+                        className={`${classes.checkbox} p-checkbox p-checkbox-box`}
                       />
                       <label
                         htmlFor={`action-${item.code}`}

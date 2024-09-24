@@ -43,27 +43,6 @@ export default function NotificationForm({
       onHide={() => setVisible(false)}
       position="right"
     >
-      {/* <form className="flex flex-col gap-8" onSubmit={handleFormSubmit}>
-        <h2 className="font-bold mb-3 text-xl">Send a Notification</h2>
-
-        <Button
-          type="submit"
-          className="bg-black text-white p-2 w-32 right-0 self-end flex items-center justify-center hover:bg-[#000000d8]"
-        >
-          {loading ? (
-            <ProgressSpinner
-              className="w-6 h-6 items-center self-center m-0 p-0"
-              strokeWidth="5"
-              style={{ fill: 'white', accentColor: 'white' }}
-              color="white"
-            />
-          ) : (
-            'Send'
-          )}
-        </Button>
-      </form> */}
-
-      {/* NEW FORM  */}
       <Formik
         initialValues={initialValues}
         validationSchema={NotificationSchema}
