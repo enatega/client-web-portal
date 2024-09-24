@@ -1,3 +1,5 @@
+export * from './action-menu.interface';
+export * from './add-on.interface';
 export * from './banner.interface';
 export * from './button.interface';
 export * from './category.interface';

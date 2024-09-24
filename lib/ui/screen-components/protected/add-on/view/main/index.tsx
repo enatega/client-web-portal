@@ -1,40 +1,43 @@
 // Core
+import { useMutation } from '@apollo/client';
 import { useContext, useState } from 'react';
 
 // Prime React
 import { FilterMatchMode } from 'primereact/api';
 
 // Interface and Types
-
-// Components
-import Table from '@/lib/ui/useable-components/table';
-import { OPTION_TABLE_COLUMNS } from '@/lib/utils/constants';
-
-// Utilities and Data
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
-import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
-
-//Toast
-import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import useToast from '@/lib/hooks/useToast';
 import {
-  IOptions,
-  IOptionsByRestaurantResponse,
-  IOptionsMainComponentsProps,
+  IActionMenuItem,
+  IAddon,
+  IAddonByRestaurantResponse,
+  IAddonMainComponentsProps,
   IQueryResult,
 } from '@/lib/utils/interfaces';
 
-// GraphQL
-import { DELETE_OPTION, GET_OPTIONS_BY_RESTAURANT_ID } from '@/lib/api/graphql';
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
-import { generateDummyOptions } from '@/lib/utils/dummy';
-import { useMutation } from '@apollo/client';
+// Components
+import Table from '@/lib/ui/useable-components/table';
+import { ADDON_TABLE_COLUMNS } from '@/lib/utils/constants';
 import CategoryTableHeader from '../header/table-header';
 
+// Utilities and Data
+import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import { generateDummyAddons } from '@/lib/utils/dummy';
+
+// Context
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import useToast from '@/lib/hooks/useToast';
+
+// GraphQL
+import { DELETE_ADDON, GET_OPTIONS_BY_RESTAURANT_ID } from '@/lib/api/graphql';
+import { GET_ADDONS_BY_RESTAURANT_ID } from '@/lib/api/graphql/queries/addon';
+
+// Context
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+
 export default function OptionMain({
-  setIsAddOptionsVisible,
-  setOption,
-}: IOptionsMainComponentsProps) {
+  setIsAddAddonVisible,
+  setAddon,
+}: IAddonMainComponentsProps) {
   // Context
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
   const restaurantId = restaurantLayoutContextData?.restaurantId || '';
@@ -44,7 +47,7 @@ export default function OptionMain({
 
   // State - Table
   const [deleteId, setDeleteId] = useState('');
-  const [selectedProducts, setSelectedProducts] = useState<IOptions[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<IAddon[]>([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
     global: { value: '' as string | null, matchMode: FilterMatchMode.CONTAINS },
@@ -52,19 +55,19 @@ export default function OptionMain({
 
   // Query
   const { data, loading } = useQueryGQL(
-    GET_OPTIONS_BY_RESTAURANT_ID,
+    GET_ADDONS_BY_RESTAURANT_ID,
     { id: restaurantId },
     {
       fetchPolicy: 'network-only',
       enabled: !!restaurantId,
-      onCompleted: onFetchCategoriesByRestaurantCompleted,
-      onError: onErrorFetchCategoriesByRestaurant,
+      onCompleted: onFetchAddonsByRestaurantCompleted,
+      onError: onErrorFetchAddonsByRestaurant,
     }
-  ) as IQueryResult<IOptionsByRestaurantResponse | undefined, undefined>;
+  ) as IQueryResult<IAddonByRestaurantResponse | undefined, undefined>;
 
   //Mutation
   const [deleteCategory, { loading: mutationLoading }] = useMutation(
-    DELETE_OPTION,
+    DELETE_ADDON,
     {
       variables: {
         id: deleteId,
@@ -88,31 +91,33 @@ export default function OptionMain({
     setGlobalFilterValue(value);
   };
 
-  // Complete and Error
-  function onFetchCategoriesByRestaurantCompleted() {}
-  function onErrorFetchCategoriesByRestaurant() {
+  // Restaurant Profile Complete
+  function onFetchAddonsByRestaurantCompleted() {}
+  // Restaurant Zone Info Error
+  function onErrorFetchAddonsByRestaurant() {
     showToast({
       type: 'error',
-      title: 'Option Fetch',
-      message: 'Categories fetch failed',
+      title: 'Addons Fetch',
+      message: 'Addons fetch failed',
       duration: 2500,
     });
   }
 
   // Constants
-  const menuItems: IActionMenuItem<IOptions>[] = [
+  const menuItems: IActionMenuItem<IAddon>[] = [
     {
       label: 'Edit',
-      command: (data?: IOptions) => {
+      command: (data?: IAddon) => {
         if (data) {
-          setIsAddOptionsVisible(true);
-          setOption(data);
+          setIsAddAddonVisible(true);
+
+          setAddon(data);
         }
       },
     },
     {
       label: 'Delete',
-      command: (data?: IOptions) => {
+      command: (data?: IAddon) => {
         if (data) {
           setDeleteId(data._id);
         }
@@ -130,13 +135,13 @@ export default function OptionMain({
           />
         }
         data={
-          data?.restaurant?.options || (loading ? generateDummyOptions() : [])
+          data?.restaurant?.addons || (loading ? generateDummyAddons() : [])
         }
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
         loading={loading}
-        columns={OPTION_TABLE_COLUMNS({ menuItems })}
+        columns={ADDON_TABLE_COLUMNS({ menuItems })}
       />
       <DeleteDialog
         loading={mutationLoading}

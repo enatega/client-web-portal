@@ -1,3 +1,4 @@
+export * from './addon';
 export * from './banner';
 export * from './category';
 export * from './coupon';

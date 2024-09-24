@@ -1,4 +1,5 @@
 import {
+  IAddonsErrors,
   IBannersErrors,
   ICategoryErrors,
   IOptionErrors,
@@ -76,4 +77,13 @@ export const OptionErrors: IOptionErrors = {
   title: ['Required'],
   description: [],
   price: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
+};
+
+export const AddonsErrors: IAddonsErrors = {
+  _id: [],
+  title: ['Required'],
+  description: [],
+  quantityMinimum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
+  quantityMaximum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
+  options: ['Required', 'Option field must have at least 1 items'],
 };

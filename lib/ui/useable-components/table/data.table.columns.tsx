@@ -9,6 +9,7 @@ import Toggle from '@/lib/ui/useable-components/toggle';
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import {
+  IAddon,
   ICategory,
   IOptions,
   IRestaurantResponse,
@@ -264,6 +265,23 @@ export const OPTION_TABLE_COLUMNS = ({
       body: (option: IOptions) => (
         <ActionMenu items={menuItems} data={option} />
       ),
+    },
+  ];
+};
+
+export const ADDON_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IAddon>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    { headerName: 'Description', propertyName: 'description' },
+    { headerName: 'Minimum', propertyName: 'quantityMinimum' },
+    { headerName: 'Maximum', propertyName: 'quantityMaximum' },
+    {
+      propertyName: 'actions',
+      body: (option: IAddon) => <ActionMenu items={menuItems} data={option} />,
     },
   ];
 };
