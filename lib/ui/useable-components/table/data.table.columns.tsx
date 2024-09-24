@@ -257,6 +257,8 @@ export const OPTION_TABLE_COLUMNS = ({
 }) => {
   return [
     { headerName: 'Title', propertyName: 'title' },
+    { headerName: 'Price', propertyName: 'price' },
+    { headerName: 'Description', propertyName: 'description' },
     {
       propertyName: 'actions',
       body: (option: IOptions) => (

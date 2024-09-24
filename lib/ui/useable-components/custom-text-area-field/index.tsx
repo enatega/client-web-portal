@@ -9,6 +9,7 @@ export default function CustomTextAreaField({
   value,
   name,
   onChange,
+  rows = 0,
   ...props
 }: ICustomTextAreaField) {
   return (
@@ -20,11 +21,12 @@ export default function CustomTextAreaField({
       )}
       <InputTextarea
         value={value}
-        className={`${className} border border-gray-300 p-1`}
+        className={`w-full min-h-20 border px-2 pt-1 text-sm border-gray-300 rounded-lg focus:outline-none focus:shadow-none ${className}`}
         id={name}
         placeholder={placeholder}
         onChange={onChange}
         name={name}
+        rows={rows}
         {...props}
       />
     </div>

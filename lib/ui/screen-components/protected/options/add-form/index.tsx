@@ -218,13 +218,13 @@ export default function OptionAddForm({
                                               </div>
                                               <div>
                                                 <CustomNumberField
+                                                  name={`options[${index}].price`}
                                                   prefix={CURRENT_SYMBOL}
                                                   min={1}
                                                   max={99999}
                                                   minFractionDigits={0}
                                                   maxFractionDigits={0}
                                                   placeholder="Price"
-                                                  name={`[options[${index}]price]`}
                                                   showLabel={true}
                                                   value={value.price}
                                                   onChangeFieldValue={
@@ -244,13 +244,23 @@ export default function OptionAddForm({
                                               </div>
                                               <div className="col-span-1 sm:col-span-2">
                                                 <CustomTextAreaField
-                                                  name="description"
+                                                  name={`[options[${index}].description]`}
                                                   placeholder="Description"
                                                   value={value.description}
                                                   onChange={handleChange}
                                                   showLabel={true}
                                                   className={''}
-                                                  rows={0}
+                                                  style={{
+                                                    borderColor:
+                                                      onErrorMessageMatcher(
+                                                        'description',
+                                                        _errors[index]
+                                                          ?.description,
+                                                        OptionErrors
+                                                      )
+                                                        ? 'red'
+                                                        : '',
+                                                  }}
                                                 />
                                               </div>
                                             </div>
