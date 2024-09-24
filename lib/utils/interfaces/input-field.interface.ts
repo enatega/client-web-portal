@@ -46,7 +46,8 @@ export interface INumberTextFieldProps
   prefix?: string;
   suffix?: string;
   useGrouping?: boolean;
-  onChange: (field: string, value: number | null) => void;
+  onChange?: (field: string, value: number | null) => void;
+  onChangeFieldValue?: (name: string, val: number) => void;
 }
 export interface IPasswordTextFieldProps
   extends Omit<IGlobalTextFieldProps, 'type'> {
