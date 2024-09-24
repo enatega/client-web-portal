@@ -462,3 +462,7 @@ body {
   fill: #000000;
   color: #ffffff;
 }
+
+.p-paginator-bottom .p-dropdown-label.p-inputtext {
+  margin-top: 2px;
+}

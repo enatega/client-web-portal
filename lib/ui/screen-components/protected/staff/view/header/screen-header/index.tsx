@@ -10,7 +10,7 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 const StaffHeader = ({ setIsAddStaffVisible }: IStaffHeaderProps) => {
   return (
-    <div className="flex flex-col mx-[-15px] mb-4 gap-6">
+    <div className="flex flex-col mb-4 gap-6">
       <div className="flex w-full justify-between">
         <HeaderText className="heading" text="Staffs" />
         <TextIconClickable

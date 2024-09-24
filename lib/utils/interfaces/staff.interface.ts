@@ -31,3 +31,8 @@ export interface IStaffAddFormComponentProps extends IGlobalComponentProps {
 export interface IStaffGQLResponse {
   staffs: IStaffResponse[];
 }
+
+export interface IStaffTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}

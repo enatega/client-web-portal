@@ -2,12 +2,12 @@
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 
 // Interfaces
-import { IRidersTableHeaderProps } from '@/lib/utils/interfaces';
+import { IStaffTableHeaderProps } from '@/lib/utils/interfaces';
 
-export default function RidersTableHeader({
+export default function StaffTableHeader({
   globalFilterValue,
   onGlobalFilterChange,
-}: IRidersTableHeaderProps) {
+}: IStaffTableHeaderProps) {
   return (
     <div className="flex flex-col mb-4 gap-6">
       <div className="w-fit flex flex-colm:flex-row items-center gap-2">

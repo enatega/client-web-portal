@@ -13,9 +13,9 @@ import {
 } from '@/lib/utils/interfaces';
 
 // Components
-import CustomTextField from '@/lib/ui/useable-components/input-field';
 import Table from '@/lib/ui/useable-components/table';
 import { STAFF_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/staff-columns';
+import StaffTableHeader from '../header/table-header';
 
 // Utilities and Data
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
@@ -64,20 +64,13 @@ export default function StaffMain({
   ];
 
   return (
-    <div className="mx-[-14px]">
+    <div>
       <Table
         header={
-          <div className="w-fit mb-2 ml-[-8px] ">
-            <CustomTextField
-              type="text"
-              name="riderFilter"
-              maxLength={35}
-              showLabel={false}
-              value={globalFilterValue}
-              onChange={onGlobalFilterChange}
-              placeholder="Keyword Search"
-            />
-          </div>
+          <StaffTableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={onGlobalFilterChange}
+          />
         }
         data={data?.staffs || []}
         filters={filters}
