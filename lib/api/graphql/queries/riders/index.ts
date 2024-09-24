@@ -16,6 +16,7 @@ export const GET_RIDERS = gql`
     }
   }
 `;
+
 export const GET_RIDERS_L = gql`
   query riders {
     riders {

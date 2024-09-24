@@ -5,6 +5,7 @@ import {
 } from '../../interfaces/forms';
 import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
 import { IRiderErrors } from '../../interfaces/forms/riders.form.interface';
+import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -58,4 +59,14 @@ export const BannersErrors: IBannersErrors = {
   action: ['Required'],
   screen: ['Required'],
   file: ['Required'],
+};
+
+export const StaffErrors: IStaffErrors = {
+  name: ['Required'],
+  email: ['Required'],
+  phone: ['Required'],
+  password: ['Required', ...PasswordErrors],
+  confirmPassword: ['Required', 'Password must match'],
+  isActive: ['Required'],
+  permissions: ['Required', 'Permissions field must have at least 1 items'],
 };

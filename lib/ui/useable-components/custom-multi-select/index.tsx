@@ -13,6 +13,7 @@ const CustomMultiSelectComponent = ({
   setSelectedItems,
   showLabel,
   isLoading = false,
+  onChange,
   ...props
 }: IMultiSelectComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
@@ -44,9 +45,12 @@ const CustomMultiSelectComponent = ({
       <MultiSelect
         value={selectedItems}
         options={options}
-        onChange={(e: MultiSelectChangeEvent) =>
-          setSelectedItems(name, e.value)
-        }
+        onChange={(e: MultiSelectChangeEvent) => {
+          if (onChange) {
+            // for custom cases: i.e conditional selecting
+            onChange(e.value);
+          } else setSelectedItems(name, e.value);
+        }}
         optionLabel="label"
         placeholder={placeholder}
         itemTemplate={itemTemplate}

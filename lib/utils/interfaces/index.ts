@@ -18,3 +18,4 @@ export * from './text.interface';
 export * from './user.interface';
 export * from './vendor.interface';
 export * from './toast.interface';
+export * from './staff.interface';
