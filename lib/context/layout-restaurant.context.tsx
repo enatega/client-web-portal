@@ -9,6 +9,8 @@ import {
   RestaurantLayoutContextData,
   RestaurantLayoutContextProps,
 } from '@/lib/utils/interfaces';
+import { SELECTED_RESTAURANT } from '../utils/constants';
+import { onUseLocalStorage } from '../utils/methods';
 
 // Types
 
@@ -19,7 +21,9 @@ export const RestaurantLayoutContext =
 
 export const RestaurantLayoutProvider = ({ children }: IProvider) => {
   const [restaurantLayoutContextData, setRestaurantLayoutContextData] =
-    useState<RestaurantLayoutContextData>({} as RestaurantLayoutContextData);
+    useState<RestaurantLayoutContextData>({
+      restaurantId: onUseLocalStorage('get', SELECTED_RESTAURANT),
+    } as RestaurantLayoutContextData);
 
   // Handlers
 

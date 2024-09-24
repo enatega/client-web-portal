@@ -1,5 +1,6 @@
 'use client';
 
+import { RestaurantLayoutProvider } from '@/lib/context/layout-restaurant.context';
 // Layout
 import RestaurantLayout from '@/lib/ui/layouts/protected/restaurant';
 
@@ -8,5 +9,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <RestaurantLayout>{children}</RestaurantLayout>;
+  return (
+    <RestaurantLayoutProvider>
+      <RestaurantLayout>{children}</RestaurantLayout>
+    </RestaurantLayoutProvider>
+  );
 }

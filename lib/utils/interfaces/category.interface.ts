@@ -27,3 +27,17 @@ export interface ICategoryResponse {
   _id: string;
   title: string;
 }
+
+export interface ICategoryByRestaurantResponse {
+  restaurant: {
+    _id: string;
+    categories: ICategory[];
+    __typename: string;
+  };
+}
+
+export interface ICategory {
+  _id: string;
+  title: string;
+  __typename: string;
+}

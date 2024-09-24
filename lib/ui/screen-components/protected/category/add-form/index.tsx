@@ -24,9 +24,11 @@ import {
   EDIT_CATEGORY,
   GET_CATEGORY_BY_RESTAURANT_ID,
 } from '@/lib/api/graphql';
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { ICategoryAddFormComponentProps } from '@/lib/utils/interfaces';
 import { CategorySchema } from '@/lib/utils/schema';
 import { useMutation } from '@apollo/client';
+import { useContext } from 'react';
 
 export default function CategoryAddForm({
   onHide,
@@ -36,7 +38,6 @@ export default function CategoryAddForm({
 }: ICategoryAddFormComponentProps) {
   // State
   const initialValues: ICategoryForm = {
-    restaurantId: '',
     _id: '',
     title: '',
     ...category,
@@ -44,12 +45,20 @@ export default function CategoryAddForm({
 
   // Hooks
   const { showToast } = useToast();
+  // Context
+  const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
+  const restaurantId = restaurantLayoutContextData?.restaurantId || '';
 
   // Mutation
   const [createCategory, { loading: mutationLoading }] = useMutation(
     category ? EDIT_CATEGORY : CREATE_CATEGORY,
     {
-      refetchQueries: [{ query: GET_CATEGORY_BY_RESTAURANT_ID }],
+      refetchQueries: [
+        {
+          query: GET_CATEGORY_BY_RESTAURANT_ID,
+          variables: { id: restaurantId },
+        },
+      ],
       onCompleted: () => {
         showToast({
           type: 'success',
@@ -82,7 +91,7 @@ export default function CategoryAddForm({
     createCategory({
       variables: {
         category: {
-          restaurant: '',
+          restaurant: restaurantId,
           _id: category ? category?._id : '',
           title: values.title,
         },

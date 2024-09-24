@@ -1,5 +1,5 @@
 // Core
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 // Prime React
 import { FilterMatchMode } from 'primereact/api';
@@ -18,8 +18,10 @@ import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
 import {
+  ICategoryByRestaurantResponse,
   ICategoryMainComponentsProps,
   ICategoryResponse,
+  IQueryResult,
 } from '@/lib/utils/interfaces';
 
 // GraphQL
@@ -27,6 +29,7 @@ import {
   DELETE_CATEGORY,
   GET_CATEGORY_BY_RESTAURANT_ID,
 } from '@/lib/api/graphql';
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { generateDummyCategories } from '@/lib/utils/dummy';
 import { useMutation } from '@apollo/client';
 import CategoryTableHeader from '../header/table-header';
@@ -35,6 +38,10 @@ export default function CategoryMain({
   setIsAddCategoryVisible,
   setCategory,
 }: ICategoryMainComponentsProps) {
+  // Context
+  const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
+  const restaurantId = restaurantLayoutContextData?.restaurantId || '';
+
   // Hooks
   const { showToast } = useToast();
 
@@ -49,20 +56,30 @@ export default function CategoryMain({
   });
 
   // Query
-  const { loading } = useQueryGQL(GET_CATEGORY_BY_RESTAURANT_ID, {
-    variables: { id: '' },
-    fetchPolicy: 'network-only',
-    //  skip: false,
-    onCompleted: onFetchCategoriesByRestaurantCompleted,
-    onError: onErrorFetchCategoriesByRestaurant,
-  });
+  const { data, loading } = useQueryGQL(
+    GET_CATEGORY_BY_RESTAURANT_ID,
+    { id: restaurantId },
+    {
+      fetchPolicy: 'network-only',
+      enabled: !!restaurantId,
+      onCompleted: onFetchCategoriesByRestaurantCompleted,
+      onError: onErrorFetchCategoriesByRestaurant,
+    }
+  ) as IQueryResult<ICategoryByRestaurantResponse | undefined, undefined>;
 
   //Mutation
   const [deleteCategory, { loading: mutationLoading }] = useMutation(
     DELETE_CATEGORY,
     {
+      variables: {
+        id: deleteId,
+        restaurant: restaurantId,
+      },
       refetchQueries: [
-        { query: GET_CATEGORY_BY_RESTAURANT_ID, variables: { id: '' } },
+        {
+          query: GET_CATEGORY_BY_RESTAURANT_ID,
+          variables: { id: restaurantId },
+        },
       ],
     }
   );
@@ -118,7 +135,10 @@ export default function CategoryMain({
             onGlobalFilterChange={onGlobalFilterChange}
           />
         }
-        data={/* data?.riders ||  */ loading ? generateDummyCategories() : []}
+        data={
+          data?.restaurant?.categories ||
+          (loading ? generateDummyCategories() : [])
+        }
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
