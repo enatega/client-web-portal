@@ -8,7 +8,7 @@ export default function RestaurantPage() {
   // Hooks
   const router = useRouter();
 
-  // Use Effects
+  // Effects
   useEffect(() => {
     router.push('/admin/restaurant/dashboard');
   }, []);

@@ -50,6 +50,7 @@ const Table = <T extends ITableExtends>({
       filters={filters}
       scrollable={true}
       scrollHeight="500px"
+      removableSort
     >
       {isSelectable && (
         <Column
@@ -62,6 +63,8 @@ const Table = <T extends ITableExtends>({
           key={index}
           field={col.propertyName}
           header={col.headerName}
+          sortable={!col.propertyName.includes('action')}
+          bodyClassName="selectable-column"
           body={loading ? <DataTableColumnSkeleton /> : col.body}
         />
       ))}

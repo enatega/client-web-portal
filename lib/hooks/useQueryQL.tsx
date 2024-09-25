@@ -1,4 +1,5 @@
 import {
+  ApolloError,
   DocumentNode,
   OperationVariables,
   QueryHookOptions,
@@ -23,6 +24,7 @@ export const useQueryGQL = <
     retry?: number;
     retryDelayMs?: number;
     onCompleted?: (data: NoInfer<T>) => void;
+    onError?: (error: ApolloError) => void;
   } = {}
 ) => {
   const {
@@ -33,6 +35,7 @@ export const useQueryGQL = <
     retry = 3,
     retryDelayMs = 1000,
     onCompleted,
+    onError,
   } = options;
 
   const { data, error, loading, refetch } = useQuery<T, V>(query, {
@@ -41,6 +44,7 @@ export const useQueryGQL = <
     fetchPolicy,
     pollInterval,
     onCompleted,
+    onError,
   });
 
   const [isRefetching, setIsRefetching] = useState(false);

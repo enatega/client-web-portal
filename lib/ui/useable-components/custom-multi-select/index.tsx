@@ -2,7 +2,7 @@
 import { IMultiSelectComponentProps } from '@/lib/utils/interfaces';
 
 // Prime React
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MultiSelect, MultiSelectChangeEvent } from 'primereact/multiselect';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
@@ -62,7 +62,7 @@ const CustomMultiSelectComponent = ({
         panelClassName="border-gray-200 border-2"
         display="chip"
         dropdownIcon={(options) => (
-          <FontAwesomeIcon icon={dropDownIcon ?? faArrowDown} {...options} />
+          <FontAwesomeIcon icon={dropDownIcon ?? faChevronDown} {...options} />
         )}
         filter={true}
         {...props}

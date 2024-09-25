@@ -1,5 +1,8 @@
+export * from './action-menu.interface';
+export * from './add-on.interface';
 export * from './banner.interface';
 export * from './button.interface';
+export * from './category.interface';
 export * from './configuration.interface';
 export * from './dropdown.interface';
 export * from './forms';
@@ -9,6 +12,7 @@ export * from './image-upload.interface';
 export * from './input-field.interface';
 export * from './input-switch.interface';
 export * from './layout.interface';
+export * from './options.interface';
 export * from './panel-menu.interface';
 export * from './popup-menu.interface';
 export * from './progress-indicator.interface';
