@@ -9,7 +9,6 @@ import Toggle from '@/lib/ui/useable-components/toggle';
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import {
-
   ICommissionColumnProps,
   IAddon,
   ICategory,

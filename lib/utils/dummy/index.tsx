@@ -157,7 +157,6 @@ export const generateDummyRiders = (count: number = 10): IRiderResponse[] => {
   return riders;
 };
 
-
 export const generateDummyCommissionRates = (
   count: number = 10
 ): IRestaurantResponse[] => {
@@ -191,7 +190,7 @@ export const generateDummyCommissionRates = (
   }
 
   return dummyCommissionRates;
-}
+};
 export const generateDummyCategories = (count: number = 10): ICategory[] => {
   const categories: ICategory[] = [];
 
@@ -237,7 +236,6 @@ export const generateDummyAddons = (count: number = 10): IAddon[] => {
   }
 
   return addons;
-
 };
 
 export const generateDummyUsers = (count: number = 10): IUserResponse[] => {
