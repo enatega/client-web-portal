@@ -70,13 +70,13 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md border-2 border-[#F4F4F5] flex flex-col">
-      <div className="flex items-center mb-4 rounded-t-lg bg-gray-200 p-4">
+    <div className="flex flex-col rounded-lg border-2 border-[#F4F4F5] bg-white shadow-md">
+      <div className="mb-4 flex items-center rounded-t-lg bg-gray-200 p-4">
         {image ? (
           <Image
             src={image}
             alt="Restaurant logo"
-            className="rounded-full mr-3 w-10 h-10 flex-shrink-0"
+            className="mr-3 h-10 w-10 flex-shrink-0 rounded-full"
             width={40}
             height={40}
           />
@@ -88,11 +88,11 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
             shape="circle"
           />
         )}
-        <div className="flex-grow min-w-0">
+        <div className="min-w-0 flex-grow">
           <TextComponent className={`card-h2 truncate`} text={name} />
 
           <TextComponent
-            className={`card-h3 text-gray-500  truncate`}
+            className={`card-h3 truncate text-gray-500`}
             text={shopType}
           />
         </div>
@@ -102,17 +102,17 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
           onChange={handleCheckboxChange}
         />
       </div>
-      <div className="flex items-center gap-x-2 text-sm text-gray-500 mb-4 px-4 truncate">
+      <div className="mb-4 flex items-center gap-x-2 truncate px-4 text-sm text-gray-500">
         <FontAwesomeIcon icon={faLocationDot} />
 
         <TextComponent
-          className={`card-h2 text-gray-500  truncate`}
+          className={`card-h2 truncate text-gray-500`}
           text={address}
         />
       </div>
-      <div className="px-4 mb-2">
+      <div className="mb-2 px-4">
         <CustomButton
-          className="w-full h-10 bg-[#EBEDE6] text-black "
+          className="h-10 w-full bg-[#EBEDE6] text-black"
           label="View Details"
           onClick={() => {
             onUseLocalStorage('save', 'restaurantId', _id);

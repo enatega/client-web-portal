@@ -35,7 +35,7 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
       showToast({
         type: 'error',
         title: 'Restaurant Status',
-        message: `Restaurant marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'} failed`,
+        message: `Restaurant has been marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'}`,
         duration: 2000,
       });
     },

@@ -113,16 +113,16 @@ export default function VendorCard({
       className="relative"
     >
       <div
-        className={`flex items-center  bg-${vendorId === _id ? 'black' : 'white'} p-2 px-3 cursor-pointer`}
+        className={`flex items-center bg-${vendorId === _id ? 'black' : 'white'} cursor-pointer p-2 px-3`}
       >
         <Image
           width={40}
           height={40}
           src="https://placehold.co/40x40"
           alt="User avatar"
-          className="rounded-full mr-3"
+          className="mr-3 rounded-full"
         />
-        <div className="flex-1 flex flex-col gap-y-1">
+        <div className="flex flex-1 flex-col gap-y-1">
           <TextComponent
             className={`card-h2 text-${vendorId === _id ? 'white' : 'black'}`}
             text={toTextCase(userType, 'title')}
@@ -134,7 +134,7 @@ export default function VendorCard({
           />
 
           <div
-            className={`w-fit px-1 rounded-md flex gap-x-2 items-center bg-${vendorId === _id ? 'primary-color' : 'gray-100'}`}
+            className={`flex w-fit items-center gap-x-2 rounded-md px-1 bg-${vendorId === _id ? 'primary-color' : 'gray-100'}`}
           >
             <FontAwesomeIcon
               icon={faShop}
@@ -155,7 +155,7 @@ export default function VendorCard({
               icon={faEllipsisVertical}
               className={`p-1 ${
                 isPopupOpen ? 'text-gray-400' : 'text-white'
-              } hover:scale-105 cursor-pointer`}
+              } cursor-pointer hover:scale-105`}
               onClick={(e) => {
                 e.stopPropagation();
                 setPopupOpen(!isPopupOpen);
@@ -163,7 +163,7 @@ export default function VendorCard({
             />
           )}
           {isPopupOpen && (
-            <div className="absolute top-[1.2rem] left-2  mt-1 -translate-x-full z-10">
+            <div className="absolute left-2 top-[1.2rem] z-10 mt-1 -translate-x-full">
               <CustomPopupMenu
                 close={() => setPopupOpen(false)}
                 items={[

@@ -21,7 +21,7 @@ const CustomMultiSelectComponent = ({
 }: IMultiSelectComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
     return (
-      <div className="flex align-items-center">
+      <div className="align-items-center flex">
         <div>{option.label}</div>
       </div>
     );
@@ -31,14 +31,14 @@ const CustomMultiSelectComponent = ({
     const length = selectedItems ? selectedItems.length : 0;
 
     return (
-      <div className="py-2 px-3">
+      <div className="px-3 py-2">
         <b>{length}</b> item{length > 1 ? 's' : ''} selected.
       </div>
     );
   };
 
   return !isLoading ? (
-    <div className={`w-full flex flex-col justify-center gap-y-1`}>
+    <div className={`flex w-full flex-col justify-center gap-y-1`}>
       {showLabel && (
         <label htmlFor="username" className="text-sm font-[500]">
           {placeholder}
@@ -58,7 +58,7 @@ const CustomMultiSelectComponent = ({
         placeholder={placeholder}
         itemTemplate={itemTemplate}
         panelFooterTemplate={panelFooterTemplate}
-        className="w-full md:w-20rem h-10 p-0 m-0 border text-sm align-middle border-gray-300 focus:outline-none focus:shadow-none"
+        className="md:w-20rem m-0 h-10 w-full border border-gray-300 p-0 align-middle text-sm focus:shadow-none focus:outline-none"
         panelClassName="border-gray-200 border-2"
         display="chip"
         dropdownIcon={(options) => (

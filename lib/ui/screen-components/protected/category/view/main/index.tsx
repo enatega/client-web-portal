@@ -8,7 +8,7 @@ import { FilterMatchMode } from 'primereact/api';
 
 // Components
 import Table from '@/lib/ui/useable-components/table';
-import { CATEGORY_TABLE_COLUMNS } from '@/lib/utils/constants';
+import { CATEGORY_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/category-columns';
 
 // Utilities and Data
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';

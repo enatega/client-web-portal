@@ -218,10 +218,10 @@ export default function AddonAddForm({
       onHide={onHide}
       className="w-full sm:w-[450px]"
     >
-      <div className="w-full h-full flex items-center justify-start">
+      <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">
           <div className="flex flex-col gap-2">
-            <div className="flex flex-col mb-2">
+            <div className="mb-2 flex flex-col">
               <span className="text-lg">{addon ? 'Edit' : 'Add'} Option</span>
             </div>
 
@@ -259,7 +259,7 @@ export default function AddonAddForm({
                                         <div className="relative">
                                           {!!index && (
                                             <button
-                                              className="absolute top-2 -right-1"
+                                              className="absolute -right-1 top-2"
                                               onClick={() => remove(index)}
                                             >
                                               <FontAwesomeIcon
@@ -408,9 +408,9 @@ export default function AddonAddForm({
                                   }
                                 )}
                               {!addon && (
-                                <div className="flex justify-end mt-4">
+                                <div className="mt-4 flex justify-end">
                                   <TextIconClickable
-                                    className="w-full bg-transparent text-black border border-black rounded"
+                                    className="w-full rounded border border-black bg-transparent text-black"
                                     icon={faAdd}
                                     iconStyles={{ color: 'black' }}
                                     title="Add New Addon"
@@ -424,9 +424,9 @@ export default function AddonAddForm({
                           )}
                         </FieldArray>
 
-                        <div className="flex justify-end mt-4">
+                        <div className="mt-4 flex justify-end">
                           <CustomButton
-                            className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                            className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
                             label={addon ? 'Edit' : 'Add'}
                             type="submit"
                             loading={mutationLoading}

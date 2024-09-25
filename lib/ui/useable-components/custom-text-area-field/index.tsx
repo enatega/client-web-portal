@@ -13,7 +13,7 @@ export default function CustomTextAreaField({
   ...props
 }: ICustomTextAreaField) {
   return (
-    <div className="flex flex-col gap-y-1 justify-center">
+    <div className="flex flex-col justify-center gap-y-1">
       {showLabel && (
         <label htmlFor={name ?? 'text-area'} className="text-sm font-[500]">
           {label}
@@ -21,7 +21,7 @@ export default function CustomTextAreaField({
       )}
       <InputTextarea
         value={value}
-        className={`w-full min-h-20 border px-2 pt-1 text-sm border-gray-300 rounded-lg focus:outline-none focus:shadow-none ${className}`}
+        className={`min-h-20 w-full rounded-lg border border-gray-300 px-2 pt-1 text-sm focus:shadow-none focus:outline-none ${className}`}
         id={name}
         placeholder={placeholder}
         onChange={onChange}
