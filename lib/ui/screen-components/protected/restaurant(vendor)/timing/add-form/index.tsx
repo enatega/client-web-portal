@@ -41,7 +41,48 @@ const TimingAddForm = () => {
     },
     {
       day: 'WED',
-      times: [],
+      times: [
+        {
+          startTime: null,
+          endTime: null,
+        },
+      ],
+    },
+    {
+      day: 'THU',
+      times: [
+        {
+          startTime: null,
+          endTime: null,
+        },
+      ],
+    },
+    {
+      day: 'FRI',
+      times: [
+        {
+          startTime: null,
+          endTime: null,
+        },
+      ],
+    },
+    {
+      day: 'SAT',
+      times: [
+        {
+          startTime: null,
+          endTime: null,
+        },
+      ],
+    },
+    {
+      day: 'SUN',
+      times: [
+        {
+          startTime: null,
+          endTime: null,
+        },
+      ],
     },
   ];
 
@@ -63,7 +104,7 @@ const TimingAddForm = () => {
           validateOnChange
           enableReinitialize
         >
-          {({ values, errors, touched, setFieldValue }) => (
+          {({ values, setFieldValue }) => (
             <Form
               onClick={() => {
                 console.log(values);
@@ -72,7 +113,7 @@ const TimingAddForm = () => {
             >
               {values.map((value, dayIndex) => {
                 return (
-                  <div className="flex items-start gap-5">
+                  <div key={dayIndex} className="flex items-start gap-5">
                     {/* left side */}
                     <div className="mt-2 flex items-center gap-4">
                       <Toggle
@@ -94,7 +135,10 @@ const TimingAddForm = () => {
                       <div className="flex flex-col gap-2">
                         {value.times?.map((time: TimeSlot, timeIndex) => {
                           return (
-                            <div className="flex items-center gap-4">
+                            <div
+                              key={timeIndex}
+                              className="flex items-center gap-4"
+                            >
                               <CustomTimeInput
                                 showLabel={false}
                                 value={time.startTime}
@@ -169,51 +213,3 @@ const TimingAddForm = () => {
 };
 
 export default TimingAddForm;
-
-const abc = [
-  {
-    day: 'WED',
-    times: [
-      {
-        startTime: null,
-        endTime: null,
-      },
-    ],
-  },
-  {
-    day: 'THU',
-    times: [
-      {
-        startTime: null,
-        endTime: null,
-      },
-    ],
-  },
-  {
-    day: 'FRI',
-    times: [
-      {
-        startTime: null,
-        endTime: null,
-      },
-    ],
-  },
-  {
-    day: 'SAT',
-    times: [
-      {
-        startTime: null,
-        endTime: null,
-      },
-    ],
-  },
-  {
-    day: 'SUN',
-    times: [
-      {
-        startTime: null,
-        endTime: null,
-      },
-    ],
-  },
-];

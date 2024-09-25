@@ -1,38 +1,27 @@
-import { GET_RIDERS } from '@/lib/api/graphql';
-import ActionMenu from '@/lib/ui/useable-components/action-menu';
-import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
-import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
-import { gql, useMutation } from '@apollo/client';
+// Core
 import { useState } from 'react';
+
+// Custom Components
+import ActionMenu from '@/lib/ui/useable-components/action-menu';
 import CustomInputSwitch from '../../custom-input-switch';
 
-// Define the GraphQL mutation
-const TOGGLE_RIDER = gql`
-  mutation ToggleRider($id: String) {
-    toggleAvailablity(id: $id) {
-      _id
-      name
-      username
-      phone
-      available
-      zone {
-        title
-      }
-    }
-  }
-`;
+// Interfaces and Types
+import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
+import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
+
+// GraphQL
+import { GET_RIDERS, TOGGLE_RIDER } from '@/lib/api/graphql';
+import { useMutation } from '@apollo/client';
 
 export const RIDER_TABLE_COLUMNS = ({
   menuItems,
 }: {
   menuItems: IActionMenuProps<IRiderResponse>['items'];
 }) => {
-  const [deletingRestaurant, setDeletingRestaurant] = useState<{
+  const [selectedRider, setSelectedRider] = useState<{
     id: string;
     isActive: boolean;
   }>({ id: '', isActive: false });
-
-  const [isRefetching, setIsRefetching] = useState(false);
 
   // GraphQL mutation hook
   const [mutateToggle, { loading }] = useMutation(TOGGLE_RIDER, {
@@ -41,19 +30,14 @@ export const RIDER_TABLE_COLUMNS = ({
   });
 
   // Handle availability toggle
-  const onHandleRestaurantStatusChange = async (
-    isActive: boolean,
-    id: string
-  ) => {
+  const onHandleBannerStatusChange = async (isActive: boolean, id: string) => {
     try {
-      setDeletingRestaurant({ id, isActive });
-      setIsRefetching(true);
+      setSelectedRider({ id, isActive });
       await mutateToggle({ variables: { id } });
     } catch (error) {
       console.error('Error toggling availability:', error);
     } finally {
-      setIsRefetching(false);
-      setDeletingRestaurant({ id: '', isActive: false });
+      setSelectedRider({ id: '', isActive: false });
     }
   };
 
@@ -71,10 +55,10 @@ export const RIDER_TABLE_COLUMNS = ({
       propertyName: 'available',
       body: (rider: IRiderResponse) => (
         <CustomInputSwitch
-          loading={rider._id === deletingRestaurant.id && loading}
+          loading={rider._id === selectedRider.id && loading}
           isActive={rider.available}
           onChange={async () => {
-            await onHandleRestaurantStatusChange(!rider.available, rider._id);
+            await onHandleBannerStatusChange(!rider.available, rider._id);
           }}
         />
       ),
