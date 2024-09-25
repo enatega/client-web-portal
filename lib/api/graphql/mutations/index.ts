@@ -1,5 +1,6 @@
 export * from './addons';
 export * from './banners';
+export * from './commission-rate';
 export * from './category';
 export * from './coupons';
 export * from './cuisines';

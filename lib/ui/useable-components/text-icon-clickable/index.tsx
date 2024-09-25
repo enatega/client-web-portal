@@ -23,7 +23,7 @@ export default function TextIconClickable({
       {icon && (
         <FontAwesomeIcon icon={icon} color={iconStyles?.color ?? 'gray'} />
       )}
-      <span>{title}</span>
+      {title}
       <Ripple />
     </div>
   );

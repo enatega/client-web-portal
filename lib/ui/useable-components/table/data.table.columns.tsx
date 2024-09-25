@@ -9,6 +9,8 @@ import Toggle from '@/lib/ui/useable-components/toggle';
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import {
+
+  ICommissionColumnProps,
   IAddon,
   ICategory,
   IOptions,
@@ -21,10 +23,83 @@ import { IUserResponse } from '@/lib/utils/interfaces/users.interface';
 import { ApolloError, useMutation } from '@apollo/client';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Form, Formik } from 'formik';
 import { useContext, useState } from 'react';
+import CustomButton from '../button';
+import CustomCommissionTextField from '../custom-commission-input';
 import CustomInputSwitch from '../custom-input-switch';
 
-// Icons
+export const COMMISSION_RATE_COLUMNS = ({
+  handleSave,
+  handleCommissionRateChange,
+  loadingRestaurant,
+}: ICommissionColumnProps & { loadingRestaurant: string | null }) => [
+  {
+    headerName: 'Name',
+    propertyName: 'name',
+    body: (restaurant: IRestaurantResponse) => (
+      <span style={{ fontWeight: 'bold' }}>{restaurant.name}</span>
+    ),
+  },
+  {
+    headerName: 'Set Commission Rate',
+    propertyName: 'commissionRate',
+    body: (restaurant: IRestaurantResponse) => (
+      <Formik
+        initialValues={{
+          [`commissionRate-${restaurant._id}`]:
+            restaurant.commissionRate.toString(),
+        }}
+        onSubmit={() => {
+          handleSave(restaurant._id);
+        }}
+      >
+        {({ values, handleChange, handleSubmit }) => (
+          <Form onSubmit={handleSubmit}>
+            <div className="flex">
+              <CustomCommissionTextField
+                type="number"
+                name={`commissionRate-${restaurant._id}`}
+                value={values[`commissionRate-${restaurant._id}`]}
+                onChange={(e) => {
+                  handleChange(e);
+                  handleCommissionRateChange(
+                    restaurant._id,
+                    parseFloat(e.target.value)
+                  );
+                }}
+                min={0}
+                max={100}
+                showLabel={false}
+                loading={false}
+              />
+            </div>
+          </Form>
+        )}
+      </Formik>
+    ),
+  },
+  {
+    headerName: 'Action',
+    propertyName: 'action',
+    body: (restaurant: IRestaurantResponse) => (
+      <Formik initialValues={{}} onSubmit={() => handleSave(restaurant._id)}>
+        {({ handleSubmit, isSubmitting }) => (
+          <Form onSubmit={handleSubmit}>
+            <CustomButton
+              type="submit"
+              className="h-10 w-24 flex px-4 mt-2 text-black border border-gray-500 bg-white rounded-md hover:bg-black hover:text-white transition-colors duration-200"
+              label="Save"
+              rounded={false}
+              loading={loadingRestaurant === restaurant._id || isSubmitting}
+              disabled={loadingRestaurant === restaurant._id || isSubmitting}
+            />
+          </Form>
+        )}
+      </Formik>
+    ),
+  },
+];
 
 export const RIDER_TABLE_COLUMNS = ({
   menuItems,
