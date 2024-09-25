@@ -1,8 +1,7 @@
 'use client';
 
 // Core
-import { useState } from 'react';
-import * as Yup from 'yup';
+import { useContext } from 'react';
 
 // Formik
 import { Form, Formik } from 'formik';
@@ -11,37 +10,96 @@ import { Form, Formik } from 'formik';
 import { Card } from 'primereact/card';
 
 // Interface
-import { ISignUpForm } from '@/lib/utils/interfaces/forms';
+import {
+  IOwnerLoginDataResponse,
+  ISignInForm,
+} from '@/lib/utils/interfaces/forms';
 
 // Component
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
+import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 
 // Constants
-import { SignUpErrors } from '@/lib/utils/constants';
+import { APP_NAME, SignInErrors } from '@/lib/utils/constants';
 
 // Methods
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 
 // Icons
-import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-const initialValues: ISignUpForm = {
-  firstName: '',
-  lastName: '',
+// GraphQL
+import { OWNER_LOGIN } from '@/lib/api/graphql';
+import { ToastContext } from '@/lib/context/toast.context';
+import { ApolloError, useMutation } from '@apollo/client';
+
+// Schema
+import { onUseLocalStorage } from '@/lib/utils/methods';
+import { SignInSchema } from '@/lib/utils/schema';
+import { useRouter } from 'next/navigation';
+
+const initialValues: ISignInForm = {
   email: '',
   password: '',
-  confirmPassword: '',
 };
 
 export default function LoginEmailPasswordMain() {
-  const [account] = useState<ISignUpForm>(initialValues);
+  // Context
+  const { showToast } = useContext(ToastContext);
 
-  const SignupSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().required('Required'),
+  // Hooks
+  const router = useRouter();
+
+  // API
+  const [onLogin, { loading }] = useMutation(OWNER_LOGIN, {
+    onError,
+    onCompleted,
   });
+
+  // API Handlers
+  function onCompleted({ ownerLogin }: IOwnerLoginDataResponse) {
+    onUseLocalStorage('save', `user-${APP_NAME}`, JSON.stringify(ownerLogin));
+    let redirect_url = '/general/vendors';
+    if (ownerLogin?.userType === 'VENDOR') {
+      redirect_url = '/general/restaurants';
+    }
+
+    router.replace(redirect_url);
+
+    showToast({
+      type: 'success',
+      title: 'Login',
+      message: 'User has been logged in successfully.',
+    });
+  }
+  function onError({ graphQLErrors, networkError }: ApolloError) {
+    showToast({
+      type: 'error',
+      title: 'Login',
+      message:
+        graphQLErrors[0]?.message ??
+        networkError?.message ??
+        `Something went wrong. Please try again`,
+    });
+  }
+
+  // Handler
+  const onSubmitHandler = async (data: ISignInForm) => {
+    try {
+      await onLogin({
+        variables: {
+          ...data,
+        },
+      });
+    } catch (err) {
+      showToast({
+        type: 'error',
+        title: 'Login',
+        message: 'Login Failed',
+      });
+    }
+  };
 
   return (
     <div className="h-full w-screen flex items-center justify-center">
@@ -59,9 +117,9 @@ export default function LoginEmailPasswordMain() {
 
             <div>
               <Formik
-                initialValues={account}
-                validationSchema={SignupSchema}
-                onSubmit={() => {}}
+                initialValues={initialValues}
+                validationSchema={SignInSchema}
+                onSubmit={onSubmitHandler}
                 validateOnChange
               >
                 {({ values, errors, handleChange }) => {
@@ -87,7 +145,7 @@ export default function LoginEmailPasswordMain() {
                             borderColor: onErrorMessageMatcher(
                               'email',
                               errors?.email,
-                              SignUpErrors
+                              SignInErrors
                             )
                               ? 'red'
                               : '',
@@ -97,18 +155,19 @@ export default function LoginEmailPasswordMain() {
 
                       <div className="mb-2">
                         <CustomPasswordTextField
-                          className="w-full"
+                          className="w-full h-[2.4rem]"
                           placeholder="Password"
                           name="password"
                           maxLength={20}
                           showLabel={false}
                           value={values.password}
                           onChange={handleChange}
+                          feedback={false}
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'password',
                               errors?.password,
-                              SignUpErrors
+                              SignInErrors
                             )
                               ? 'red'
                               : '',
@@ -117,9 +176,10 @@ export default function LoginEmailPasswordMain() {
                       </div>
 
                       <CustomButton
-                        className="w-full h-10 bg-[#18181B] text-white border border-transparent hover-border-black hover:bg-white hover:text-black"
+                        className="w-full h-10 px-32 bg-[#18181B] text-white border border-black hover-border-black hover:bg-white hover:text-black"
                         label="Login"
                         type="submit"
+                        loading={loading}
                       />
                     </Form>
                   );
