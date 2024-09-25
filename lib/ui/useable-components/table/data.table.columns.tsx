@@ -19,9 +19,11 @@ import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 import { IUserResponse } from '@/lib/utils/interfaces/users.interface';
+import { onUseLocalStorage } from '@/lib/utils/methods';
 import { ApolloError, useMutation } from '@apollo/client';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/navigation';
 import { Form, Formik } from 'formik';
 import { useContext, useState } from 'react';
 import CustomButton from '../button';
@@ -171,6 +173,8 @@ export const BANNERS_TABLE_COLUMNS = ({
 export const RESTAURANT_TABLE_COLUMNS = () => {
   // Context
   const { showToast } = useContext(ToastContext);
+  // Hooks
+  const router = useRouter();
 
   // State
   const [deletingRestaurant, setDeletingRestaurant] = useState<{
@@ -263,7 +267,7 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
     { headerName: 'Address', propertyName: 'address' },
     {
       headerName: 'Status',
-      propertyName: 'status',
+      propertyName: 'actions',
       body: (rowData: IRestaurantResponse) => {
         return (
           <CustomInputSwitch
@@ -274,6 +278,22 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
                 rowData.isActive,
                 rowData._id
               );
+            }}
+          />
+        );
+      },
+    },
+    {
+      headerName: 'Actions',
+      propertyName: 'actions',
+      body: (rowData: IRestaurantResponse) => {
+        return (
+          <FontAwesomeIcon
+            icon={faEye}
+            className="ml-5 cursor-pointer"
+            onClick={() => {
+              onUseLocalStorage('save', 'restaurantId', rowData?._id);
+              router.push(`/admin/restaurant/`);
             }}
           />
         );

@@ -5,7 +5,7 @@ import { Card } from 'primereact/card';
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 
-export default function EmailVerificationScreen() {
+export default function EmailVerificationMain() {
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="w-2/6">

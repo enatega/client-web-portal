@@ -30,7 +30,13 @@ import { LayoutContext } from '@/lib/context/layout.context';
 // Interface/Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';
 
-import { APP_NAME, DISPATCH, LANGUAGE, ZONE } from '@/lib/utils/constants';
+import {
+  APP_NAME,
+  DISPATCH,
+  LANGUAGE,
+  SETTINGS,
+  ZONE,
+} from '@/lib/utils/constants';
 
 // Methods
 import { toTextCase } from '@/lib/utils/methods';
@@ -95,7 +101,7 @@ const AppTopbar = () => {
       <div className="hidden md:flex items-center space-x-6">
         <TextIconClickable icon={faMap} title={ZONE} />
         <TextIconClickable icon={faTruck} title={DISPATCH} />
-        <TextIconClickable icon={faCog} title={DISPATCH} />
+        <TextIconClickable icon={faCog} title={SETTINGS} />
         <TextIconClickable icon={faChevronDown} title={LANGUAGE} />
 
         <FontAwesomeIcon className="cursor-pointer" icon={faBell} />
