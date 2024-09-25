@@ -44,15 +44,15 @@ export default function VendorMain({
 
   const {
     onSetRestaurantFormVisible,
-    restaurantGlobalFilter,
-    restaurantFiltered,
-    onSetRestaurantGlobalFilter,
     restaurantByOwnerResponse,
+
+    restaurantContextData,
+    onSetRestaurantContextData,
   } = useContext(RestaurantContext);
 
   const vendors = globalFilter ? filtered : vendorResponse?.data?.vendors;
-  const restaurants = restaurantGlobalFilter
-    ? restaurantFiltered
+  const restaurants = restaurantContextData.globalFilter
+    ? restaurantContextData?.filtered
     : restaurantByOwnerResponse?.data?.restaurantByOwner?.restaurants;
 
   return (
@@ -154,8 +154,12 @@ export default function VendorMain({
                 maxLength={35}
                 placeholder="Search Restaurants"
                 showLabel={false}
-                value={restaurantGlobalFilter}
-                onChange={(e) => onSetRestaurantGlobalFilter(e.target.value)}
+                value={restaurantContextData.globalFilter}
+                onChange={(e) =>
+                  onSetRestaurantContextData({
+                    globalFilter: e.target.value,
+                  })
+                }
               />
             </div>
             <CustomTab

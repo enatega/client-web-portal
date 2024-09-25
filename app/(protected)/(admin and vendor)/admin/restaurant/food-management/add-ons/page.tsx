@@ -1,7 +1,7 @@
 'use client';
 
-import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+import AddonsScreen from '@/lib/ui/screens/admin-vendor/food-management/addons';
 
 export default function AddonsPage() {
-  return <ComingSoon />;
+  return <AddonsScreen />;
 }

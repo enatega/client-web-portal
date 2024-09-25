@@ -15,6 +15,7 @@ export interface IColumnConfig<T> extends IGlobalComponentProps {
 }
 
 export interface IDataTableProps<T> extends IGlobalComponentProps {
+  isSelectable?: boolean;
   header?: React.ReactNode;
   data: T[];
   selectedData: T[];

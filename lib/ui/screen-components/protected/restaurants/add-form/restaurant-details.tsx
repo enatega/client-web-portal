@@ -452,12 +452,30 @@ export default function RestaurantDetailsForm({
                           name="logo"
                           title="Upload Logo"
                           onSetImageUrl={setFieldValue}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'logo',
+                              errors?.logo as string,
+                              RestaurantErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
                         />
                         <CustomUploadImageComponent
                           key={'image'}
                           name="image"
                           title="Upload Image"
                           onSetImageUrl={setFieldValue}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'image',
+                              errors?.image as string,
+                              RestaurantErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
                         />
                       </div>
 

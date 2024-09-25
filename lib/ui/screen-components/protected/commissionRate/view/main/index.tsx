@@ -7,7 +7,7 @@ import { generateDummyCommissionRates } from '@/lib/utils/dummy';
 import { IQueryResult, IRestaurantResponse } from '@/lib/utils/interfaces';
 import { useMutation } from '@apollo/client';
 import { useContext, useEffect, useState } from 'react';
-import CommissionRateHeader from '../header';
+import CommissionRateHeader from '../header/table-header';
 
 interface RestaurantsData {
   restaurants: IRestaurantResponse[];

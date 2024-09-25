@@ -23,7 +23,7 @@ export default function RestaurantsScreenHeader() {
         <TextIconClickable
           className="sm:w-auto bg-black text-white border-gray-300 rounded"
           icon={faAdd}
-          iconStyles={{ color: 'white' }}
+          iconStyles={{ color: 'black' }}
           title="Add Restaurant"
           onClick={() => onRestaurantsFormVisible(true)}
         />

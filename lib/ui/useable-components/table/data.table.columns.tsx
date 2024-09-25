@@ -1,29 +1,38 @@
 // Core
 import Image from 'next/image';
+import { useContext, useState } from 'react';
+
+// Third-party libraries
+import { ApolloError, useMutation } from '@apollo/client';
+import { Formik, Form } from 'formik';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 // Custom Components
 import ActionMenu from '@/lib/ui/useable-components/action-menu';
 import Toggle from '@/lib/ui/useable-components/toggle';
+import CustomInputSwitch from '../custom-input-switch';
+import CustomCommissionTextField from '../custom-commission-input';
+import CustomButton from '../button';
+
+// Contexts
+import { ToastContext } from '@/lib/context/toast.context';
+
+// GraphQL
+import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 
 // Interfaces and Types
-import { DELETE_RESTAURANT } from '@/lib/api/graphql';
-import { ToastContext } from '@/lib/context/toast.context';
 import {
-  ICommissionColumnProps,
+  IAddon,
+  ICategory,
+  IOptions,
   IRestaurantResponse,
 } from '@/lib/utils/interfaces';
 import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 import { IUserResponse } from '@/lib/utils/interfaces/users.interface';
-import { ApolloError, useMutation } from '@apollo/client';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Form, Formik } from 'formik';
-import { useContext, useState } from 'react';
-import CustomButton from '../button';
-import CustomCommissionTextField from '../custom-commission-input';
-import CustomInputSwitch from '../custom-input-switch';
+import { ICommissionColumnProps } from '@/lib/utils/interfaces';
 
 export const COMMISSION_RATE_COLUMNS = ({
   handleSave,
@@ -181,7 +190,7 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
       showToast({
         type: 'error',
         title: 'Restaurant Status',
-        message: `Restaurant marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'} failed`,
+        message: `Restaurant has been marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'}`,
         duration: 2000,
       });
     },
@@ -307,3 +316,52 @@ export const USERS_TABLE_COLUMNS = [
     },
   },
 ];
+
+export const CATEGORY_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<ICategory>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    {
+      propertyName: 'actions',
+      body: (rider: ICategory) => <ActionMenu items={menuItems} data={rider} />,
+    },
+  ];
+};
+
+export const OPTION_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IOptions>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    { headerName: 'Price', propertyName: 'price' },
+    { headerName: 'Description', propertyName: 'description' },
+    {
+      propertyName: 'actions',
+      body: (option: IOptions) => (
+        <ActionMenu items={menuItems} data={option} />
+      ),
+    },
+  ];
+};
+
+export const ADDON_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IAddon>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    { headerName: 'Description', propertyName: 'description' },
+    { headerName: 'Minimum', propertyName: 'quantityMinimum' },
+    { headerName: 'Maximum', propertyName: 'quantityMaximum' },
+    {
+      propertyName: 'actions',
+      body: (option: IAddon) => <ActionMenu items={menuItems} data={option} />,
+    },
+  ];
+};

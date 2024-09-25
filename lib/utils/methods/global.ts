@@ -32,3 +32,19 @@ export const retryQuery = async <
 
   return retry(); // Initial call to retry function
 };
+
+export const omitExtraAttributes = <T extends object>(
+  obj: Partial<T>,
+  schema: T
+): T => {
+  const validKeys = Object.keys(schema) as Array<keyof T>;
+  const filteredObj = {} as T;
+
+  validKeys.forEach((key) => {
+    if (key in obj) {
+      filteredObj[key] = obj[key] as T[keyof T]; // Ensure proper type assignment
+    }
+  });
+
+  return filteredObj;
+};
