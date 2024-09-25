@@ -5,8 +5,11 @@ import {
   faUtensils,
 } from '@fortawesome/free-solid-svg-icons';
 import {
+  IAddon,
   IBannersResponse,
+  ICategory,
   IDropdownSelectItem,
+  IOptions,
   IRestaurantResponse,
   IStatsCardProps,
 } from '../interfaces';
@@ -152,6 +155,53 @@ export const generateDummyRiders = (count: number = 10): IRiderResponse[] => {
   }
 
   return riders;
+};
+
+export const generateDummyCategories = (count: number = 10): ICategory[] => {
+  const categories: ICategory[] = [];
+
+  for (let i = 0; i < count; i++) {
+    categories.push({
+      _id: `category_${i + 1}`,
+      title: `Category ${i + 1}`,
+    });
+  }
+
+  return categories;
+};
+
+export const generateDummyOptions = (count: number = 10): IOptions[] => {
+  const options: IOptions[] = [];
+
+  for (let i = 0; i < count; i++) {
+    options.push({
+      _id: `option_${i + 1}`,
+      title: `Option ${i + 1}`,
+      description: `Description for Option ${i + 1}`,
+      price: Math.floor(Math.random() * 100) + 1,
+      __typename: '',
+    });
+  }
+
+  return options;
+};
+
+export const generateDummyAddons = (count: number = 10): IAddon[] => {
+  const addons: IAddon[] = [];
+
+  for (let i = 0; i < count; i++) {
+    addons.push({
+      _id: `addon_${i + 1}`,
+      title: `Addon ${i + 1}`,
+      description: `Description for Addon ${i + 1}`,
+      quantityMinimum: 1,
+      quantityMaximum: 1,
+      __typename: 'Addon',
+      options: [],
+    });
+  }
+
+  return addons;
 };
 
 export const generateDummyUsers = (count: number = 10): IUserResponse[] => {

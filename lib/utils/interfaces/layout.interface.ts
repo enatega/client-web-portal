@@ -9,7 +9,7 @@ import { IGlobalProps } from './global.interface';
 // Layout
 export interface IProvider extends IGlobalProps {}
 
-/* Context Types */
+/* Layoyt */
 export type LayoutState = {
   staticMenuDesktopInactive: boolean;
   overlayMenuActive: boolean;
@@ -28,12 +28,26 @@ export type LayoutConfig = {
   scale: number;
 };
 
+/* Layout Context */
 export interface LayoutContextProps {
   isSidebarVisible: boolean;
   showSidebar: (isOpen?: boolean) => void;
   isAdminSidebarVisible: boolean;
   showAdminSidebar: (isOpen?: boolean) => void;
 }
+
+export interface RestaurantLayoutContextProps {
+  restaurantLayoutContextData: RestaurantLayoutContextData;
+  onSetRestaurantLayoutContextData: (
+    data: Partial<RestaurantLayoutContextData>
+  ) => void;
+}
+
+export interface RestaurantLayoutContextData {
+  restaurantId: string;
+}
+
+/* Menu */
 
 export interface MenuContextProps {
   activeMenu: string;

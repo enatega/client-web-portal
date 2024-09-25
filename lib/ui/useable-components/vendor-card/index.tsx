@@ -23,7 +23,7 @@ import {
 import { DELETE_VENDOR, GET_VENDORS } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import { SELECTED_VENDOR } from '@/lib/utils/constants';
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
 import Image from 'next/image';
 import DeleteDialog from '../delete-dialog';
 import CustomPopupMenu from '../popup-menu';
@@ -48,8 +48,25 @@ export default function VendorCard({
   const [deleteVendor, { loading }] = useMutation(DELETE_VENDOR, {
     refetchQueries: [{ query: GET_VENDORS }],
     onCompleted: () => {
+      showToast({
+        type: 'success',
+        title: 'Vendor Delete',
+        message: 'Vendor has been deleted successfully',
+      });
+
       onResetVendor(true); // so after refetching is vendor can be selected.
       vendorResponse.refetch();
+    },
+    onError: ({ networkError, graphQLErrors }: ApolloError) => {
+      showToast({
+        type: 'error',
+        title: 'Vendor Delete',
+        message:
+          graphQLErrors[0]?.message ??
+          networkError?.message ??
+          'Vendor Deletion  Failed',
+        duration: 2500,
+      });
     },
   });
 
@@ -68,13 +85,6 @@ export default function VendorCard({
   const onHandleConfirmDeleteVendor = async () => {
     try {
       await deleteVendor({ variables: { id: vendorId } });
-
-      showToast({
-        type: 'success',
-        title: 'Vendor Delete',
-        message: 'Vendor has been deleted successfully',
-      });
-
       setDeletePopupOpen(false);
     } catch (error) {
       showToast({
@@ -153,7 +163,7 @@ export default function VendorCard({
             />
           )}
           {isPopupOpen && (
-            <div className="absolute top-full left-0 mt-1 -translate-x-full z-10">
+            <div className="absolute top-[1.2rem] left-2  mt-1 -translate-x-full z-10">
               <CustomPopupMenu
                 close={() => setPopupOpen(false)}
                 items={[
