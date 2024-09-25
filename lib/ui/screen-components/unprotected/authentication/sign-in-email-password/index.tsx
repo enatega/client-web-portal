@@ -24,7 +24,8 @@ import { SignUpErrors } from '@/lib/utils/constants';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 
 // Icons
-import { faEnvelope, faEye } from '@fortawesome/free-solid-svg-icons';
+import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 const initialValues: ISignUpForm = {
   firstName: '',
@@ -34,7 +35,7 @@ const initialValues: ISignUpForm = {
   confirmPassword: '',
 };
 
-export default function LoginEmailPasswordScreen() {
+export default function LoginEmailPasswordMain() {
   const [account] = useState<ISignUpForm>(initialValues);
 
   const SignupSchema = Yup.object().shape({
@@ -43,14 +44,16 @@ export default function LoginEmailPasswordScreen() {
   });
 
   return (
-    <div className="h-full w-full flex items-center justify-center">
-      <div className="w-2/6">
+    <div className="h-full w-screen flex items-center justify-center">
+      <div className="w-full md:w-1/2 lg:w-[30%]">
         <Card>
           <div className="flex flex-col gap-2">
-            <div className="flex flex-col mb-2 p-2">
-              <span className="text-2xl">Please login</span>
-              <span className="text-gray-400 text-sm">
-                First, let&apos;s create your Enatega account
+            <div className="flex flex-col items-center mb-2 p-2 gap-y-[0.5rem]">
+              <span className="text-3xl font-semibold font-inter text-center">
+                Login to your account
+              </span>
+              <span className="text-[#667085] text-base font-normal font-inter text-center">
+                Welcome back! Please enter your details.
               </span>
             </div>
 
@@ -74,6 +77,9 @@ export default function LoginEmailPasswordScreen() {
                           iconProperties={{
                             icon: faEnvelope,
                             position: 'right',
+                            style: {
+                              marginTop: '-10px',
+                            },
                           }}
                           showLabel={false}
                           onChange={handleChange}
@@ -90,17 +96,12 @@ export default function LoginEmailPasswordScreen() {
                       </div>
 
                       <div className="mb-2">
-                        <CustomIconTextField
+                        <CustomPasswordTextField
                           className="w-full"
                           placeholder="Password"
                           name="password"
-                          type="password"
                           maxLength={20}
                           showLabel={false}
-                          iconProperties={{
-                            icon: faEye,
-                            position: 'right',
-                          }}
                           value={values.password}
                           onChange={handleChange}
                           style={{
@@ -116,9 +117,8 @@ export default function LoginEmailPasswordScreen() {
                       </div>
 
                       <CustomButton
-                        className="w-full h-12 bg-primary-color text-white border-primary-color hover:bg-white hover:text-primary-color"
+                        className="w-full h-10 bg-[#18181B] text-white border border-transparent hover-border-black hover:bg-white hover:text-black"
                         label="Login"
-                        rounded={true}
                         type="submit"
                       />
                     </Form>

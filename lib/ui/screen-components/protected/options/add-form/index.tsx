@@ -96,7 +96,6 @@ export default function OptionAddForm({
         onHide();
       },
       onError: (error) => {
-        console.log({ error });
         let message = '';
         try {
           message = error.graphQLErrors[0]?.message;
@@ -114,7 +113,6 @@ export default function OptionAddForm({
 
   // Form Submission
   const handleSubmit = ({ options }: { options: IOptionForm[] }) => {
-    console.log({ options, option });
     createOption({
       variables: {
         optionInput: {
@@ -157,6 +155,8 @@ export default function OptionAddForm({
                 }) => {
                   const _errors: FormikErrors<IOptionForm>[] =
                     (errors?.options as FormikErrors<IOptionForm>[]) ?? [];
+
+                  console.log({ _errors });
 
                   return (
                     <Form onSubmit={handleSubmit}>

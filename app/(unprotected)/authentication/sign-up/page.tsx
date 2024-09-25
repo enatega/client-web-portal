@@ -1,5 +1,5 @@
 // Component
-import SignupScreen from '@/lib/ui/screens/auth/sign-up';
+import SignupScreen from '@/lib/ui/screen-components/unprotected/authentication/sign-up';
 
 export default function SignupPage() {
   return <SignupScreen />;

@@ -5,7 +5,7 @@ import CustomPhoneTextField from '@/lib/ui/useable-components/phone-input-field'
 // Prime React
 import { Card } from 'primereact/card';
 
-export default function PhoneVerificationScreen() {
+export default function PhoneVerificationMain() {
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="w-2/6">

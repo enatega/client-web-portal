@@ -1,4 +1,5 @@
 // Core
+import { useMutation } from '@apollo/client';
 import { useState } from 'react';
 
 // Prime React
@@ -11,24 +12,25 @@ import {
   IRidersMainComponentsProps,
 } from '@/lib/utils/interfaces/rider.interface';
 
-// Components
-import Table from '@/lib/ui/useable-components/table';
-import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants';
-
-// Utilities and Data
+// UI Components
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import Table from '@/lib/ui/useable-components/table';
+import RidersTableHeader from '../header/table-header';
+
+// Constants and Interfaces
+import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants';
+import { IQueryResult } from '@/lib/utils/interfaces';
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 
-//Toast
+// Hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
-import { IQueryResult } from '@/lib/utils/interfaces';
 
-// GraphQL
+// GraphQL and Utilities
 import { DELETE_RIDER, GET_RIDERS } from '@/lib/api/graphql';
+
+// Data
 import { generateDummyRiders } from '@/lib/utils/dummy';
-import { useMutation } from '@apollo/client';
-import RidersTableHeader from '../header/table-header';
 
 export default function RidersMain({
   setIsAddRiderVisible,
