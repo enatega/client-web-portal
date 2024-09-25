@@ -1,7 +1,5 @@
-'use client';
-
-import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+import TimingScreen from '@/lib/ui/screens/admin-vendor/timing';
 
 export default function TimingPage() {
-  return <ComingSoon />;
+  return <TimingScreen />;
 }

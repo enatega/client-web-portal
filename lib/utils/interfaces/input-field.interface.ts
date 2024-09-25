@@ -1,8 +1,14 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { InputMaskChangeEvent } from 'primereact/inputmask';
-import { CSSProperties, HTMLInputAutoCompleteAttribute } from 'react';
+import { FormEvent } from 'primereact/ts-helpers';
+import {
+  CSSProperties,
+  HTMLInputAutoCompleteAttribute,
+  SyntheticEvent,
+} from 'react';
 import { TNumberMode } from '../types';
 import { IGlobalComponentProps } from './global.interface';
+
 // Global
 interface IGlobalTextFieldProps extends IGlobalComponentProps {
   type: string;
@@ -63,4 +69,13 @@ export interface ICustomRadiusInputFieldComponentProps
   min?: number;
   max?: number;
   loading: boolean;
+}
+
+export interface ITimeTextField {
+  value: Date | null; // Updated to Date | null
+  onChange?: (event: FormEvent<Date, SyntheticEvent<Element, Event>>) => void;
+  placeholder?: string;
+  showLabel: boolean;
+  isLoading?: boolean;
+  className?: string;
 }

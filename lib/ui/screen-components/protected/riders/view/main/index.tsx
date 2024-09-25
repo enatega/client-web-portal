@@ -48,9 +48,10 @@ export default function RidersMain({
   });
 
   // Query
-  const { data, loading } = useQueryGQL(GET_RIDERS, {
-    fetchPolicy: 'cache-and-network',
-  }) as IQueryResult<IRidersDataResponse | undefined, undefined>;
+  const { data, loading } = useQueryGQL(GET_RIDERS, {}) as IQueryResult<
+    IRidersDataResponse | undefined,
+    undefined
+  >;
 
   //Mutation
   const [mutateDelete, { loading: mutationLoading }] = useMutation(

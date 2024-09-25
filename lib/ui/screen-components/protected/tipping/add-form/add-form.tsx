@@ -88,7 +88,7 @@ const TippingAddForm = () => {
   };
 
   return (
-    <div className="py-14 px-8 rounded bg-[#F4F4F5] mt-11">
+    <div className="mt-7 rounded bg-[#F4F4F5] px-8 py-14">
       <div>
         <Formik
           initialValues={initialValues}
@@ -98,7 +98,7 @@ const TippingAddForm = () => {
           enableReinitialize
         >
           {({ values, errors, touched, setFieldValue }) => (
-            <Form className="grid grid-cols-2 gap-3  items-center sm:grid-cols-4">
+            <Form className="grid grid-cols-2 items-center gap-3 sm:grid-cols-4">
               <CustomNumberTextField
                 name="tip1"
                 placeholder="Tip 1 e.g 10"
@@ -141,7 +141,7 @@ const TippingAddForm = () => {
                 }}
               />
               <CustomButton
-                className="h-11 flex mt-auto mb-[2px] px-10 text-white border-gray-300 bg-[black] rounded-md"
+                className="mb-[2px] mt-auto flex h-11 rounded-md border-gray-300 bg-[black] px-10 text-white"
                 label={data?.tips._id ? 'Update' : 'Add'}
                 rounded={false}
                 type="submit"
