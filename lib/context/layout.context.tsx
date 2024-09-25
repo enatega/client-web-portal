@@ -14,8 +14,8 @@ export const LayoutContext = createContext<LayoutContextProps>(
 );
 
 export const LayoutProvider = ({ children }: IProvider) => {
-  const [isSidebarVisible, setShowSidebar] = useState<boolean>(false);
-  const [isAdminSidebarVisible, setAdminShowSidebar] = useState<boolean>(false);
+  const [isSidebarVisible, setShowSidebar] = useState<boolean>(true);
+  const [isAdminSidebarVisible, setAdminShowSidebar] = useState<boolean>(true);
 
   const onShowSidebarHandler = (val?: boolean) => {
     setShowSidebar((prevState) => (val === undefined ? !prevState : val));
