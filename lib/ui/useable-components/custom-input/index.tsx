@@ -63,7 +63,10 @@ export default function CustomNumberTextField({
           value={value}
           suffix=" %"
           useGrouping={false}
-          onChange={(e) => onChange(name, e.value)}
+          onChange={(e: { value: number | null }) => {
+            setFieldValue(name, e.value);
+            onChange?.(name, e.value); // Safely call onChange if defined
+          }}
           {...props}
         />
 
