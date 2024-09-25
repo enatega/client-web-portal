@@ -159,6 +159,7 @@ export default function DispatchMain() {
     e: DropdownChangeEvent,
     rowData: IActiveOrders
   ) => {
+    setIsLoading(true);
     try {
       const filtered_arr = activeOrders.filter(
         (order) => order._id !== rowData._id
@@ -166,7 +167,7 @@ export default function DispatchMain() {
       const updated_active_order = { ...rowData, orderStatus: e.value.code };
       await updateStatus({
         variables: {
-          _id: rowData._id,
+          id: rowData._id,
           orderStatus: e.value.code,
         },
       });
@@ -175,10 +176,17 @@ export default function DispatchMain() {
         title: 'Edit Order Status',
         message: 'Order status has been updated successfully',
       });
+      const newOrder: IActiveOrders = {
+        ...rowData,
+        orderStatus: e.value.code,
+      };
 
+      setActiveOrders(() => [newOrder, ...filtered_arr]);
       setActiveOrders(() => [updated_active_order, ...filtered_arr]);
     } catch (error) {
       console.log(error);
+    } finally {
+      return setIsLoading(false);
     }
   };
 
