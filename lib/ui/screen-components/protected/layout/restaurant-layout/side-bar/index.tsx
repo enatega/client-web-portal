@@ -21,16 +21,15 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // Components
-import { Sidebar } from 'primereact/sidebar';
 import SidebarItem from './side-bar-item';
 
 function AdminSidebar({ children }: IGlobalComponentProps) {
   // Context
-  const { isAdminSidebarVisible, showAdminSidebar } =
+  const { isAdminSidebarVisible } =
     useContext<LayoutContextProps>(LayoutContext);
 
   // States
-  const [, setWidth] = useState(isAdminSidebarVisible ? '16rem' : '0');
+  const [width, setWidth] = useState(isAdminSidebarVisible ? '16rem' : '0');
 
   // Effects
   useEffect(() => {
@@ -38,28 +37,32 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
   }, [isAdminSidebarVisible]);
 
   return (
-    <Sidebar
+    <div className="relative">
+      <aside
+        className="box-border h-screen transition-all duration-300 ease-in-out overflow-hidden"
+        style={{ width }}
+      >
+        <nav
+          className={`pt-2 flex h-full flex-col border-r bg-white shadow-sm ${
+            isAdminSidebarVisible ? '' : 'invisible'
+          }`}
+        >
+          <ul className="flex-1 px-3">{children}</ul>
+        </nav>
+      </aside>
+    </div>
+  );
+
+  /*   return (
+  
+     <Sidebar
       visible={isAdminSidebarVisible}
       onHide={() => showAdminSidebar(false)}
       style={{ width: '300px' }}
     >
       <ul className="flex-1">{children}</ul>
-    </Sidebar>
-    // <div className="relative">
-    //   <aside
-    //     className="box-border h-screen transition-all duration-300 ease-in-out overflow-hidden"
-    //     style={{ width }}
-    //   >
-    //     <nav
-    //       className={`pt-2 flex h-full flex-col border-r bg-white shadow-sm ${
-    //         isAdminSidebarVisible ? '' : 'invisible'
-    //       }`}
-    //     >
-    //       <ul className="flex-1 px-3">{children}</ul>
-    //     </nav>
-    //   </aside>
-    // </div>
-  );
+    </Sidebar> 
+  ); */
 }
 
 export default function MakeSidebar() {

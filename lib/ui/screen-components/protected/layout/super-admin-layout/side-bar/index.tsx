@@ -20,27 +20,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // Components
-import { Sidebar } from 'primereact/sidebar';
+
 import SidebarItem from './side-bar-item';
 
 function SuperAdminSidebar({ children }: IGlobalComponentProps) {
-  const { isSidebarVisible, showSidebar } =
-    useContext<LayoutContextProps>(LayoutContext);
-  const [, setWidth] = useState(isSidebarVisible ? '16rem' : '0');
+  const { isSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
+  const [width, setWidth] = useState(isSidebarVisible ? '16rem' : '0');
 
   useEffect(() => {
     setWidth(isSidebarVisible ? '16rem' : '0');
   }, [isSidebarVisible]);
 
   return (
-    <Sidebar
-      visible={isSidebarVisible}
-      onHide={() => showSidebar(false)}
-      style={{ width: '300px' }}
-    >
-      <ul className="flex-1">{children}</ul>
-    </Sidebar>
-    /*  <div className="relative">
+    <div className="relative">
       <aside
         className="box-border h-screen transition-all duration-300 ease-in-out overflow-hidden"
         style={{ width }}
@@ -53,8 +45,18 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
           <ul className="flex-1 px-3">{children}</ul>
         </nav>
       </aside>
-    </div> */
+    </div>
   );
+  /* return (
+    <Sidebar
+      visible={isSidebarVisible}
+      onHide={() => showSidebar(false)}
+      style={{ width: '300px' }}
+    >
+      <ul className="flex-1">{children}</ul>
+    </Sidebar>
+ 
+  ); */
 }
 
 export default function MakeSidebar() {
