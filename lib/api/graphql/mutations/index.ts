@@ -3,6 +3,8 @@ export * from './banners';
 export * from './category';
 export * from './commission-rate';
 export * from './category';
+export * from './commission-rate';
+export * from './category';
 export * from './coupons';
 export * from './cuisines';
 export * from './notifications';

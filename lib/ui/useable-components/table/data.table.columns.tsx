@@ -23,6 +23,7 @@ import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 
 // Interfaces and Types
 import {
+  ICommissionColumnProps,
   IAddon,
   ICategory,
   IOptions,
@@ -32,7 +33,6 @@ import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 import { IUserResponse } from '@/lib/utils/interfaces/users.interface';
-import { ICommissionColumnProps } from '@/lib/utils/interfaces';
 
 export const COMMISSION_RATE_COLUMNS = ({
   handleSave,
