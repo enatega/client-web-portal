@@ -6,7 +6,9 @@ export default function WithdrawRequestScreen() {
   return (
     <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
       <WithdrawRequestHeader />
-      <WithdrawRequestsMain />
+      <div className="flex-grow overflow-y-auto">
+        <WithdrawRequestsMain />
+      </div>
     </div>
   );
 }

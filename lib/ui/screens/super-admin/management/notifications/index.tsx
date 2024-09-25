@@ -12,7 +12,9 @@ export default function NotificationsScreen() {
   return (
     <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
       <NotificationHeader handleButtonClick={handleButtonClick} />
-      <NotificationMain visible={visible} setVisible={setVisible} />
+      <div className="flex-grow overflow-y-auto">
+        <NotificationMain visible={visible} setVisible={setVisible} />
+      </div>
     </div>
   );
 }

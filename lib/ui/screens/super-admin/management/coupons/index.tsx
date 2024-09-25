@@ -16,7 +16,9 @@ export default function CouponsScreen() {
   return (
     <div className="flex flex-col mb-3 ml-2 gap-2 overflow-y-auto h-full">
       <CouponScreenHeader handleButtonClick={handleButtonClick} />
-      <CouponsMain setVisible={setVisible} visible={visible} />
+      <div className="flex-grow overflow-y-auto">
+        <CouponsMain setVisible={setVisible} visible={visible} />
+      </div>
     </div>
   );
 }

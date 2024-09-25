@@ -76,12 +76,12 @@ export default function CuisinesMain({
   });
   const [cuisines, setCuisines] = useState<ICuisine[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   //queries
-  const { data, loading, fetch } = useLazyQueryQL(
-    GET_CUISINES,
-    {}
-  ) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
+  const { data, fetch } = useLazyQueryQL(GET_CUISINES, {
+    onCompleted: () => setIsLoading(false),
+  }) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
 
   //filters
   const [filters, setFilters] = useState<IFilterType>({
@@ -239,6 +239,7 @@ export default function CuisinesMain({
     };
   }, [setIsEditDeletePopupOpen]);
   useEffect(() => {
+    setIsLoading(true);
     fetch();
   }, []);
 
@@ -280,7 +281,7 @@ export default function CuisinesMain({
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e as ICuisine[])}
         filters={filters}
-        loading={loading ?? deleteCuisineLoading}
+        loading={isLoading}
         header={
           <TableHeader
             globalFilterValue={globalFilterValue}

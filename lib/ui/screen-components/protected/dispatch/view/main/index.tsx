@@ -1,21 +1,33 @@
 // queries
-import { GET_ACTIVE_ORDERS, UPDATE_STATUS } from '@/lib/api/graphql';
+import {
+  GET_ACTIVE_ORDERS,
+  GET_RIDERS_BY_ZONE,
+  UPDATE_STATUS,
+} from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import Table from '@/lib/ui/useable-components/table';
 import TableHeader from '@/lib/ui/useable-components/table-header';
 import { IDropdownSelectItem, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   IActiveOrders,
   IGetActiveOrders,
+  IGetRidersByZone,
+  IGetRidersByZoneVariables,
+  IRidersByZone,
 } from '@/lib/utils/interfaces/dispatch.interface';
 import {
   IColumnConfig,
   IFilterType,
 } from '@/lib/utils/interfaces/table.interface';
-import { useMutation } from '@apollo/client';
+import {
+  LazyQueryResultTuple,
+  useLazyQuery,
+  useMutation,
+} from '@apollo/client';
 import {
   faCircleCheck,
   faDashboard,
@@ -34,6 +46,14 @@ export default function DispatchMain() {
   //states
   const [activeOrders, setActiveOrders] = useState<IActiveOrders[]>([]);
   const [selectedData, setSelectedData] = useState<IActiveOrders[]>([]);
+  const [riderOptions, setRiderOptions] = useState<IDropdownSelectItem[]>([]);
+  const [currentRiders, setCurrentRiders] = useState<IRidersByZone[]>([]);
+  const [currentSelectedRider, setCurrentSelectedRider] =
+    useState<IDropdownSelectItem>();
+  const [isRiderLoading, setIsRiderLoading] = useState({
+    _id: '',
+    bool: false,
+  });
   //   const [ridersData, setRidersData] = useState([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -66,9 +86,23 @@ export default function DispatchMain() {
     }
   ) as ILazyQueryResult<IGetActiveOrders | undefined, undefined>;
 
-  //   const { data: get_riders_data, fetch: fetchRidersByZone } = useLazyQueryQL(
-  //     GET_RIDERS_BY_ZONE
-  //   ) as ILazyQueryResult<IRidersByZone[] | undefined, undefined>;
+  const [fetch] = useLazyQuery(GET_RIDERS_BY_ZONE) as LazyQueryResultTuple<
+    IGetRidersByZone | undefined,
+    IGetRidersByZoneVariables
+  >;
+  const handleRiderClick = async (
+    rowData: IActiveOrders
+  ): Promise<{ data?: IRidersByZone[]; loading: boolean }> => {
+    const res = await fetch({
+      variables: {
+        id: rowData.zone._id,
+      },
+    });
+    return {
+      data: res.data?.ridersByZone,
+      loading: res.loading,
+    };
+  };
 
   //subscriptions
   //   const subscribeFunc = (rowData: any) => {
@@ -215,6 +249,48 @@ export default function DispatchMain() {
     {
       propertyName: 'rider.name',
       headerName: 'Rider',
+      body: (rowData: IActiveOrders) => {
+        async function handleClick(rowData: IActiveOrders) {
+          setIsRiderLoading({
+            _id: rowData._id,
+            bool: true,
+          });
+          const { data } = await handleRiderClick(rowData);
+          data?.forEach((rider) => {
+            setRiderOptions((prev) => [
+              ...prev,
+              { label: rider.name, code: rider.name.toUpperCase() },
+            ]);
+          });
+          if (data) {
+            setCurrentRiders(data);
+          }
+          setIsRiderLoading({
+            _id: rowData._id,
+            bool: false,
+          });
+        }
+        return (
+          <div onClick={() => handleClick(rowData)}>
+            <CustomDropdownComponent
+              name="riders"
+              options={
+                isRiderLoading._id === rowData._id && riderOptions
+                  ? riderOptions
+                  : [{ label: '', code: '' }]
+              }
+              selectedItem={
+                currentSelectedRider ?? { label: 'Select', code: 'SELECT' }
+              }
+              placeholder="Select Rider"
+              setSelectedItem={(key, item) => setCurrentSelectedRider(item)}
+              loading={
+                isRiderLoading.bool && isRiderLoading._id === rowData._id
+              }
+            />
+          </div>
+        );
+      },
     },
     {
       propertyName: 'createdAt',
@@ -258,6 +334,7 @@ export default function DispatchMain() {
         setIsLoading(false);
       }, 1000);
     }
+    console.log({ currentRiders });
   }, [active_orders_data?.getActiveOrders, activeOrders]);
   return (
     <div>

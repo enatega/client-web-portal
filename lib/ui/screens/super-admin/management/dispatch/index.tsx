@@ -4,9 +4,11 @@ import DispatchMain from '@/lib/ui/screen-components/protected/dispatch/view/mai
 
 export default function DispatchScreen() {
   return (
-    <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
+    <div className="flex flex-col p-3 h-screen overflow-hidden">
       <DispatchHeader />
-      <DispatchMain />
+      <div className="flex-grow overflow-y-auto">
+        <DispatchMain />
+      </div>
     </div>
   );
 }

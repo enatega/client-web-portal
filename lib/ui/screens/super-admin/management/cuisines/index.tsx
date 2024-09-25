@@ -17,7 +17,9 @@ export default function CuisinesScreen() {
   return (
     <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
       <CuisineScreenHeader handleButtonClick={handleButtonClick} />
-      <CuisinesMain setVisible={setVisible} visible={visible} />
+      <div className="flex-grow overflow-y-auto">
+        <CuisinesMain setVisible={setVisible} visible={visible} />
+      </div>
     </div>
   );
 }

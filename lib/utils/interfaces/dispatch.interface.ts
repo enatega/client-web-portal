@@ -93,6 +93,10 @@ export interface IRidersByZone {
   };
 }
 
+export interface IGetRidersByZone {
+  ridersByZone: IRidersByZone[];
+}
+export interface IGetRidersByZoneVariables {}
 export interface IAssignRider {
   _id: string;
   orderStatus: string;
