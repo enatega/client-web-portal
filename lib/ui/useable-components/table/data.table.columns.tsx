@@ -9,7 +9,11 @@ import Toggle from '@/lib/ui/useable-components/toggle';
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import {
+
   ICommissionColumnProps,
+  IAddon,
+  ICategory,
+  IOptions,
   IRestaurantResponse,
 } from '@/lib/utils/interfaces';
 import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
@@ -181,7 +185,7 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
       showToast({
         type: 'error',
         title: 'Restaurant Status',
-        message: `Restaurant marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'} failed`,
+        message: `Restaurant has been marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'}`,
         duration: 2000,
       });
     },
@@ -307,3 +311,52 @@ export const USERS_TABLE_COLUMNS = [
     },
   },
 ];
+
+export const CATEGORY_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<ICategory>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    {
+      propertyName: 'actions',
+      body: (rider: ICategory) => <ActionMenu items={menuItems} data={rider} />,
+    },
+  ];
+};
+
+export const OPTION_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IOptions>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    { headerName: 'Price', propertyName: 'price' },
+    { headerName: 'Description', propertyName: 'description' },
+    {
+      propertyName: 'actions',
+      body: (option: IOptions) => (
+        <ActionMenu items={menuItems} data={option} />
+      ),
+    },
+  ];
+};
+
+export const ADDON_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IAddon>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    { headerName: 'Description', propertyName: 'description' },
+    { headerName: 'Minimum', propertyName: 'quantityMinimum' },
+    { headerName: 'Maximum', propertyName: 'quantityMaximum' },
+    {
+      propertyName: 'actions',
+      body: (option: IAddon) => <ActionMenu items={menuItems} data={option} />,
+    },
+  ];
+};

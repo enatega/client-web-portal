@@ -408,6 +408,7 @@ body {
 
 .p-stepper-number {
   font-size: 16px;
+  background-color: var(--primary-color);
 }
 
 /* Sidebar */
@@ -442,4 +443,20 @@ body {
   background-color: white;
   height: 2.62rem;
   margin-top: 1px;
+}
+
+/* Fieldset */
+.p-fieldset {
+  border: 1px dashed black;
+  padding: 8px;
+}
+
+.p-fieldset-legend {
+  margin-left: 10px;
+  height: fit-content;
+  border: 1px dashed gray;
+}
+
+.p-fieldset-legend > a {
+  padding: 10px;
 }

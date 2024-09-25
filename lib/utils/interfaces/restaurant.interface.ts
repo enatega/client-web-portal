@@ -1,25 +1,44 @@
-import { IGlobalComponentProps, IQueryResult } from './global.interface';
+import {
+  IGlobalComponentProps,
+  IQueryResult,
+  IStepperFormProps,
+} from './global.interface';
 
+export interface IAddRestaurantComponentProps extends IGlobalComponentProps {
+  stepperProps?: IStepperFormProps;
+}
 export interface IRestaurantCardProps extends IGlobalComponentProps {
   restaurant: IRestaurantByOwner;
 }
 
 export interface IRestaurantContextProps {
+  // Vendor and Restaurant Data
   vendorId: string | null;
-  restaurantFormVisible: boolean;
-  onSetRestaurantFormVisible: (status: boolean) => void;
-  restaurantId: string | null;
-  onSetRestaurantId: (id: string) => void;
+  restaurantContextData: IRestaurantContextData;
   restaurantByOwnerResponse: IQueryResult<
     IRestaurantsByOwnerResponseGraphQL | undefined,
     undefined
   >;
-  restaurantGlobalFilter: string;
-  onSetRestaurantGlobalFilter: (filter: string) => void;
-  restaurantFiltered?: IRestaurantByOwner[];
-  // Editing,
-  isEditingRestaurant: boolean;
-  onSetEditingRestaurant: (status: boolean) => void;
+
+  // Form Visibility
+  isRestaurantFormVisible: boolean;
+  onSetRestaurantFormVisible: (status: boolean) => void;
+
+  // Form Navigation
+  activeIndex: number;
+  onActiveStepChange: (activeStep: number) => void;
+  onClearRestaurntsData: () => void;
+
+  // Context Data Management
+  onSetRestaurantContextData: (data: Partial<IRestaurantContextData>) => void;
+}
+
+export interface IRestaurantContextData {
+  id: string | null;
+  filtered: IRestaurantByOwner[] | undefined;
+  globalFilter: string;
+  isEditing: boolean;
+  autoCompleteAddress: string;
 }
 
 export interface IRestaurantResponse {
@@ -49,7 +68,6 @@ export interface IRestaurantsResponseGraphQL {
   restaurants: IRestaurantResponse[];
 }
 
-// By OWner
 export interface IRestaurantByOwner {
   _id: string;
   orderId: string;

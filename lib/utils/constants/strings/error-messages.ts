@@ -1,10 +1,14 @@
 import {
+  IAddonsErrors,
   IBannersErrors,
+  ICategoryErrors,
+  IOptionErrors,
+  IRiderErrors,
   ISignFormErrors,
   IVendorErrors,
-} from '../../interfaces/forms';
-import { IRestaurantFormErrors } from '../../interfaces/forms/restaurant.form.interface';
-import { IRiderErrors } from '../../interfaces/forms/riders.form.interface';
+} from '@/lib/utils/interfaces/forms';
+
+import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -42,6 +46,8 @@ export const RestaurantErrors: IRestaurantFormErrors = {
   salesTax: ['Required'],
   shopType: ['Required'],
   cuisines: ['Required', 'Cuisines field must have at least 1 items'],
+  image: ['Required', 'Invalid image URL'],
+  logo: ['Required', 'Invalid logo URL'],
 };
 
 export const RiderErrors: IRiderErrors = {
@@ -59,4 +65,25 @@ export const BannersErrors: IBannersErrors = {
   action: ['Required'],
   screen: ['Required'],
   file: ['Required'],
+};
+
+export const CategoryErrors: ICategoryErrors = {
+  _id: [],
+  title: ['Required'],
+};
+
+export const OptionErrors: IOptionErrors = {
+  _id: [],
+  title: ['Required'],
+  description: [],
+  price: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
+};
+
+export const AddonsErrors: IAddonsErrors = {
+  _id: [],
+  title: ['Required'],
+  description: [],
+  quantityMinimum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
+  quantityMaximum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
+  options: ['Required', 'Option field must have at least 1 items'],
 };

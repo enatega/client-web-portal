@@ -15,7 +15,7 @@ import { faLocationDot, faStore } from '@fortawesome/free-solid-svg-icons';
 // Componetn
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
-import { useMutation } from '@apollo/client';
+import { ApolloError, useMutation } from '@apollo/client';
 import Image from 'next/image';
 import { Avatar } from 'primereact/avatar';
 import CustomButton from '../button';
@@ -33,20 +33,32 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   const router = useRouter();
 
   // API
-  const [deleteRestaurant, { loading }] = useMutation(DELETE_RESTAURANT, {});
-
-  // Handle checkbox change
-  const handleCheckboxChange = async () => {
-    try {
-      console.log('restaurant card');
-      await deleteRestaurant({ variables: { id: _id } });
-
+  const [deleteRestaurant, { loading }] = useMutation(DELETE_RESTAURANT, {
+    onCompleted: () => {
       showToast({
         type: 'success',
         title: 'Restaurant Status',
         message: `Restaurant has been marked a ${isActive ? 'in-active' : 'actie'}`,
         duration: 2000,
       });
+    },
+    onError: ({ networkError, graphQLErrors }: ApolloError) => {
+      showToast({
+        type: 'error',
+        title: 'Restaurant Status (Un-changed)',
+        message:
+          graphQLErrors[0]?.message ??
+          networkError?.message ??
+          `Restaurant marked as ${isActive ? 'in-active' : 'actie'} failed`,
+        duration: 2500,
+      });
+    },
+  });
+
+  // Handle checkbox change
+  const handleCheckboxChange = async () => {
+    try {
+      await deleteRestaurant({ variables: { id: _id } });
     } catch (err) {
       showToast({
         type: 'error',

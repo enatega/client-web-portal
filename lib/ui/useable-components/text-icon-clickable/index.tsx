@@ -1,3 +1,5 @@
+// Utilities
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 //
@@ -15,7 +17,7 @@ export default function TextIconClickable({
 }: TextIconClickableProps) {
   return (
     <div
-      className={`text-icon-clickable-container ${className}`}
+      className={`text-icon-clickable-container ${className} flex items-center justify-center`}
       onClick={onClick}
     >
       {icon && (
