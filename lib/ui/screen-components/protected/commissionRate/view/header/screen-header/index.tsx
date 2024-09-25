@@ -1,11 +1,7 @@
-// Interface and Types
-import { ICommissionRateScreenHeaderProps } from '@/lib/utils/interfaces/commission-rate.interface';
-
 // Components
 import HeaderText from '@/lib/ui/useable-components/header-text';
 
-const CommissionRateHeader = ({
-}: ICommissionRateScreenHeaderProps) => {
+const CommissionRateHeader = () => {
   return (
     <div className="w-full flex-shrink-0">
       <div className="flex w-full justify-between">

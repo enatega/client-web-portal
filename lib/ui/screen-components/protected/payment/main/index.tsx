@@ -34,7 +34,6 @@ export default function PaymentMain() {
     }
   };
 
-
   const fetchPaymentMethods = () => {
     // Simulating a fetch call to load payment methods
     setTimeout(() => {

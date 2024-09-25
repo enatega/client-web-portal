@@ -6,6 +6,7 @@ export interface ICommissionRateHeaderProps extends IGlobalComponentProps {
   onSearch: (searchTerm: string) => void;
 }
 
-export interface ICommissionRateScreenHeaderProps extends IGlobalComponentProps {
+export interface ICommissionRateScreenHeaderProps
+  extends IGlobalComponentProps {
   setIsAddCommissionRateVisible: (visible: boolean) => void;
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { TPaymentType } from '@/lib/utils/types/payment-type';
 import { StripeSVG } from '@/lib/utils/assets/svgs/stripeLogo';
 import { IPaymentCardProps } from '@/lib/utils/interfaces';
@@ -18,7 +17,7 @@ export default function PaymentCard({
   return (
     <div className="border border-gray-200 rounded-lg p-6 flex flex-col items-center justify-center bg-white">
       <div className="mb-6 flex items-center justify-center">
-        {LogoComponent && <LogoComponent  />}
+        {LogoComponent && <LogoComponent />}
       </div>
       <h2 className="text-lg font-bold text-black mb-2">{name}</h2>
       <p className="text-gray-500 mb-4 text-center">{description}</p>

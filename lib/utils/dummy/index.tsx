@@ -190,7 +190,7 @@ export const generateDummyCommissionRates = (
   }
 
   return dummyCommissionRates;
-}
+};
 
 export const generateDummyCategories = (count: number = 10): ICategory[] => {
   const categories: ICategory[] = [];

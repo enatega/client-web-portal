@@ -27,7 +27,7 @@ export default function TextIconClickable({
           <FontAwesomeIcon icon={icon} color={iconStyles?.color ?? 'gray'} />
         )
       )}
-       <span className={loading ? 'opacity-50' : ''}>{title}</span>
+      <span className={loading ? 'opacity-50' : ''}>{title}</span>
       <Ripple />
     </div>
   );
