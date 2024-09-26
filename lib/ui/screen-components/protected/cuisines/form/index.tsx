@@ -27,6 +27,7 @@ import { Sidebar } from 'primereact/sidebar';
 //hooks
 import { ApolloError, useMutation } from '@apollo/client';
 import { useContext } from 'react';
+import CustomUploadImageComponent from '@/lib/ui/useable-components/upload/upload-image';
 
 export default function CuisineForm({
   setVisible,
@@ -46,6 +47,7 @@ export default function CuisineForm({
       label: isEditing.bool ? isEditing?.data?.shopType : '',
       code: isEditing.bool ? isEditing?.data?.shopType.toLowerCase() : '',
     },
+    image: isEditing.bool ? isEditing.data.image : '',
   };
 
   //toast
@@ -107,6 +109,7 @@ export default function CuisineForm({
                   name: values.name,
                   description: values.description,
                   shopType: values.shopType.label,
+                  image: values.image,
                 };
               } else {
                 formData = {
@@ -114,6 +117,7 @@ export default function CuisineForm({
                   name: values.name,
                   description: values.description,
                   shopType: values.shopType.label,
+                  image: values.image,
                 };
               }
               let res;
@@ -152,9 +156,11 @@ export default function CuisineForm({
                     image: '',
                   },
                 });
+
                 let filteredCuisines = cuisines.filter(
-                  (cuisine) => cuisine._id !== isEditing.data._id
+                  (cuisine) => cuisine?._id !== isEditing?.data?._id
                 );
+
                 filteredCuisines.push(newCuisine);
                 setCuisines([newCuisine, ...filteredCuisines]);
               } else {
@@ -230,6 +236,14 @@ export default function CuisineForm({
                 >
                   {errors.shopType?.label}
                 </span>
+
+                <CustomUploadImageComponent
+                  name="file"
+                  onSetImageUrl={setFieldValue}
+                  title="image"
+                  existingImageUrl={isEditing.bool ? isEditing.data.image : ''}
+                  showExistingImage={true}
+                />
 
                 <button
                   className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"

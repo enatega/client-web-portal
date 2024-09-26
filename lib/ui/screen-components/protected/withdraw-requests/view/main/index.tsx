@@ -13,7 +13,7 @@ import {
 
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import { ChangeEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useMemo, useState } from 'react';
 
 //prime react
 import { FilterMatchMode } from 'primereact/api';
@@ -83,23 +83,26 @@ export default function WithdrawRequestsMain() {
   };
 
   //status dropdown options
-  const options = [
-    {
-      code: 'REQUESTED',
-      label: 'Requested',
-      body: () => <Tag value="Requested" severity="info" rounded />,
-    },
-    {
-      code: 'TRANSFERRED',
-      label: 'Transferred',
-      body: () => <Tag value="Transferred" severity="success" rounded />,
-    },
-    {
-      code: 'CANCELLED',
-      label: 'Cancelled',
-      body: () => <Tag value="Cancelled" severity="danger" rounded />,
-    },
-  ];
+  const options = useMemo(
+    () => [
+      {
+        code: 'REQUESTED',
+        label: 'Requested',
+        body: () => <Tag value="Requested" severity="info" rounded />,
+      },
+      {
+        code: 'TRANSFERRED',
+        label: 'Transferred',
+        body: () => <Tag value="Transferred" severity="success" rounded />,
+      },
+      {
+        code: 'CANCELLED',
+        label: 'Cancelled',
+        body: () => <Tag value="Cancelled" severity="danger" rounded />,
+      },
+    ],
+    []
+  );
   //mutation
   const [updateWithdrawReqStatus] = useMutation(UPDATE_WITHDRAW_REQUEST, {
     onError: (err) => {
@@ -107,8 +110,8 @@ export default function WithdrawRequestsMain() {
         type: 'error',
         title: 'Update Withdraw Request',
         message:
-          err.graphQLErrors[0].message ||
-          err.networkError?.message ||
+          err?.graphQLErrors[0]?.message ||
+          err?.networkError?.message ||
           'Failed to update the request',
       });
     },
@@ -247,7 +250,7 @@ export default function WithdrawRequestsMain() {
     } else {
       setRequests(data?.getAllWithdrawRequests.data ?? []);
     }
-  }, [selectedStatuses]);
+  }, [selectedStatuses, requests]);
   return (
     <div className="w-full">
       <Table

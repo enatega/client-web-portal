@@ -111,7 +111,7 @@ export default function CuisinesMain({
   const addCuisineLocally = (cuisine: ICuisine) => {
     setCuisines((prevCuisines: ICuisine[]) => [
       cuisine,
-      ...prevCuisines.filter((c) => c._id !== cuisine._id),
+      ...prevCuisines.filter((c) => c?._id !== cuisine?._id),
     ]);
     setIsEditing({
       bool: false,
@@ -128,17 +128,20 @@ export default function CuisinesMain({
     {
       headerName: 'Image',
       propertyName: 'image',
-      body: (data: ICuisine) => (
-        <Image
-          src={
-            'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-          }
-          alt={data?.description ?? 'cuisine'}
-          width={30}
-          height={30}
-          className="rounded-md"
-        />
-      ),
+      body: (data: ICuisine) => {
+        return (
+          <Image
+            src={
+              data?.image ??
+              'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            }
+            alt={data?.description ?? 'cuisine'}
+            width={30}
+            height={30}
+            className="rounded-md"
+          />
+        );
+      },
     },
     {
       headerName: 'Name',
@@ -195,13 +198,13 @@ export default function CuisinesMain({
         },
       });
       showToast({
-        title: 'New Cuisine',
+        title: 'Delete Cuisine',
         type: 'success',
         message: 'Cuisine has been deleted successfully',
         duration: 2000,
       });
       let filteredCuisines = data?.cuisines?.filter(
-        (cuisine) => cuisine._id !== isDeleting?.data?._id
+        (cuisine) => cuisine?._id !== isDeleting?.data?._id
       );
       if (filteredCuisines) {
         setCuisines(filteredCuisines);

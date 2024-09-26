@@ -21,7 +21,7 @@ import {
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { FilterMatchMode } from 'primereact/api';
 import { Tag } from 'primereact/tag';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 export default function DispatchMain() {
   //toast
@@ -187,33 +187,36 @@ export default function DispatchMain() {
   };
 
   //status options
-  const actionStatusOptions = [
-    {
-      label: 'Pending',
-      code: 'PENDING',
-      body: () => <Tag value="Pending" severity="secondary" rounded />,
-    },
-    {
-      label: 'Assigned',
-      code: 'ASSIGNED',
-      body: () => <Tag value="Assigned" severity="warning" rounded />,
-    },
-    {
-      label: 'Accepted',
-      code: 'ACCEPTED',
-      body: () => <Tag value="Accepted" severity="info" rounded />,
-    },
-    {
-      label: 'Delivered',
-      code: 'DELIVERED',
-      body: () => <Tag value="Delivered" severity="success" rounded />,
-    },
-    {
-      label: 'Rejected',
-      code: 'REJECTED',
-      body: () => <Tag value="Reject" severity="danger" rounded />,
-    },
-  ];
+  const actionStatusOptions = useMemo(
+    () => [
+      {
+        label: 'Pending',
+        code: 'PENDING',
+        body: () => <Tag value="Pending" severity="secondary" rounded />,
+      },
+      {
+        label: 'Assigned',
+        code: 'ASSIGNED',
+        body: () => <Tag value="Assigned" severity="warning" rounded />,
+      },
+      {
+        label: 'Accepted',
+        code: 'ACCEPTED',
+        body: () => <Tag value="Accepted" severity="info" rounded />,
+      },
+      {
+        label: 'Delivered',
+        code: 'DELIVERED',
+        body: () => <Tag value="Delivered" severity="success" rounded />,
+      },
+      {
+        label: 'Rejected',
+        code: 'REJECTED',
+        body: () => <Tag value="Reject" severity="danger" rounded />,
+      },
+    ],
+    []
+  );
 
   //=========== commenting out for now ==========
 
