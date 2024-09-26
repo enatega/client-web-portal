@@ -3,10 +3,9 @@ import ProfileHeader from '@/lib/ui/screen-components/protected/profile/restaura
 import UpdateRestaurantsProfileForm from '@/lib/ui/screen-components/protected/profile/restaurant/add-form';
 import { RestaurantProvider } from '@/lib/context/restaurant.context';
 import RestaurantMain from '@/lib/ui/screen-components/protected/profile/restaurant/main';
-import { GET_RESTAURANT_PROFILE } from '@/lib/api/graphql';
 
 export default function ProfileScreen() {
-  const [isUpdateProfileVisible, setIsUpdateProfileVisible] = useState(false);
+  const [, setIsUpdateProfileVisible] = useState(false);
 
   return (
     <RestaurantProvider>

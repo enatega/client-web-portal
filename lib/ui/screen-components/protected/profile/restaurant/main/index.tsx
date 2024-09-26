@@ -42,16 +42,20 @@ const RestaurantMain: React.FC<IRestaurantProfileProps> = ({
           <div className="md:row-span-4">
             <p className="text-xs text-gray-500 mb-2">Images</p>
             <div className="flex space-x-2">
-              <img
+              {/* <Image
                 src="/api/placeholder/100/100"
                 alt="Image of grocery store with fruits and vegetables"
-                className="w-24 h-24 object-cover rounded"
+                className="object-cover rounded"
+                width= {96}
+                height= {96}
               />
-              <img
+              <Image
                 src="/api/placeholder/100/100"
                 alt="Image of grocery store aisle"
-                className="w-24 h-24 object-cover rounded"
-              />
+                className="object-cover rounded"
+                width= {96}
+                height= {96} */}
+              {/* /> */}
             </div>
           </div>
           <InfoItem label="Name" value={name} />
