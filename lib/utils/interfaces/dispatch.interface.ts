@@ -86,7 +86,7 @@ export interface IRidersByZone {
   username: string;
   password: string;
   phone: string;
-  available: string | boolean;
+  available: boolean;
   zone: {
     _id: string;
     title: string;
