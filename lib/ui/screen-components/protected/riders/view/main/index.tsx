@@ -13,6 +13,7 @@ import {
 } from '@/lib/utils/interfaces/rider.interface';
 
 // UI Components
+import RidersTableHeader from '../header/table-header';
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 import { RIDER_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/rider-columns';
@@ -26,6 +27,7 @@ import useToast from '@/lib/hooks/useToast';
 
 // GraphQL and Utilities
 import { DELETE_RIDER, GET_RIDERS } from '@/lib/api/graphql';
+import { IQueryResult } from '@/lib/utils/interfaces';
 
 // Data
 import { generateDummyRiders } from '@/lib/utils/dummy';

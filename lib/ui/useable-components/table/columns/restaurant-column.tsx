@@ -3,6 +3,7 @@
 // Core
 import Image from 'next/image';
 import { useContext, useState } from 'react';
+import { useRouter } from 'next/router';
 
 // Context
 import { ToastContext } from '@/lib/context/toast.context';
@@ -13,8 +14,15 @@ import { ApolloError, useMutation } from '@apollo/client';
 // Custom Components
 import CustomInputSwitch from '../../custom-input-switch';
 
-// Constants and Interfaces
+// Interfaces
 import { IRestaurantResponse } from '@/lib/utils/interfaces';
+
+// Utils and Constants 
+import { onUseLocalStorage } from '@/lib/utils/methods';
+
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 
 // GraphQL Queries and Mutations
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
@@ -22,6 +30,8 @@ import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 export const RESTAURANT_TABLE_COLUMNS = () => {
   // Context
   const { showToast } = useContext(ToastContext);
+  // Hooks
+  const router = useRouter();
 
   // State
   const [deletingRestaurant, setDeletingRestaurant] = useState<{
@@ -114,7 +124,7 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
     { headerName: 'Address', propertyName: 'address' },
     {
       headerName: 'Status',
-      propertyName: 'status',
+      propertyName: 'actions',
       body: (rowData: IRestaurantResponse) => {
         return (
           <CustomInputSwitch
@@ -125,6 +135,22 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
                 rowData.isActive,
                 rowData._id
               );
+            }}
+          />
+        );
+      },
+    },
+    {
+      headerName: 'Actions',
+      propertyName: 'actions',
+      body: (rowData: IRestaurantResponse) => {
+        return (
+          <FontAwesomeIcon
+            icon={faEye}
+            className="ml-5 cursor-pointer"
+            onClick={() => {
+              onUseLocalStorage('save', 'restaurantId', rowData?._id);
+              router.push(`/admin/restaurant/`);
             }}
           />
         );
