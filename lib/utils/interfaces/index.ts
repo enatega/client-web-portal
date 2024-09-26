@@ -33,3 +33,4 @@ export * from './user.interface';
 export * from './users.interface';
 export * from './vendor.interface';
 export * from './payment.card.interface';
+export * from './profile.interface';
