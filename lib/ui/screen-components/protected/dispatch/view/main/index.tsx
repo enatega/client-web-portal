@@ -2,6 +2,7 @@
 import {
   GET_ACTIVE_ORDERS,
   GET_RIDERS_BY_ZONE,
+  SUBSCRIPTION_ORDER,
   UPDATE_STATUS,
 } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
@@ -27,6 +28,7 @@ import {
   LazyQueryResultTuple,
   useLazyQuery,
   useMutation,
+  useSubscription,
 } from '@apollo/client';
 import {
   faCircleCheck,
@@ -104,15 +106,8 @@ export default function DispatchMain() {
     };
   };
 
-  //subscriptions
-  //   const subscribeFunc = (rowData: any) => {
-  //     const { data: subscription_data } = useSubscription(SUBSCRIPTION_ORDER, {
-  //       variables: {
-  //         _id: rowData._id,
-  //       },
-  //     });
-  //     console.log({ subscription_data });
-  //   };
+  //   subscriptions
+  const { data: subscription_data } = useSubscription(SUBSCRIPTION_ORDER);
 
   //global filters change
   const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -126,7 +121,6 @@ export default function DispatchMain() {
   };
 
   //status options
-
   const actionStatusOptions = [
     {
       label: 'Pending',
@@ -176,12 +170,7 @@ export default function DispatchMain() {
         title: 'Edit Order Status',
         message: 'Order status has been updated successfully',
       });
-      const newOrder: IActiveOrders = {
-        ...rowData,
-        orderStatus: e.value.code,
-      };
 
-      setActiveOrders(() => [newOrder, ...filtered_arr]);
       setActiveOrders(() => [updated_active_order, ...filtered_arr]);
     } catch (error) {
       console.log(error);
@@ -344,6 +333,12 @@ export default function DispatchMain() {
     }
     console.log({ currentRiders });
   }, [active_orders_data?.getActiveOrders, activeOrders]);
+  useEffect(() => {
+    if (subscription_data) {
+      console.log({ subscription_data });
+    }
+  }, [subscription_data]);
+
   return (
     <div>
       <Table

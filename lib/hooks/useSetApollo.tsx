@@ -40,7 +40,7 @@ export const useSetupApollo = (): ApolloClient<NormalizedCacheObject> => {
 
   const wsLink = new GraphQLWsLink(
     createClient({
-      url: `${WS_SERVER_URL}/graphql`,
+      url: `${WS_SERVER_URL}graphql`,
       connectionParams: {
         reconnect: true,
       },
