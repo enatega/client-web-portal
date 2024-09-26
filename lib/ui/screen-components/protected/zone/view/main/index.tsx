@@ -20,7 +20,7 @@ import Table from '@/lib/ui/useable-components/table';
 import RidersTableHeader from '../header/table-header';
 
 // Constants and Interfaces
-import { ZONE_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/data.table.columns';
+import { ZONE_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/zone-columns';
 
 // Hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
