@@ -14,7 +14,7 @@ const OptionHeader = ({ setIsAddOptionsVisible }: IOptionsHeaderProps) => {
       <div className="flex w-full justify-between">
         <HeaderText text="Option" />
         <TextIconClickable
-          className="sm:w-auto bg-black text-white border-gray-300 rounded"
+          className="rounded border-gray-300 bg-black text-white sm:w-auto"
           icon={faAdd}
           iconStyles={{ color: 'white' }}
           title="Add Option"

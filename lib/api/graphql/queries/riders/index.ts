@@ -16,6 +16,7 @@ export const GET_RIDERS = gql`
     }
   }
 `;
+
 export const GET_RIDERS_L = gql`
   query riders {
     riders {
@@ -35,20 +36,6 @@ export const GET_AVAILABLE_RIDERS = gql`
       zone {
         _id
       }
-    }
-  }
-`;
-
-export const GET_ZONES = gql`
-  query Zones {
-    zones {
-      _id
-      title
-      description
-      location {
-        coordinates
-      }
-      isActive
     }
   }
 `;

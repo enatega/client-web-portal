@@ -4,11 +4,14 @@ import {
   ICategoryErrors,
   IOptionErrors,
   IRiderErrors,
-  ISignFormErrors,
+  ISignInFormErrors,
+  ISignUpFormErrors,
   IVendorErrors,
 } from '@/lib/utils/interfaces/forms';
 
 import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
+import { IZoneErrors } from '../../interfaces/forms/zone.form.interface';
+import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -19,12 +22,17 @@ export const PasswordErrors = [
   'Password does not match',
 ];
 
-export const SignUpErrors: ISignFormErrors = {
+export const SignUpErrors: ISignUpFormErrors = {
   firstName: ['Required'],
   lastName: ['Required'],
   email: ['Required', 'Invalid email'],
   password: ['Required', ...PasswordErrors],
   confirmPassword: ['Required', 'Password must match'],
+};
+
+export const SignInErrors: ISignInFormErrors = {
+  email: ['Required', 'Invalid email'],
+  password: ['Required'],
 };
 
 export const VendorErrors: IVendorErrors = {
@@ -86,4 +94,19 @@ export const AddonsErrors: IAddonsErrors = {
   quantityMinimum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
   quantityMaximum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
   options: ['Required', 'Option field must have at least 1 items'],
+};
+
+export const ZoneErrors: IZoneErrors = {
+  title: ['Required'],
+  description: ['Required'],
+};
+
+export const StaffErrors: IStaffErrors = {
+  name: ['Required'],
+  email: ['Required'],
+  phone: ['Required'],
+  password: ['Required', ...PasswordErrors],
+  confirmPassword: ['Required', 'Password must match'],
+  isActive: ['Required'],
+  permissions: ['Required', 'Permissions field must have at least 1 items'],
 };

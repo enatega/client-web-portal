@@ -1,6 +1,7 @@
 import { ApolloError } from '@apollo/client';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { TPolygonPoints } from '../types';
 
 export interface IGlobalProps {
   children?: React.ReactNode;
@@ -70,4 +71,8 @@ export interface IEditState<T> {
 export interface IGlobalTableHeaderProps {
   globalFilterValue: string;
   onGlobalFilterChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface IPolygonLocation {
+  coordinates: TPolygonPoints;
 }

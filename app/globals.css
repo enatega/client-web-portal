@@ -163,7 +163,7 @@ body {
 }
 
 .p-multiselect-token {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   color: white; /* optional: change the text color to white for better contrast */
 }
 
@@ -227,7 +227,8 @@ body {
 /* Text Icon Clickable */
 .text-icon-clickable-container {
   height: 40px;
-  padding: 0.5rem;
+  padding: 0.4rem 0.6rem;
+
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -236,7 +237,7 @@ body {
 }
 
 .text-icon-clickable-container > span {
-  font-size: 0.75rem; /* equivalent to text-xs */
+  font-size: 0.2rem; /* equivalent to text-xs */
   font-weight: 400; /* equivalent to font-normal */
   line-height: 1.5rem; /* equivalent to leading-6 */
 }
@@ -459,4 +460,36 @@ body {
 
 .p-fieldset-legend > a {
   padding: 10px;
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+  color: #000000;
+  background: var(--secondary-color);
+}
+
+.p-multiselect-select-all .p-highlight .p-checkbox-box,
+.p-multiselect-item.p-highlight .p-checkbox-box {
+  color: #000000;
+  background-color: var(--primary-color);
+  outline: none;
+  border: none;
+}
+
+.p-multiselect-item .p-highlight .p-checkbox-box svg {
+  fill: #000000;
+  color: #ffffff;
+}
+
+.p-paginator-bottom .p-dropdown-label.p-inputtext {
+  margin-top: 2px;
+}
+
+#time12 .p-inputtext {
+  padding: 0 10px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }

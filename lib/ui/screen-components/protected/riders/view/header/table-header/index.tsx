@@ -14,7 +14,7 @@ export default function RidersTableHeader({
         <div className="w-60">
           <CustomTextField
             type="text"
-            name="vendorFilter"
+            name="riderFilter"
             maxLength={35}
             showLabel={false}
             value={globalFilterValue}

@@ -12,6 +12,7 @@ import {
   IOptions,
   IRestaurantResponse,
   IStatsCardProps,
+  IZoneResponse,
 } from '../interfaces';
 import { IRiderResponse } from '../interfaces/rider.interface';
 import { IUserResponse } from '../interfaces/users.interface';
@@ -157,6 +158,40 @@ export const generateDummyRiders = (count: number = 10): IRiderResponse[] => {
   return riders;
 };
 
+export const generateDummyCommissionRates = (
+  count: number = 10
+): IRestaurantResponse[] => {
+  const dummyCommissionRates: IRestaurantResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    dummyCommissionRates.push({
+      _id: `restaurant_${i + 1}`,
+      name: `Restaurant ${i + 1}`,
+      commissionRate: Math.floor(Math.random() * 10) + 5, // Random commission rate between 5 and 15
+      isActive: Math.random() > 0.2, // 80% chance of being active
+      __typename: 'Restaurant',
+      image: '',
+      orderPrefix: '',
+      slug: '',
+      address: '',
+      deliveryTime: Math.floor(Math.random() * 60) + 15, // Random delivery time between 15 and 75 minutes
+      minimumOrder: Math.floor(Math.random() * 20) + 5, // Random minimum order between $5 and $25
+      tax: Math.floor(Math.random() * 10) + 5, // Random tax between 5% and 15%
+      username: `restaurant${i + 1}`,
+      owner: {
+        _id: `owner_${i + 1}`,
+        email: `owner${i + 1}@example.com`,
+        isActive: true,
+        __typename: 'Owner',
+      },
+      shopType: ['Fast Food', 'Casual Dining', 'Fine Dining'][
+        Math.floor(Math.random() * 3)
+      ],
+    });
+  }
+
+  return dummyCommissionRates;
+};
 export const generateDummyCategories = (count: number = 10): ICategory[] => {
   const categories: ICategory[] = [];
 
@@ -243,4 +278,23 @@ export const generateDummyBanners = (
   }
 
   return banners;
+};
+
+export const generateDummyZones = (count: number = 10): IZoneResponse[] => {
+  const zones: IZoneResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    zones.push({
+      _id: `zone_${i + 1}`,
+      title: `Zone ${i + 1}`,
+      description: `Description for Zone ${i + 1}`,
+      location: {
+        coordinates: [[[0, 0]]], // Placeholder coordinates
+      },
+      isActive: Math.random() > 0.5,
+      __typename: 'Zone',
+    });
+  }
+
+  return zones;
 };

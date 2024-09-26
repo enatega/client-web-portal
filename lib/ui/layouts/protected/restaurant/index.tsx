@@ -14,7 +14,7 @@ import AdminSidebar from '@/lib/ui/screen-components/protected/layout/restaurant
 // Interface
 import { IProvider, LayoutContextProps } from '@/lib/utils/interfaces';
 
-const AdminLayout = ({ children }: IProvider) => {
+const RestaurantLayout = ({ children }: IProvider) => {
   // Context
   const { isAdminSidebarVisible } =
     useContext<LayoutContextProps>(LayoutContext);
@@ -36,4 +36,4 @@ const AdminLayout = ({ children }: IProvider) => {
   );
 };
 
-export default AdminLayout;
+export default RestaurantLayout;
