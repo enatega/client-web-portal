@@ -65,20 +65,3 @@ export interface IRiderReponse {
 export interface IRidersResponseGraphQL {
   riders: IRiderReponse[];
 }
-interface ILocation {
-  __typename: string;
-  coordinates: number[][][];
-}
-
-interface IZone {
-  __typename: string;
-  _id: string;
-  title: string;
-  description: string;
-  location: ILocation;
-  isActive: boolean;
-}
-
-export interface IZonesResponse {
-  zones: IZone[];
-}

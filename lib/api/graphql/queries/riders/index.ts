@@ -38,17 +38,3 @@ export const GET_AVAILABLE_RIDERS = gql`
     }
   }
 `;
-
-export const GET_ZONES = gql`
-  query Zones {
-    zones {
-      _id
-      title
-      description
-      location {
-        coordinates
-      }
-      isActive
-    }
-  }
-`;

@@ -32,3 +32,4 @@ export * from './toast.interface';
 export * from './user.interface';
 export * from './users.interface';
 export * from './vendor.interface';
+export * from './zone.interface';

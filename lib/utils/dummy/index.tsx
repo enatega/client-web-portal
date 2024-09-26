@@ -12,6 +12,7 @@ import {
   IOptions,
   IRestaurantResponse,
   IStatsCardProps,
+  IZoneResponse,
 } from '../interfaces';
 import { IRiderResponse } from '../interfaces/rider.interface';
 import { IUserResponse } from '../interfaces/users.interface';
@@ -277,4 +278,23 @@ export const generateDummyBanners = (
   }
 
   return banners;
+};
+
+export const generateDummyZones = (count: number = 10): IZoneResponse[] => {
+  const zones: IZoneResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    zones.push({
+      _id: `zone_${i + 1}`,
+      title: `Zone ${i + 1}`,
+      description: `Description for Zone ${i + 1}`,
+      location: {
+        coordinates: [[[0, 0]]], // Placeholder coordinates
+      },
+      isActive: Math.random() > 0.5,
+      __typename: 'Zone',
+    });
+  }
+
+  return zones;
 };

@@ -3,6 +3,7 @@
 'use client';
 
 // Core
+import { usePathname, useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
@@ -51,6 +52,9 @@ const AppTopbar = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   // Context
   const { showSidebar } = useContext<LayoutContextProps>(LayoutContext);
+  // Hooks
+  const pathname = usePathname();
+  const router = useRouter();
 
   // Handlers
   const onDevicePixelRatioChange = useCallback(() => {
@@ -66,6 +70,10 @@ const AppTopbar = () => {
     ) {
       setIsMenuOpen(false); // Close the container or handle the click outside
     }
+  };
+
+  const onRedirectToPage = (_route: string) => {
+    router.push(_route);
   };
 
   // Use Effects
@@ -98,11 +106,53 @@ const AppTopbar = () => {
           {toTextCase(APP_NAME, 'upper')}
         </span>
       </div>
-      <div className="hidden md:flex items-center space-x-6">
-        <TextIconClickable icon={faMap} title={ZONE} />
-        <TextIconClickable icon={faTruck} title={DISPATCH} />
-        <TextIconClickable icon={faCog} title={SETTINGS} />
-        <TextIconClickable icon={faChevronDown} title={LANGUAGE} />
+      <div className="hidden md:flex items-center space-x-5">
+        <TextIconClickable
+          icon={faMap}
+          title={ZONE}
+          className={
+            pathname === '/zone'
+              ? 'bg-primary-color text-white rounded'
+              : 'bg-transparent hover:bg-secondary-color hover:rounded'
+          }
+          iconStyles={{
+            color: pathname === '/zone' ? 'white' : 'gray',
+          }}
+          onClick={() => onRedirectToPage('/zone')}
+        />
+        <TextIconClickable
+          icon={faTruck}
+          title={DISPATCH}
+          className={
+            pathname === '/dispatch'
+              ? 'bg-primary-color text-white rounded'
+              : 'bg-transparent hover:bg-secondary-color hover:rounded'
+          }
+          iconStyles={{ color: pathname === '/dispatch' ? 'white' : 'gray' }}
+          onClick={() => onRedirectToPage('/dispatch')}
+        />
+        <TextIconClickable
+          icon={faCog}
+          title={SETTINGS}
+          className={
+            pathname === '/settings'
+              ? 'bg-primary-color text-white rounded'
+              : 'bg-transparent hover:bg-secondary-color hover:rounded'
+          }
+          iconStyles={{ color: pathname === '/settings' ? 'white' : 'gray' }}
+          onClick={() => onRedirectToPage('/settings')}
+        />
+        <TextIconClickable
+          icon={faChevronDown}
+          title={LANGUAGE}
+          className={
+            pathname === '/language'
+              ? 'bg-primary-color text-white rounded'
+              : 'bg-transparent hover:bg-secondary-color hover:rounded'
+          }
+          iconStyles={{ color: pathname === '/language' ? 'white' : 'gray' }}
+          onClick={() => onRedirectToPage('/language')}
+        />
 
         <FontAwesomeIcon className="cursor-pointer" icon={faBell} />
         <div className="flex items-center space-x-1">
@@ -116,6 +166,7 @@ const AppTopbar = () => {
           <FontAwesomeIcon icon={faChevronDown} />
         </div>
       </div>
+
       <div className="md:hidden">
         <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <FontAwesomeIcon icon={faEllipsisV} />

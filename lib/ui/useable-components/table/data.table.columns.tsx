@@ -14,6 +14,7 @@ import {
   ICategory,
   IOptions,
   IRestaurantResponse,
+  IZoneResponse,
 } from '@/lib/utils/interfaces';
 import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { IBannersResponse } from '@/lib/utils/interfaces/banner.interface';
@@ -128,6 +129,22 @@ export const RIDER_TABLE_COLUMNS = ({
       propertyName: 'actions',
       body: (rider: IRiderResponse) => (
         <ActionMenu items={menuItems} data={rider} />
+      ),
+    },
+  ];
+};
+export const ZONE_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IZoneResponse>['items'];
+}) => {
+  return [
+    { headerName: 'Title', propertyName: 'title' },
+    { headerName: 'Description', propertyName: 'description' },
+    {
+      propertyName: 'actions',
+      body: (zone: IZoneResponse) => (
+        <ActionMenu items={menuItems} data={zone} />
       ),
     },
   ];
