@@ -23,10 +23,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'enatega.com',
       },
-      /*     {
+      {
         protocol: 'https',
         hostname: 'www.lifcobooks.com',
-      }, */
+      },
       {
         protocol: 'https',
         hostname: 'images.pexels.com',
