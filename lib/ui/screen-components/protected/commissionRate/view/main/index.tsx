@@ -2,12 +2,12 @@ import { GET_RESTAURANTS, updateCommission } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import Table from '@/lib/ui/useable-components/table';
-import { COMMISSION_RATE_COLUMNS } from '@/lib/utils/constants';
 import { generateDummyCommissionRates } from '@/lib/utils/dummy';
 import { IQueryResult, IRestaurantResponse } from '@/lib/utils/interfaces';
 import { useMutation } from '@apollo/client';
 import { useContext, useEffect, useState } from 'react';
 import CommissionRateHeader from '../header';
+import { COMMISSION_RATE_COLUMNS } from '@/lib/ui/useable-components/table/columns/comission-rate-columns';
 
 interface RestaurantsData {
   restaurants: IRestaurantResponse[];

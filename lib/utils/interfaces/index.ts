@@ -23,6 +23,7 @@ export * from './restaurants.interface';
 export * from './rider.interface';
 export * from './ripple.interface';
 export * from './sidebar.interface';
+export * from './staff.interface';
 export * from './stat-card.interface';
 export * from './table-header.interface';
 export * from './tabs.interface';

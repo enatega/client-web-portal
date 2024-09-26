@@ -37,3 +37,18 @@ export const DELETE_RIDER = gql`
     }
   }
 `;
+
+export const TOGGLE_RIDER = gql`
+  mutation ToggleRider($id: String) {
+    toggleAvailablity(id: $id) {
+      _id
+      name
+      username
+      phone
+      available
+      zone {
+        title
+      }
+    }
+  }
+`;

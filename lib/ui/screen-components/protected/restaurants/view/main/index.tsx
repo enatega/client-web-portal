@@ -13,9 +13,10 @@ import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 
 // Custom Components
 import Table from '@/lib/ui/useable-components/table';
+import { RESTAURANT_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/restaurant-column';
+import RestaurantsTableHeader from '../header/table-header';
 
 // Constants and Interfaces
-import { RESTAURANT_TABLE_COLUMNS } from '@/lib/utils/constants';
 import {
   IQueryResult,
   IRestaurantResponse,
@@ -25,7 +26,6 @@ import {
 // GraphQL Queries and Mutations
 import { GET_RESTAURANTS } from '@/lib/api/graphql';
 import { generateDummyRestaurants } from '@/lib/utils/dummy';
-import RestaurantsTableHeader from '../header/table-header';
 
 export default function RestaurantsMain() {
   const [selectedProducts, setSelectedProducts] = useState<

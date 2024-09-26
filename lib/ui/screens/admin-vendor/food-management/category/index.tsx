@@ -16,7 +16,7 @@ export default function CategoryScreen() {
   const [category, setCategory] = useState<ICategory | null>(null);
 
   return (
-    <div className="flex flex-col p-3 h-screen overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden p-3">
       <CategoryHeader setIsAddCategoryVisible={setIsAddCategoryVisible} />
       <div className="flex-grow overflow-y-auto">
         <CategoryMain

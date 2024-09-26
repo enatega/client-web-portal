@@ -11,6 +11,7 @@ import {
 
 import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
 import { IZoneErrors } from '../../interfaces/forms/zone.form.interface';
+import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -98,4 +99,14 @@ export const AddonsErrors: IAddonsErrors = {
 export const ZoneErrors: IZoneErrors = {
   title: ['Required'],
   description: ['Required'],
+};
+
+export const StaffErrors: IStaffErrors = {
+  name: ['Required'],
+  email: ['Required'],
+  phone: ['Required'],
+  password: ['Required', ...PasswordErrors],
+  confirmPassword: ['Required', 'Password must match'],
+  isActive: ['Required'],
+  permissions: ['Required', 'Permissions field must have at least 1 items'],
 };

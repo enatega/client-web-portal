@@ -13,13 +13,12 @@ import {
 } from '@/lib/utils/interfaces/rider.interface';
 
 // UI Components
+import RidersTableHeader from '../header/table-header';
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
-import RidersTableHeader from '../header/table-header';
+import { RIDER_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/rider-columns';
 
-// Constants and Interfaces
-import { RIDER_TABLE_COLUMNS } from '@/lib/utils/constants';
-import { IQueryResult } from '@/lib/utils/interfaces';
+// Utilities and Data
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
 
 // Hooks
@@ -28,6 +27,7 @@ import useToast from '@/lib/hooks/useToast';
 
 // GraphQL and Utilities
 import { DELETE_RIDER, GET_RIDERS } from '@/lib/api/graphql';
+import { IQueryResult } from '@/lib/utils/interfaces';
 
 // Data
 import { generateDummyRiders } from '@/lib/utils/dummy';
@@ -50,9 +50,10 @@ export default function RidersMain({
   });
 
   // Query
-  const { data, loading } = useQueryGQL(GET_RIDERS, {
-    fetchPolicy: 'cache-and-network',
-  }) as IQueryResult<IRidersDataResponse | undefined, undefined>;
+  const { data, loading } = useQueryGQL(GET_RIDERS, {}) as IQueryResult<
+    IRidersDataResponse | undefined,
+    undefined
+  >;
 
   //Mutation
   const [mutateDelete, { loading: mutationLoading }] = useMutation(

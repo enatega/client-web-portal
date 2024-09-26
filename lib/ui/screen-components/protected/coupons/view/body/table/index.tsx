@@ -177,7 +177,7 @@ export default function CouponTable({
             onClick={() => optimizedToggleFunction(rowData)}
           />
           {isEditDeletePopupOpen._id === rowData?._id &&
-          isEditDeletePopupOpen.bool ? (
+            isEditDeletePopupOpen.bool ? (
             <div className="editdeletepoup-container" ref={editDeletePopupRef}>
               <EditDeletePopup
                 setIsEditing={setIsEditing}

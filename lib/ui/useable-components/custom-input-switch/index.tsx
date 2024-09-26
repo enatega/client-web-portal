@@ -10,13 +10,13 @@ export default function CustomInputSwitch({
   return loading ? (
     <CustomLoader />
   ) : (
-    <label className="ml-2 flex items-center cursor-pointer flex-shrink-0 h-1">
+    <label className="ml-2 flex items-center cursor-pointer flex-shrink-0">
       <div className="relative">
         <div className="flex items-center space-x-2">
-          <label className="relative inline-flex items-center cursor-pointer">
+          <label className="relative inline-flex cursor-pointer items-center">
             <input
               type="checkbox"
-              className="sr-only peer"
+              className="peer sr-only"
               checked={isActive}
               onChange={onChange}
             />

@@ -205,7 +205,7 @@ export default function RestaurantDetailsForm({
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-start">
+    <div className="flex h-full w-full items-center justify-start">
       <div className="h-full w-full">
         <div className="flex flex-col gap-2">
           {/* <div className="flex flex-col mb-2">
@@ -231,7 +231,7 @@ export default function RestaurantDetailsForm({
               }) => {
                 return (
                   <Form onSubmit={handleSubmit}>
-                    <div className="space-y-3 mb-2">
+                    <div className="mb-2 space-y-3">
                       <div>
                         <CustomTextField
                           type="text"
@@ -446,7 +446,7 @@ export default function RestaurantDetailsForm({
                           }}
                         />
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border border-gray-200 p-4 rounded-lg">
+                      <div className="grid grid-cols-1 gap-4 rounded-lg border border-gray-200 p-4 sm:grid-cols-2">
                         <CustomUploadImageComponent
                           key="logo"
                           name="logo"
@@ -479,15 +479,15 @@ export default function RestaurantDetailsForm({
                         />
                       </div>
 
-                      <div className="flex justify-between mt-4">
+                      <div className="mt-4 flex justify-between">
                         <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                          className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
                           label="Back"
                           type="button"
                           onClick={() => onStepChange(order - 1)}
                         />
                         <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                          className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
                           label="Save & Next"
                           type="submit"
                           loading={isSubmitting}
