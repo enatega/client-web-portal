@@ -175,7 +175,7 @@ export default function DispatchMain() {
     } catch (error) {
       console.log(error);
     } finally {
-      return setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
