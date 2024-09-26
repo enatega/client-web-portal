@@ -290,7 +290,6 @@ export const generateDummyZones = (count: number = 10): IZoneResponse[] => {
       description: `Description for Zone ${i + 1}`,
       location: {
         coordinates: [[[0, 0]]], // Placeholder coordinates
-        __typename: 'Polygon',
       },
       isActive: Math.random() > 0.5,
       __typename: 'Zone',
