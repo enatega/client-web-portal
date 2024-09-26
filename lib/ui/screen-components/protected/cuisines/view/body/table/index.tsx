@@ -131,7 +131,7 @@ export default function CuisineTable({
       body: (rowData: ICuisine) => (
         <div className="three-dots">
           {isEditDeletePopupOpen._id === rowData?._id &&
-          isEditDeletePopupOpen.bool ? (
+            isEditDeletePopupOpen.bool ? (
             <div className="editdeletepoup-container" ref={editDeletePopupRef}>
               <EditDeletePopup
                 setIsEditing={setIsEditing}
@@ -145,7 +145,7 @@ export default function CuisineTable({
           ) : (
             <FontAwesomeIcon
               icon={faEllipsisVertical}
-              className="hover:scale-105 p-1 cursor-pointer"
+              className=" cursor-pointer hover:scale-105 p-1"
               onClick={() =>
                 setIsEditDeletePopupOpen({
                   _id: rowData?._id,

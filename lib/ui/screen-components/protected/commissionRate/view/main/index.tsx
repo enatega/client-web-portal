@@ -2,12 +2,12 @@ import { GET_RESTAURANTS, updateCommission } from '@/lib/api/graphql';
 import { ToastContext } from '@/lib/context/toast.context';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import Table from '@/lib/ui/useable-components/table';
-import { COMMISSION_RATE_COLUMNS } from '@/lib/utils/constants';
 import { generateDummyCommissionRates } from '@/lib/utils/dummy';
 import { IQueryResult, IRestaurantResponse } from '@/lib/utils/interfaces';
 import { useMutation } from '@apollo/client';
 import { useContext, useEffect, useState } from 'react';
-import CommissionRateHeader from '../header/table-header';
+import CommissionRateHeader from '../header/screen-header';
+import { COMMISSION_RATE_COLUMNS } from '@/lib/ui/useable-components/table/columns/comission-rate-columns';
 
 interface RestaurantsData {
   restaurants: IRestaurantResponse[];
@@ -24,8 +24,8 @@ export default function CommissionRateMain() {
   const [loadingRestaurant, setLoadingRestaurant] = useState<string | null>(
     null
   );
-  const [selectedActions, setSelectedActions] = useState<string[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedActions,] = useState<string[]>([]);
+  const [searchTerm,] = useState<string>('');
 
   const { showToast } = useContext(ToastContext);
   const { data, error, refetch, loading } = useQueryGQL(GET_RESTAURANTS, {
@@ -152,17 +152,14 @@ export default function CommissionRateMain() {
     loadingRestaurant,
   });
 
-  const handleSearch = (value: string) => {
-    setSearchTerm(value);
-  };
+  // const handleSearch = (value: string) => {
+  //   setSearchTerm(value);
+  // };
 
   return (
     <div className="p-2 pt-5 pb-20">
       <>
         <CommissionRateHeader
-          setSelectedActions={setSelectedActions}
-          selectedActions={selectedActions}
-          onSearch={handleSearch}
         />
         <Table
           data={loading ? generateDummyCommissionRates() : filteredRestaurants}

@@ -3,6 +3,7 @@ import { InputMaskChangeEvent } from 'primereact/inputmask';
 import { CSSProperties, HTMLInputAutoCompleteAttribute } from 'react';
 import { TNumberMode } from '../types';
 import { IGlobalComponentProps } from './global.interface';
+
 // Global
 interface IGlobalTextFieldProps extends IGlobalComponentProps {
   type: string;
@@ -56,17 +57,29 @@ export interface IPasswordTextFieldProps
   iconProperties?: Omit<IIconProperties, 'icon'> & { icon?: IconDefinition };
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
-export interface ICustomNumberTippingProps extends IGlobalTextFieldProps {
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  min?: number;
-  max?: number;
-  loading: boolean;
-}
 
 export interface ICustomRadiusInputFieldComponentProps
   extends Omit<IGlobalTextFieldProps, 'value' | 'onChange'> {
   value: number;
   onChange?: (val: number) => void;
+  min?: number;
+  max?: number;
+  loading: boolean;
+}
+
+export interface ITimeTextField {
+  value: string | null; // Changed from Date to string
+  placeholder?: string;
+  onChange: (value: string) => void; // Changed to string
+  showLabel?: boolean;
+  isLoading?: boolean;
+  className?: string;
+  style?: CSSProperties;
+  name?: string;
+}
+
+export interface ICustomNumberTippingProps extends IGlobalTextFieldProps {
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   min?: number;
   max?: number;
   loading: boolean;

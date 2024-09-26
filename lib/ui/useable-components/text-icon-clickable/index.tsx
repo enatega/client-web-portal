@@ -1,4 +1,4 @@
-// Utilities
+import { twMerge } from 'tailwind-merge';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TextIconClickableProps } from '@/lib/utils/interfaces';
@@ -16,7 +16,7 @@ export default function TextIconClickable({
 }: TextIconClickableProps) {
   return (
     <div
-      className={`text-icon-clickable-container ${className} ${loading ? 'cursor-not-allowed' : ''}`}
+      className={`text-icon-clickable-container ${twMerge('text-sm flex items-center justify-center', className)}`}
       onClick={onClick}
     >
       {/* Conditionally render the loader or the icon */}
@@ -24,10 +24,10 @@ export default function TextIconClickable({
         <ProgressSpinner style={{ width: '20px', height: '20px' }} /> // Loader/spinner
       ) : (
         icon && (
-          <FontAwesomeIcon icon={icon} color={iconStyles?.color ?? 'gray'} />
+          <FontAwesomeIcon icon={icon} color={iconStyles?.color ?? 'gray'} spin={loading} />
         )
       )}
-      <span className={loading ? 'opacity-50' : ''}>{title}</span>
+      <div className={loading ? 'opacity-50' : ''}>{title}</div>
       <Ripple />
     </div>
   );

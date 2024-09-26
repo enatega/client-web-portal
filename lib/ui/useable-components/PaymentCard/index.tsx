@@ -22,7 +22,7 @@ export default function PaymentCard({
       <h2 className="text-lg font-bold text-black mb-2">{name}</h2>
       <p className="text-gray-500 mb-4 text-center">{description}</p>
       <TextIconClickable
-        className="bg-black text-white border-gray-300 rounded"
+        className="bg-black text-white  border-gray-300 rounded"
         icon={icon}
         iconStyles={{ color: 'white' }}
         title={`Connect with ${name}`}

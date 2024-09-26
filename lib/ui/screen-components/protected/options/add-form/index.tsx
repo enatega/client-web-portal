@@ -96,7 +96,6 @@ export default function OptionAddForm({
         onHide();
       },
       onError: (error) => {
-        console.log({ error });
         let message = '';
         try {
           message = error.graphQLErrors[0]?.message;
@@ -114,7 +113,6 @@ export default function OptionAddForm({
 
   // Form Submission
   const handleSubmit = ({ options }: { options: IOptionForm[] }) => {
-    console.log({ options, option });
     createOption({
       variables: {
         optionInput: {
@@ -134,10 +132,10 @@ export default function OptionAddForm({
       onHide={onHide}
       className="w-full sm:w-[450px]"
     >
-      <div className="w-full h-full flex items-center justify-start">
+      <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">
           <div className="flex flex-col gap-2">
-            <div className="flex flex-col mb-2">
+            <div className="mb-2 flex flex-col">
               <span className="text-lg">{option ? 'Edit' : 'Add'} Option</span>
             </div>
 
@@ -158,6 +156,8 @@ export default function OptionAddForm({
                   const _errors: FormikErrors<IOptionForm>[] =
                     (errors?.options as FormikErrors<IOptionForm>[]) ?? [];
 
+                  console.log({ _errors });
+
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div>
@@ -175,7 +175,7 @@ export default function OptionAddForm({
                                         <div className="relative">
                                           {!!index && (
                                             <button
-                                              className="absolute top-2 -right-1"
+                                              className="absolute -right-1 top-2"
                                               onClick={() => remove(index)}
                                             >
                                               <FontAwesomeIcon
@@ -189,7 +189,7 @@ export default function OptionAddForm({
                                             legend={`Option ${index + 1} ${value.title ? `(${value.title})` : ''}`}
                                             toggleable
                                           >
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                                               <div>
                                                 <CustomTextField
                                                   type="text"
@@ -271,9 +271,9 @@ export default function OptionAddForm({
                                   }
                                 )}
                               {!option && (
-                                <div className="flex justify-end mt-4">
+                                <div className="mt-4 flex justify-end">
                                   <TextIconClickable
-                                    className="w-full bg-transparent text-black border border-black rounded"
+                                    className="w-full rounded border border-black bg-transparent text-black"
                                     icon={faAdd}
                                     iconStyles={{ color: 'black' }}
                                     title="Add New Option"
@@ -287,9 +287,9 @@ export default function OptionAddForm({
                           )}
                         </FieldArray>
 
-                        <div className="flex justify-end mt-4">
+                        <div className="mt-4 flex justify-end">
                           <CustomButton
-                            className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                            className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
                             label={option ? 'Edit' : 'Add'}
                             type="submit"
                             loading={mutationLoading}

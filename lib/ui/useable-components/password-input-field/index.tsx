@@ -1,5 +1,6 @@
 import { IPasswordTextFieldProps } from '@/lib/utils/interfaces';
 import { Password } from 'primereact/password';
+import { twMerge } from 'tailwind-merge';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 export default function CustomPasswordTextField({
@@ -18,7 +19,10 @@ export default function CustomPasswordTextField({
         </label>
       )}
       <Password
-        className={`w-full h-10 border rounded-lg text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
+        className={twMerge(
+          `w-full h-10 border rounded-lg text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit`,
+          className
+        )}
         placeholder={placeholder}
         toggleMask
         feedback={feedback}

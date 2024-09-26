@@ -85,8 +85,8 @@ const CustomGoogleMapsLocationBounds: React.FC<
     lng: 73.047882,
   });
   const [path, setPath] = useState<ILocationPoint[]>(
-    [] /* [
-    [] /* [
+    []
+    /* [
     {
       lat: 33.6981335731709,
       lng: 73.036895671875,

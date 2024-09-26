@@ -15,7 +15,7 @@ export default function AddonsScreen() {
   const [addon, setAddon] = useState<IAddon | null>(null);
 
   return (
-    <div className="flex flex-col p-3 h-screen overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden p-3">
       <AddonsHeader setIsAddAddonVisible={setIsAddAddonVisible} />
       <div className="flex-grow overflow-y-auto">
         <AddonsMain

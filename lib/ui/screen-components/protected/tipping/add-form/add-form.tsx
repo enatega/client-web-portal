@@ -27,15 +27,15 @@ import { useMutation } from '@apollo/client';
 
 const TippingAddForm = () => {
   // Query
-  const { refetch, loading, data } = useQueryGQL(GET_TIPPING, {
+  const { loading, data } = useQueryGQL(GET_TIPPING, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<ITippingResponse | undefined, undefined>;
 
   // State
   const initialValues: ITippingsForm = {
-    tip1: data?.tips?.tipVariations[0].toString() ?? '',
-    tip2: data?.tips?.tipVariations[1].toString() ?? '',
-    tip3: data?.tips?.tipVariations[2].toString() ?? '',
+    tip1: data?.tips?.tipVariations[0] ?? 1,
+    tip2: data?.tips?.tipVariations[1] ?? 2,
+    tip3: data?.tips?.tipVariations[2] ?? 3,
   };
 
   // Hooks
@@ -55,7 +55,7 @@ const TippingAddForm = () => {
         variables: {
           tippingInput: {
             _id: data.tips._id,
-            tipVariations: [+values.tip1, +values.tip2, +values.tip3],
+            tipVariations: [values.tip1, values.tip2, values.tip3],
             enabled: true,
           },
         },
@@ -67,7 +67,6 @@ const TippingAddForm = () => {
             duration: 3000,
           });
           resetForm();
-          refetch();
         },
         onError: (error) => {
           let message = '';
@@ -88,69 +87,66 @@ const TippingAddForm = () => {
   };
 
   return (
-    <div className="py-14 px-8 rounded bg-[#F4F4F5] mt-11">
+    <div className="mt-7 rounded bg-[#F4F4F5] px-8 py-14">
       <div>
         <Formik
           initialValues={initialValues}
           validationSchema={TippingSchema}
           onSubmit={handleSubmit}
           validateOnChange
+          validateOnBlur
           enableReinitialize
         >
-          {({ values, errors, touched, handleChange }) => (
-            <Form className="grid grid-cols-2 gap-3  items-center sm:grid-cols-4">
+          {({ values, errors, touched, setFieldValue }) => (
+            <Form className="grid grid-cols-2 items-center gap-3 sm:grid-cols-4">
               <CustomNumberTextField
-                type="number"
                 name="tip1"
                 placeholder="Tip 1 e.g 10"
                 maxLength={35}
-                min={0}
+                min={1}
                 max={100}
                 value={values.tip1}
-                onChange={handleChange}
-                loading={loading}
+                onChange={setFieldValue}
+                isLoading={loading}
                 showLabel={true}
                 style={{
                   borderColor: errors?.tip1 && touched.tip1 ? 'red' : '',
                 }}
               />
               <CustomNumberTextField
-                type="number"
                 name="tip2"
                 placeholder="Tip 2 e.g 20"
                 maxLength={35}
-                min={0}
+                min={1}
                 max={100}
-                loading={loading}
+                isLoading={loading}
                 showLabel={true}
                 value={values.tip2}
-                onChange={handleChange}
+                onChange={setFieldValue}
                 style={{
                   borderColor: errors.tip2 && touched.tip2 ? 'red' : '',
                 }}
               />
               <CustomNumberTextField
-                type="number"
                 name="tip3"
-                placeholder="Tip 3 e.g 30"
-                maxLength={35}
-                min={0}
+                min={1}
                 max={100}
-                loading={loading}
+                placeholder="Tip 3 e.g 30"
+                isLoading={loading}
                 showLabel={true}
                 value={values.tip3}
-                onChange={handleChange}
+                onChange={setFieldValue}
                 style={{
                   borderColor: errors.tip3 && touched.tip3 ? 'red' : '',
                 }}
               />
               <CustomButton
-                className="h-11 flex mt-auto mb-[2px] px-10 text-white border-gray-300 bg-[black] rounded-md"
+                className="mb-[2px] mt-auto flex h-11 rounded-md border-gray-300 bg-[black] px-10 text-white"
                 label={data?.tips._id ? 'Update' : 'Add'}
                 rounded={false}
                 type="submit"
                 loading={mutationLoading}
-                disabled={mutationLoading}
+                disabled={mutationLoading || loading}
               />
             </Form>
           )}

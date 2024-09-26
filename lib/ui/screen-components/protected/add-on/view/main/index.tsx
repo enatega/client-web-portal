@@ -16,7 +16,7 @@ import {
 
 // Components
 import Table from '@/lib/ui/useable-components/table';
-import { ADDON_TABLE_COLUMNS } from '@/lib/utils/constants';
+import { ADDON_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/addon-columns';
 import CategoryTableHeader from '../header/table-header';
 
 // Utilities and Data

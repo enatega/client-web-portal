@@ -1,4 +1,5 @@
 export * from './addons';
+export * from './authentication';
 export * from './banners';
 export * from './category';
 export * from './commission-rate';
@@ -15,3 +16,4 @@ export * from './taxations';
 export * from './tippings';
 export * from './vendor';
 export * from './withdraw-requests';
+export * from './zone';
