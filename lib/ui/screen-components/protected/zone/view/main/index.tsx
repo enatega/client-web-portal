@@ -20,7 +20,7 @@ import Table from '@/lib/ui/useable-components/table';
 import RidersTableHeader from '../header/table-header';
 
 // Constants and Interfaces
-import { ZONE_TABLE_COLUMNS } from '@/lib/utils/constants';
+import { ZONE_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/data.table.columns';
 
 // Hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
@@ -31,6 +31,7 @@ import { DELETE_ZONE, GET_ZONES } from '@/lib/api/graphql';
 
 // Data
 import { generateDummyZones } from '@/lib/utils/dummy';
+
 
 export default function ZoneMain({
   setIsAddZoneVisible,
