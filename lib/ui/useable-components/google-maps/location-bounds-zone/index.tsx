@@ -123,9 +123,7 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
       Array.isArray(_path[0]) &&
       _path[0].length > 0
     ) {
-      const _editValue = transformPolygon(_path[0]);
-      console.log({ _editValue });
-      setPath(_editValue);
+      setPath(transformPolygon(_path[0]));
       setCenter(calculatePolygonCentroid(_path[0]));
     }
   };
@@ -170,7 +168,6 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
   );
 
   const onUnmount = useCallback(() => {
-    console.log('on unmount');
     listenersRef?.current?.forEach((lis) => lis?.remove());
     polygonRef.current = null;
   }, []);
