@@ -9,7 +9,7 @@ const CustomTimeInput = ({
   value,
   onChange,
   ...props
-}: ITimeTextField): JSX.Element => {
+}: ITimeTextField) => {
   return !isLoading ? (
     <div className="flex w-full flex-col justify-center gap-y-1">
       {showLabel && (

@@ -245,7 +245,7 @@ const TimingAddForm = () => {
                               <button
                                 type="button"
                                 onClick={() => {
-                                  let prev = [...values[dayIndex]?.times];
+                                  let prev = [...values[dayIndex].times];
                                   prev.splice(timeIndex, 1);
                                   setFieldValue(`${dayIndex}.times`, prev);
                                 }}
@@ -256,7 +256,7 @@ const TimingAddForm = () => {
                             ) : (
                               <button
                                 onClick={() => {
-                                  let prev = [...values[dayIndex]?.times];
+                                  let prev = [...values[dayIndex].times];
                                   prev.push({ startTime: null, endTime: null });
                                   setFieldValue(`${dayIndex}.times`, prev);
                                 }}

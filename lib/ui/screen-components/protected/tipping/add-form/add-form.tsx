@@ -97,7 +97,7 @@ const TippingAddForm = () => {
           validateOnBlur
           enableReinitialize
         >
-          {({ values, errors, touched, setFieldValue, validateForm }) => (
+          {({ values, errors, touched, setFieldValue }) => (
             <Form className="grid grid-cols-2 items-center gap-3 sm:grid-cols-4">
               <CustomNumberTextField
                 name="tip1"
