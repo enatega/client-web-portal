@@ -132,8 +132,9 @@ export default function CuisinesMain({
         return (
           <Image
             src={
-              data?.image ??
-              'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+              data?.image
+                ? data?.image
+                : 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             }
             alt={data?.description ?? 'cuisine'}
             width={30}
@@ -203,7 +204,7 @@ export default function CuisinesMain({
         message: 'Cuisine has been deleted successfully',
         duration: 2000,
       });
-      let filteredCuisines = data?.cuisines?.filter(
+      let filteredCuisines = cuisines?.filter(
         (cuisine) => cuisine?._id !== isDeleting?.data?._id
       );
       if (filteredCuisines) {

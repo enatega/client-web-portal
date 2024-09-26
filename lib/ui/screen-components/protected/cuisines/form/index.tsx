@@ -238,11 +238,13 @@ export default function CuisineForm({
                 </span>
 
                 <CustomUploadImageComponent
-                  name="file"
+                  name="image"
                   onSetImageUrl={setFieldValue}
                   title="image"
                   existingImageUrl={isEditing.bool ? isEditing.data.image : ''}
-                  showExistingImage={true}
+                  showExistingImage={
+                    isEditing.bool && isEditing.data.image ? true : false
+                  }
                 />
 
                 <button
