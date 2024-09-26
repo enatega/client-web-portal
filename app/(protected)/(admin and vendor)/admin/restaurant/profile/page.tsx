@@ -1,7 +1,7 @@
 'use client';
 
-import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+import ProfileScreen from '@/lib/ui/screens/admin-vendor/profile';
 
 export default function ProfilePage() {
-  return <ComingSoon />;
+  return <ProfileScreen />;
 }
