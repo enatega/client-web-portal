@@ -3,7 +3,7 @@
 // Core
 import Image from 'next/image';
 import { useContext, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 // Context
 import { ToastContext } from '@/lib/context/toast.context';
