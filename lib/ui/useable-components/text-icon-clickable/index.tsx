@@ -1,4 +1,4 @@
-// Utilities
+import { twMerge } from 'tailwind-merge';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -17,7 +17,7 @@ export default function TextIconClickable({
 }: TextIconClickableProps) {
   return (
     <div
-      className={`text-icon-clickable-container flex items-center justify-center ${className}`}
+      className={`text-icon-clickable-container ${twMerge('text-sm flex items-center justify-center', className)}`}
       onClick={onClick}
     >
       {icon && (

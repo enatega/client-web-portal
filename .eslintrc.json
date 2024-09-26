@@ -1,5 +1,5 @@
 {
-  "extends": ["next", "next/core-web-vitals", "eslint:recommended", "prettier"],
+  "extends": ["next", "next/core-web-vitals", "eslint:recommended"],
 
   "globals": {
     "React": "readonly",
@@ -20,13 +20,11 @@
   "rules": {
     // Custom rules for your project
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
-    // "prettier/prettier": "error",
+    "prettier/prettier": "error",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
-    "react-hooks/exhaustive-deps": "off",
-    "prettier/prettier": ["error", {}, { "usePrettierrc": true }]
-    // ... other rules
+    "react-hooks/exhaustive-deps": "off"
   },
   "settings": {
     "import/resolver": {
