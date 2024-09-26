@@ -1,6 +1,5 @@
 import { ITimeTextField } from '@/lib/utils/interfaces';
-import { Calendar } from 'primereact/calendar';
-import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
+import TimeInputSkeleton from '../custom-skeletons/time-inputfield.skeleton';
 
 const CustomTimeInput = ({
   className,
@@ -8,28 +7,31 @@ const CustomTimeInput = ({
   showLabel,
   isLoading = false,
   value,
+  onChange,
   ...props
-}: ITimeTextField) => {
+}: ITimeTextField): JSX.Element => {
   return !isLoading ? (
-    <div className={`flex w-full flex-col justify-center gap-y-1`}>
+    <div className="flex w-full flex-col justify-center gap-y-1">
       {showLabel && (
-        <label htmlFor="time12" className="text-sm font-[500]">
+        <label htmlFor="timeInput" className="text-sm font-[500]">
           {placeholder}
         </label>
       )}
-
-      <Calendar
-        id="time12"
-        value={value}
-        timeOnly
-        hourFormat="12"
-        className={`h-10 w-full rounded-lg border border-gray-300 text-sm outline-none focus:shadow-none focus:outline-none ${className}`}
+      <input
+        id="timeInput"
+        type="time"
+        className={`h-10 w-full rounded-lg border border-gray-300 px-8 text-sm outline-none focus:shadow-none focus:outline-none ${className}`}
         placeholder={placeholder}
+        // 'HH:MM' format
+        value={value ?? ''}
+        onChange={(e) => {
+          onChange(e.target.value); // Pass the time string "HH:MM"
+        }}
         {...props}
       />
     </div>
   ) : (
-    <InputSkeleton />
+    <TimeInputSkeleton />
   );
 };
 

@@ -1,213 +1,297 @@
 'use client';
+// Core
+import { ErrorMessage, Form, Formik, FormikErrors } from 'formik';
+import { useContext } from 'react';
+
+// Interface and Types
+import { TWeekDays } from '@/lib/utils/types/days';
+
+// Components
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTimeInput from '@/lib/ui/useable-components/time-input';
 import Toggle from '@/lib/ui/useable-components/toggle';
-import { Form, Formik } from 'formik';
+import {
+  ITimeSlot,
+  ITimeSlotResponseGQL,
+  ITimingForm,
+  ITimingResponseGQL,
+} from '@/lib/utils/interfaces/timing.interface';
 
-type TimeSlot = {
-  startTime: Date | null;
-  endTime: Date | null;
-};
+// Context
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+
+// Utilities and Constants
+import { TIMING_INITIAL_VALUE } from '@/lib/utils/constants';
+import { TimingSchema } from '@/lib/utils/schema/timing';
+
+// Toast
+import useToast from '@/lib/hooks/useToast';
+
+// GraphQL
+import { GET_RESTAURANT_PROFILE } from '@/lib/api/graphql';
+import { UPDATE_TIMINGS } from '@/lib/api/graphql/mutations/timing';
+import { useMutation, useQuery } from '@apollo/client';
 
 const TimingAddForm = () => {
-  let initialValues: {
-    day: 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
-    times: {
-      startTime: null;
-      endTime: null;
-    }[];
-  }[] = [
-    {
-      day: 'MON',
-      times: [
-        {
-          startTime: null,
-          endTime: null,
-        },
-      ],
-    },
-    {
-      day: 'TUE',
-      times: [
-        {
-          startTime: null,
-          endTime: null,
-        },
-        {
-          startTime: null,
-          endTime: null,
-        },
-      ],
-    },
-    {
-      day: 'WED',
-      times: [
-        {
-          startTime: null,
-          endTime: null,
-        },
-      ],
-    },
-    {
-      day: 'THU',
-      times: [
-        {
-          startTime: null,
-          endTime: null,
-        },
-      ],
-    },
-    {
-      day: 'FRI',
-      times: [
-        {
-          startTime: null,
-          endTime: null,
-        },
-      ],
-    },
-    {
-      day: 'SAT',
-      times: [
-        {
-          startTime: null,
-          endTime: null,
-        },
-      ],
-    },
-    {
-      day: 'SUN',
-      times: [
-        {
-          startTime: null,
-          endTime: null,
-        },
-      ],
-    },
-  ];
+  // Context
+  const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
+  const restaurantId = restaurantLayoutContextData?.restaurantId || '';
 
-  //  const {
-  //    data,
-  //    error: errorQuery,
-  //    loading: loadingQuery,
-  //  } = useQuery(GET_RESTAURANT_PROFILE, {
-  //    variables: { id: restaurantId },
-  //  });
+  // Hooks
+  const { showToast } = useToast();
+
+  const { data, loading } = useQuery(GET_RESTAURANT_PROFILE, {
+    variables: { id: restaurantId },
+  });
+
+  //for conversion from ["HH","MM"] to 'HH:MM' format
+  const openingTimes: ITimingForm[] =
+    data?.restaurant.openingTimes.map((opening: ITimingResponseGQL) => {
+      const times = opening.times.map((timing: ITimeSlotResponseGQL) => {
+        const formatTime = (time: string[]) =>
+          `${time[0].padStart(2, '0')}:${time[1].padStart(2, '0')}`;
+
+        return {
+          startTime: formatTime(timing.startTime),
+          endTime: formatTime(timing.endTime),
+        };
+      });
+
+      return {
+        day: opening.day as TWeekDays,
+        times,
+      };
+    }) ?? [];
+
+  const initialValues: ITimingForm[] =
+    openingTimes.length > 0 ? openingTimes : TIMING_INITIAL_VALUE;
+
+  const [mutate, { loading: mutationLoading }] = useMutation(UPDATE_TIMINGS);
+
+  // Form Submission
+  const handleSubmit = (values: ITimingForm[]) => {
+    //conversion from 'HH:MM' to ["HH","MM"]
+    let formattedData = [...values].map((v) => {
+      let tempTime = [...v.times];
+      let formattedTime = tempTime.map((time) => {
+        return {
+          startTime: time.startTime?.split(':'),
+          endTime: time.endTime?.split(':'),
+        };
+      });
+      return {
+        ...v,
+        times: formattedTime,
+      };
+    });
+
+    mutate({
+      variables: {
+        id: restaurantId,
+        openingTimes: formattedData,
+      },
+      onCompleted: () => {
+        showToast({
+          type: 'success',
+          title: 'Success!',
+          message: 'Timing updated',
+          duration: 3000,
+        });
+      },
+      onError: (error) => {
+        let message = '';
+        try {
+          message = error.graphQLErrors[0]?.message;
+        } catch (err) {
+          message = 'ActionFailedTryAgain';
+        }
+        showToast({
+          type: 'error',
+          title: 'Error!',
+          message,
+          duration: 3000,
+        });
+      },
+    });
+  };
 
   return (
-    <div className="mt-7 rounded border px-8 py-8">
-      <div>
-        <Formik
-          initialValues={initialValues}
-          // validationSchema={TippingSchema}
-          onSubmit={() => {}}
-          validateOnChange
-          enableReinitialize
-        >
-          {({ values, setFieldValue }) => (
-            <Form
-              onClick={() => {
-                console.log(values);
-              }}
-              className="flex flex-col gap-6"
-            >
-              {values.map((value, dayIndex) => {
-                return (
-                  <div key={dayIndex} className="flex items-start gap-5">
-                    {/* left side */}
-                    <div className="mt-2 flex items-center gap-4">
-                      <Toggle
-                        onClick={() => {
-                          const newTimes =
-                            value.times.length > 0
-                              ? []
-                              : [{ startTime: null, endTime: null }];
-                          setFieldValue(`${dayIndex}.times`, newTimes);
-                        }}
-                        checked={value.times.length > 0}
-                      />
-                      {/* <span className="text-sm">{getFullDayName(v.day)}</span> */}
-                      <span className="w-10 text-sm">{value.day}</span>
-                    </div>
-
-                    {/* center */}
-                    {value.times.length > 0 ? (
-                      <div className="flex flex-col gap-2">
-                        {value.times?.map((time: TimeSlot, timeIndex) => {
-                          return (
-                            <div
-                              key={timeIndex}
-                              className="flex items-center gap-4"
-                            >
-                              <CustomTimeInput
-                                showLabel={false}
-                                value={time.startTime}
-                                className="w-40"
-                                placeholder="Start Time"
-                              />
-                              <span>-</span>
-                              <CustomTimeInput
-                                showLabel={false}
-                                value={time.endTime}
-                                className="w-40"
-                                placeholder="End Time"
-                              />
-                              {/* right side */}
-                              {timeIndex > 0 ? (
-                                <div
-                                  onClick={() => {
-                                    let prev = [...values[dayIndex].times];
-                                    prev.splice(timeIndex, 1);
-                                    setFieldValue(`${dayIndex}.times`, prev);
-                                  }}
-                                  className="mt-1 flex h-6 w-14 select-none items-center justify-center rounded-full border border-red-500 text-red-500 hover:cursor-pointer hover:bg-red-400 hover:text-white"
-                                >
-                                  -
-                                </div>
-                              ) : (
-                                <div
-                                  onClick={() => {
-                                    let prev = [...values[dayIndex].times];
-                                    prev.push({
-                                      startTime: null,
-                                      endTime: null,
-                                    });
-                                    console.log(prev);
-                                    setFieldValue(`${dayIndex}.times`, prev);
-                                  }}
-                                  className="mt-1 flex h-6 w-14 select-none items-center justify-center rounded-full border border-primary-color text-primary-color hover:cursor-pointer hover:bg-secondary-color hover:text-white"
-                                >
-                                  +
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <div className="flex min-h-10 flex-1 items-center justify-start">
-                        <span className="select-none rounded-full bg-black px-3 py-1 text-xs text-white">
-                          Closed all Day
-                        </span>
-                      </div>
-                    )}
+    <div className="mt-7 max-h-[calc(100vh-152px)] overflow-auto rounded border px-8 py-8">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={TimingSchema}
+        onSubmit={handleSubmit}
+        enableReinitialize
+      >
+        {({ values, errors, touched, setFieldValue }) => (
+          <Form
+            onClick={() => {
+              console.log(errors);
+            }}
+            className="flex flex-col gap-6"
+          >
+            {values?.map((value, dayIndex) => {
+              return (
+                <div key={dayIndex} className="flex items-start gap-5">
+                  {/* left side */}
+                  <div className="mt-2 flex items-center gap-4">
+                    <Toggle
+                      onClick={() => {
+                        const newTimes =
+                          value?.times?.length > 0
+                            ? []
+                            : [
+                                {
+                                  startTime: '00:00',
+                                  endTime: '23:59',
+                                },
+                              ];
+                        setFieldValue(`${dayIndex}.times`, newTimes);
+                      }}
+                      checked={value?.times?.length > 0}
+                    />
+                    <span className="w-10 text-sm">{value.day}</span>
                   </div>
-                );
-              })}
 
-              <CustomButton
-                className="mb-[2px] mr-auto mt-auto flex h-11 rounded-md border-gray-300 bg-[black] px-10 text-white"
-                // label={data?.tips._id ? 'Update' : 'Add'}
-                label={'Save'}
-                rounded={false}
-                type="submit"
-                // loading={mutationLoading}
-                // disabled={mutationLoading}
-              />
-            </Form>
-          )}
-        </Formik>
-      </div>
+                  {/* center */}
+                  {value?.times?.length > 0 ? (
+                    <div className="flex flex-col gap-4">
+                      {value?.times?.map((time: ITimeSlot, timeIndex) => {
+                        return (
+                          <div
+                            key={timeIndex}
+                            className="flex items-start gap-4"
+                          >
+                            <div className="flex flex-col gap-0 sm:flex-row sm:gap-4">
+                              <div className="max-w-4min-w-44 relative flex w-full min-w-44 flex-col">
+                                <CustomTimeInput
+                                  name={`${dayIndex}.times[${timeIndex}].startTime`}
+                                  showLabel={false}
+                                  value={time.startTime}
+                                  onChange={(value: string) => {
+                                    setFieldValue(
+                                      `${dayIndex}.times[${timeIndex}].startTime`,
+                                      value
+                                    );
+                                  }}
+                                  isLoading={loading}
+                                  placeholder="Start Time"
+                                  style={{
+                                    borderColor:
+                                      (
+                                        errors?.[dayIndex]?.times?.[
+                                          timeIndex
+                                        ] as FormikErrors<ITimeSlot>
+                                      )?.startTime &&
+                                      touched?.[dayIndex]?.times?.[timeIndex]
+                                        ?.startTime
+                                        ? 'red'
+                                        : '',
+                                  }}
+                                />
+                                <ErrorMessage
+                                  name={`${dayIndex}.times[${timeIndex}].startTime`}
+                                >
+                                  {(msg) => (
+                                    <div className="absolute bottom-[-15px] ml-1 text-[10px] text-red-500">
+                                      {msg}
+                                    </div>
+                                  )}
+                                </ErrorMessage>
+                              </div>
+
+                              <span className="self-center text-xs">-</span>
+
+                              <div className="max-w-4min-w-44 relative flex w-full min-w-44 flex-col">
+                                <CustomTimeInput
+                                  name={`${dayIndex}.times[${timeIndex}].endTime`}
+                                  showLabel={false}
+                                  value={time.endTime}
+                                  onChange={(value: string) => {
+                                    setFieldValue(
+                                      `${dayIndex}.times[${timeIndex}].endTime`,
+                                      value
+                                    );
+                                  }}
+                                  isLoading={loading}
+                                  placeholder="End Time"
+                                  style={{
+                                    borderColor:
+                                      (
+                                        errors?.[dayIndex]?.times?.[
+                                          timeIndex
+                                        ] as FormikErrors<ITimeSlot>
+                                      )?.endTime &&
+                                      touched?.[dayIndex]?.times?.[timeIndex]
+                                        ?.endTime
+                                        ? 'red'
+                                        : '',
+                                  }}
+                                />
+                                <ErrorMessage
+                                  name={`${dayIndex}.times[${timeIndex}].endTime`}
+                                >
+                                  {(msg) => (
+                                    <div className="absolute bottom-[-15px] text-[10px] text-red-500">
+                                      {msg}
+                                    </div>
+                                  )}
+                                </ErrorMessage>
+                              </div>
+                            </div>
+
+                            {/* right side */}
+                            {timeIndex > 0 ? (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  let prev = [...values[dayIndex]?.times];
+                                  prev.splice(timeIndex, 1);
+                                  setFieldValue(`${dayIndex}.times`, prev);
+                                }}
+                                className="mt-2 flex h-6 w-6 select-none items-center justify-center rounded-full border border-red-500 text-red-500 hover:cursor-pointer hover:bg-red-400 hover:text-white"
+                              >
+                                -
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => {
+                                  let prev = [...values[dayIndex]?.times];
+                                  prev.push({ startTime: null, endTime: null });
+                                  setFieldValue(`${dayIndex}.times`, prev);
+                                }}
+                                type="button"
+                                className="mt-2 flex h-6 w-6 select-none items-center justify-center rounded-full border border-primary-color text-primary-color hover:cursor-pointer hover:bg-secondary-color hover:text-white"
+                              >
+                                +
+                              </button>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="flex min-h-10 flex-1 items-center justify-start">
+                      <span className="select-none rounded-full bg-black px-3 py-1 text-xs text-white">
+                        Closed all Day
+                      </span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            <CustomButton
+              className="mb-[2px] mr-auto mt-auto flex h-11 rounded-md border-gray-300 bg-[black] px-10 text-white"
+              label={'Save'}
+              rounded={false}
+              disabled={loading}
+              type="submit"
+              loading={mutationLoading}
+            />
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

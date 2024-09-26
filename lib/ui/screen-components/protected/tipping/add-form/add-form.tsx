@@ -27,7 +27,7 @@ import { useMutation } from '@apollo/client';
 
 const TippingAddForm = () => {
   // Query
-  const { refetch, loading, data } = useQueryGQL(GET_TIPPING, {
+  const { loading, data } = useQueryGQL(GET_TIPPING, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<ITippingResponse | undefined, undefined>;
 
@@ -55,7 +55,7 @@ const TippingAddForm = () => {
         variables: {
           tippingInput: {
             _id: data.tips._id,
-            tipVariations: [+values.tip1, +values.tip2, +values.tip3],
+            tipVariations: [values.tip1, values.tip2, values.tip3],
             enabled: true,
           },
         },
@@ -67,7 +67,6 @@ const TippingAddForm = () => {
             duration: 3000,
           });
           resetForm();
-          refetch();
         },
         onError: (error) => {
           let message = '';
@@ -95,9 +94,10 @@ const TippingAddForm = () => {
           validationSchema={TippingSchema}
           onSubmit={handleSubmit}
           validateOnChange
+          validateOnBlur
           enableReinitialize
         >
-          {({ values, errors, touched, setFieldValue }) => (
+          {({ values, errors, touched, setFieldValue, validateForm }) => (
             <Form className="grid grid-cols-2 items-center gap-3 sm:grid-cols-4">
               <CustomNumberTextField
                 name="tip1"
@@ -146,7 +146,7 @@ const TippingAddForm = () => {
                 rounded={false}
                 type="submit"
                 loading={mutationLoading}
-                disabled={mutationLoading}
+                disabled={mutationLoading || loading}
               />
             </Form>
           )}
