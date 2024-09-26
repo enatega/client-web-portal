@@ -17,13 +17,13 @@ export default function TextIconClickable({
 }: TextIconClickableProps) {
   return (
     <div
-      className={`text-icon-clickable-container ${className} flex items-center justify-center`}
+      className={`text-icon-clickable-container flex items-center justify-center ${className}`}
       onClick={onClick}
     >
       {icon && (
         <FontAwesomeIcon icon={icon} color={iconStyles?.color ?? 'gray'} />
       )}
-      <span>{title}</span>
+      {title}
       <Ripple />
     </div>
   );

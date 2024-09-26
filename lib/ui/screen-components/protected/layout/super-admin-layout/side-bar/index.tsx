@@ -1,21 +1,29 @@
 // Core
+import { useContext, useEffect, useState } from 'react';
 
+// Context
 import { LayoutContext } from '@/lib/context/layout.context';
+
+// Interface & Types
 import {
   IGlobalComponentProps,
   ISidebarMenuItem,
   LayoutContextProps,
 } from '@/lib/utils/interfaces';
+
+// Icons
 import {
   faCog,
   faHome,
   faSliders,
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useEffect, useState } from 'react';
+
+// Components
+
 import SidebarItem from './side-bar-item';
 
-function Sidebar({ children }: IGlobalComponentProps) {
+function SuperAdminSidebar({ children }: IGlobalComponentProps) {
   const { isSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
   const [width, setWidth] = useState(isSidebarVisible ? '16rem' : '0');
 
@@ -39,6 +47,16 @@ function Sidebar({ children }: IGlobalComponentProps) {
       </aside>
     </div>
   );
+  /* return (
+    <Sidebar
+      visible={isSidebarVisible}
+      onHide={() => showSidebar(false)}
+      style={{ width: '300px' }}
+    >
+      <ul className="flex-1">{children}</ul>
+    </Sidebar>
+ 
+  ); */
 }
 
 export default function MakeSidebar() {
@@ -144,11 +162,11 @@ export default function MakeSidebar() {
 
   return (
     <>
-      <Sidebar>
+      <SuperAdminSidebar>
         {navBarItems.map((item, index) => (
           <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
         ))}
-      </Sidebar>
+      </SuperAdminSidebar>
     </>
   );
 }

@@ -7,7 +7,7 @@ import { InputOtp } from 'primereact/inputotp';
 
 // Style
 
-export default function OTPVerificationScreen() {
+export default function OTPVerificationMain() {
   return (
     <div className="h-full w-full flex items-center justify-center">
       <div className="w-2/6">

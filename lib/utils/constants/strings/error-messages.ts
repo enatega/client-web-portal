@@ -4,7 +4,8 @@ import {
   ICategoryErrors,
   IOptionErrors,
   IRiderErrors,
-  ISignFormErrors,
+  ISignInFormErrors,
+  ISignUpFormErrors,
   IVendorErrors,
 } from '@/lib/utils/interfaces/forms';
 
@@ -20,12 +21,17 @@ export const PasswordErrors = [
   'Password does not match',
 ];
 
-export const SignUpErrors: ISignFormErrors = {
+export const SignUpErrors: ISignUpFormErrors = {
   firstName: ['Required'],
   lastName: ['Required'],
   email: ['Required', 'Invalid email'],
   password: ['Required', ...PasswordErrors],
   confirmPassword: ['Required', 'Password must match'],
+};
+
+export const SignInErrors: ISignInFormErrors = {
+  email: ['Required', 'Invalid email'],
+  password: ['Required'],
 };
 
 export const VendorErrors: IVendorErrors = {

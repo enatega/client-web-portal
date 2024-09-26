@@ -6,7 +6,7 @@ export interface ISignUpForm {
   confirmPassword: string;
 }
 
-export interface ISignFormErrors {
+export interface ISignUpFormErrors {
   firstName: string[];
   lastName: string[];
   email: string[];

@@ -34,7 +34,7 @@ const initialValues: ISignUpForm = {
   confirmPassword: '',
 };
 
-export default function SignupScreen() {
+export default function SignupMain() {
   const [account] = useState<ISignUpForm>(initialValues);
 
   const SignupSchema = Yup.object().shape({
