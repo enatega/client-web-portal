@@ -17,6 +17,7 @@ import {
   faCog,
   faHome,
   faSliders,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Components
@@ -51,6 +52,17 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
       </aside>
     </div>
   );
+
+  /*   return (
+  
+     <Sidebar
+      visible={isAdminSidebarVisible}
+      onHide={() => showAdminSidebar(false)}
+      style={{ width: '300px' }}
+    >
+      <ul className="flex-1">{children}</ul>
+    </Sidebar> 
+  ); */
 }
 
 export default function MakeSidebar() {
@@ -68,7 +80,7 @@ export default function MakeSidebar() {
       text: 'Profile',
       route: '/admin/restaurant/profile',
       isParent: true,
-      icon: faHome,
+      icon: faUser,
       isClickable: true,
     },
     {
@@ -122,6 +134,7 @@ export default function MakeSidebar() {
         },
       ],
     },
+
     {
       text: 'Back to Admin',
       route: '/home',

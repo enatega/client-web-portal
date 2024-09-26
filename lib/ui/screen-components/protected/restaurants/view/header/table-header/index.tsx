@@ -48,8 +48,8 @@ export default function RestaurantsTableHeader({
   ];
 
   return (
-    <div className="flex flex-col mb-4 gap-6">
-      <div className="w-fit flex flex-colm:flex-row items-center gap-2">
+    <div className="mb-4 flex flex-col gap-6">
+      <div className="flex-colm:flex-row flex w-fit items-center gap-2">
         <div className="w-60">
           <CustomTextField
             type="text"
@@ -70,7 +70,7 @@ export default function RestaurantsTableHeader({
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   placeholder="Search"
-                  className="w-full h-8"
+                  className="h-8 w-full"
                   type="text"
                   name="search"
                   showLabel={false}
@@ -85,7 +85,7 @@ export default function RestaurantsTableHeader({
                   .map((item, index) => (
                     <div
                       key={index}
-                      className={`${classes.filter} flex justify-between items-center my-2`}
+                      className={`${classes.filter} my-2 flex items-center justify-between`}
                     >
                       <div className="flex">
                         <Checkbox
@@ -114,7 +114,7 @@ export default function RestaurantsTableHeader({
           </OverlayPanel>
 
           <TextIconClickable
-            className="border border-dotted border-[#E4E4E7] rounded text-black w-20"
+            className="w-20 rounded border border-dotted border-[#E4E4E7] text-black"
             icon={faAdd}
             iconStyles={{ color: 'black' }}
             title={selectedActions.length > 0 ? 'Filter' : 'Action'}

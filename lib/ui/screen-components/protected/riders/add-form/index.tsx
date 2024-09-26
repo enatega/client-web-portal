@@ -9,8 +9,8 @@ import { IQueryResult } from '@/lib/utils/interfaces';
 import { IRiderForm } from '@/lib/utils/interfaces/forms';
 import {
   IRidersAddFormComponentProps,
-  IZonesResponse,
-} from '@/lib/utils/interfaces/rider.interface';
+  IRiderZonesResponse,
+} from '@/lib/utils/interfaces';
 
 // Components
 import CustomButton from '@/lib/ui/useable-components/button';
@@ -60,7 +60,7 @@ export default function RiderAddForm({
   // Query
   const { data } = useQueryGQL(GET_ZONES, {
     fetchPolicy: 'cache-and-network',
-  }) as IQueryResult<IZonesResponse | undefined, undefined>;
+  }) as IQueryResult<IRiderZonesResponse | undefined, undefined>;
 
   // Mutation
   const mutation = rider ? EDIT_RIDER : CREATE_RIDER;

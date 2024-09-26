@@ -3,11 +3,11 @@ import { useState } from 'react';
 
 // Components
 import RiderAddForm from '@/lib/ui/screen-components/protected/riders/add-form';
+import RiderHeader from '@/lib/ui/screen-components/protected/riders/view/header/screen-header';
 import RidersMain from '@/lib/ui/screen-components/protected/riders/view/main';
 
 // Interfaces and Types
 
-import RiderHeader from '@/lib/ui/screen-components/protected/riders/view/header/screen-header';
 import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 
 export default function RidersScreen() {
@@ -16,7 +16,7 @@ export default function RidersScreen() {
   const [rider, setRider] = useState<null | IRiderResponse>(null);
 
   return (
-    <div className="flex flex-col p-3 h-screen overflow-hidden">
+    <div className="flex flex-col h-screen p-3 overflow-hidden">
       <RiderHeader setIsAddRiderVisible={setIsAddRiderVisible} />
       <div className="flex-grow overflow-y-auto">
         <RidersMain

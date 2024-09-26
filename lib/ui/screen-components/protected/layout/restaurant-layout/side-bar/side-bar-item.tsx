@@ -71,7 +71,7 @@ export default function SidebarItem({
   const isActive = pathname.includes(route ?? '');
 
   return (
-    <div className={`flex flex-col mt-[0.4rem]`}>
+    <div className={`flex flex-col mt-[0.4rem] rounded-md`}>
       <div>
         <button
           className={`

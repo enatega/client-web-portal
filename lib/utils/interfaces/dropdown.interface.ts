@@ -17,6 +17,7 @@ export interface IMultiSelectComponentProps extends ISelectionComponentProps {
   setSelectedItems: (key: string, items: IDropdownSelectItem[]) => void;
   options: IDropdownSelectItem[];
   dropDownIcon?: IconDefinition;
+  onChange?: (selected: IDropdownSelectItem[]) => void;
 }
 
 export interface IDropdownComponentProps extends ISelectionComponentProps {

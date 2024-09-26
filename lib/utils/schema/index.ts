@@ -1,4 +1,5 @@
 export * from './addon';
+export * from './authentication';
 export * from './banner';
 export * from './category';
 export * from './coupon';
@@ -8,3 +9,4 @@ export * from './restaurant';
 export * from './rider';
 export * from './tipping';
 export * from './vendor';
+export * from './zone';

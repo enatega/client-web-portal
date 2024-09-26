@@ -1,5 +1,7 @@
 export * from './addons';
+export * from './authentication';
 export * from './banners';
+export * from './commission-rate';
 export * from './category';
 export * from './coupons';
 export * from './cuisines';
@@ -12,3 +14,4 @@ export * from './taxations';
 export * from './tippings';
 export * from './vendor';
 export * from './withdraw-requests';
+export * from './zone';

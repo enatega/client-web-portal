@@ -1,3 +1,5 @@
+'use client';
+
 // Interfaces
 import { IIconTextFieldProps } from '@/lib/utils/interfaces';
 
@@ -19,12 +21,14 @@ import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 
 export default function CustomIconTextField({
   className,
-  iconProperties: { icon, position, style },
+  iconProperties,
   placeholder,
   showLabel,
   isLoading = false,
   ...props
 }: IIconTextFieldProps) {
+  const { icon, position, style } = iconProperties;
+
   return !isLoading ? (
     <IconField iconPosition={position}>
       <InputIcon style={style}>
@@ -39,7 +43,7 @@ export default function CustomIconTextField({
         )}
         <InputText
           className={twMerge(
-            `w-full h-10 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit`,
+            `w-full h-10 rounded-lg px-2 text-sm border border-gray-300 focus:outline-none focus:shadow-none`,
             className
           )}
           placeholder={placeholder}

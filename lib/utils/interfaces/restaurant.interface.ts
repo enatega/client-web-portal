@@ -181,6 +181,10 @@ export interface IRestaurantProfileResponse {
   };
 }
 
+export interface IRestaurantProfileResponseGQL {
+  restaurant: IRestaurantProfile;
+}
+
 export interface IRestaurantDeliveryZoneInfo {
   boundType: string;
   deliveryBounds: {

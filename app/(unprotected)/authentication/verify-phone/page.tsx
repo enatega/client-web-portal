@@ -1,5 +1,5 @@
 // Component
-import PhoneVerificationScreen from '@/lib/ui/screens/auth/phone-verification';
+import PhoneVerificationScreen from '@/lib/ui/screen-components/unprotected/authentication/phone-verification';
 
 export default function VerifyPhonePage() {
   return <PhoneVerificationScreen />;

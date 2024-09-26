@@ -15,7 +15,7 @@ export default function OptionsScreen() {
   const [option, setOption] = useState<IOptions | null>(null);
 
   return (
-    <div className="flex flex-col p-3 h-screen overflow-hidden">
+    <div className="flex h-screen flex-col overflow-hidden p-3">
       <OptionsHeader setIsAddOptionsVisible={setIsAddOptionsVisible} />
       <div className="flex-grow overflow-y-auto">
         <OptionsMain

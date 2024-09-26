@@ -21,9 +21,9 @@ export default function RestaurantsScreenHeader() {
       <div className="flex w-full justify-between">
         <HeaderText text="Restaurants" />
         <TextIconClickable
-          className="sm:w-auto bg-black text-white border-gray-300 rounded"
+          className="rounded border-gray-300 bg-black text-white sm:w-auto"
           icon={faAdd}
-          iconStyles={{ color: 'black' }}
+          iconStyles={{ color: 'white' }}
           title="Add Restaurant"
           onClick={() => onRestaurantsFormVisible(true)}
         />

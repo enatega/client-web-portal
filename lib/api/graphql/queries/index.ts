@@ -11,3 +11,4 @@ export * from './tippings';
 export * from './user';
 export * from './vendors';
 export * from './withdraw-requests';
+export * from './zone';
