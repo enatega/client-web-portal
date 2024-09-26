@@ -360,7 +360,6 @@ export default function AddonAddForm({
                                                   value={value.description}
                                                   onChange={handleChange}
                                                   showLabel={true}
-                                                  className={''}
                                                   style={{
                                                     borderColor:
                                                       onErrorMessageMatcher(

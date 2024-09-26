@@ -227,7 +227,8 @@ body {
 /* Text Icon Clickable */
 .text-icon-clickable-container {
   height: 40px;
-  padding: 0.5rem;
+  padding: 0.4rem 0.6rem;
+
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -236,7 +237,7 @@ body {
 }
 
 .text-icon-clickable-container > span {
-  font-size: 0.75rem; /* equivalent to text-xs */
+  font-size: 0.2rem; /* equivalent to text-xs */
   font-weight: 400; /* equivalent to font-normal */
   line-height: 1.5rem; /* equivalent to leading-6 */
 }

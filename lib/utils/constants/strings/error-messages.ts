@@ -10,6 +10,7 @@ import {
 } from '@/lib/utils/interfaces/forms';
 
 import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
+import { IZoneErrors } from '../../interfaces/forms/zone.form.interface';
 import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
 
 export const PasswordErrors = [
@@ -93,6 +94,11 @@ export const AddonsErrors: IAddonsErrors = {
   quantityMinimum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
   quantityMaximum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
   options: ['Required', 'Option field must have at least 1 items'],
+};
+
+export const ZoneErrors: IZoneErrors = {
+  title: ['Required'],
+  description: ['Required'],
 };
 
 export const StaffErrors: IStaffErrors = {

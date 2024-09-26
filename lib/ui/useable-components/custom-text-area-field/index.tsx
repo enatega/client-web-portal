@@ -21,7 +21,7 @@ export default function CustomTextAreaField({
       )}
       <InputTextarea
         value={value}
-        className={`min-h-20 w-full rounded-lg border border-gray-300 px-2 pt-1 text-sm focus:shadow-none focus:outline-none ${className}`}
+        className={`w-full min-h-20 border px-2 pt-1 text-sm border-gray-300 rounded-lg focus:outline-none focus:shadow-none ${className ?? ''}`}
         id={name}
         placeholder={placeholder}
         onChange={onChange}
