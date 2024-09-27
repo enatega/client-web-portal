@@ -6,7 +6,6 @@ import { ToastContext } from '@/lib/context/toast.context';
 
 // Custom hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-
 // UI components
 import Table from '@/lib/ui/useable-components/table';
 
