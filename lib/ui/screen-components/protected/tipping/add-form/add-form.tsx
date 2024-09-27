@@ -87,8 +87,8 @@ const TippingAddForm = () => {
   };
 
   return (
-    <div className="mt-7 rounded bg-[#F4F4F5] px-8 py-14">
-      <div>
+    <div className="p-3">
+    
         <Formik
           initialValues={initialValues}
           validationSchema={TippingSchema}
@@ -151,7 +151,7 @@ const TippingAddForm = () => {
             </Form>
           )}
         </Formik>
-      </div>
+   
     </div>
   );
 };

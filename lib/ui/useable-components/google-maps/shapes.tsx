@@ -6,6 +6,7 @@ import { ICustomShapeComponentProps } from '@/lib/utils/interfaces';
 export default function CustomShape({
   selected,
   onClick,
+  hidenNames=[],
 }: ICustomShapeComponentProps) {
   const items = [
     {
@@ -44,6 +45,9 @@ export default function CustomShape({
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
       {items.map((item, index: number) => {
+
+        if(hidenNames.some((hidden: string) => hidden.toLowerCase() === item.value)) return;
+
         return (
           <button
             key={`${item.value}-${index}`}

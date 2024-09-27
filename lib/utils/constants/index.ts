@@ -8,5 +8,6 @@ export * from './strings';
 export * from './timing';
 export * from './url';
 export * from './vendor';
+export * from './geo-location'
 export * from './banners';
 

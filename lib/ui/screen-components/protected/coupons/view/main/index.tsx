@@ -141,7 +141,7 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
     }
   }, [selectedStatuses]);
   return (
-    <div>
+    <div className="p-3">
       <CouponTable
         data={coupons}
         loading={loading}

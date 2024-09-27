@@ -46,6 +46,18 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* Screen Container */
+/* Start Generation Here */
+.screen-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  overflow-y: auto;
+}
+/* End Generation Here */
+
+
+
 /* Layout */
 
 .layout-top-container {
@@ -54,6 +66,7 @@ body {
   left: 0;
   top: 0;
   width: 100%;
+  border-bottom: 0.2px solid rgba(0, 0, 0, 0.1);
 }
 
 .layout-main-container {
@@ -118,23 +131,15 @@ body {
   font-weight: 400;
 }
 
-/* Scroll Bar  */
-::-webkit-scrollbar {
-  width: 7px;
-  background: rgba(177, 177, 177, 0.171);
-}
-::-webkit-scrollbar-thumb {
-  background: #050505dc;
-  border-radius: 7px;
-}
+
 
 /* Scroll Bar  */
 ::-webkit-scrollbar {
   width: 7px;
-  background: rgba(177, 177, 177, 0.171);
+  background: rgba(255, 255, 255, 0.8); /* Light gray background for better visibility */
 }
 ::-webkit-scrollbar-thumb {
-  background: #050505dc;
+  background: #d3d3d3; /* A more lighter gray color for the scrollbar thumb */
   border-radius: 7px;
 }
 
@@ -493,3 +498,5 @@ body {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
+

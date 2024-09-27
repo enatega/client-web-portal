@@ -1,4 +1,3 @@
-'use client';
 // Screens
 export default function RootLayout({
   children,

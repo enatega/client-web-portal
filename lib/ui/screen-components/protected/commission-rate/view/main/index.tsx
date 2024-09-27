@@ -1,12 +1,27 @@
+// GraphQL API imports
 import { GET_RESTAURANTS, updateCommission } from '@/lib/api/graphql';
+
+// Context imports
 import { ToastContext } from '@/lib/context/toast.context';
+
+// Custom hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+// UI components
 import Table from '@/lib/ui/useable-components/table';
+
+// Utility functions
 import { generateDummyCommissionRates } from '@/lib/utils/dummy';
+
+// Type definitions
 import { IQueryResult, IRestaurantResponse } from '@/lib/utils/interfaces';
+
+// Apollo Client hooks
 import { useMutation } from '@apollo/client';
+
+// React hooks
 import { useContext, useEffect, useState } from 'react';
-import CommissionRateHeader from '../header/screen-header';
+
+// Table column definitions
 import { COMMISSION_RATE_COLUMNS } from '@/lib/ui/useable-components/table/columns/comission-rate-columns';
 
 interface RestaurantsData {
@@ -157,10 +172,8 @@ export default function CommissionRateMain() {
   // };
 
   return (
-    <div className="p-2 pt-5 pb-20">
-      <>
-        <CommissionRateHeader
-        />
+    <div className="p-3">
+   
         <Table
           data={loading ? generateDummyCommissionRates() : filteredRestaurants}
           setSelectedData={setSelectedRestaurants}
@@ -168,7 +181,7 @@ export default function CommissionRateMain() {
           columns={columns}
           loading={loading}
         />
-      </>
+ 
     </div>
   );
 }

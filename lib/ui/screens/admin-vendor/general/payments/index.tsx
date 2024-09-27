@@ -4,11 +4,9 @@ import PaymentHeader from '@/lib/ui/screen-components/protected/payment/header/s
 
 export default function PaymentScreen() {
   return (
-    <div className="flex flex-col p-3 h-screen overflow-hidden">
+    <div className="screen-container">
       <PaymentHeader />
-      <div className="flex-grow overflow-y-auto">
-        <PaymentMain />
-      </div>
+      <PaymentMain />
     </div>
   );
 }
