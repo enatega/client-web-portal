@@ -22,4 +22,5 @@ export interface TextIconClickableProps extends IGlobalComponentProps {
   iconStyles?: IIconStyles;
   title?: string;
   route?: string;
+  loading?: boolean;
 }

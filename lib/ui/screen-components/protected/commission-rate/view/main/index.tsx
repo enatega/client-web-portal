@@ -1,12 +1,27 @@
+// GraphQL API imports
 import { GET_RESTAURANTS, updateCommission } from '@/lib/api/graphql';
+
+// Context imports
 import { ToastContext } from '@/lib/context/toast.context';
+
+// Custom hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+// UI components
 import Table from '@/lib/ui/useable-components/table';
+
+// Utility functions
 import { generateDummyCommissionRates } from '@/lib/utils/dummy';
+
+// Type definitions
 import { IQueryResult, IRestaurantResponse } from '@/lib/utils/interfaces';
+
+// Apollo Client hooks
 import { useMutation } from '@apollo/client';
+
+// React hooks
 import { useContext, useEffect, useState } from 'react';
-import CommissionRateHeader from '../header';
+
+// Table column definitions
 import { COMMISSION_RATE_COLUMNS } from '@/lib/ui/useable-components/table/columns/comission-rate-columns';
 
 interface RestaurantsData {
@@ -24,8 +39,8 @@ export default function CommissionRateMain() {
   const [loadingRestaurant, setLoadingRestaurant] = useState<string | null>(
     null
   );
-  const [selectedActions, setSelectedActions] = useState<string[]>([]);
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [selectedActions,] = useState<string[]>([]);
+  const [searchTerm,] = useState<string>('');
 
   const { showToast } = useContext(ToastContext);
   const { data, error, refetch, loading } = useQueryGQL(GET_RESTAURANTS, {
@@ -152,18 +167,13 @@ export default function CommissionRateMain() {
     loadingRestaurant,
   });
 
-  const handleSearch = (value: string) => {
-    setSearchTerm(value);
-  };
+  // const handleSearch = (value: string) => {
+  //   setSearchTerm(value);
+  // };
 
   return (
     <div className="p-3">
-      <>
-        <CommissionRateHeader
-          setSelectedActions={setSelectedActions}
-          selectedActions={selectedActions}
-          onSearch={handleSearch}
-        />
+   
         <Table
           data={loading ? generateDummyCommissionRates() : filteredRestaurants}
           setSelectedData={setSelectedRestaurants}
@@ -171,7 +181,7 @@ export default function CommissionRateMain() {
           columns={columns}
           loading={loading}
         />
-      </>
+ 
     </div>
   );
 }

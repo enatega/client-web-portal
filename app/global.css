@@ -136,10 +136,10 @@ body {
 /* Scroll Bar  */
 ::-webkit-scrollbar {
   width: 7px;
-  background: rgba(177, 177, 177, 0.171);
+  background: rgba(255, 255, 255, 0.8); /* Light gray background for better visibility */
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--secondary-color);
+  background: #d3d3d3; /* A more lighter gray color for the scrollbar thumb */
   border-radius: 7px;
 }
 
