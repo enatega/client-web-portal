@@ -43,7 +43,6 @@ const NodeMailerAddForm = () => {
   );
 
   const handleSubmit = (values: INodeMailerForm) => {
-    console.log(values);
     mutate({
       variables: {
         configurationInput: {
