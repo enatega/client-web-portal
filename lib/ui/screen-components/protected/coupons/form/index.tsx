@@ -153,72 +153,74 @@ export default function CouponForm({
         {({ errors, handleSubmit, values, isSubmitting, setFieldValue }) => {
           return (
             <Form onSubmit={handleSubmit}>
-              <div className="flex gap-x-2">
-                <h2>{isEditing.bool ? 'Edit' : 'Add'} Coupon</h2>
-                <div className="flex gap-x-1 items-center">
-                  {values.enabled ? 'Enabled' : 'Disabled'}
-                  <InputSwitch
-                    checked={values.enabled}
-                    onChange={(e) => setFieldValue('enabled', e.value)}
-                    className={values.enabled ? 'p-inputswitch-checked' : ''}
-                  />
+              <div className="space-y-4">
+                <div className="flex gap-4">
+                  <h2>{isEditing.bool ? 'Edit' : 'Add'} Coupon</h2>
+                  <div className="flex gap-x-1 items-center">
+                    {values.enabled ? 'Enabled' : 'Disabled'}
+                    <InputSwitch
+                      checked={values.enabled}
+                      onChange={(e) => setFieldValue('enabled', e.value)}
+                      className={values.enabled ? 'p-inputswitch-checked' : ''}
+                    />
+                  </div>
                 </div>
-              </div>
-              <CustomTextField
-                value={values.title}
-                name="title"
-                showLabel={true}
-                placeholder={'Title'}
-                type="text"
-                onChange={(e) => setFieldValue('title', e.target.value)}
-                className={
-                  errors.title ? 'text-red-600 outline outine-red' : ''
-                }
-              />
-              <ErrorMessage
-                name="title"
-                component="span"
-                className="text-red-600"
-              />
-              <CustomNumberField
-                value={values.discount}
-                name="discount"
-                showLabel={true}
-                placeholder={'Discount'}
-                onChange={setFieldValue}
-                min={0}
-                max={100}
-                className={
-                  errors.discount ? 'text-red-600 outline outine-red' : ''
-                }
-              />
+                <CustomTextField
+                  value={values.title}
+                  name="title"
+                  showLabel={true}
+                  placeholder={'Title'}
+                  type="text"
+                  onChange={(e) => setFieldValue('title', e.target.value)}
+                  className={
+                    errors.title ? 'text-red-600 outline outine-red' : ''
+                  }
+                />
+                <ErrorMessage
+                  name="title"
+                  component="span"
+                  className="text-red-600"
+                />
+                <CustomNumberField
+                  value={values.discount}
+                  name="discount"
+                  showLabel={true}
+                  placeholder={'Discount'}
+                  onChange={setFieldValue}
+                  min={0}
+                  max={100}
+                  className={
+                    errors.discount ? 'text-red-600 outline outine-red' : ''
+                  }
+                />
 
-              {errors.discount}
-              <ErrorMessage
-                name="discount"
-                component="span"
-                className="text-red-600"
-              />
-              <button
-                className="float-end rounded-md w-fit h-10 bg-black text-white border-gray-300 px-8"
-                disabled={
-                  isSubmitting || editCouponLoading || createCouponLoading
-                }
-                type="submit"
-              >
-                {isSubmitting || editCouponLoading || createCouponLoading ? (
-                  <ProgressSpinner
-                    className="w-6 h-6 items-center self-center m-0 p-0"
-                    strokeWidth="5"
-                    style={{ fill: 'white', accentColor: 'white' }}
-                    color="white"
-                  />
-                ) : isEditing.bool ? (
-                  'Update'
-                ) : (
-                  'Add'
-                )}
-              </button>
+                {errors.discount}
+                <ErrorMessage
+                  name="discount"
+                  component="span"
+                  className="text-red-600"
+                />
+                <button
+                  className="float-end rounded-md w-fit h-10 bg-black text-white border-gray-300 px-8"
+                  disabled={
+                    isSubmitting || editCouponLoading || createCouponLoading
+                  }
+                  type="submit"
+                >
+                  {isSubmitting || editCouponLoading || createCouponLoading ? (
+                    <ProgressSpinner
+                      className="w-6 h-6 items-center self-center m-0 p-0"
+                      strokeWidth="5"
+                      style={{ fill: 'white', accentColor: 'white' }}
+                      color="white"
+                    />
+                  ) : isEditing.bool ? (
+                    'Update'
+                  ) : (
+                    'Add'
+                  )}
+                </button>
+              </div>
             </Form>
           );
         }}

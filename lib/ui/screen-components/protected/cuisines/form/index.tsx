@@ -173,83 +173,87 @@ export default function CuisineForm({
           }) => {
             return (
               <Form onSubmit={handleSubmit}>
-                <CustomTextField
-                  showLabel={true}
-                  name="name"
-                  onChange={handleChange}
-                  value={values.name}
-                  type="text"
-                  placeholder="Name"
-                  className={`${errors.name ? 'text-red-600 outline outline-red-600' : ''}`}
-                />
-                <ErrorMessage
-                  name="name"
-                  component="span"
-                  className="text-red-600"
-                />
-                <CustomTextAreaField
-                  showLabel={true}
-                  label="Description"
-                  name="description"
-                  onChange={handleChange}
-                  value={values.description}
-                  placeholder="Description"
-                  rows={5}
-                  className={`${errors.description ? 'text-red-600 outline outline-red-600' : ''}`}
-                />
-                <ErrorMessage
-                  name="description"
-                  component="span"
-                  className="text-red-600"
-                />
-                <CustomDropdownComponent
-                  name="shopType"
-                  options={shopTypeOptions}
-                  selectedItem={values.shopType}
-                  setSelectedItem={setFieldValue}
-                  placeholder="Shop Type"
-                  showLabel={true}
-                />
-                <span
-                  className={
-                    errors.shopType?.label ? 'text-red-600 visible' : 'hidden'
-                  }
-                >
-                  {errors.shopType?.label}
-                </span>
+                <div className="space-y-4">
+                  <CustomTextField
+                    showLabel={true}
+                    name="name"
+                    onChange={handleChange}
+                    value={values.name}
+                    type="text"
+                    placeholder="Name"
+                    className={`${errors.name ? 'text-red-600 outline outline-red-600' : ''}`}
+                  />
+                  <ErrorMessage
+                    name="name"
+                    component="span"
+                    className="text-red-600"
+                  />
+                  <CustomTextAreaField
+                    showLabel={true}
+                    label="Description"
+                    name="description"
+                    onChange={handleChange}
+                    value={values.description}
+                    placeholder="Description"
+                    rows={5}
+                    className={`${errors.description ? 'text-red-600 outline outline-red-600' : ''}`}
+                  />
+                  <ErrorMessage
+                    name="description"
+                    component="span"
+                    className="text-red-600"
+                  />
+                  <CustomDropdownComponent
+                    name="shopType"
+                    options={shopTypeOptions}
+                    selectedItem={values.shopType}
+                    setSelectedItem={setFieldValue}
+                    placeholder="Shop Type"
+                    showLabel={true}
+                  />
+                  <span
+                    className={
+                      errors.shopType?.label ? 'text-red-600 visible' : 'hidden'
+                    }
+                  >
+                    {errors.shopType?.label}
+                  </span>
 
-                <CustomUploadImageComponent
-                  name="image"
-                  onSetImageUrl={setFieldValue}
-                  title="image"
-                  existingImageUrl={isEditing.bool ? isEditing.data.image : ''}
-                  showExistingImage={
-                    isEditing.bool && isEditing.data.image ? true : false
-                  }
-                />
+                  <CustomUploadImageComponent
+                    name="image"
+                    onSetImageUrl={setFieldValue}
+                    title="image"
+                    existingImageUrl={
+                      isEditing.bool ? isEditing.data.image : ''
+                    }
+                    showExistingImage={
+                      isEditing.bool && isEditing.data.image ? true : false
+                    }
+                  />
 
-                <button
-                  className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"
-                  disabled={
-                    isSubmitting || createCuisineLoading || editCuisineLoading
-                  }
-                  type="submit"
-                >
-                  {isSubmitting ||
-                  createCuisineLoading ||
-                  editCuisineLoading ? (
-                    <ProgressSpinner
-                      className="w-6 h-6 items-center self-center m-0 p-0"
-                      strokeWidth="5"
-                      style={{ fill: 'white', accentColor: 'white' }}
-                      color="white"
-                    />
-                  ) : isEditing.bool ? (
-                    'Update'
-                  ) : (
-                    'Add'
-                  )}
-                </button>
+                  <button
+                    className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"
+                    disabled={
+                      isSubmitting || createCuisineLoading || editCuisineLoading
+                    }
+                    type="submit"
+                  >
+                    {isSubmitting ||
+                    createCuisineLoading ||
+                    editCuisineLoading ? (
+                      <ProgressSpinner
+                        className="w-6 h-6 items-center self-center m-0 p-0"
+                        strokeWidth="5"
+                        style={{ fill: 'white', accentColor: 'white' }}
+                        color="white"
+                      />
+                    ) : isEditing.bool ? (
+                      'Update'
+                    ) : (
+                      'Add'
+                    )}
+                  </button>
+                </div>
               </Form>
             );
           }}

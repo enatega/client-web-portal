@@ -79,53 +79,58 @@ export default function NotificationForm({
         {({ handleSubmit, handleChange, values, isSubmitting }) => {
           return (
             <Form onSubmit={handleSubmit}>
-              <CustomTextField
-                value={values.title}
-                onChange={handleChange}
-                name="title"
-                className="w-full py-2 px-1 text-sm"
-                showLabel={true}
-                placeholder="Title"
-                type="text"
-              />
+              <div className="flex flex-col mb-2">
+                <span className="text-lg">Send Notification</span>
+              </div>
+              <div className="space-y-4">
+                <CustomTextField
+                  value={values.title}
+                  onChange={handleChange}
+                  name="title"
+                  className="w-full py-2 px-1 text-sm"
+                  showLabel={true}
+                  placeholder="Title"
+                  type="text"
+                />
 
-              <ErrorMessage
-                name="title"
-                component="span"
-                className="text-red-600"
-              />
-              <CustomTextAreaField
-                value={values.body}
-                onChange={handleChange}
-                showLabel={true}
-                label="Description"
-                name="body"
-                placeholder="Add description here"
-                className="w-full text-sm"
-                rows={5}
-              />
-              <ErrorMessage
-                name="body"
-                component="span"
-                className="text-red-600"
-              />
+                <ErrorMessage
+                  name="title"
+                  component="span"
+                  className="text-red-600"
+                />
+                <CustomTextAreaField
+                  value={values.body}
+                  onChange={handleChange}
+                  showLabel={true}
+                  label="Description"
+                  name="body"
+                  placeholder="Add description here"
+                  className="w-full text-sm"
+                  rows={5}
+                />
+                <ErrorMessage
+                  name="body"
+                  component="span"
+                  className="text-red-600"
+                />
 
-              <button
-                className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"
-                disabled={isSubmitting}
-                type="submit"
-              >
-                {isSubmitting ? (
-                  <ProgressSpinner
-                    className="w-6 h-6 items-center self-center m-0 p-0"
-                    strokeWidth="5"
-                    style={{ fill: 'white', accentColor: 'white' }}
-                    color="white"
-                  />
-                ) : (
-                  'Send'
-                )}
-              </button>
+                <button
+                  className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"
+                  disabled={isSubmitting}
+                  type="submit"
+                >
+                  {isSubmitting ? (
+                    <ProgressSpinner
+                      className="w-6 h-6 items-center self-center m-0 p-0"
+                      strokeWidth="5"
+                      style={{ fill: 'white', accentColor: 'white' }}
+                      color="white"
+                    />
+                  ) : (
+                    'Send'
+                  )}
+                </button>
+              </div>
             </Form>
           );
         }}
