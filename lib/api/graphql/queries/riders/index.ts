@@ -39,3 +39,19 @@ export const GET_AVAILABLE_RIDERS = gql`
     }
   }
 `;
+export const GET_RIDERS_BY_ZONE = gql`
+  query RidersByZone($id: String!) {
+    ridersByZone(id: $id) {
+      _id
+      name
+      username
+      password
+      phone
+      available
+      zone {
+        _id
+        title
+      }
+    }
+  }
+`;
