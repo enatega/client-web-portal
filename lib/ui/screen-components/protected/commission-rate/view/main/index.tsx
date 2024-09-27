@@ -39,8 +39,8 @@ export default function CommissionRateMain() {
   const [loadingRestaurant, setLoadingRestaurant] = useState<string | null>(
     null
   );
-  const [selectedActions,] = useState<string[]>([]);
-  const [searchTerm,] = useState<string>('');
+  const [selectedActions] = useState<string[]>([]);
+  const [searchTerm] = useState<string>('');
 
   const { showToast } = useContext(ToastContext);
   const { data, error, refetch, loading } = useQueryGQL(GET_RESTAURANTS, {
@@ -173,15 +173,13 @@ export default function CommissionRateMain() {
 
   return (
     <div className="p-3">
-   
-        <Table
-          data={loading ? generateDummyCommissionRates() : filteredRestaurants}
-          setSelectedData={setSelectedRestaurants}
-          selectedData={selectedRestaurants}
-          columns={columns}
-          loading={loading}
-        />
- 
+      <Table
+        data={loading ? generateDummyCommissionRates() : filteredRestaurants}
+        setSelectedData={setSelectedRestaurants}
+        selectedData={selectedRestaurants}
+        columns={columns}
+        loading={loading}
+      />
     </div>
   );
 }

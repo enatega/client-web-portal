@@ -56,8 +56,6 @@ body {
 }
 /* End Generation Here */
 
-
-
 /* Layout */
 
 .layout-top-container {
@@ -131,12 +129,15 @@ body {
   font-weight: 400;
 }
 
-
-
 /* Scroll Bar  */
 ::-webkit-scrollbar {
   width: 7px;
-  background: rgba(255, 255, 255, 0.8); /* Light gray background for better visibility */
+  background: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Light gray background for better visibility */
 }
 ::-webkit-scrollbar-thumb {
   background: #d3d3d3; /* A more lighter gray color for the scrollbar thumb */
@@ -499,4 +500,13 @@ body {
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+/* .p-inputmask.p-inputtext.p-component.p-filled */
+.p-password-input.p-inputtext.p-component.p-filled .p-input-icon svg {
+  margin-right: -20px;
+}
 
+.icon-right .p-icon-field.p-icon-field-right svg {
+  /* margin-right: -90px; */
+  position: absolute;
+  right: -35px;
+}

@@ -64,7 +64,7 @@ export default function StaffMain({
   ];
 
   return (
-    <div className='p-3'>
+    <div className="p-3">
       <Table
         header={
           <StaffTableHeader

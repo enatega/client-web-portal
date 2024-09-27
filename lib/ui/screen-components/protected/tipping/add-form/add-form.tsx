@@ -88,70 +88,68 @@ const TippingAddForm = () => {
 
   return (
     <div className="p-3">
-    
-        <Formik
-          initialValues={initialValues}
-          validationSchema={TippingSchema}
-          onSubmit={handleSubmit}
-          validateOnChange
-          validateOnBlur
-          enableReinitialize
-        >
-          {({ values, errors, touched, setFieldValue }) => (
-            <Form className="grid grid-cols-2 items-center gap-3 sm:grid-cols-4">
-              <CustomNumberTextField
-                name="tip1"
-                placeholder="Tip 1 e.g 10"
-                maxLength={35}
-                min={1}
-                max={100}
-                value={values.tip1}
-                onChange={setFieldValue}
-                isLoading={loading}
-                showLabel={true}
-                style={{
-                  borderColor: errors?.tip1 && touched.tip1 ? 'red' : '',
-                }}
-              />
-              <CustomNumberTextField
-                name="tip2"
-                placeholder="Tip 2 e.g 20"
-                maxLength={35}
-                min={1}
-                max={100}
-                isLoading={loading}
-                showLabel={true}
-                value={values.tip2}
-                onChange={setFieldValue}
-                style={{
-                  borderColor: errors.tip2 && touched.tip2 ? 'red' : '',
-                }}
-              />
-              <CustomNumberTextField
-                name="tip3"
-                min={1}
-                max={100}
-                placeholder="Tip 3 e.g 30"
-                isLoading={loading}
-                showLabel={true}
-                value={values.tip3}
-                onChange={setFieldValue}
-                style={{
-                  borderColor: errors.tip3 && touched.tip3 ? 'red' : '',
-                }}
-              />
-              <CustomButton
-                className="mb-[2px] mt-auto flex h-11 rounded-md border-gray-300 bg-[black] px-10 text-white"
-                label={data?.tips._id ? 'Update' : 'Add'}
-                rounded={false}
-                type="submit"
-                loading={mutationLoading}
-                disabled={mutationLoading || loading}
-              />
-            </Form>
-          )}
-        </Formik>
-   
+      <Formik
+        initialValues={initialValues}
+        validationSchema={TippingSchema}
+        onSubmit={handleSubmit}
+        validateOnChange
+        validateOnBlur
+        enableReinitialize
+      >
+        {({ values, errors, touched, setFieldValue }) => (
+          <Form className="grid grid-cols-2 items-center gap-3 sm:grid-cols-4">
+            <CustomNumberTextField
+              name="tip1"
+              placeholder="Tip 1 e.g 10"
+              maxLength={35}
+              min={1}
+              max={100}
+              value={values.tip1}
+              onChange={setFieldValue}
+              isLoading={loading}
+              showLabel={true}
+              style={{
+                borderColor: errors?.tip1 && touched.tip1 ? 'red' : '',
+              }}
+            />
+            <CustomNumberTextField
+              name="tip2"
+              placeholder="Tip 2 e.g 20"
+              maxLength={35}
+              min={1}
+              max={100}
+              isLoading={loading}
+              showLabel={true}
+              value={values.tip2}
+              onChange={setFieldValue}
+              style={{
+                borderColor: errors.tip2 && touched.tip2 ? 'red' : '',
+              }}
+            />
+            <CustomNumberTextField
+              name="tip3"
+              min={1}
+              max={100}
+              placeholder="Tip 3 e.g 30"
+              isLoading={loading}
+              showLabel={true}
+              value={values.tip3}
+              onChange={setFieldValue}
+              style={{
+                borderColor: errors.tip3 && touched.tip3 ? 'red' : '',
+              }}
+            />
+            <CustomButton
+              className="mb-[2px] mt-auto flex h-11 rounded-md border-gray-300 bg-[black] px-10 text-white"
+              label={data?.tips._id ? 'Update' : 'Add'}
+              rounded={false}
+              type="submit"
+              loading={mutationLoading}
+              disabled={mutationLoading || loading}
+            />
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 };

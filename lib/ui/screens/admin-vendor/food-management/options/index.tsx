@@ -18,11 +18,10 @@ export default function OptionsScreen() {
     <div className="screen-container">
       <OptionsHeader setIsAddOptionsVisible={setIsAddOptionsVisible} />
 
-        <OptionsMain
-          setIsAddOptionsVisible={setIsAddOptionsVisible}
-          setOption={setOption}
-        />
-  
+      <OptionsMain
+        setIsAddOptionsVisible={setIsAddOptionsVisible}
+        setOption={setOption}
+      />
 
       <OptionsAddForm
         option={option}
