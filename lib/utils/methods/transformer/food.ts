@@ -21,7 +21,5 @@ export const onTransformRetaurantsByIdToFoods = ({
     });
   });
 
-  console.log({foods})
-
   return foods;
 };
