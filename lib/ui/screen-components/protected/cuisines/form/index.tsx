@@ -1,6 +1,6 @@
 'use client';
 //contexts
-import { CREATE_CUISINE, EDIT_CUISINE } from '@/lib/api/graphql';
+import { CREATE_CUISINE, EDIT_CUISINE, GET_CUISINES } from '@/lib/api/graphql';
 
 //contexts
 import { ToastContext } from '@/lib/context/toast.context';
@@ -13,7 +13,6 @@ import CustomTextField from '@/lib/ui/useable-components/input-field';
 //interfaces
 import {
   IAddCuisineProps,
-  ICuisine,
 } from '@/lib/utils/interfaces/cuisine.interface';
 
 //schema
@@ -31,12 +30,9 @@ import CustomUploadImageComponent from '@/lib/ui/useable-components/upload/uploa
 
 export default function CuisineForm({
   setVisible,
-  setCuisines,
   setIsEditing,
-  cuisines,
   isEditing,
   visible,
-  addCuisineLocally,
 }: IAddCuisineProps) {
   // initial values
   const initialValues = {
@@ -58,12 +54,14 @@ export default function CuisineForm({
     CREATE_CUISINE,
     {
       onError,
+      refetchQueries: [{ query: GET_CUISINES }],
     }
   );
   const [editCuisine, { loading: editCuisineLoading }] = useMutation(
     EDIT_CUISINE,
     {
       onError,
+      refetchQueries: [{ query: GET_CUISINES }],
     }
   );
 
@@ -77,11 +75,11 @@ export default function CuisineForm({
   function onError({ graphQLErrors, networkError }: ApolloError) {
     showToast({
       type: 'error',
-      title: 'New Cuisine',
+      title: `${isEditing.bool ? 'Edit' : 'New'}Cuisine`,
       message:
         graphQLErrors[0]?.message ??
         networkError?.message ??
-        'Cuisine Creation  Failed',
+        `Cuisine ${isEditing.bool ? 'Editio' : 'Creation'}  Failed`,
       duration: 2500,
     });
   }
@@ -91,6 +89,7 @@ export default function CuisineForm({
       visible={visible}
       onHide={() => setVisible(false)}
       position="right"
+      className="w-full sm:w-[450px]"
     >
       <div className="flex flex-col gap-4">
         <h2 className="font-bold mb-3 text-xl">
@@ -120,15 +119,14 @@ export default function CuisineForm({
                   image: values.image,
                 };
               }
-              let res;
               if (!isEditing.bool) {
-                res = await CreateCuisine({
+             await CreateCuisine({
                   variables: {
                     cuisineInput: formData,
                   },
                 });
               } else {
-                res = await editCuisine({
+                await editCuisine({
                   variables: {
                     cuisineInput: formData,
                   },
@@ -137,41 +135,27 @@ export default function CuisineForm({
 
               setVisible(false);
               showToast({
-                title: 'New Cuisine',
+                title: `${!isEditing.bool ? 'New' : 'Edit'} Cuisine`,
                 type: 'success',
-                message: 'Cuisine has been created successfully',
+                message: `Cuisine has been ${!isEditing.bool ? 'created' : 'edited'} successfully`,
                 duration: 2000,
               });
-              let newCuisine: ICuisine;
-              if (isEditing.bool) {
-                newCuisine = res?.data?.editCuisine;
-                setIsEditing({
-                  bool: false,
-                  data: {
-                    __typename: '',
-                    _id: '',
-                    description: '',
-                    name: '',
-                    shopType: '',
-                    image: '',
-                  },
-                });
-
-                let filteredCuisines = cuisines.filter(
-                  (cuisine) => cuisine?._id !== isEditing?.data?._id
-                );
-
-                filteredCuisines.push(newCuisine);
-                setCuisines([newCuisine, ...filteredCuisines]);
-              } else {
-                newCuisine = res?.data?.createCuisine;
-                addCuisineLocally(newCuisine);
-              }
               setSubmitting(false);
+              setIsEditing({
+                bool: false,
+                data: {
+                  __typename: '',
+                  _id: '',
+                  description: '',
+                  name: '',
+                  shopType: '',
+                  image: '',
+                },
+              });
             } catch (err) {
               setVisible(true);
               showToast({
-                title: 'New Cuisine',
+                title: `${!isEditing.bool ? 'New' : 'Edit'} Cuisine`,
                 type: 'error',
                 message: `New Cuisine ${isEditing.bool ? 'Edition' : 'Creation'} has been failed`,
                 duration: 2000,

@@ -4,7 +4,7 @@ import WithdrawRequestsMain from '@/lib/ui/screen-components/protected/withdraw-
 
 export default function WithdrawRequestScreen() {
   return (
-    <div className="flex flex-col mb-3 gap-6 overflow-y-auto h-full">
+    <div className="screen-container">
       <WithdrawRequestHeader />
       <div className="flex-grow overflow-y-auto">
         <WithdrawRequestsMain />

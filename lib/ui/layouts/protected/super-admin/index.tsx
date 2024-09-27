@@ -23,7 +23,9 @@ const Layout = ({ children }: IProvider) => {
         <AppTopbar />
       </div>
       <div className="layout-main-container">
-        <Sidebar />
+        <div className="absolute left-0 z-50">
+          <Sidebar />
+        </div>
         <div
           className={`w-full h-auto lg:ml-45 md:ml-${isSidebarVisible ? 64 : 20}`}
         >

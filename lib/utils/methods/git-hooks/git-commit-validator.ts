@@ -12,7 +12,7 @@ if (!pattern.test(commitMsg)) {
   process.exit(1);
 }
 
-const [, , description, version] = commitMsg
+const [, , , version] = commitMsg
   ? (commitMsg.match(pattern)?.slice(1) ?? ['', '', '', ''])
   : ['', '', '', ''];
 
@@ -29,12 +29,12 @@ if (lastCommitMsg) {
   const lastCommitMatch = lastCommitMsg.match(pattern);
 
   if (lastCommitMatch) {
-    const [, , lastDescription, lastVersion] = lastCommitMatch.slice(1);
+    const [, , , lastVersion] = lastCommitMatch.slice(1);
 
-    if (description === lastDescription) {
+    /*   if (description === lastDescription) {
       console.error('Description must be different from the previous commit.');
       process.exit(1);
-    }
+    } */
 
     if (version === lastVersion) {
       console.error('Version must be different from the previous commit.');

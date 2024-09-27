@@ -14,30 +14,39 @@ import {
 } from '@/lib/utils/interfaces/table.interface';
 import { FilterMatchMode } from 'primereact/api';
 
-//components
-import CuisineForm from '../../form';
 
 // hooks
 import { ToastContext } from '@/lib/context/toast.context';
+
+//hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { useMutation } from '@apollo/client';
+import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+
+
+//components
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import Table from '@/lib/ui/useable-components/table';
 import TableHeader from '@/lib/ui/useable-components/table-header';
 import { IEditPopupVal } from '@/lib/utils/interfaces/coupons.interface';
-import { useMutation } from '@apollo/client';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
-import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 
 export default function CuisinesMain({
   visible,
   setVisible,
+  isEditing,
+  setIsEditing,
 }: ICuisineMainProps) {
   //mutations
-  const [deleteCuisine, { loading: deleteCuisineLoading }] =
-    useMutation(DELETE_CUISINE);
+  const [deleteCuisine, { loading: deleteCuisineLoading }] = useMutation(
+    DELETE_CUISINE,
+    {
+      refetchQueries: [{ query: GET_CUISINES }],
+    }
+  );
 
   //toast
   const { showToast } = useContext(ToastContext);
@@ -52,17 +61,7 @@ export default function CuisinesMain({
       _id: '',
       bool: false,
     });
-  const [isEditing, setIsEditing] = useState<IEditState<ICuisine>>({
-    bool: false,
-    data: {
-      _id: '',
-      __typename: '',
-      description: '',
-      name: '',
-      shopType: '',
-      image: '',
-    },
-  });
+
   const [isDeleting, setIsDeleting] = useState<IEditState<ICuisine>>({
     bool: false,
     data: {
@@ -74,7 +73,6 @@ export default function CuisinesMain({
       image: '',
     },
   });
-  const [cuisines, setCuisines] = useState<ICuisine[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -105,22 +103,6 @@ export default function CuisinesMain({
 
     setFilters(_filters);
     setGlobalFilterValue(value);
-  };
-
-  //handle add cuisine locally to append child in the cuisine array
-  const addCuisineLocally = (cuisine: ICuisine) => {
-    setCuisines((prevCuisines: ICuisine[]) => [
-      cuisine,
-      ...prevCuisines.filter((c) => c?._id !== cuisine?._id),
-    ]);
-    setIsEditing({
-      bool: false,
-      data: { ...isEditing.data },
-    });
-    setIsDeleting({
-      bool: false,
-      data: { ...isEditing.data },
-    });
   };
 
   //columns
@@ -204,15 +186,15 @@ export default function CuisinesMain({
         message: 'Cuisine has been deleted successfully',
         duration: 2000,
       });
-      let filteredCuisines = cuisines?.filter(
-        (cuisine) => cuisine?._id !== isDeleting?.data?._id
-      );
-      if (filteredCuisines) {
-        setCuisines(filteredCuisines);
-      }
+      setIsEditDeletePopupOpen({
+        _id: '',
+        bool: false,
+      });
       setIsDeleting({
         bool: false,
-        data: { ...isDeleting.data },
+        data: {
+          ...isDeleting.data,
+        },
       });
     } catch (err) {
       console.log(err);
@@ -242,21 +224,13 @@ export default function CuisinesMain({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [setIsEditDeletePopupOpen]);
+
   useEffect(() => {
     setIsLoading(true);
     fetch();
   }, []);
 
   useEffect(() => {
-    if (data) {
-      setCuisines(data.cuisines);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (data) {
-      setCuisines(data.cuisines);
-    }
     if (isEditing.bool) {
       setVisible(true);
     } else {
@@ -267,21 +241,27 @@ export default function CuisinesMain({
     <div>
       <DeleteDialog
         onConfirm={deleteItem}
-        onHide={() =>
+        onHide={() => {
           setIsDeleting({
             bool: false,
             data: {
               ...isDeleting.data,
             },
-          })
-        }
+          });
+          setIsEditing({
+            bool: false,
+            data: {
+              ...isEditing.data,
+            },
+          });
+        }}
         visible={isDeleting.bool}
         loading={deleteCuisineLoading}
         message="Are you sure to delete the cuisine?"
       />
       <Table
         columns={cuisineColumns}
-        data={cuisines}
+        data={data?.cuisines ?? []}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e as ICuisine[])}
         filters={filters}
@@ -295,15 +275,6 @@ export default function CuisinesMain({
             statusOptions={statusOptions}
           />
         }
-      />
-      <CuisineForm
-        addCuisineLocally={addCuisineLocally}
-        cuisines={cuisines}
-        isEditing={isEditing}
-        setCuisines={setCuisines}
-        setIsEditing={setIsEditing}
-        setVisible={setVisible}
-        visible={visible}
       />
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 //queries
-import { CREATE_COUPON, EDIT_COUPON } from '@/lib/api/graphql';
+import { CREATE_COUPON, EDIT_COUPON, GET_COUPONS } from '@/lib/api/graphql';
 
 //contexts
 import { ToastContext } from '@/lib/context/toast.context';
@@ -12,7 +12,6 @@ import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 //interfaces
 import {
   IAddCouponProps,
-  ICoupon,
 } from '@/lib/utils/interfaces/coupons.interface';
 
 //schema
@@ -31,13 +30,10 @@ import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
 export default function CouponForm({
-  setIsEditing,
   setVisible,
-  setCoupons,
-  handleAddCouponLocally,
   isEditing,
   visible,
-  coupons,
+  setIsEditing,
 }: IAddCouponProps) {
   //initial values
   const initialValues = {
@@ -48,9 +44,18 @@ export default function CouponForm({
   };
 
   //mutations
-  const [CreateCoupon, { loading: createCouponLoading }] =
-    useMutation(CREATE_COUPON);
-  const [editCoupon, { loading: editCouponLoading }] = useMutation(EDIT_COUPON);
+  const [CreateCoupon, { loading: createCouponLoading }] = useMutation(
+    CREATE_COUPON,
+    {
+      refetchQueries: [{ query: GET_COUPONS }],
+    }
+  );
+  const [editCoupon, { loading: editCouponLoading }] = useMutation(
+    EDIT_COUPON,
+    {
+      refetchQueries: [{ query: GET_COUPONS }],
+    }
+  );
   //toast
   const { showToast } = useContext(ToastContext);
 
@@ -59,6 +64,7 @@ export default function CouponForm({
       visible={visible}
       onHide={() => setVisible(false)}
       position="right"
+      className="w-full sm:w-[450px]"
     >
       <Formik
         initialValues={initialValues}
@@ -81,21 +87,30 @@ export default function CouponForm({
                 enabled: values.enabled,
               };
             }
-            let res;
+           
             if (!isEditing.bool) {
-              res = await CreateCoupon({
+             await CreateCoupon({
                 variables: {
                   couponInput: formData,
                 },
               });
             } else {
-              res = await editCoupon({
+             await editCoupon({
                 variables: {
                   couponInput: formData,
                 },
               });
             }
-
+            setIsEditing({
+              bool: false,
+              data: {
+                __typename: '',
+                _id: '',
+                discount: 0,
+                enabled: true,
+                title: '',
+              },
+            });
             setVisible(false);
             showToast({
               title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
@@ -103,29 +118,6 @@ export default function CouponForm({
               message: 'Coupon has been added successfully',
               duration: 2000,
             });
-            let newCoupon: ICoupon;
-            if (isEditing.bool) {
-              newCoupon = res?.data?.editCoupon;
-              setIsEditing({
-                bool: false,
-                data: {
-                  __typename: '',
-                  _id: '',
-                  discount: 0,
-                  enabled: false,
-                  title: '',
-                },
-              });
-              let filteredCoupons = coupons.filter(
-                (coupon) => coupon._id !== isEditing.data._id
-              );
-              filteredCoupons.push(newCoupon);
-              setCoupons([newCoupon, ...filteredCoupons]);
-            } else {
-              newCoupon = res?.data?.createCoupon;
-              handleAddCouponLocally(newCoupon);
-            }
-
             setSubmitting(false);
           } catch (err) {
             setVisible(true);

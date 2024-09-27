@@ -25,7 +25,9 @@ const RestaurantLayout = ({ children }: IProvider) => {
         <AdminAppTopbar />
       </div>
       <div className="layout-main-container">
-        <AdminSidebar />
+        <div className="absolute left-0 z-50">
+          <AdminSidebar />
+        </div>
         <div
           className={`w-full h-full lg:ml-45 md:ml-${isAdminSidebarVisible ? 64 : 20}`}
         >

@@ -5,11 +5,10 @@ import RestaurantsMain from '@/lib/ui/screen-components/protected/restaurants/vi
 
 export default function RestaurantsScreen() {
   return (
-    <div className="flex flex-col p-3 h-screen overflow-hidden">
+    <div className="screen-container">
       <RestaurantsScreenHeader />
-      <div className="flex-grow overflow-y-auto">
-        <RestaurantsMain />
-      </div>
+      <RestaurantsMain />
+
       <RestaurantsForm />
     </div>
   );

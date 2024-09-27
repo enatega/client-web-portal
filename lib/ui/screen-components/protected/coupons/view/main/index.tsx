@@ -1,5 +1,5 @@
 //css
-import './index.css';
+import './index.module.css';
 
 //graphQL
 import { DELETE_COUPON, EDIT_COUPON, GET_COUPONS } from '@/lib/api/graphql';
@@ -34,16 +34,26 @@ import TableHeader from '@/lib/ui/useable-components/table-header';
 import { useMutation } from '@apollo/client';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CouponForm from '../../form';
 
-export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
+export default function CouponsMain({
+  setVisible,
+  visible,
+  isEditing,
+  setIsEditing,
+}: ICouponMainProps) {
   //refs
   const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
 
   //queries
-  const [deleteCoupon, { loading: deleteCouponLoading }] =
-    useMutation(DELETE_COUPON);
-  const [editCoupon] = useMutation(EDIT_COUPON);
+  const [deleteCoupon, { loading: deleteCouponLoading }] = useMutation(
+    DELETE_COUPON,
+    {
+      refetchQueries: [{ query: GET_COUPONS }],
+    }
+  );
+  const [editCoupon] = useMutation(EDIT_COUPON, {
+    refetchQueries: [{ query: GET_COUPONS }],
+  });
 
   //states
   const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
@@ -55,19 +65,7 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
     _id: '',
     bool: false,
   });
-  const [sortedData, setSortedData] = useState<ICoupon[] | null | undefined>();
   const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
-  // edit/delete states which are to be circulated in the whole coupons module
-  const [isEditing, setIsEditing] = useState<IEditState<ICoupon>>({
-    bool: false,
-    data: {
-      __typename: '',
-      _id: '',
-      discount: 0,
-      enabled: false,
-      title: '',
-    },
-  });
   const [isDeleting, setIsDeleting] = useState<IEditState<ICoupon>>({
     bool: false,
     data: {
@@ -82,6 +80,7 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
   //filters
   const [filters, setFilters] = useState<IFilterType>({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
+    status: { value: '', matchMode: FilterMatchMode.EQUALS },
   });
 
   const [globalFilterValue, setGlobalFilterValue] = useState('');
@@ -92,12 +91,11 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
     let _filters = { ...filters };
 
     _filters['global'].value = value;
-
+    // fetch({ variables: { filter: { ...filters, global: { value } } } });
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
 
-  const [coupons, setCoupons] = useState<ICoupon[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
   //options
@@ -121,26 +119,6 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
     GET_COUPONS,
     {}
   ) as ILazyQueryResult<IGetCouponsData | undefined, undefined>;
-
-  //handle add cuisine locally to append child in the cuisine array
-  const handleAddCouponLocally = (coupon: ICoupon) => {
-    setSortedData(
-      (prevCoupons: ICoupon[] | null | undefined) =>
-        prevCoupons && [
-          coupon,
-          ...prevCoupons.filter((c) => c._id !== coupon._id),
-        ]
-    );
-    setIsEditing({
-      bool: false,
-      data: { ...isEditing.data },
-    });
-    setIsDeleting({
-      bool: false,
-      data: { ...isEditing.data },
-    });
-  };
-
   //toast
   const { showToast } = useContext(ToastContext);
 
@@ -168,18 +146,10 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
       });
       showToast({
         title: 'Edit Coupon',
-        type: 'info',
+        type: 'success',
         message: 'Coupon Status has been edited successfully',
         duration: 2500,
       });
-      const coupon = sortedData?.find((coupon) => coupon._id === rowData?._id);
-      const filteredData = sortedData?.filter(
-        (coupon) => coupon._id !== rowData?._id
-      );
-      const newUpdatedCoupon = { ...rowData, enabled: !coupon?.enabled };
-      if (filteredData) {
-        setSortedData(() => [newUpdatedCoupon, ...filteredData]);
-      }
     } catch (err) {
       showToast({
         title: 'Edit Coupon',
@@ -208,12 +178,6 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
         message: 'Coupon has been deleted successfully',
         duration: 2000,
       });
-      let filteredCoupons = data?.coupons.filter(
-        (coupon) => coupon._id !== isDeleting?.data?._id
-      );
-      if (filteredCoupons) {
-        setSortedData(filteredCoupons);
-      }
       setIsDeleting({
         bool: false,
         data: { ...isDeleting.data },
@@ -291,6 +255,10 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
 
   //useEffects
   useEffect(() => {
+    fetch();
+  }, []);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         editDeletePopupRef.current &&
@@ -308,17 +276,6 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
   }, [setIsEditDeletePopupOpen]);
 
   useEffect(() => {
-    setSortedData(data?.coupons);
-  }, [data]);
-
-  useEffect(() => {
-    fetch();
-  }, []);
-
-  useEffect(() => {
-    if (data) {
-      setCoupons(data.coupons);
-    }
     if (isEditing.bool) {
       setVisible(true);
     } else {
@@ -326,36 +283,6 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
     }
   }, [data, isEditing.bool]);
 
-  useEffect(() => {
-    let filteredCoupons: ICoupon[];
-
-    if (selectedStatuses.length > 0) {
-      const enabledSelected = selectedStatuses.some(
-        (status: string) => status === 'enabled'
-      );
-      const disabledSelected = selectedStatuses.some(
-        (status: string) => status === 'disabled'
-      );
-      const bothEnabledAndDisabled = enabledSelected && disabledSelected;
-
-      filteredCoupons = coupons.filter((coupon) =>
-        selectedStatuses.some((status) =>
-          status === 'all'
-            ? true
-            : enabledSelected
-              ? coupon.enabled
-              : disabledSelected
-                ? !coupon.enabled
-                : bothEnabledAndDisabled
-        )
-      );
-      setSortedData(filteredCoupons);
-    } else {
-      if (data?.coupons) {
-        setSortedData(data.coupons);
-      }
-    }
-  }, [selectedStatuses]);
   return (
     <div>
       <DeleteDialog
@@ -376,33 +303,23 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
         loading={deleteCouponLoading}
         message="Are you sure to delete the coupon?"
       />
-      {sortedData && (
-        <Table
-          columns={columns}
-          data={sortedData}
-          selectedData={selectedData}
-          setSelectedData={(e) => setSelectedData(e)}
-          loading={loading}
-          header={
-            <TableHeader
-              globalFilterValue={globalFilterValue}
-              onGlobalFilterChange={onGlobalFilterChange}
-              selectedStatuses={selectedStatuses}
-              setSelectedStatuses={setSelectedStatuses}
-              statusOptions={statusOptions}
-            />
-          }
-          filters={filters}
-        />
-      )}
-      <CouponForm
-        coupons={coupons}
-        isEditing={isEditing}
-        visible={visible}
-        handleAddCouponLocally={handleAddCouponLocally}
-        setCoupons={setCoupons}
-        setIsEditing={setIsEditing}
-        setVisible={setVisible}
+      <Table
+        columns={columns}
+        data={data?.coupons ?? []}
+        selectedData={selectedData}
+        setSelectedData={(e) => setSelectedData(e)}
+        loading={loading}
+        header={
+          <TableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={onGlobalFilterChange}
+            selectedStatuses={selectedStatuses}
+            setFilters={setFilters}
+            setSelectedStatuses={setSelectedStatuses}
+            statusOptions={statusOptions}
+          />
+        }
+        filters={filters}
       />
     </div>
   );

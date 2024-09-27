@@ -15,14 +15,13 @@ export default function AddonsScreen() {
   const [addon, setAddon] = useState<IAddon | null>(null);
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden p-3">
+    <div className="screen-container">
       <AddonsHeader setIsAddAddonVisible={setIsAddAddonVisible} />
-      <div className="flex-grow overflow-y-auto">
-        <AddonsMain
-          setIsAddAddonVisible={setIsAddAddonVisible}
-          setAddon={setAddon}
-        />
-      </div>
+
+      <AddonsMain
+        setIsAddAddonVisible={setIsAddAddonVisible}
+        setAddon={setAddon}
+      />
 
       <AddonsAddForm
         addon={addon}

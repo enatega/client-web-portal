@@ -1,7 +1,6 @@
 //interfaces
 import {
   INotification,
-  INotificationMainProps,
 } from '@/lib/utils/interfaces/notification.interface';
 import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 
@@ -14,16 +13,13 @@ import { ChangeEvent, useState } from 'react';
 //components
 import Table from '@/lib/ui/useable-components/table';
 import TableHeader from '@/lib/ui/useable-components/table-header';
-import NotificationForm from '../../form';
 
-export default function NotificationMain({
-  visible,
-  setVisible,
-}: INotificationMainProps) {
+export default function NotificationMain() {
   //filters
   const [filters, setFilters] = useState({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
   });
+
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
   //global filters change
@@ -57,7 +53,6 @@ export default function NotificationMain({
   ];
   return (
     <div>
-      <NotificationForm setVisible={setVisible} visible={visible} />
       <Table
         columns={columns}
         data={[]}

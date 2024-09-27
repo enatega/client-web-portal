@@ -45,7 +45,6 @@ export const GET_RIDERS_BY_ZONE = gql`
       _id
       name
       username
-      password
       phone
       available
       zone {

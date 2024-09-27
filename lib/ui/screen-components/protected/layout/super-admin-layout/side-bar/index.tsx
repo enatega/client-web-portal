@@ -1,5 +1,5 @@
 // Core
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 // Context
 import { LayoutContext } from '@/lib/context/layout.context';
@@ -20,43 +20,47 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // Components
-
 import SidebarItem from './side-bar-item';
 
 function SuperAdminSidebar({ children }: IGlobalComponentProps) {
-  const { isSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
-  const [width, setWidth] = useState(isSidebarVisible ? '16rem' : '0');
+  const { isSidebarVisible, showSidebar } =
+    useContext<LayoutContextProps>(LayoutContext);
 
+  // Detect clicks outside the sidebar
   useEffect(() => {
-    setWidth(isSidebarVisible ? '16rem' : '0');
-  }, [isSidebarVisible]);
+    const handleClickOutside = (event: MouseEvent) => {
+      const sidebar = document.getElementById('super-admin-sidebar');
+      const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
+      if (
+        sidebar &&
+        !sidebar.contains(event.target as Node) &&
+        iconContainer &&
+        !iconContainer.contains(event.target as Node)
+      ) {
+        showSidebar(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showSidebar]);
 
   return (
     <div className="relative">
       <aside
-        className="box-border h-screen transition-all duration-300 ease-in-out overflow-hidden"
-        style={{ width }}
+        id="super-admin-sidebar"
+        className={`box-border transition-all duration-300 ease-in-out overflow-hidden transform ${isSidebarVisible ? 'translate-x-0 w-64' : '-translate-x-full w-0'}`}
       >
         <nav
-          className={`pt-2 flex h-full flex-col border-r bg-white shadow-sm ${
-            isSidebarVisible ? '' : 'invisible'
-          }`}
+          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isSidebarVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         >
-          <ul className="flex-1 px-3">{children}</ul>
+          <ul className="flex-1 pl-2">{children}</ul>
         </nav>
       </aside>
     </div>
   );
-  /* return (
-    <Sidebar
-      visible={isSidebarVisible}
-      onHide={() => showSidebar(false)}
-      style={{ width: '300px' }}
-    >
-      <ul className="flex-1">{children}</ul>
-    </Sidebar>
- 
-  ); */
 }
 
 export default function MakeSidebar() {
@@ -163,9 +167,11 @@ export default function MakeSidebar() {
   return (
     <>
       <SuperAdminSidebar>
-        {navBarItems.map((item, index) => (
-          <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
-        ))}
+        <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
+          {navBarItems.map((item, index) => (
+            <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
+          ))}
+        </div>
       </SuperAdminSidebar>
     </>
   );

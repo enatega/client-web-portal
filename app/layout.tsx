@@ -24,7 +24,7 @@ import { ToastProvider } from '@/lib/context/toast.context';
 import { useSetupApollo } from '@/lib/hooks/useSetApollo';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
-import './globals.css';
+import './global.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({

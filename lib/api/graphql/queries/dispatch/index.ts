@@ -23,7 +23,7 @@ export const GET_ACTIVE_ORDERS = gql`
         }
         deliveryAddress
       }
-   
+
       paymentMethod
       orderStatus
       isPickedUp

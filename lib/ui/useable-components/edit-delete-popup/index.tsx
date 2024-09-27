@@ -37,6 +37,7 @@ export default function EditDeletePopup<T>({
       bool: false,
     });
   }, []);
+
   //handle blur
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

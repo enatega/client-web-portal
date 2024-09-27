@@ -42,6 +42,7 @@ export default function NotificationForm({
       visible={visible}
       onHide={() => setVisible(false)}
       position="right"
+      className="w-full sm:w-[450px]"
     >
       <Formik
         initialValues={initialValues}

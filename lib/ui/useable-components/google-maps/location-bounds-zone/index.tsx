@@ -37,6 +37,8 @@ import {
 // Prime React
 import { AutoComplete, AutoCompleteSelectEvent } from 'primereact/autocomplete';
 import { GoogleMapsContext } from '@/lib/context/google-maps.context';
+import CustomShape from '../shapes';
+import { DEFAULT_CENTER, DEFAULT_POLYGON } from '@/lib/utils/constants';
 
 const autocompleteService: {
   current: google.maps.places.AutocompleteService | null;
@@ -50,7 +52,8 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
 
   // States
   const [isMounted, setIsMounted] = useState(false);
-  const [center, setCenter] = useState({ lat: 0, lng: 0 });
+  const [deliveryZoneType, setDeliveryZoneType] = useState('polygon');
+  const [center, setCenter] = useState(DEFAULT_CENTER);
   const [path, setPath] = useState<ILocationPoint[]>([]);
 
   // Auto complete
@@ -121,8 +124,10 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
       Array.isArray(_path) &&
       _path.length > 0 &&
       Array.isArray(_path[0]) &&
-      _path[0].length > 0
+      _path[0].length > 0 &&
+      _path[0][0].length > 0
     ) {
+      console.log('onsetcenter', _path);
       setPath(transformPolygon(_path[0]));
       setCenter(calculatePolygonCentroid(_path[0]));
     }
@@ -347,6 +352,25 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
           )}
         </div>
       </div>
+
+      <CustomShape
+        selected={deliveryZoneType}
+        hidenNames={['radius']}
+        onClick={(val: string) => {
+          switch (val) {
+            case 'polygon':
+              setPath(DEFAULT_POLYGON);
+              break;
+            case 'point':
+              setPath([]);
+              break;
+            default:
+              break;
+          }
+
+          setDeliveryZoneType(val);
+        }}
+      />
     </div>
   );
 };

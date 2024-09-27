@@ -7,6 +7,7 @@ import {
   ISignInFormErrors,
   ISignUpFormErrors,
   IVendorErrors,
+  IUpdateProfileFormErrors,
 } from '@/lib/utils/interfaces/forms';
 
 import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
@@ -52,6 +53,22 @@ export const RestaurantErrors: IRestaurantFormErrors = {
   deliveryTime: ['Required'],
   minOrder: ['Required'],
   salesTax: ['Required'],
+  shopType: ['Required'],
+  cuisines: ['Required', 'Cuisines field must have at least 1 items'],
+  image: ['Required', 'Invalid image URL'],
+  logo: ['Required', 'Invalid logo URL'],
+};
+
+export const ProfileErrors: IUpdateProfileFormErrors = {
+  name: ['Required'],
+  email: ['Required', 'Invalid email'],
+  username: ['Required', 'Invalid email'],
+  password: ['Required', ...PasswordErrors],
+  address: ['Required'],
+  deliveryTime: ['Required'],
+  minOrder: ['Required'],
+  salesTax: ['Required'],
+  orderprefix: ['Required'],
   shopType: ['Required'],
   cuisines: ['Required', 'Cuisines field must have at least 1 items'],
   image: ['Required', 'Invalid image URL'],
