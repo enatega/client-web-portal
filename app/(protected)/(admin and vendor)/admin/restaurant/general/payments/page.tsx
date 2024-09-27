@@ -1,7 +1,7 @@
 'use client';
 
-import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+import PaymentScreen from '@/lib/ui/screens/admin-vendor/general/payments';
 
 export default function PaymentsPage() {
-  return <ComingSoon />;
+  return <PaymentScreen />;
 }

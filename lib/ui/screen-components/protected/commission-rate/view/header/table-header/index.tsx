@@ -5,7 +5,7 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { Checkbox } from 'primereact/checkbox';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import React, { useRef, useState } from 'react';
-import classes from './commissionRateHeader.module.css';
+import classes from './commission-rate.header.module.css';
 
 interface MenuItem {
   label: string;
