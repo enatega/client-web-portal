@@ -43,6 +43,7 @@ export default function WithdrawRequestsMain() {
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
   const [selectedData, setSelectedData] = useState<IWithDrawRequest[]>([]);
   const [requests, setRequests] = useState<IWithDrawRequest[]>([]);
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
 
   //queries
   const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
@@ -51,13 +52,12 @@ export default function WithdrawRequestsMain() {
 
   //filters
   const filters = {
-    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
+    global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
     status: {
       value: selectedActions.length > 0 ? selectedActions : null,
       matchMode: FilterMatchMode.IN,
     },
   };
-  const [globalFilterValue, setGlobalFilterValue] = useState('');
 
   //status dropdown options
   const options = useMemo(

@@ -79,7 +79,7 @@ export default function CuisinesMain({
     global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
     shopType: {
       value: selectedActions.length > 0 ? selectedActions : null,
-      matchMode: FilterMatchMode.IN,
+      matchMode: FilterMatchMode.CONTAINS,
     },
   };
 
