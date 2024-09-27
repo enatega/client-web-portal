@@ -1,3 +1,5 @@
+"use client"
+
 // Core
 import { useContext, useEffect } from 'react';
 

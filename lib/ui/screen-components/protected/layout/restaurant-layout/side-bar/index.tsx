@@ -64,7 +64,7 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
 }
 
 export default function MakeSidebar() {
-  const { isSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
+  const { isAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
 
   const navBarItems: ISidebarMenuItem[] = [
     {
@@ -148,7 +148,7 @@ export default function MakeSidebar() {
       <AdminSidebar>
         <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
           {navBarItems.map((item, index) => (
-            <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
+            <SidebarItem key={index} expanded={isAdminSidebarVisible} {...item} />
           ))}
         </div>
       </AdminSidebar>
