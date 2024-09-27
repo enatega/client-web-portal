@@ -12,7 +12,7 @@ import {
 } from '@/lib/utils/interfaces/users.interface';
 
 // Components
-import { USERS_TABLE_COLUMNS } from '@/lib/utils/constants';
+import { USERS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/user-columns';
 
 //Toast
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
