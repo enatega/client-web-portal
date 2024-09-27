@@ -163,7 +163,7 @@ export default function MakeSidebar() {
   return (
     <>
       <SuperAdminSidebar>
-        <div className="h-[90vh] overflow-y-auto pr-2">
+        <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
         {navBarItems.map((item, index) => (
           <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
         ))}

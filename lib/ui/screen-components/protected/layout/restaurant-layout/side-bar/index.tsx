@@ -1,5 +1,5 @@
 // Core
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 
 // Context
 import { LayoutContext } from '@/lib/context/layout.context';
@@ -28,18 +28,11 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
   const { isAdminSidebarVisible, showAdminSidebar } =
     useContext<LayoutContextProps>(LayoutContext);
 
-  // States
-  const [width, setWidth] = useState(isAdminSidebarVisible ? '16rem' : '0');
-
-  // Effects
-  useEffect(() => {
-    setWidth(isAdminSidebarVisible ? '16rem' : '0');
-  }, [isAdminSidebarVisible]);
 
     // Detect clicks outside the sidebar
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
-        const sidebar = document.getElementById('super-admin-sidebar');
+        const sidebar = document.getElementById('admin-sidebar');
         const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
         if (sidebar && !sidebar.contains(event.target as Node) && iconContainer && !iconContainer.contains(event.target as Node)) {
           showAdminSidebar(false);
@@ -55,9 +48,9 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
   return (
     <div className="relative">
       <aside
-        id="super-admin-sidebar"
+        id="admin-sidebar"
         className={`box-border transition-all duration-300 ease-in-out overflow-hidden transform ${isAdminSidebarVisible ? 'translate-x-0 w-64' : '-translate-x-full w-0'}`}
-        style={{ width }}
+  
       >
         <nav
           className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isAdminSidebarVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -153,7 +146,7 @@ export default function MakeSidebar() {
   return (
     <>
       <AdminSidebar>
-        <div className="h-[90vh] overflow-y-auto pr-2">
+        <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
           {navBarItems.map((item, index) => (
             <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
           ))}
