@@ -16,15 +16,14 @@ export default function RidersScreen() {
   const [rider, setRider] = useState<null | IRiderResponse>(null);
 
   return (
-    <div className="flex flex-col h-screen p-3 overflow-hidden">
+    <div className="flex flex-col h-[90vh] overflow-auto">
       <RiderHeader setIsAddRiderVisible={setIsAddRiderVisible} />
-      <div className="flex-grow overflow-y-auto">
+    
         <RidersMain
           setIsAddRiderVisible={setIsAddRiderVisible}
           setRider={setRider}
         />
-      </div>
-
+ 
       <RiderAddForm
         rider={rider}
         onHide={() => {

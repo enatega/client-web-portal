@@ -109,7 +109,7 @@ export default function CuisinesMain({
     }
   }, [data, isEditing.bool]);
   return (
-    <div>
+    <div className="p-3">
       <CuisineTable
         data={cuisines}
         globalFilterValue={globalFilterValue}

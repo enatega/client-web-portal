@@ -1,13 +1,10 @@
-import { INotificationMainProps } from '@/lib/utils/interfaces/notification.interface';
 import { FilterMatchMode } from 'primereact/api';
 import { ChangeEvent, useState } from 'react';
-import NotificationForm from '../../form';
+
+// Grouping imports for better organization
 import NotificationTable from '../../table';
 
-export default function NotificationMain({
-  visible,
-  setVisible,
-}: INotificationMainProps) {
+export default function NotificationMain() {
   //filters
   const [filters, setFilters] = useState({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
@@ -25,8 +22,7 @@ export default function NotificationMain({
     setGlobalFilterValue(value);
   };
   return (
-    <div>
-      <NotificationForm setVisible={setVisible} visible={visible} />
+    <div className="p-3">
       <NotificationTable
         onGlobalFilterChange={onGlobalFilterChange}
         filters={filters}

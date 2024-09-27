@@ -7,8 +7,9 @@ export default function CouponScreenHeader({
   handleButtonClick,
 }: ICouponScreenHeaderProps) {
   return (
-    <div>
-      <div className="flex justify-between items-center p-2 w-full">
+  
+      <div className="w-full flex-shrink-0 sticky top-0 bg-white z-10 shadow-sm p-3">
+      <div className="flex w-full justify-between">
         <HeaderText text="Coupons" />
         <TextIconClickable
           icon={faAdd}
@@ -17,7 +18,8 @@ export default function CouponScreenHeader({
           title="Add Coupon"
           className="sm:w-auto bg-black text-white border-gray-300 rounded"
         />
+        </div>
       </div>
-    </div>
+  
   );
 }

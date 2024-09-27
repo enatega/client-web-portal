@@ -58,6 +58,7 @@ import { AutoComplete, AutoCompleteSelectEvent } from 'primereact/autocomplete';
 import CustomButton from '../../button';
 import CustomRadiusInputField from '../../custom-radius-input';
 import CustomShape from '../shapes';
+import { DEFAULT_CENTER } from '@/lib/utils/constants';
 
 const autocompleteService: {
   current: google.maps.places.AutocompleteService | null;
@@ -76,35 +77,9 @@ const CustomGoogleMapsLocationBounds: React.FC<
 
   // States
   const [deliveryZoneType, setDeliveryZoneType] = useState('point');
-  const [center, setCenter] = useState({
-    lat: 33.684422,
-    lng: 73.047882,
-  });
-  const [marker, setMarker] = useState({
-    lat: 33.684422,
-    lng: 73.047882,
-  });
-  const [path, setPath] = useState<ILocationPoint[]>(
-    []
-    /* [
-    {
-      lat: 33.6981335731709,
-      lng: 73.036895671875,
-    },
-    {
-      lat: 33.684779099960515,
-      lng: 73.04650870898438,
-    },
-    {
-      lat: 33.693206228391965,
-      lng: 73.06461898425293,
-    },
-    {
-      lat: 33.706880699271096,
-      lng: 73.05410472491455,
-    },
-  ] */
-  );
+  const [center, setCenter] = useState(DEFAULT_CENTER);
+  const [marker, setMarker] = useState(DEFAULT_CENTER);
+  const [path, setPath] = useState<ILocationPoint[]>([]);
   const [distance, setDistance] = useState(1);
   // const [isLoading, setLoading] = useState(false);
   // Auto complete

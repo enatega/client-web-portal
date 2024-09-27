@@ -121,7 +121,7 @@ export default function OptionMain({
   ];
 
   return (
-    <div className="pt-5">
+    <div className="p-3">
       <Table
         header={
           <CategoryTableHeader
