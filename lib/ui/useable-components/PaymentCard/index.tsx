@@ -1,7 +1,7 @@
 import React from 'react';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { TPaymentType } from '@/lib/utils/types/payment-type';
-import { StripeSVG } from '@/lib/utils/assets/svgs/stripeLogo';
+import { StripeSVG } from '@/lib/utils/assets/svgs/stripe';
 import { IPaymentCardProps } from '@/lib/utils/interfaces';
 
 export default function PaymentCard({
