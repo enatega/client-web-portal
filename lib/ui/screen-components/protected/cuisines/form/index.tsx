@@ -11,9 +11,7 @@ import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-fi
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 
 //interfaces
-import {
-  IAddCuisineProps,
-} from '@/lib/utils/interfaces/cuisine.interface';
+import { IAddCuisineProps } from '@/lib/utils/interfaces/cuisine.interface';
 
 //schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
@@ -120,7 +118,7 @@ export default function CuisineForm({
                 };
               }
               if (!isEditing.bool) {
-             await CreateCuisine({
+                await CreateCuisine({
                   variables: {
                     cuisineInput: formData,
                   },

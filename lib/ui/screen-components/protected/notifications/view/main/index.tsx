@@ -1,7 +1,5 @@
 //interfaces
-import {
-  INotification,
-} from '@/lib/utils/interfaces/notification.interface';
+import { INotification } from '@/lib/utils/interfaces/notification.interface';
 import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 
 //prime react

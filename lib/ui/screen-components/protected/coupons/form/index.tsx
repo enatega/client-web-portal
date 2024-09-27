@@ -10,9 +10,7 @@ import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 
 //interfaces
-import {
-  IAddCouponProps,
-} from '@/lib/utils/interfaces/coupons.interface';
+import { IAddCouponProps } from '@/lib/utils/interfaces/coupons.interface';
 
 //schema
 import { CouponFormSchema } from '@/lib/utils/schema/coupon';
@@ -87,15 +85,15 @@ export default function CouponForm({
                 enabled: values.enabled,
               };
             }
-           
+
             if (!isEditing.bool) {
-             await CreateCoupon({
+              await CreateCoupon({
                 variables: {
                   couponInput: formData,
                 },
               });
             } else {
-             await editCoupon({
+              await editCoupon({
                 variables: {
                   couponInput: formData,
                 },

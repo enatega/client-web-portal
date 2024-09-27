@@ -4,40 +4,58 @@ import CustomTextField from '../input-field';
 import TextIconClickable from '../text-icon-clickable';
 import { useRef, useState } from 'react';
 import { ITableHeaderProps } from '@/lib/utils/interfaces';
-import { Checkbox } from 'primereact/checkbox';
-import classes from './index.module.css';
-import { FilterMatchMode } from 'primereact/api';
 
 export default function TableHeader({
-  statusOptions,
-  setFilters,
+  // statusOptions,
+  // setFilters,
   onGlobalFilterChange,
   globalFilterValue,
 }: ITableHeaderProps) {
   const overlayPanelRef = useRef<OverlayPanel>(null);
-  const [searchValue, setSearchValue] = useState('');
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [searchValue, setSearchValue] = useState<string>('');
+  // const [selectedStatus, setSelectedStatus] = useState<string[]>(['all']);
 
-  const toggleAction = (action: string) => {
-    const updatedStatuses = selectedStatuses.includes(action)
-      ? selectedStatuses.filter((s) => s !== action)
-      : [...selectedStatuses, action];
+  // const toggleAction = (action: string, checked: boolean) => {
+  //   let updatedSelectedStatus = [...selectedStatus];
 
-    setSelectedStatuses(updatedStatuses);
+  //   if (checked) {
+  //     // Remove 'all' if selecting any other option
+  //     if (action !== 'all') {
+  //       updatedSelectedStatus = updatedSelectedStatus.filter(
+  //         (status) => status !== 'all'
+  //       );
+  //     }
+  //     updatedSelectedStatus.push(action);
+  //   } else {
+  //     // Deselect the option
+  //     updatedSelectedStatus = updatedSelectedStatus.filter(
+  //       (status) => status !== action
+  //     );
+  //   }
 
-    const updatedStatusValue =
-      updatedStatuses.length === 0 ? '' : updatedStatuses.join(',');
+  //   // If no specific option is selected, reset to 'all'
+  //   if (
+  //     updatedSelectedStatus.length === 0 ||
+  //     (updatedSelectedStatus.length === 1 && updatedSelectedStatus.includes('all'))
+  //   ) {
+  //     updatedSelectedStatus = ['all'];
+  //   }
 
-    if (setFilters) {
-      setFilters((prev) => ({
-        ...prev,
-        status: {
-          value: updatedStatusValue,
-          matchMode: FilterMatchMode.EQUALS,
-        },
-      }));
-    }
-  };
+  //   let updatedStatusValue = '';
+  //   if (updatedSelectedStatus.includes('enabled') && updatedSelectedStatus.includes('disabled')) {
+  //     updatedStatusValue = '';
+  //   } else if (updatedSelectedStatus.includes('enabled')) {
+  //     updatedStatusValue = 'true';
+  //   } else if (updatedSelectedStatus.includes('disabled')) {
+  //     updatedStatusValue = 'false';
+  //   }
+
+  //   setSelectedStatus(updatedSelectedStatus);
+  //   setFilters?.((prev: IFilterType) => ({
+  //     ...prev,
+  //     status: { value: updatedStatusValue, matchMode: FilterMatchMode.EQUALS },
+  //   }));
+  // };
 
   return (
     <div className="w-fit flex flex-col sm:flex-row items-center gap-2 mx-2 my-2">
@@ -68,8 +86,8 @@ export default function TableHeader({
               />
             </div>
 
-            <div className="border-b border-t py-1">
-              {statusOptions.map((item) => (
+            {/* <div className="border-b border-t py-1">
+              {statusOptions.map((item: IDropdownSelectItem) => (
                 <div
                   key={item.code}
                   className="flex justify-between items-center my-2"
@@ -77,8 +95,8 @@ export default function TableHeader({
                   <div className={`flex ${classes.filter}`}>
                     <Checkbox
                       inputId={`action-${item.code}`}
-                      onChange={() => toggleAction(item.code)}
-                      checked={selectedStatuses.includes(item.code)}
+                      onChange={(e) => toggleAction(item.code, e.checked??false)}
+                      checked={selectedStatus.includes(item.code)}
                       className={`${classes.checkbox} p-checkbox p-checkbox-box`}
                     />
                     <label
@@ -90,21 +108,20 @@ export default function TableHeader({
                   </div>
                 </div>
               ))}
-            </div>
-            <p
+            </div> */}
+
+            {/* <p
               className="mt-3 text-center text-sm"
               onClick={() => {
-                setSelectedStatuses([]);
-                if (setFilters) {
-                  setFilters((prev) => ({
-                    ...prev,
-                    status: { value: '', matchMode: FilterMatchMode.EQUALS },
-                  }));
-                }
+                setSelectedStatus(['all']);
+                setFilters?.((prev: IFilterType) => ({
+                  ...prev,
+                  status: { value: '', matchMode: FilterMatchMode.EQUALS },
+                }));
               }}
             >
               Clear filters
-            </p>
+            </p> */}
           </div>
         </OverlayPanel>
 
