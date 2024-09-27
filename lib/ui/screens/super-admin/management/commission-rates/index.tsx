@@ -7,7 +7,6 @@ export default function CommissionRateScreen() {
     <div className="screen-container">
       <CommissionRateHeader />
       <CommissionRateMain />
-
     </div>
   );
 }

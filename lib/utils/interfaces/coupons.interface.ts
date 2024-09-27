@@ -21,17 +21,13 @@ export interface ICouponsStakProps {
 }
 export interface IAddCouponProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  handleAddCouponLocally: (coupon: ICoupon) => void;
-  setCoupons: Dispatch<SetStateAction<ICoupon[]>>;
   setIsEditing: Dispatch<
     SetStateAction<{
       bool: boolean;
       data: ICoupon;
     }>
   >;
-  coupons: ICoupon[];
   isEditing: IEditState<ICoupon>;
-
   visible: boolean;
 }
 
@@ -78,4 +74,6 @@ export interface ICouponScreenHeaderProps {
 export interface ICouponMainProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
+  setIsEditing: Dispatch<SetStateAction<IEditState<ICoupon>>>;
+  isEditing: IEditState<ICoupon>;
 }

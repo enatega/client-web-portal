@@ -5,6 +5,7 @@ export * from './category';
 export * from './commission-rate';
 export * from './coupons';
 export * from './cuisines';
+export * from './dispatch';
 export * from './notifications';
 export * from './options';
 export * from './restaurant';

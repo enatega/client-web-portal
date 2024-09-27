@@ -14,7 +14,6 @@ export default function NotificationsScreen() {
     <div className="screen-container">
       <NotificationHeader handleButtonClick={handleButtonClick} />
       <NotificationMain />
-
       <NotificationForm setVisible={setVisible} visible={visible} />
     </div>
   );

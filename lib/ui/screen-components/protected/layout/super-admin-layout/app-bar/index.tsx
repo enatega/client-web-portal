@@ -94,7 +94,7 @@ const AppTopbar = () => {
   return (
     <div className={`${classes['layout-topbar']}`}>
       <div className="flex items-center gap-x-3">
-        <div id='sidebar-opening-icon'>
+        <div id="sidebar-opening-icon">
           <button onClick={() => showSidebar()}>
             <FontAwesomeIcon icon={faBars} />
           </button>

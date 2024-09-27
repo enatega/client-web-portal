@@ -1,38 +1,65 @@
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { OverlayPanel } from 'primereact/overlaypanel';
-//components
 import CustomTextField from '../input-field';
 import TextIconClickable from '../text-icon-clickable';
-//prime react
 import { useRef, useState } from 'react';
-//css
 import { ITableHeaderProps } from '@/lib/utils/interfaces';
-import { Checkbox } from 'primereact/checkbox';
-import classes from './index.module.css';
 
 export default function TableHeader({
-  statusOptions,
-  setSelectedStatuses,
-  selectedStatuses,
+  // statusOptions,
+  // setFilters,
   onGlobalFilterChange,
   globalFilterValue,
 }: ITableHeaderProps) {
-  //refs
   const overlayPanelRef = useRef<OverlayPanel>(null);
+  const [searchValue, setSearchValue] = useState<string>('');
+  // const [selectedStatus, setSelectedStatus] = useState<string[]>(['all']);
 
-  //states
-  const [searchValue, setSearchValue] = useState('');
+  // const toggleAction = (action: string, checked: boolean) => {
+  //   let updatedSelectedStatus = [...selectedStatus];
 
-  // Handle checkbox toggle
-  const toggleAction = (action: string) => {
-    const updatedActions = selectedStatuses.includes(action)
-      ? selectedStatuses.filter((s) => s !== action)
-      : [...selectedStatuses, action];
-    setSelectedStatuses(updatedActions);
-  };
+  //   if (checked) {
+  //     // Remove 'all' if selecting any other option
+  //     if (action !== 'all') {
+  //       updatedSelectedStatus = updatedSelectedStatus.filter(
+  //         (status) => status !== 'all'
+  //       );
+  //     }
+  //     updatedSelectedStatus.push(action);
+  //   } else {
+  //     // Deselect the option
+  //     updatedSelectedStatus = updatedSelectedStatus.filter(
+  //       (status) => status !== action
+  //     );
+  //   }
+
+  //   // If no specific option is selected, reset to 'all'
+  //   if (
+  //     updatedSelectedStatus.length === 0 ||
+  //     (updatedSelectedStatus.length === 1 && updatedSelectedStatus.includes('all'))
+  //   ) {
+  //     updatedSelectedStatus = ['all'];
+  //   }
+
+  //   let updatedStatusValue = '';
+  //   if (updatedSelectedStatus.includes('enabled') && updatedSelectedStatus.includes('disabled')) {
+  //     updatedStatusValue = '';
+  //   } else if (updatedSelectedStatus.includes('enabled')) {
+  //     updatedStatusValue = 'true';
+  //   } else if (updatedSelectedStatus.includes('disabled')) {
+  //     updatedStatusValue = 'false';
+  //   }
+
+  //   setSelectedStatus(updatedSelectedStatus);
+  //   setFilters?.((prev: IFilterType) => ({
+  //     ...prev,
+  //     status: { value: updatedStatusValue, matchMode: FilterMatchMode.EQUALS },
+  //   }));
+  // };
 
   return (
-    <div className="w-fit flex flex-colm:flex-row items-center gap-2 mx-2 my-2">
+    <div className="mb-4 flex flex-col gap-6 pt-5">
+    <div className="flex-colm:flex-row flex w-fit items-center gap-2">
       <div className="w-60">
         <CustomTextField
           name="searchQuery"
@@ -45,7 +72,6 @@ export default function TableHeader({
         />
       </div>
 
-      {/* ======================== */}
       <div className="flex items-center">
         <OverlayPanel ref={overlayPanelRef} dismissable>
           <div className="w-60">
@@ -61,39 +87,42 @@ export default function TableHeader({
               />
             </div>
 
-            <div className="border-b border-t py-1">
-              {statusOptions
-                .filter((item) =>
-                  item.label.toLowerCase().includes(searchValue.toLowerCase())
-                )
-                .map((item, index) => (
-                  <div
-                    key={index}
-                    className={` flex justify-between items-center my-2`}
-                  >
-                    <div className="flex">
-                      <Checkbox
-                        inputId={`action-${item.code}`}
-                        checked={selectedStatuses.includes(item?.code)}
-                        onChange={() => toggleAction(item.code)}
-                        className={`${classes.checkbox}`}
-                      />
-                      <label
-                        htmlFor={`action-${item.code}`}
-                        className="ml-1 text-sm"
-                      >
-                        {item.label}
-                      </label>
-                    </div>
+            {/* <div className="border-b border-t py-1">
+              {statusOptions.map((item: IDropdownSelectItem) => (
+                <div
+                  key={item.code}
+                  className="flex justify-between items-center my-2"
+                >
+                  <div className={`flex ${classes.filter}`}>
+                    <Checkbox
+                      inputId={`action-${item.code}`}
+                      onChange={(e) => toggleAction(item.code, e.checked??false)}
+                      checked={selectedStatus.includes(item.code)}
+                      className={`${classes.checkbox} p-checkbox p-checkbox-box`}
+                    />
+                    <label
+                      htmlFor={`action-${item.code}`}
+                      className="ml-1 text-sm"
+                    >
+                      {item.label}
+                    </label>
                   </div>
-                ))}
-            </div>
-            <p
+                </div>
+              ))}
+            </div> */}
+
+            {/* <p
               className="mt-3 text-center text-sm"
-              onClick={() => setSelectedStatuses([])}
+              onClick={() => {
+                setSelectedStatus(['all']);
+                setFilters?.((prev: IFilterType) => ({
+                  ...prev,
+                  status: { value: '', matchMode: FilterMatchMode.EQUALS },
+                }));
+              }}
             >
               Clear filters
-            </p>
+            </p> */}
           </div>
         </OverlayPanel>
 
@@ -101,11 +130,11 @@ export default function TableHeader({
           className="border border-dotted border-[#E4E4E7] rounded text-black w-20"
           icon={faAdd}
           iconStyles={{ color: 'black' }}
-          title={selectedStatuses.length > 0 ? 'Filter' : 'Action'}
+          title="Filter"
           onClick={(e) => overlayPanelRef.current?.toggle(e)}
         />
       </div>
-      {/* ======================== */}
+    </div>
     </div>
   );
 }

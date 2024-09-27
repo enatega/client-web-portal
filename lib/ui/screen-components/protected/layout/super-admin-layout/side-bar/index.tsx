@@ -24,16 +24,21 @@ import {
 // Components
 import SidebarItem from './side-bar-item';
 
-
 function SuperAdminSidebar({ children }: IGlobalComponentProps) {
-  const { isSidebarVisible, showSidebar } = useContext<LayoutContextProps>(LayoutContext);
+  const { isSidebarVisible, showSidebar } =
+    useContext<LayoutContextProps>(LayoutContext);
 
   // Detect clicks outside the sidebar
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const sidebar = document.getElementById('super-admin-sidebar');
       const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
-      if (sidebar && !sidebar.contains(event.target as Node) && iconContainer && !iconContainer.contains(event.target as Node)) {
+      if (
+        sidebar &&
+        !sidebar.contains(event.target as Node) &&
+        iconContainer &&
+        !iconContainer.contains(event.target as Node)
+      ) {
         showSidebar(false);
       }
     };
@@ -159,16 +164,15 @@ export default function MakeSidebar() {
         },
       ],
     },
-
   ];
 
   return (
     <>
       <SuperAdminSidebar>
         <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
-        {navBarItems.map((item, index) => (
-          <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
-        ))}
+          {navBarItems.map((item, index) => (
+            <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
+          ))}
         </div>
       </SuperAdminSidebar>
     </>

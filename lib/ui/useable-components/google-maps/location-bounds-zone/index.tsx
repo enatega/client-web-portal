@@ -360,7 +360,7 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
           switch (val) {
             case 'polygon':
               setPath(DEFAULT_POLYGON);
-              break
+              break;
             case 'point':
               setPath([]);
               break;

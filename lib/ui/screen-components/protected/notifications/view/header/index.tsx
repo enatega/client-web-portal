@@ -9,15 +9,15 @@ export default function NotificationHeader({
   return (
     <div className="w-full flex-shrink-0 sticky top-0 bg-white z-10 shadow-sm p-3">
       <div className="flex w-full justify-between">
-      <HeaderText text="Notification" />
-      <TextIconClickable
-        icon={faAdd}
-        iconStyles={{ color: 'white' }}
-        onClick={handleButtonClick}
-        title="Send Notification"
-        className="sm:w-auto bg-black text-white border-gray-300 rounded"
-      />
-    </div>
+        <HeaderText text="Notification" />
+        <TextIconClickable
+          icon={faAdd}
+          iconStyles={{ color: 'white' }}
+          onClick={handleButtonClick}
+          title="Send Notification"
+          className="sm:w-auto bg-black text-white border-gray-300 rounded"
+        />
+      </div>
     </div>
   );
 }

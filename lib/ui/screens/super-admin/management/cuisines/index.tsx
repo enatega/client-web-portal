@@ -1,7 +1,10 @@
 'use client';
+import CuisineForm from '@/lib/ui/screen-components/protected/cuisines/form';
 //screen components
 import CuisineScreenHeader from '@/lib/ui/screen-components/protected/cuisines/view/header';
 import CuisinesMain from '@/lib/ui/screen-components/protected/cuisines/view/main';
+import { IEditState } from '@/lib/utils/interfaces';
+import { ICuisine } from '@/lib/utils/interfaces/cuisine.interface';
 
 //hooks
 import { useState } from 'react';
@@ -13,11 +16,35 @@ export default function CuisinesScreen() {
   const handleButtonClick = () => {
     setVisible(true);
   };
+  const [isEditing, setIsEditing] = useState<IEditState<ICuisine>>({
+    bool: false,
+    data: {
+      _id: '',
+      __typename: '',
+      description: '',
+      name: '',
+      shopType: '',
+      image: '',
+    },
+  });
 
   return (
     <div className="screen-container">
       <CuisineScreenHeader handleButtonClick={handleButtonClick} />
-      <CuisinesMain setVisible={setVisible} visible={visible} />
+      <div className="flex-grow overflow-y-auto">
+        <CuisinesMain
+          setVisible={setVisible}
+          visible={visible}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+        />
+      </div>
+      <CuisineForm
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        setVisible={setVisible}
+        visible={visible}
+      />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import {
   ISignInFormErrors,
   ISignUpFormErrors,
   IVendorErrors,
-  IUpdateProfileFormErrors
+  IUpdateProfileFormErrors,
 } from '@/lib/utils/interfaces/forms';
 
 import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';

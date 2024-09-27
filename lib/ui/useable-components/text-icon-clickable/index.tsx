@@ -24,7 +24,11 @@ export default function TextIconClickable({
         <ProgressSpinner style={{ width: '20px', height: '20px' }} /> // Loader/spinner
       ) : (
         icon && (
-          <FontAwesomeIcon icon={icon} color={iconStyles?.color ?? 'gray'} spin={loading} />
+          <FontAwesomeIcon
+            icon={icon}
+            color={iconStyles?.color ?? 'gray'}
+            spin={loading}
+          />
         )
       )}
       <div className={loading ? 'opacity-50' : ''}>{title}</div>

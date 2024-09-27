@@ -12,9 +12,7 @@ export interface INotificationFormProps {
   visible: boolean;
 }
 
-export interface INotificationMainProps {
-
-}
+export interface INotificationMainProps {}
 
 export interface INotificationTableProps {
   onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;

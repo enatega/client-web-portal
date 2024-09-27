@@ -55,7 +55,7 @@ import { toTextCase } from '@/lib/utils/methods';
 import { RestaurantSchema } from '@/lib/utils/schema/restaurant';
 import { ApolloCache, ApolloError, useMutation } from '@apollo/client';
 
-const initialValues: IUpdateProfileForm  = {
+const initialValues: IUpdateProfileForm = {
   name: '',
   username: '',
   password: '',
@@ -69,7 +69,7 @@ const initialValues: IUpdateProfileForm  = {
   image: '',
   logo: '',
   email: '',
-  orderprefix: ''
+  orderprefix: '',
 };
 
 export default function UpdateRestaurantDetails({
@@ -233,7 +233,6 @@ export default function UpdateRestaurantDetails({
                 return (
                   <Form onSubmit={handleSubmit}>
                     <div className="space-y-3 mb-2">
-                    
                       <div>
                         <CustomIconTextField
                           type="email"
@@ -325,7 +324,7 @@ export default function UpdateRestaurantDetails({
                       <div>
                         <CustomNumberField
                           suffix=" m"
-                          min={0} 
+                          min={0}
                           max={500}
                           placeholder="Delivery Time"
                           name="deliveryTime"

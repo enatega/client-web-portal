@@ -28,29 +28,32 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
   const { isAdminSidebarVisible, showAdminSidebar } =
     useContext<LayoutContextProps>(LayoutContext);
 
+  // Detect clicks outside the sidebar
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const sidebar = document.getElementById('admin-sidebar');
+      const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
+      if (
+        sidebar &&
+        !sidebar.contains(event.target as Node) &&
+        iconContainer &&
+        !iconContainer.contains(event.target as Node)
+      ) {
+        showAdminSidebar(false);
+      }
+    };
 
-    // Detect clicks outside the sidebar
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        const sidebar = document.getElementById('admin-sidebar');
-        const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
-        if (sidebar && !sidebar.contains(event.target as Node) && iconContainer && !iconContainer.contains(event.target as Node)) {
-          showAdminSidebar(false);
-        }
-      };
-  
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-      };
-    }, [showAdminSidebar]);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showAdminSidebar]);
 
   return (
     <div className="relative">
       <aside
         id="admin-sidebar"
         className={`box-border transition-all duration-300 ease-in-out overflow-hidden transform ${isAdminSidebarVisible ? 'translate-x-0 w-64' : '-translate-x-full w-0'}`}
-  
       >
         <nav
           className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isAdminSidebarVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -60,7 +63,6 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
       </aside>
     </div>
   );
-
 }
 
 export default function MakeSidebar() {
