@@ -6,13 +6,16 @@ export default function CustomInputSwitch({
   isActive,
   label,
   onChange,
+  reverse = false,
 }: ICustomInputSwitchComponentProps) {
   return loading ? (
     <CustomLoader />
   ) : (
-    <label className="ml-2 flex items-center cursor-pointer flex-shrink-0">
+    <label className="ml-2 flex flex-shrink-0 cursor-pointer items-center">
       <div className="relative">
-        <div className="flex items-center space-x-2">
+        <div
+          className={`flex items-center gap-2 ${reverse && 'flex-row-reverse'}`}
+        >
           <label className="relative inline-flex cursor-pointer items-center">
             <input
               type="checkbox"
@@ -20,10 +23,10 @@ export default function CustomInputSwitch({
               checked={isActive}
               onChange={onChange}
             />
-            <div className="w-8 h-4 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:bg-primary-color"></div>
-            <div className="absolute left-0.5 top-0.5 bg-gray-50 w-3 h-3 rounded-full transition-transform peer-checked:translate-x-5"></div>
+            <div className="peer h-4 w-8 rounded-full bg-gray-300 peer-checked:bg-primary-color peer-focus:outline-none dark:bg-gray-700"></div>
+            <div className="absolute left-0.5 top-0.5 h-3 w-3 rounded-full bg-gray-50 transition-transform peer-checked:translate-x-4"></div>
           </label>
-          {label && <span className="ml-2">{label}</span>}
+          {label && <span>{label}</span>}
         </div>
       </div>
     </label>

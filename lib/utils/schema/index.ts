@@ -10,3 +10,4 @@ export * from './rider';
 export * from './tipping';
 export * from './vendor';
 export * from './zone';
+export * from './configuration';

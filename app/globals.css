@@ -493,3 +493,14 @@ body {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
     var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
+
+/* .p-inputmask.p-inputtext.p-component.p-filled */
+.p-password-input.p-inputtext.p-component.p-filled .p-input-icon svg {
+  margin-right: -20px;
+}
+
+.icon-right .p-icon-field.p-icon-field-right svg {
+  /* margin-right: -90px; */
+  position: absolute;
+  right: -35px;
+}
