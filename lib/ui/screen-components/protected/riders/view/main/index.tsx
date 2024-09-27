@@ -93,7 +93,7 @@ export default function RidersMain({
   ];
 
   return (
-    <div className="pt-5">
+    <div className="p-3">
       <Table
         header={
           <RidersTableHeader

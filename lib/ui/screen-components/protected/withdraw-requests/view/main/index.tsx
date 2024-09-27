@@ -55,7 +55,7 @@ export default function WithdrawRequestsMain() {
     }
   }, [data]);
   return (
-    <div className="w-full">
+    <div className="p-3">
       <WithdrawTable
         data={requests ?? []}
         globalFilterValue={globalFilterValue}

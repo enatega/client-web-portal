@@ -16,12 +16,13 @@ export default function StaffScreen() {
   const [staff, setStaff] = useState<null | IStaffResponse>(null);
 
   return (
-    <div className="flex flex-col p-3 h-screen overflow-hidden">
+    <div className="screen-container">
       <StaffHeader setIsAddStaffVisible={setIsAddStaffVisible} />
       <StaffMain
         setIsAddStaffVisible={setIsAddStaffVisible}
         setStaff={setStaff}
       />
+
       <StaffAddForm
         staff={staff}
         onHide={() => {

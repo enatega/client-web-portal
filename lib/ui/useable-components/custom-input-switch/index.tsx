@@ -26,7 +26,7 @@ export default function CustomInputSwitch({
             <div className="peer h-4 w-8 rounded-full bg-gray-300 peer-checked:bg-primary-color peer-focus:outline-none dark:bg-gray-700"></div>
             <div className="absolute left-0.5 top-0.5 h-3 w-3 rounded-full bg-gray-50 transition-transform peer-checked:translate-x-4"></div>
           </label>
-          {label && <span>{label}</span>}
+          {label && <span className="ml-2">{label}</span>}
         </div>
       </div>
     </label>

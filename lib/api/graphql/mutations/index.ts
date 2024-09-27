@@ -1,8 +1,8 @@
 export * from './addons';
 export * from './authentication';
 export * from './banners';
-export * from './commission-rate';
 export * from './category';
+export * from './commission-rate';
 export * from './coupons';
 export * from './cuisines';
 export * from './notifications';
@@ -15,3 +15,4 @@ export * from './vendor';
 export * from './withdraw-requests';
 export * from './zone';
 export * from './configuration';
+export * from './food';

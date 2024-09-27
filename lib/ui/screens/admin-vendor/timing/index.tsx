@@ -1,5 +1,5 @@
-import TimingAddForm from "@/lib/ui/screen-components/protected/timing/add-form";
-import TimingHeader from "@/lib/ui/screen-components/protected/timing/view/header";
+import TimingAddForm from '@/lib/ui/screen-components/protected/restaurant(vendor)/timing/add-form';
+import TimingHeader from '@/lib/ui/screen-components/protected/restaurant(vendor)/timing/view/header';
 
 const TimingScreen = () => {
   return (
