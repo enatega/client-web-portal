@@ -28,6 +28,7 @@ export interface IGoogleMapsProviderProps {
 export interface ICustomShapeComponentProps extends IGlobalComponentProps {
   selected: string;
   onClick: (value: string) => void;
+  hidenNames?: string[] | []
 }
 
 export interface ILocationPoint {

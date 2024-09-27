@@ -13,8 +13,7 @@ export interface INotificationFormProps {
 }
 
 export interface INotificationMainProps {
-  setVisible: Dispatch<SetStateAction<boolean>>;
-  visible: boolean;
+
 }
 
 export interface INotificationTableProps {

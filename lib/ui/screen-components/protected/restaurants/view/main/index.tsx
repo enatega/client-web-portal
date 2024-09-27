@@ -51,7 +51,7 @@ export default function RestaurantsMain() {
   ) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
 
   return (
-    <div className="pt-5">
+    <div className="p-3">
       <Table
         header={
           <RestaurantsTableHeader
@@ -71,3 +71,4 @@ export default function RestaurantsMain() {
     </div>
   );
 }
+

@@ -15,14 +15,14 @@ export default function OptionsScreen() {
   const [option, setOption] = useState<IOptions | null>(null);
 
   return (
-    <div className="flex h-screen flex-col overflow-hidden p-3">
+    <div className="screen-container">
       <OptionsHeader setIsAddOptionsVisible={setIsAddOptionsVisible} />
-      <div className="flex-grow overflow-y-auto">
+
         <OptionsMain
           setIsAddOptionsVisible={setIsAddOptionsVisible}
           setOption={setOption}
         />
-      </div>
+  
 
       <OptionsAddForm
         option={option}

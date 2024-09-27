@@ -157,7 +157,7 @@ export default function CommissionRateMain() {
   };
 
   return (
-    <div className="p-2 pt-5 pb-20">
+    <div className="p-3">
       <>
         <CommissionRateHeader
           setSelectedActions={setSelectedActions}

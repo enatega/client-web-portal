@@ -86,7 +86,7 @@ export default function BannersMain({
   ];
 
   return (
-    <div className="pt-5">
+    <div className="p-3">
       <Table
         header={
           <BannerTableHeader
