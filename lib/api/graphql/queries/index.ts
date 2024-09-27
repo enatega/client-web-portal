@@ -11,3 +11,4 @@ export * from './user';
 export * from './vendors';
 export * from './withdraw-requests';
 export * from './zone';
+export * from './food'
