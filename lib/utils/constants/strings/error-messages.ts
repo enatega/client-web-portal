@@ -13,6 +13,8 @@ import {
 import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
 import { IZoneErrors } from '../../interfaces/forms/zone.form.interface';
 import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
+import { ICuisineErrors } from '../../interfaces/forms/cusine.form.interface';
+import { ICouponErrors } from '../../interfaces/forms/coupon.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -126,4 +128,16 @@ export const StaffErrors: IStaffErrors = {
   confirmPassword: ['Required', 'Password must match'],
   isActive: ['Required'],
   permissions: ['Required', 'Permissions field must have at least 1 items'],
+};
+
+export const CusisineErrors: ICuisineErrors = {
+  name: ['Required'],
+  description: ['Required'],
+  shopType: ['Required'],
+};
+
+export const CouponErrors: ICouponErrors = {
+  title: ['Required'],
+  discount: ['Required'],
+  enabled: ['Required'],
 };

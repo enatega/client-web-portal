@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { IGlobalComponentProps } from './global.interface';
 
 export interface ICustomInputSwitchComponentProps
@@ -5,5 +6,5 @@ export interface ICustomInputSwitchComponentProps
   loading?: boolean;
   isActive: boolean;
   label?: string;
-  onChange: () => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
