@@ -46,7 +46,7 @@ export default function CouponForm({
     CREATE_COUPON,
     {
       refetchQueries: [{ query: GET_COUPONS }],
-      onCompleted:()=>{
+      onCompleted: () => {
         showToast({
           title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
           type: 'success',
@@ -54,21 +54,23 @@ export default function CouponForm({
           duration: 2000,
         });
       },
-      onError:(err)=>{
+      onError: (err) => {
         showToast({
           title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
           type: 'error',
-          message: err.message||`Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
+          message:
+            err.message ||
+            `Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
           duration: 2000,
         });
-      }
+      },
     }
   );
   const [editCoupon, { loading: editCouponLoading }] = useMutation(
     EDIT_COUPON,
     {
       refetchQueries: [{ query: GET_COUPONS }],
-      onCompleted:()=>{
+      onCompleted: () => {
         showToast({
           title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
           type: 'success',
@@ -76,14 +78,16 @@ export default function CouponForm({
           duration: 2000,
         });
       },
-      onError:(err)=>{
+      onError: (err) => {
         showToast({
           title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
           type: 'error',
-          message: err.message||`Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
+          message:
+            err.message ||
+            `Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
           duration: 2000,
         });
-      }
+      },
     }
   );
   //toast
@@ -100,51 +104,49 @@ export default function CouponForm({
         initialValues={initialValues}
         validationSchema={CouponFormSchema}
         onSubmit={async (values, { setSubmitting }) => {
-      
-            setSubmitting(true);
-            let formData;
-            if (!isEditing.bool) {
-              formData = {
-                title: values.title,
-                discount: values.discount,
-                enabled: values.enabled,
-              };
-            } else {
-              formData = {
-                _id: values._id,
-                title: values.title,
-                discount: values.discount,
-                enabled: values.enabled,
-              };
-            }
+          setSubmitting(true);
+          let formData;
+          if (!isEditing.bool) {
+            formData = {
+              title: values.title,
+              discount: values.discount,
+              enabled: values.enabled,
+            };
+          } else {
+            formData = {
+              _id: values._id,
+              title: values.title,
+              discount: values.discount,
+              enabled: values.enabled,
+            };
+          }
 
-            if (!isEditing.bool) {
-              await CreateCoupon({
-                variables: {
-                  couponInput: formData,
-                },
-              });
-            } else {
-              await editCoupon({
-                variables: {
-                  couponInput: formData,
-                },
-              });
-            }
-            setIsEditing({
-              bool: false,
-              data: {
-                __typename: '',
-                _id: '',
-                discount: 0,
-                enabled: true,
-                title: '',
+          if (!isEditing.bool) {
+            await CreateCoupon({
+              variables: {
+                couponInput: formData,
               },
             });
-            setVisible(false);
-          
-            setSubmitting(false);
-       
+          } else {
+            await editCoupon({
+              variables: {
+                couponInput: formData,
+              },
+            });
+          }
+          setIsEditing({
+            bool: false,
+            data: {
+              __typename: '',
+              _id: '',
+              discount: 0,
+              enabled: true,
+              title: '',
+            },
+          });
+          setVisible(false);
+
+          setSubmitting(false);
         }}
         validateOnChange={true}
       >

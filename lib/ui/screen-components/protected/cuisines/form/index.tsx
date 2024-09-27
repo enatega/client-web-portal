@@ -52,7 +52,7 @@ export default function CuisineForm({
     CREATE_CUISINE,
     {
       onError,
-      onCompleted:()=>{
+      onCompleted: () => {
         showToast({
           title: `${!isEditing.bool ? 'New' : 'Edit'} Cuisine`,
           type: 'success',
@@ -67,7 +67,7 @@ export default function CuisineForm({
     EDIT_CUISINE,
     {
       onError,
-      onCompleted:()=>{
+      onCompleted: () => {
         showToast({
           title: `${!isEditing.bool ? 'New' : 'Edit'} Cuisine`,
           type: 'success',
@@ -113,54 +113,53 @@ export default function CuisineForm({
           initialValues={initialValues}
           validationSchema={CuisineFormSchema}
           onSubmit={async (values, { setSubmitting }) => {
-              setSubmitting(true);
+            setSubmitting(true);
 
-              let formData;
-              if (!isEditing.bool) {
-                formData = {
-                  name: values.name,
-                  description: values.description,
-                  shopType: values.shopType.label,
-                  image: values.image,
-                };
-              } else {
-                formData = {
-                  _id: values._id,
-                  name: values.name,
-                  description: values.description,
-                  shopType: values.shopType.label,
-                  image: values.image,
-                };
-              }
-              if (!isEditing.bool) {
-                await CreateCuisine({
-                  variables: {
-                    cuisineInput: formData,
-                  },
-                });
-              } else {
-                await editCuisine({
-                  variables: {
-                    cuisineInput: formData,
-                  },
-                });
-              }
-
-              setVisible(false);
-            
-              setSubmitting(false);
-              setIsEditing({
-                bool: false,
-                data: {
-                  __typename: '',
-                  _id: '',
-                  description: '',
-                  name: '',
-                  shopType: '',
-                  image: '',
+            let formData;
+            if (!isEditing.bool) {
+              formData = {
+                name: values.name,
+                description: values.description,
+                shopType: values.shopType.label,
+                image: values.image,
+              };
+            } else {
+              formData = {
+                _id: values._id,
+                name: values.name,
+                description: values.description,
+                shopType: values.shopType.label,
+                image: values.image,
+              };
+            }
+            if (!isEditing.bool) {
+              await CreateCuisine({
+                variables: {
+                  cuisineInput: formData,
                 },
               });
-          
+            } else {
+              await editCuisine({
+                variables: {
+                  cuisineInput: formData,
+                },
+              });
+            }
+
+            setVisible(false);
+
+            setSubmitting(false);
+            setIsEditing({
+              bool: false,
+              data: {
+                __typename: '',
+                _id: '',
+                description: '',
+                name: '',
+                shopType: '',
+                image: '',
+              },
+            });
           }}
           validateOnChange={true}
         >
