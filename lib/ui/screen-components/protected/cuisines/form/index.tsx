@@ -52,6 +52,14 @@ export default function CuisineForm({
     CREATE_CUISINE,
     {
       onError,
+      onCompleted:()=>{
+        showToast({
+          title: `${!isEditing.bool ? 'New' : 'Edit'} Cuisine`,
+          type: 'success',
+          message: `Cuisine has been ${!isEditing.bool ? 'created' : 'edited'} successfully`,
+          duration: 2000,
+        });
+      },
       refetchQueries: [{ query: GET_CUISINES }],
     }
   );
@@ -59,6 +67,14 @@ export default function CuisineForm({
     EDIT_CUISINE,
     {
       onError,
+      onCompleted:()=>{
+        showToast({
+          title: `${!isEditing.bool ? 'New' : 'Edit'} Cuisine`,
+          type: 'success',
+          message: `Cuisine has been ${!isEditing.bool ? 'created' : 'edited'} successfully`,
+          duration: 2000,
+        });
+      },
       refetchQueries: [{ query: GET_CUISINES }],
     }
   );
@@ -97,7 +113,6 @@ export default function CuisineForm({
           initialValues={initialValues}
           validationSchema={CuisineFormSchema}
           onSubmit={async (values, { setSubmitting }) => {
-            try {
               setSubmitting(true);
 
               let formData;
@@ -132,12 +147,7 @@ export default function CuisineForm({
               }
 
               setVisible(false);
-              showToast({
-                title: `${!isEditing.bool ? 'New' : 'Edit'} Cuisine`,
-                type: 'success',
-                message: `Cuisine has been ${!isEditing.bool ? 'created' : 'edited'} successfully`,
-                duration: 2000,
-              });
+            
               setSubmitting(false);
               setIsEditing({
                 bool: false,
@@ -150,17 +160,7 @@ export default function CuisineForm({
                   image: '',
                 },
               });
-            } catch (err) {
-              setVisible(true);
-              showToast({
-                title: `${!isEditing.bool ? 'New' : 'Edit'} Cuisine`,
-                type: 'error',
-                message: `New Cuisine ${isEditing.bool ? 'Edition' : 'Creation'} has been failed`,
-                duration: 2000,
-              });
-              setSubmitting(false);
-              return console.log(err);
-            }
+          
           }}
           validateOnChange={true}
         >

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const SUBSCRIPTION_PLACE_ORDER = gql`
-  subscription SubscribePaceOrder($restaurant: String!) {
+  subscription SubscribePlaceOrder($restaurant: String!) {
     subscribePlaceOrder(restaurant: $restaurant) {
       userId
       origin

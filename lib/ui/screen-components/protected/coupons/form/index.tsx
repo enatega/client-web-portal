@@ -46,12 +46,44 @@ export default function CouponForm({
     CREATE_COUPON,
     {
       refetchQueries: [{ query: GET_COUPONS }],
+      onCompleted:()=>{
+        showToast({
+          title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
+          type: 'success',
+          message: 'Coupon has been added successfully',
+          duration: 2000,
+        });
+      },
+      onError:(err)=>{
+        showToast({
+          title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
+          type: 'error',
+          message: err.message||`Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
+          duration: 2000,
+        });
+      }
     }
   );
   const [editCoupon, { loading: editCouponLoading }] = useMutation(
     EDIT_COUPON,
     {
       refetchQueries: [{ query: GET_COUPONS }],
+      onCompleted:()=>{
+        showToast({
+          title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
+          type: 'success',
+          message: `Coupon has been ${isEditing.bool ? 'edited' : 'added'}  successfully`,
+          duration: 2000,
+        });
+      },
+      onError:(err)=>{
+        showToast({
+          title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
+          type: 'error',
+          message: err.message||`Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
+          duration: 2000,
+        });
+      }
     }
   );
   //toast
@@ -68,7 +100,7 @@ export default function CouponForm({
         initialValues={initialValues}
         validationSchema={CouponFormSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          try {
+      
             setSubmitting(true);
             let formData;
             if (!isEditing.bool) {
@@ -110,24 +142,9 @@ export default function CouponForm({
               },
             });
             setVisible(false);
-            showToast({
-              title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
-              type: 'success',
-              message: 'Coupon has been added successfully',
-              duration: 2000,
-            });
+          
             setSubmitting(false);
-          } catch (err) {
-            setVisible(true);
-            showToast({
-              title: `${isEditing.bool ? 'Edit' : 'New'} Coupon`,
-              type: 'error',
-              message: `Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
-              duration: 2000,
-            });
-            setSubmitting(false);
-            return console.log(err);
-          }
+       
         }}
         validateOnChange={true}
       >
