@@ -1,6 +1,6 @@
 //screen components
 import CouponForm from '@/lib/ui/screen-components/protected/coupons/form';
-import CouponScreenHeader from '@/lib/ui/screen-components/protected/coupons/view/header';
+import CouponScreenHeader from '@/lib/ui/screen-components/protected/coupons/view/header/screen-header';
 import CouponsMain from '@/lib/ui/screen-components/protected/coupons/view/main';
 import { IEditState } from '@/lib/utils/interfaces';
 import { ICoupon } from '@/lib/utils/interfaces/coupons.interface';
@@ -29,14 +29,12 @@ export default function CouponsScreen() {
   return (
     <div className="screen-container">
       <CouponScreenHeader handleButtonClick={handleButtonClick} />
-      <div className="flex-grow overflow-y-auto">
-        <CouponsMain
-          setVisible={setVisible}
-          visible={visible}
-          isEditing={isEditing}
-          setIsEditing={setIsEditing}
-        />
-      </div>
+      <CouponsMain
+        setVisible={setVisible}
+        visible={visible}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      />
       <CouponForm
         isEditing={isEditing}
         visible={visible}

@@ -13,7 +13,7 @@ import {
 import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
 import { IZoneErrors } from '../../interfaces/forms/zone.form.interface';
 import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
-import { ICuisineErrors } from '../../interfaces/forms/cusine.form.interface';
+import { ICuisineErrors } from '../../interfaces/forms/cuisine.form.interface';
 import { ICouponErrors } from '../../interfaces/forms/coupon.form.interface';
 
 export const PasswordErrors = [
@@ -130,7 +130,7 @@ export const StaffErrors: IStaffErrors = {
   permissions: ['Required', 'Permissions field must have at least 1 items'],
 };
 
-export const CusisineErrors: ICuisineErrors = {
+export const CuisineErrors: ICuisineErrors = {
   name: ['Required'],
   description: ['Required'],
   shopType: ['Required'],

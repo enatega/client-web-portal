@@ -15,7 +15,7 @@ import { IAddCuisineProps } from '@/lib/utils/interfaces/cuisine.interface';
 
 //schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
-import {  Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 
 //prime react
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -26,7 +26,7 @@ import { ApolloError, useMutation } from '@apollo/client';
 import { useContext } from 'react';
 import CustomUploadImageComponent from '@/lib/ui/useable-components/upload/upload-image';
 import { onErrorMessageMatcher } from '@/lib/utils/methods';
-import { CusisineErrors } from '@/lib/utils/constants';
+import { CuisineErrors } from '@/lib/utils/constants';
 
 export default function CuisineForm({
   setVisible,
@@ -187,7 +187,7 @@ export default function CuisineForm({
                       borderColor: onErrorMessageMatcher(
                         'name',
                         errors?.name,
-                        CusisineErrors
+                        CuisineErrors
                       )
                         ? 'red'
                         : '',
@@ -206,7 +206,7 @@ export default function CuisineForm({
                       borderColor: onErrorMessageMatcher(
                         'description',
                         errors?.description,
-                        CusisineErrors
+                        CuisineErrors
                       )
                         ? 'red'
                         : '',
@@ -224,7 +224,7 @@ export default function CuisineForm({
                       borderColor: onErrorMessageMatcher(
                         'shopType',
                         errors?.shopType?.code,
-                        CusisineErrors
+                        CuisineErrors
                       )
                         ? 'red'
                         : '',

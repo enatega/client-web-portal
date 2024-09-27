@@ -77,3 +77,10 @@ export interface ICouponMainProps {
   setIsEditing: Dispatch<SetStateAction<IEditState<ICoupon>>>;
   isEditing: IEditState<ICoupon>;
 }
+
+export interface ICouponTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  selectedActions: string[];
+  setSelectedActions: Dispatch<SetStateAction<string[]>>;
+}

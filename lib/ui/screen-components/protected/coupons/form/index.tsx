@@ -16,7 +16,7 @@ import { IAddCouponProps } from '@/lib/utils/interfaces/coupons.interface';
 import { CouponFormSchema } from '@/lib/utils/schema/coupon';
 
 //formik
-import {  Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 
 //prime react
 import { ProgressSpinner } from 'primereact/progressspinner';

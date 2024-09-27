@@ -10,7 +10,6 @@ import {
 } from '@/lib/utils/interfaces/cuisine.interface';
 import {
   IColumnConfig,
-  IFilterType,
 } from '@/lib/utils/interfaces/table.interface';
 import { FilterMatchMode } from 'primereact/api';
 
@@ -20,17 +19,17 @@ import { ToastContext } from '@/lib/context/toast.context';
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useMutation } from '@apollo/client';
-import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import {  useContext, useEffect, useRef, useState } from 'react';
 
 //components
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import Table from '@/lib/ui/useable-components/table';
-import TableHeader from '@/lib/ui/useable-components/table-header';
 import { IEditPopupVal } from '@/lib/utils/interfaces/coupons.interface';
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
+import CuisineTableHeader from '../header/table-header';
 
 export default function CuisinesMain({
   visible,
@@ -71,37 +70,23 @@ export default function CuisinesMain({
       image: '',
     },
   });
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
+
+  //filters
+  const filters = {
+    global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
+    shopType: {
+      value: selectedActions.length > 0 ? selectedActions : null,
+      matchMode: FilterMatchMode.IN,
+    },
+  };
 
   //queries
   const { data, fetch } = useLazyQueryQL(GET_CUISINES, {
     onCompleted: () => setIsLoading(false),
   }) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
-
-  //filters
-  const [filters, setFilters] = useState<IFilterType>({
-    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
-  });
-  const [globalFilterValue, setGlobalFilterValue] = useState('');
-  //options
-  let statusOptions = [
-    {
-      label: '',
-      code: '',
-    },
-  ];
-
-  //global filters change
-  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    let _filters = { ...filters };
-
-    _filters['global'].value = value;
-
-    setFilters(_filters);
-    setGlobalFilterValue(value);
-  };
 
   //columns
   const cuisineColumns: IColumnConfig<ICuisine>[] = [
@@ -265,12 +250,11 @@ export default function CuisinesMain({
         filters={filters}
         loading={isLoading}
         header={
-          <TableHeader
+          <CuisineTableHeader
             globalFilterValue={globalFilterValue}
-            onGlobalFilterChange={onGlobalFilterChange}
-            selectedStatuses={selectedStatuses}
-            setSelectedStatuses={setSelectedStatuses}
-            statusOptions={statusOptions}
+            onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
           />
         }
       />

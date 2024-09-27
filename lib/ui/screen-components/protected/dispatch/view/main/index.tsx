@@ -3,7 +3,7 @@ import { GET_ACTIVE_ORDERS } from '@/lib/api/graphql';
 
 //components
 import Table from '@/lib/ui/useable-components/table';
-import TableHeader from '@/lib/ui/useable-components/table-header';
+import DispatchTableHeader from '../header/table-header';
 
 //inrfaces
 import { ILazyQueryResult } from '@/lib/utils/interfaces';
@@ -11,23 +11,20 @@ import {
   IActiveOrders,
   IGetActiveOrders,
 } from '@/lib/utils/interfaces/dispatch.interface';
-import {
-  IColumnConfig,
-  IFilterType,
-} from '@/lib/utils/interfaces/table.interface';
+import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 
 //prime react
-//hooks
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { FilterMatchMode } from 'primereact/api';
 import { Tag } from 'primereact/tag';
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+
+//hooks
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { useEffect, useState } from 'react';
 
 export default function DispatchMain() {
   //toast
   // const { showToast } = useContext(ToastContext);
   //states
-  const [activeOrders, setActiveOrders] = useState<IActiveOrders[]>([]);
   const [selectedData, setSelectedData] = useState<IActiveOrders[]>([]);
   // const [riderOptions, setRiderOptions] = useState<IDropdownSelectItem[]>([]);
   // const [currentSelectedRider, setCurrentSelectedRider] =
@@ -42,13 +39,25 @@ export default function DispatchMain() {
   // });
   //   const [ridersData, setRidersData] = useState([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [selectedStatuses, setSelectedStatuses] = useState(['']);
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
 
   //filters
-  const [filters, setFilters] = useState<IFilterType>({
-    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
-  });
+  const filters = {
+    global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
+    orderStatus: {
+      value: selectedActions.length > 0 ? selectedActions : null,
+      matchMode: FilterMatchMode.IN,
+    },
+  };
+  //queries
+  const {
+    data: active_orders_data,
+    fetch: fetchActiveOrders,
+    loading,
+  } = useLazyQueryQL(GET_ACTIVE_ORDERS, {
+    fetchPolicy: 'network-only',
+    debounceMs: 5000,
+  }) as ILazyQueryResult<IGetActiveOrders | undefined, undefined>;
 
   //mutaions (commented out for now)
   // const [updateStatus] = useMutation(UPDATE_STATUS, {
@@ -75,14 +84,6 @@ export default function DispatchMain() {
   //     });
   //   },
   // });
-
-  //queries
-  const { data: active_orders_data, fetch: fetchActiveOrders } = useLazyQueryQL(
-    GET_ACTIVE_ORDERS,
-    {
-      pollInterval: 3000,
-    }
-  ) as ILazyQueryResult<IGetActiveOrders | undefined, undefined>;
 
   //======== commented out for now =========
 
@@ -175,48 +176,37 @@ export default function DispatchMain() {
   //     console.log({ subscription_data });
   //   };
 
-  //global filters change
-  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    let _filters = { ...filters };
-
-    _filters['global'].value = value;
-
-    setFilters(_filters);
-    setGlobalFilterValue(value);
-  };
-
   //status options
-  const actionStatusOptions = useMemo(
-    () => [
-      {
-        label: 'Pending',
-        code: 'PENDING',
-        body: () => <Tag value="Pending" severity="secondary" rounded />,
-      },
-      {
-        label: 'Assigned',
-        code: 'ASSIGNED',
-        body: () => <Tag value="Assigned" severity="warning" rounded />,
-      },
-      {
-        label: 'Accepted',
-        code: 'ACCEPTED',
-        body: () => <Tag value="Accepted" severity="info" rounded />,
-      },
-      {
-        label: 'Delivered',
-        code: 'DELIVERED',
-        body: () => <Tag value="Delivered" severity="success" rounded />,
-      },
-      {
-        label: 'Rejected',
-        code: 'REJECTED',
-        body: () => <Tag value="Reject" severity="danger" rounded />,
-      },
-    ],
-    []
-  );
+  // const actionStatusOptions = useMemo(
+  //   () => [
+  //     {
+  //       label: 'Pending',
+  //       code: 'PENDING',
+  //       body: () => <Tag value="Pending" severity="secondary" rounded />,
+  //     },
+  //     {
+  //       label: 'Assigned',
+  //       code: 'ASSIGNED',
+  //       body: () => <Tag value="Assigned" severity="warning" rounded />,
+  //     },
+  //     {
+  //       label: 'Accepted',
+  //       code: 'ACCEPTED',
+  //       body: () => <Tag value="Accepted" severity="info" rounded />,
+  //     },
+  //     {
+  //       label: 'Delivered',
+  //       code: 'DELIVERED',
+  //       body: () => <Tag value="Delivered" severity="success" rounded />,
+  //     },
+  //     {
+  //       label: 'Rejected',
+  //       code: 'REJECTED',
+  //       body: () => <Tag value="Reject" severity="danger" rounded />,
+  //     },
+  //   ],
+  //   []
+  // );
 
   //=========== commenting out for now ==========
 
@@ -430,34 +420,25 @@ export default function DispatchMain() {
     },
   ];
 
+  //useEffects
   useEffect(() => {
-    setIsLoading(true);
     fetchActiveOrders();
   }, []);
-  useEffect(() => {
-    if (active_orders_data?.getActiveOrders) {
-      setActiveOrders(active_orders_data.getActiveOrders);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    }
-  }, [active_orders_data?.getActiveOrders, activeOrders]);
   return (
     <div>
       <Table
         columns={colums}
-        data={activeOrders}
+        data={active_orders_data?.getActiveOrders ?? []}
         isSelectable={true}
-        loading={isLoading}
+        loading={loading}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e as IActiveOrders[])}
         header={
-          <TableHeader
+          <DispatchTableHeader
             globalFilterValue={globalFilterValue}
-            onGlobalFilterChange={onGlobalFilterChange}
-            selectedStatuses={selectedStatuses}
-            setSelectedStatuses={setSelectedStatuses}
-            statusOptions={actionStatusOptions}
+            onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
           />
         }
         filters={filters}

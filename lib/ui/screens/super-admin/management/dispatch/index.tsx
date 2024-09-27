@@ -1,5 +1,5 @@
 //components
-import DispatchHeader from '@/lib/ui/screen-components/protected/dispatch/view/header';
+import DispatchHeader from '@/lib/ui/screen-components/protected/dispatch/view/header/screen-header';
 import DispatchMain from '@/lib/ui/screen-components/protected/dispatch/view/main';
 
 export default function DispatchScreen() {
