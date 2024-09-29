@@ -88,15 +88,14 @@ export default function WithdrawRequestsMain() {
         type: 'error',
         title: 'Update Withdraw Request',
         message:
-          err?.graphQLErrors[0]?.message ||
-          err?.networkError?.message ||
+          err?.cause?.message ||
           'Failed to update the request',
       });
     },
   });
 
   // find severity
-  function findSeverity(code: string) {
+  function findSeverity(code: string | undefined) {
     switch (code) {
       case 'REQUESTED':
         return 'info';

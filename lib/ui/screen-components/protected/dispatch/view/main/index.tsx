@@ -93,8 +93,7 @@ export default function DispatchMain() {
       showToast({
         type: 'error',
         message:
-          err.message ||
-          err.graphQLErrors[0].message ||
+          err.cause?.message||
           'An error occured while updating the status',
         title: 'Edit Order Status',
       }),
@@ -114,8 +113,7 @@ export default function DispatchMain() {
         type: 'error',
         title: 'Assign Rider',
         message:
-          error.message ||
-          error.graphQLErrors[0].message ||
+          error.cause?.message ||
           'An error occured while assigning the job to rider',
       });
     },
