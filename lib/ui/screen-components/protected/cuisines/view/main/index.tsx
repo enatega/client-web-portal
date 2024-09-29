@@ -8,9 +8,7 @@ import {
   ICuisineMainProps,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
-import {
-  IColumnConfig,
-} from '@/lib/utils/interfaces/table.interface';
+import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 import { FilterMatchMode } from 'primereact/api';
 
 // hooks
@@ -19,7 +17,7 @@ import { ToastContext } from '@/lib/context/toast.context';
 //hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useMutation } from '@apollo/client';
-import {  useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 //components
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
