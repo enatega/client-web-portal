@@ -75,7 +75,7 @@ export default function FoodDetails({
       ],
       onCompleted: ({ createCategory }: { createCategory: { categories: ICategory[] } }) => {
 
-        const recent_category = createCategory?.categories[createCategory?.categories?.length - 1 ?? 0]
+        const recent_category = createCategory?.categories[createCategory?.categories?.length - 1]
 
         if (!recent_category?._id) {
           showToast({
