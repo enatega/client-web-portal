@@ -2,7 +2,7 @@
 import './index.module.css';
 
 // GraphQL
-import { DELETE_COUPON,  GET_COUPONS } from '@/lib/api/graphql';
+import { DELETE_COUPON, GET_COUPONS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 
 // Interfaces
@@ -16,9 +16,7 @@ import {
   ICouponMainProps,
   IGetCouponsData,
 } from '@/lib/utils/interfaces/coupons.interface';
-import {
-  IFilterType,
-} from '@/lib/utils/interfaces/table.interface';
+import { IFilterType } from '@/lib/utils/interfaces/table.interface';
 
 // Prime react
 import { FilterMatchMode } from 'primereact/api';

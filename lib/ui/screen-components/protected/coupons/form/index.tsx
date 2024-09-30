@@ -163,7 +163,7 @@ export default function CouponForm({
                     {values.enabled ? 'Enabled' : 'Disabled'}
                     <CustomInputSwitch
                       onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setFieldValue('enabld', e.target.checked)
+                        setFieldValue('enabled', e.target.checked)
                       }
                       isActive={values.enabled}
                       className={values.enabled ? 'p-inputswitch-checked' : ''}

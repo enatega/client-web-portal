@@ -46,7 +46,7 @@ export default function CuisinesMain({
   const { showToast } = useContext(ToastContext);
 
   // States
-  const [selectedData, setSelectedData] = useState<ICuisine[]>([])
+  const [selectedData, setSelectedData] = useState<ICuisine[]>([]);
   const [isDeleting, setIsDeleting] = useState<IEditState<ICuisine>>({
     bool: false,
     data: {
@@ -141,7 +141,7 @@ export default function CuisinesMain({
     setIsLoading(true);
     fetch();
   }, []);
- 
+
   return (
     <div className="p-3">
       <Table
