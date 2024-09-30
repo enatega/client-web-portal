@@ -1,7 +1,3 @@
-//Interfaces
-import { INotification } from '@/lib/utils/interfaces/notification.interface';
-import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
-
 //Prime react
 import { FilterMatchMode } from 'primereact/api';
 
@@ -12,7 +8,7 @@ import { ChangeEvent, useState } from 'react';
 import NotificationTableHeader from '../header/table-header';
 import Table from '@/lib/ui/useable-components/table';
 import { generateDummyNotifications } from '@/lib/utils/dummy';
-import CustomButton from '@/lib/ui/useable-components/button';
+import { NOTIFICATIONS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/notification-columns';
 
 export default function NotificationMain() {
   // States
@@ -36,41 +32,10 @@ export default function NotificationMain() {
     setGlobalFilterValue(value);
   };
 
-  // Columns
-  const columns: IColumnConfig<INotification>[] = [
-    {
-      propertyName: 'title',
-      headerName: 'Title',
-    },
-    {
-      propertyName: 'description',
-      headerName: 'description',
-    },
-    {
-      propertyName: 'createdAt',
-      headerName: 'Date',
-    },
-    {
-      propertyName: 'status',
-      headerName: 'Change Status',
-      body: () => {
-        return (
-          <CustomButton
-            onClick={() => {}}
-            label="Resend"
-            loading={false}
-            type="button"
-            className="block self-end"
-          />
-        );
-      },
-    },
-  ];
-
   return (
     <div className="p-3">
       <Table
-        columns={columns}
+        columns={NOTIFICATIONS_TABLE_COLUMNS()}
         data={generateDummyNotifications()}
         selectedData={[]}
         setSelectedData={() => {}}
