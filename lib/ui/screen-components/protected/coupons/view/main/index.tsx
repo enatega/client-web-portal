@@ -22,7 +22,8 @@ import {
 import { FilterMatchMode } from 'primereact/api';
 
 //hooks
-import { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useMutation } from '@apollo/client';
 
 //components
 import { ToastContext } from '@/lib/context/toast.context';
@@ -30,8 +31,9 @@ import CustomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import Table from '@/lib/ui/useable-components/table';
-import TableHeader from '@/lib/ui/useable-components/table-header';
-import { useMutation } from '@apollo/client';
+import CouponTableHeader from '../header/table-header';
+
+//icons
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -41,22 +43,13 @@ export default function CouponsMain({
   isEditing,
   setIsEditing,
 }: ICouponMainProps) {
+  //toast
+  const { showToast } = useContext(ToastContext);
   //refs
   const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
 
-  //queries
-  const [deleteCoupon, { loading: deleteCouponLoading }] = useMutation(
-    DELETE_COUPON,
-    {
-      refetchQueries: [{ query: GET_COUPONS }],
-    }
-  );
-  const [editCoupon] = useMutation(EDIT_COUPON, {
-    refetchQueries: [{ query: GET_COUPONS }],
-  });
-
-  //states
-  const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
+    //states
+    const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
     useState<IEditPopupVal>({
       _id: '',
       bool: false,
@@ -76,121 +69,107 @@ export default function CouponsMain({
       title: '',
     },
   });
-
-  //filters
-  const [filters, setFilters] = useState<IFilterType>({
-    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
-    status: { value: '', matchMode: FilterMatchMode.EQUALS },
-  });
-
+  
   const [globalFilterValue, setGlobalFilterValue] = useState('');
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
 
-  //global filters change
-  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    let _filters = { ...filters };
+  // Filters
+  const filters: IFilterType = {
+    global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
 
-    _filters['global'].value = value;
-    // fetch({ variables: { filter: { ...filters, global: { value } } } });
-    setFilters(_filters);
-    setGlobalFilterValue(value);
+    enabled: {
+      value: selectedActions.length > 0 ? selectedActions : null,
+      matchMode: FilterMatchMode.CONTAINS,
+    },
   };
 
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
-  //options
-  let statusOptions = [
-    {
-      label: 'Enabled',
-      code: 'enabled',
-    },
-    {
-      label: 'Disabled',
-      code: 'disabled',
-    },
-    {
-      label: 'All',
-      code: 'all',
-    },
-  ];
-
-  //query
+  // Queries
   const { data, fetch, loading } = useLazyQueryQL(
-    GET_COUPONS,
-    {}
+    GET_COUPONS
   ) as ILazyQueryResult<IGetCouponsData | undefined, undefined>;
-  //toast
-  const { showToast } = useContext(ToastContext);
 
-  // handle enabled toggle (locally)
-  async function handleEnableField(rowData: ICoupon) {
-    setEditCouponLoading({
-      bool: true,
-      _id: rowData._id,
-    });
-    try {
-      const updatedCoupon = {
-        _id: rowData?._id,
-        title: rowData?.title,
-        discount: rowData?.discount,
-        enabled: !rowData?.enabled,
-      };
-      await editCoupon({
-        variables: {
-          couponInput: updatedCoupon,
-        },
-      });
-      setEditCouponLoading({
-        bool: false,
-        _id: '',
-      });
+  // Mutations
+  const [deleteCoupon, { loading: deleteCouponLoading }] = useMutation(
+    DELETE_COUPON,
+    {
+      refetchQueries: [{ query: GET_COUPONS }],
+      onCompleted: () => {
+        showToast({
+          title: 'Delete Coupon',
+          type: 'success',
+          message: 'Coupon has been deleted successfully',
+          duration: 2000,
+        });
+      },
+      onError: (err) => {
+        showToast({
+          title: 'Delete Coupon',
+          type: 'error',
+          message: err.message || 'An unknown error occured, please try again',
+          duration: 2000,
+        });
+      },
+    }
+  );
+  const [editCoupon] = useMutation(EDIT_COUPON, {
+    refetchQueries: [{ query: GET_COUPONS }],
+    onCompleted: () => {
       showToast({
         title: 'Edit Coupon',
         type: 'success',
         message: 'Coupon Status has been edited successfully',
         duration: 2500,
       });
-    } catch (err) {
+    },
+    onError: (err) => {
       showToast({
         title: 'Edit Coupon',
         type: 'error',
-        message: 'Something went wrong please try again',
+        message: err.message || 'Something went wrong please try again',
         duration: 2500,
       });
       setEditCouponLoading({
         bool: false,
         _id: '',
       });
-    }
+    },
+  });
+
+
+  // Handlers
+  async function handleEnableField(rowData: ICoupon) {
+    setEditCouponLoading({
+      bool: true,
+      _id: rowData._id,
+    });
+    const updatedCoupon = {
+      _id: rowData?._id,
+      title: rowData?.title,
+      discount: rowData?.discount,
+      enabled: !rowData?.enabled,
+    };
+    await editCoupon({
+      variables: {
+        couponInput: updatedCoupon,
+      },
+    });
+    setEditCouponLoading({
+      bool: false,
+      _id: '',
+    });
   }
 
-  //handle final delete
   async function deleteItem() {
-    try {
-      await deleteCoupon({
-        variables: {
-          id: isDeleting?.data?._id,
-        },
-      });
-      showToast({
-        title: 'Delete Coupon',
-        type: 'success',
-        message: 'Coupon has been deleted successfully',
-        duration: 2000,
-      });
-      setIsDeleting({
-        bool: false,
-        data: { ...isDeleting.data },
-      });
-    } catch (err) {
-      console.log(err);
-      showToast({
-        title: 'Delete Coupon',
-        type: 'error',
-        message: 'An unknown error occured, please try again',
-        duration: 2000,
-      });
-    }
+    await deleteCoupon({
+      variables: {
+        id: isDeleting?.data?._id,
+      },
+    });
+    setIsDeleting({
+      bool: false,
+      data: { ...isDeleting.data },
+    });
   }
 
   //column
@@ -255,10 +234,6 @@ export default function CouponsMain({
 
   //useEffects
   useEffect(() => {
-    fetch();
-  }, []);
-
-  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         editDeletePopupRef.current &&
@@ -283,6 +258,10 @@ export default function CouponsMain({
     }
   }, [data, isEditing.bool]);
 
+  useEffect(() => {
+    fetch();
+  }, []);
+
   return (
     <div className='p-3'>
       
@@ -293,19 +272,16 @@ export default function CouponsMain({
         setSelectedData={(e) => setSelectedData(e)}
         loading={loading}
         header={
-          <TableHeader
+          <CouponTableHeader
             globalFilterValue={globalFilterValue}
-            onGlobalFilterChange={onGlobalFilterChange}
-            selectedStatuses={selectedStatuses}
-            setFilters={setFilters}
-            setSelectedStatuses={setSelectedStatuses}
-            statusOptions={statusOptions}
+            onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
           />
         }
         filters={filters}
       />
-
-<DeleteDialog
+      <DeleteDialog
         onConfirm={deleteItem}
         onHide={() =>
           setIsDeleting({

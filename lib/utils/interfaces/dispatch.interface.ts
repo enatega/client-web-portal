@@ -1,3 +1,5 @@
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+
 export interface IActiveOrders {
   _id: string;
   zone: {
@@ -108,4 +110,10 @@ export interface IAssignRider {
 export interface IUpdateOrderStatus {
   _id: string;
   orderStatus: string;
+}
+export interface IDispatchTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  selectedActions: string[];
+  setSelectedActions: Dispatch<SetStateAction<string[]>>;
 }

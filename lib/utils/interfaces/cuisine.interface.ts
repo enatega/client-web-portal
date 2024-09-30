@@ -54,3 +54,9 @@ export interface ICuisineMainProps {
   isEditing: IEditState<ICuisine>;
   setIsEditing: Dispatch<SetStateAction<IEditState<ICuisine>>>;
 }
+export interface ICuisineTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  selectedActions: string[];
+  setSelectedActions: Dispatch<SetStateAction<string[]>>;
+}

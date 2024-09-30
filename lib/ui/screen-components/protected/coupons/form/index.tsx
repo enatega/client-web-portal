@@ -16,16 +16,18 @@ import { IAddCouponProps } from '@/lib/utils/interfaces/coupons.interface';
 import { CouponFormSchema } from '@/lib/utils/schema/coupon';
 
 //formik
-import { ErrorMessage, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 
 //prime react
-import { InputSwitch } from 'primereact/inputswitch';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Sidebar } from 'primereact/sidebar';
 
 //hooks
 import { useMutation } from '@apollo/client';
-import { useContext } from 'react';
+import { ChangeEvent, useContext } from 'react';
+import CustomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
+import { onErrorMessageMatcher } from '@/lib/utils/methods';
+import { CouponErrors } from '@/lib/utils/constants';
 
 export default function CouponForm({
   setVisible,
@@ -158,9 +160,11 @@ export default function CouponForm({
                   <h2>{isEditing.bool ? 'Edit' : 'Add'} Coupon</h2>
                   <div className="flex gap-x-1 items-center">
                     {values.enabled ? 'Enabled' : 'Disabled'}
-                    <InputSwitch
-                      checked={values.enabled}
-                      onChange={(e) => setFieldValue('enabled', e.value)}
+                    <CustomInputSwitch
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        setFieldValue('enabld', e.target.checked)
+                      }
+                      isActive={values.enabled}
                       className={values.enabled ? 'p-inputswitch-checked' : ''}
                     />
                   </div>
@@ -172,15 +176,17 @@ export default function CouponForm({
                   placeholder={'Title'}
                   type="text"
                   onChange={(e) => setFieldValue('title', e.target.value)}
-                  className={
-                    errors.title ? 'text-red-600 outline outine-red' : ''
-                  }
+                  style={{
+                    borderColor: onErrorMessageMatcher(
+                      'title',
+                      errors?.title,
+                      CouponErrors
+                    )
+                      ? 'red'
+                      : '',
+                  }}
                 />
-                <ErrorMessage
-                  name="title"
-                  component="span"
-                  className="text-red-600"
-                />
+
                 <CustomNumberField
                   value={values.discount}
                   name="discount"
@@ -189,17 +195,17 @@ export default function CouponForm({
                   onChange={setFieldValue}
                   min={0}
                   max={100}
-                  className={
-                    errors.discount ? 'text-red-600 outline outine-red' : ''
-                  }
+                  style={{
+                    borderColor: onErrorMessageMatcher(
+                      'discount',
+                      errors?.discount,
+                      CouponErrors
+                    )
+                      ? 'red'
+                      : '',
+                  }}
                 />
 
-                {errors.discount}
-                <ErrorMessage
-                  name="discount"
-                  component="span"
-                  className="text-red-600"
-                />
                 <button
                   className="float-end rounded-md w-fit h-10 bg-black text-white border-gray-300 px-8"
                   disabled={

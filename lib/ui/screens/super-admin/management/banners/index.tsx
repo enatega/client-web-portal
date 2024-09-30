@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 //Components
 import BannersAddForm from '@/lib/ui/screen-components/protected/banner/add-form';
-import BannersHeader from '@/lib/ui/screen-components/protected/banner/view/header';
+import BannersHeader from '@/lib/ui/screen-components/protected/banner/view/header/screen-header';
 import BannersMain from '@/lib/ui/screen-components/protected/banner/view/main';
 
 // Interface

@@ -15,7 +15,7 @@ import { IAddCuisineProps } from '@/lib/utils/interfaces/cuisine.interface';
 
 //schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
-import { ErrorMessage, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 
 //prime react
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -25,6 +25,8 @@ import { Sidebar } from 'primereact/sidebar';
 import { ApolloError, useMutation } from '@apollo/client';
 import { useContext } from 'react';
 import CustomUploadImageComponent from '@/lib/ui/useable-components/upload/upload-image';
+import { onErrorMessageMatcher } from '@/lib/utils/methods';
+import { CuisineErrors } from '@/lib/utils/constants';
 
 export default function CuisineForm({
   setVisible,
@@ -181,13 +183,17 @@ export default function CuisineForm({
                     value={values.name}
                     type="text"
                     placeholder="Name"
-                    className={`${errors.name ? 'text-red-600 outline outline-red-600' : ''}`}
+                    style={{
+                      borderColor: onErrorMessageMatcher(
+                        'name',
+                        errors?.name,
+                        CuisineErrors
+                      )
+                        ? 'red'
+                        : '',
+                    }}
                   />
-                  <ErrorMessage
-                    name="name"
-                    component="span"
-                    className="text-red-600"
-                  />
+
                   <CustomTextAreaField
                     showLabel={true}
                     label="Description"
@@ -196,13 +202,17 @@ export default function CuisineForm({
                     value={values.description}
                     placeholder="Description"
                     rows={5}
-                    className={`${errors.description ? 'text-red-600 outline outline-red-600' : ''}`}
+                    style={{
+                      borderColor: onErrorMessageMatcher(
+                        'description',
+                        errors?.description,
+                        CuisineErrors
+                      )
+                        ? 'red'
+                        : '',
+                    }}
                   />
-                  <ErrorMessage
-                    name="description"
-                    component="span"
-                    className="text-red-600"
-                  />
+
                   <CustomDropdownComponent
                     name="shopType"
                     options={shopTypeOptions}
@@ -210,14 +220,16 @@ export default function CuisineForm({
                     setSelectedItem={setFieldValue}
                     placeholder="Shop Type"
                     showLabel={true}
+                    style={{
+                      borderColor: onErrorMessageMatcher(
+                        'shopType',
+                        errors?.shopType?.code,
+                        CuisineErrors
+                      )
+                        ? 'red'
+                        : '',
+                    }}
                   />
-                  <span
-                    className={
-                      errors.shopType?.label ? 'text-red-600 visible' : 'hidden'
-                    }
-                  >
-                    {errors.shopType?.label}
-                  </span>
 
                   <CustomUploadImageComponent
                     name="image"

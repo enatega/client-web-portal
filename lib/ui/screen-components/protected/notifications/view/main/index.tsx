@@ -3,22 +3,22 @@ import { INotification } from '@/lib/utils/interfaces/notification.interface';
 import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 
 //prime react
-import { FilterMatchMode } from 'primereact/api';
+// import { FilterMatchMode } from 'primereact/api';
 
 //hooks
-import { ChangeEvent, useState } from 'react';
+// import { ChangeEvent, useState } from 'react';
 
 //components
 import Table from '@/lib/ui/useable-components/table';
-import TableHeader from '@/lib/ui/useable-components/table-header';
+
 
 export default function NotificationMain() {
   //filters
-  const [filters, setFilters] = useState({
+ /*  const [filters, setFilters] = useState({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
-  });
+  }); */
 
-  const [globalFilterValue, setGlobalFilterValue] = useState('');
+/*   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
   //global filters change
   const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +29,8 @@ export default function NotificationMain() {
 
     setFilters(_filters);
     setGlobalFilterValue(value);
-  };
+  }; */
+
   //columns
   const columns: IColumnConfig<INotification>[] = [
     {
@@ -50,22 +51,23 @@ export default function NotificationMain() {
     },
   ];
   return (
-    <div>
+    <div className='p-3'>
       <Table
         columns={columns}
         data={[]}
         selectedData={[]}
         setSelectedData={() => {}}
         header={
-          <TableHeader
+          <div>Header Missing</div>
+       /*    <TableHeader
             globalFilterValue={globalFilterValue}
             onGlobalFilterChange={onGlobalFilterChange}
             selectedStatuses={[]}
             setSelectedStatuses={() => {}}
             statusOptions={[]}
-          />
+          /> */
         }
-        filters={filters}
+       //filters={filters}
       />
     </div>
   );
