@@ -10,7 +10,7 @@ import { useContext, useState } from 'react';
 import { ToastContext } from '@/lib/context/toast.context';
 
 // Interface and Types
-import { ICategory, ICategoryForm, IFoodDetailsComponentProps } from '@/lib/utils/interfaces';
+import { ICategory, ICategoryForm, IFoodDetailsComponentProps, IFoodGridItem } from '@/lib/utils/interfaces';
 import { IFoodDetailsForm } from '@/lib/utils/interfaces/forms/food.form.interface';
 
 // Constants and Methods
@@ -120,7 +120,15 @@ export default function FoodDetails({
 
   // Handlers
   const onFoodSubmitHandler = (values: IFoodDetailsForm) => {
-    onSetFoodContextData({ food: { _id: null, data: values, variations:[] } })
+    const foodData: IFoodGridItem = {
+      _id: '',
+      title: values.title,
+      description: values.description,
+      category: values.category,
+      image: values.image
+    }
+    
+    onSetFoodContextData({ food: { _id: null, data: foodData, variations:[] } })
     onStepChange(order + 1);
   }
 

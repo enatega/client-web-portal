@@ -65,7 +65,7 @@ export interface IFoodAddonsRestaurantLocationComponentProps
 
 /* API */
 export interface IFoodGridItem {
-  _id: string | null;
+  _id: string;
   title: string;
   description: string;
   category: IDropdownSelectItem | null,
