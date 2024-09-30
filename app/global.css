@@ -100,6 +100,36 @@ body {
   line-height: 40px;
 }
 
+.heading-3 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.heading-4 {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 32px;
+}
+
+.heading-5 {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.heading-6 {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.heading-7 {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
 /* Card */
 .card {
   border-radius: 0.5rem;

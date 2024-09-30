@@ -65,6 +65,7 @@ export default function BannersMain({
     }
   );
 
+
   const menuItems: IActionMenuItem<IBannersResponse>[] = [
     {
       label: 'Edit',

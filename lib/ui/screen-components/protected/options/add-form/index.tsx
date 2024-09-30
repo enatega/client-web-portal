@@ -223,7 +223,7 @@ export default function OptionAddForm({
                                                   min={1}
                                                   max={99999}
                                                   minFractionDigits={0}
-                                                  maxFractionDigits={0}
+                                                  maxFractionDigits={2}
                                                   placeholder="Price"
                                                   showLabel={true}
                                                   value={value.price}

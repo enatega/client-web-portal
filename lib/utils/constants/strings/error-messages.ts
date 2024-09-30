@@ -8,6 +8,7 @@ import {
   ISignUpFormErrors,
   IVendorErrors,
   IUpdateProfileFormErrors,
+  IVariationErrors,
 } from '@/lib/utils/interfaces/forms';
 
 import { IRestaurantFormErrors } from '@/lib/utils/interfaces/forms/restaurant.form.interface';
@@ -15,6 +16,7 @@ import { IZoneErrors } from '../../interfaces/forms/zone.form.interface';
 import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
 import { ICuisineErrors } from '../../interfaces/forms/cuisine.form.interface';
 import { ICouponErrors } from '../../interfaces/forms/coupon.form.interface';
+import { IFoodErrors } from '../../interfaces/forms/food.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -103,15 +105,15 @@ export const OptionErrors: IOptionErrors = {
   _id: [],
   title: ['Required'],
   description: [],
-  price: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
+  price: ['Required', 'Minimum value must be greater than 0', 'Maximum price is 99999'],
 };
 
 export const AddonsErrors: IAddonsErrors = {
   _id: [],
   title: ['Required'],
   description: [],
-  quantityMinimum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
-  quantityMaximum: ['Required', 'Minimum price is 1', 'Maximum price is 99999'],
+  quantityMinimum: ['Required', 'Minimum value must be greater than 0', 'Maximum price is 99999'],
+  quantityMaximum: ['Required', 'Minimum value must be greater than 0', 'Maximum price is 99999'],
   options: ['Required', 'Option field must have at least 1 items'],
 };
 
@@ -141,3 +143,18 @@ export const CouponErrors: ICouponErrors = {
   discount: ['Required'],
   enabled: ['Required'],
 };
+
+
+
+export const FoodErrors: IFoodErrors = {
+  title: ['Required'],
+  description: [],
+  image: ["Required"],
+  category: ['Required'],
+};
+
+export const VariationErrors: IVariationErrors = {
+  title: ["Required"],
+  discount: ["Required"],
+  price: ["Required",'Minimum value must be greater than 0']
+}

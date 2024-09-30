@@ -8,7 +8,6 @@ export default function RestaurantsScreen() {
     <div className="screen-container">
       <RestaurantsScreenHeader />
       <RestaurantsMain />
-
       <RestaurantsForm />
     </div>
   );

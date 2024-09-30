@@ -1,6 +1,5 @@
 {
   "extends": ["next", "next/core-web-vitals", "eslint:recommended"],
-
   "globals": {
     "React": "readonly",
     "google": "readonly",
@@ -16,17 +15,36 @@
       "tsx": true
     }
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": [
+    "@typescript-eslint", 
+    "prettier",
+    "unused-imports" // Added plugin for unused imports
+  ],
   "rules": {
-    // Custom rules for your project
+    // Allow .tsx and .jsx extensions for JSX files
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
-    // "prettier/prettier": "error",
+
+    // Remove unused variables
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
+    ],
+
+    // Remove unused imports automatically
+    "unused-imports/no-unused-imports": "error",
+
+    // Remove unused variables but allow unused arguments prefixed with _
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+
+    // Prettier-related rules
+    // "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
+    
     "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "react-hooks/exhaustive-deps": "off"
-    // "prettier/prettier": ["error", {}, { "usePrettierrc": true }]
-    // ... other rules
   },
   "settings": {
     "import/resolver": {
