@@ -144,6 +144,7 @@ export const WITHDRAW_REQUESTS_TABLE_COLUMNS = () => {
         return 'warning';
     }
   }
+  
   const withdraw_requests_columns = useMemo(
     () => [
       {
