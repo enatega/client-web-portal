@@ -2,13 +2,16 @@
 import { DELETE_CUISINE, GET_CUISINES } from '@/lib/api/graphql';
 
 // Interfaces
-import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
+import {
+  IActionMenuItem,
+  IEditState,
+  ILazyQueryResult,
+} from '@/lib/utils/interfaces';
 import {
   ICuisine,
   ICuisineMainProps,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
-import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 import { FilterMatchMode } from 'primereact/api';
 
 //  Contexts
@@ -17,21 +20,16 @@ import { ToastContext } from '@/lib/context/toast.context';
 // Hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useMutation } from '@apollo/client';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 // Components
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
-import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import Table from '@/lib/ui/useable-components/table';
-import { IEditPopupVal } from '@/lib/utils/interfaces/coupons.interface';
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Image from 'next/image';
 import CuisineTableHeader from '../header/table-header';
 import { generateDummyCuisines } from '@/lib/utils/dummy';
+import { CUISINE_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/cuisine-columns';
 
 export default function CuisinesMain({
-  visible,
   setVisible,
   isEditing,
   setIsEditing,
@@ -47,14 +45,8 @@ export default function CuisinesMain({
   // Toast
   const { showToast } = useContext(ToastContext);
 
-  // Refs
-  const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
-
   // States
-  const [selectedData, setSelectedData] = useState<ICuisine[]>([]);
-  const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
-    useState<IEditPopupVal>({ _id: '', bool: false });
-
+  const [selectedData, setSelectedData] = useState<ICuisine[]>([])
   const [isDeleting, setIsDeleting] = useState<IEditState<ICuisine>>({
     bool: false,
     data: {
@@ -84,64 +76,37 @@ export default function CuisinesMain({
     onCompleted: () => setIsLoading(false),
   }) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
 
-  // Columns
-  const cuisineColumns: IColumnConfig<ICuisine>[] = [
+  // Menu Items
+  const menuItems: IActionMenuItem<ICuisine>[] = [
     {
-      headerName: 'Image',
-      propertyName: 'image',
-      body: (data: ICuisine) => (
-        <Image
-          src={
-            data?.image ||
-            'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-          }
-          alt={data?.description ?? 'cuisine'}
-          width={30}
-          height={30}
-          className="rounded-md"
-        />
-      ),
+      label: 'Edit',
+      command: (data?: ICuisine) => {
+        if (data) {
+          setIsEditing({
+            bool: true,
+            data: data,
+          });
+          setIsDeleting({
+            bool: false,
+            data: { ...isDeleting.data },
+          });
+        }
+      },
     },
     {
-      headerName: 'Name',
-      propertyName: 'name',
-    },
-    {
-      headerName: 'Vendor',
-      propertyName: 'description',
-    },
-    {
-      headerName: 'Shop Type',
-      propertyName: 'shopType',
-    },
-    {
-      headerName: 'Action',
-      propertyName: 'action',
-      body: (rowData: ICuisine) => (
-        <div className="three-dots">
-          {isEditDeletePopupOpen._id === rowData?._id &&
-          isEditDeletePopupOpen.bool ? (
-            <div className="editdeletepoup-container" ref={editDeletePopupRef}>
-              <EditDeletePopup
-                setIsEditing={setIsEditing}
-                setVisible={setVisible}
-                setIsDeleting={setIsDeleting}
-                data={rowData}
-                visible={visible}
-                setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
-              />
-            </div>
-          ) : (
-            <FontAwesomeIcon
-              icon={faEllipsisVertical}
-              className="cursor-pointer p-1 hover:scale-105"
-              onClick={() =>
-                setIsEditDeletePopupOpen({ _id: rowData?._id, bool: true })
-              }
-            />
-          )}
-        </div>
-      ),
+      label: 'Delete',
+      command: (data?: ICuisine) => {
+        if (data) {
+          setIsDeleting({
+            bool: true,
+            data: data,
+          });
+          setIsEditing({
+            bool: false,
+            data: { ...isEditing.data },
+          });
+        }
+      },
     },
   ];
 
@@ -155,7 +120,6 @@ export default function CuisinesMain({
         message: 'Cuisine has been deleted successfully',
         duration: 2000,
       });
-      setIsEditDeletePopupOpen({ _id: '', bool: false });
       setIsDeleting({ bool: false, data: { ...isDeleting.data } });
     } catch (err) {
       console.log(err);
@@ -170,22 +134,6 @@ export default function CuisinesMain({
 
   // UseEffects
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        editDeletePopupRef.current &&
-        !editDeletePopupRef.current.contains(event.target as Node)
-      ) {
-        setIsEditDeletePopupOpen({ _id: '', bool: false });
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [setIsEditDeletePopupOpen]);
-
-  useEffect(() => {
     setVisible(isEditing.bool);
   }, [data, isEditing.bool]);
 
@@ -193,11 +141,11 @@ export default function CuisinesMain({
     setIsLoading(true);
     fetch();
   }, []);
-
+ 
   return (
     <div className="p-3">
       <Table
-        columns={cuisineColumns}
+        columns={CUISINE_TABLE_COLUMNS({ menuItems })}
         data={data?.cuisines ?? generateDummyCuisines()}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e as ICuisine[])}

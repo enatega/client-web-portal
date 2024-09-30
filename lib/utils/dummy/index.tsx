@@ -385,13 +385,8 @@ export const generateDummyDispatchOrders = (count: number = 10) => {
         label: 'Delivery Address',
         location: {
           coordinates: {
-            accuracy: 0,
-            altitude: 0,
-            altitudeAccuracy: 0,
-            heading: 0,
             latitude: 0,
             longitude: 0,
-            speed: 0,
           },
         },
       },

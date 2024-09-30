@@ -28,13 +28,13 @@ export interface IActiveOrders {
 }
 
 export interface GeolocationCoordinates {
-    accuracy?: number,
-    altitude?: number,
-    altitudeAccuracy?: number,
-    heading?: number,
-    latitude?: number,
-    longitude?: number,
-    speed?: number,
+  accuracy?: number;
+  altitude?: number;
+  altitudeAccuracy?: number;
+  heading?: number;
+  latitude: number;
+  longitude: number;
+  speed?: number;
 }
 
 export interface IGetActiveOrders {
