@@ -36,6 +36,7 @@ import CouponTableHeader from '../header/table-header';
 // Icons
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { generateDummyCoupons } from '@/lib/utils/dummy';
 
 export default function CouponsMain({
   setVisible,
@@ -264,7 +265,7 @@ export default function CouponsMain({
     <div className="p-3">
       <Table
         columns={columns}
-        data={data?.coupons ?? []}
+        data={data?.coupons ?? generateDummyCoupons()}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e)}
         loading={loading}

@@ -18,6 +18,10 @@ import {
 import { IRiderResponse } from '../interfaces/rider.interface';
 import { IUserResponse } from '../interfaces/users.interface';
 import { ICoupon } from '../interfaces/coupons.interface';
+import { ICuisine } from '../interfaces/cuisine.interface';
+import { INotification } from '../interfaces/notification.interface';
+import { IWithDrawRequest } from '../interfaces/withdraw-request.interface';
+import { IActiveOrders } from '../interfaces/dispatch.interface';
 
 export const dummyStatsData: IStatsCardProps[] = [
   {
@@ -314,6 +318,93 @@ export const generateDummyCoupons = (count: number = 10) => {
     });
   }
   return coupons;
+};
+
+export const generateDummyCuisines = (count: number = 10) => {
+  const cuisines: ICuisine[] = [];
+  for (let i = 0; i < count; i++) {
+    cuisines.push({
+      _id: `cuisine_${i + 1}`,
+      shopType: `cuisine_${i + 1}`,
+      __typename: `cuisine_${i + 1}`,
+      description: `cuisine_${i + 1}`,
+      name: `cuisine_${i + 1}`,
+    });
+  }
+  return cuisines;
+};
+
+export const generateDummyNotifications = (count: number = 10) => {
+  const notifications: INotification[] = [];
+  for (let i = 0; i < count; i++) {
+    notifications.push({
+      _id: `notification_${i + 1}`,
+      title: `notification_${i + 1}`,
+      createdAt: new Date().toDateString(),
+      description: `notification_${i + 1}`,
+    });
+  }
+  return notifications;
+};
+
+export const generateDummyWithdrawRequests = (count: number = 10) => {
+  const withdrawRequests: IWithDrawRequest[] = [];
+  for (let i = 0; i < count; i++) {
+    withdrawRequests.push({
+      _id: `withdraw_request_${i + 1}`,
+      requestAmount: i + 1,
+      requestId: `withdraw_request_${i + 1}`,
+      status: 'TRANSFERRED',
+      requestTime: new Date().toDateString(),
+      rider: {
+        _id: `rider_${i + 1}`,
+        currentWalletAmount: i + 1,
+        name: `rider_${i + 1}`,
+      },
+    });
+  }
+  return withdrawRequests;
+};
+
+export const generateDummyDispatchOrders = (count: number = 10) => {
+  const dispatchActiveOrders: IActiveOrders[] = [];
+  for (let i = 0; i < count; i++) {
+    dispatchActiveOrders.push({
+      _id: `active_order_${i + 1}`,
+      status: 'TRANSFERRED',
+      rider: {
+        _id: `rider_${i + 1}`,
+        name: `rider_${i + 1}`,
+        username: `rider_${i + 1}`,
+        available: true,
+      },
+      createdAt: new Date().toDateString(),
+      deliveryAddress: {
+        deliveryAddress: `active_order_${i + 1}`,
+        details: '',
+        label: 'Delivery Address',
+        location: {
+          coordinates: {
+            accuracy: 0,
+            altitude: 0,
+            altitudeAccuracy: 0,
+            heading: 0,
+            latitude: 0,
+            longitude: 0,
+            speed: 0,
+          },
+        },
+      },
+      isActive: true,
+      orderId: `active_order_${i + 1}`,
+      orderStatus: 'DELIVERED',
+      paymentMethod: 'COD',
+      zone: {
+        _id: `active_order_${i + 1}`,
+      },
+    });
+  }
+  return dispatchActiveOrders;
 };
 
 export const generateDummyFoods = (count: number = 10): IFoodGridItem[] => {

@@ -51,6 +51,7 @@ import {
   faTrash,
   faTruck,
 } from '@fortawesome/free-solid-svg-icons';
+import { generateDummyDispatchOrders } from '@/lib/utils/dummy';
 
 export default function DispatchMain() {
   // Toast
@@ -412,7 +413,9 @@ export default function DispatchMain() {
     <div className="p-3">
       <Table
         columns={colums}
-        data={active_orders_data?.getActiveOrders ?? []}
+        data={
+          active_orders_data?.getActiveOrders ?? generateDummyDispatchOrders()
+        }
         isSelectable={true}
         loading={loading}
         selectedData={selectedData}

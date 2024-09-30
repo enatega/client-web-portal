@@ -28,6 +28,7 @@ import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image from 'next/image';
 import CuisineTableHeader from '../header/table-header';
+import { generateDummyCuisines } from '@/lib/utils/dummy';
 
 export default function CuisinesMain({
   visible,
@@ -197,7 +198,7 @@ export default function CuisinesMain({
     <div className="p-3">
       <Table
         columns={cuisineColumns}
-        data={data?.cuisines ?? []}
+        data={data?.cuisines ?? generateDummyCuisines()}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e as ICuisine[])}
         filters={filters}

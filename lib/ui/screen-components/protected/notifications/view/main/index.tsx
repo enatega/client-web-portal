@@ -11,6 +11,8 @@ import { ChangeEvent, useState } from 'react';
 //Components
 import NotificationTableHeader from '../header/table-header';
 import Table from '@/lib/ui/useable-components/table';
+import { generateDummyNotifications } from '@/lib/utils/dummy';
+import CustomButton from '@/lib/ui/useable-components/button';
 
 export default function NotificationMain() {
   // States
@@ -50,7 +52,18 @@ export default function NotificationMain() {
     },
     {
       propertyName: 'status',
-      headerName: 'Status',
+      headerName: 'Change Status',
+      body: () => {
+        return (
+          <CustomButton
+            onClick={() => {}}
+            label="Resend"
+            loading={false}
+            type="button"
+            className="block self-end"
+          />
+        );
+      },
     },
   ];
 
@@ -58,7 +71,7 @@ export default function NotificationMain() {
     <div className="p-3">
       <Table
         columns={columns}
-        data={[]}
+        data={generateDummyNotifications()}
         selectedData={[]}
         setSelectedData={() => {}}
         header={

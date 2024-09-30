@@ -35,6 +35,7 @@ import {
 // Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import WithdrawRequestTableHeader from '../header/table-header';
+import { generateDummyWithdrawRequests } from '@/lib/utils/dummy';
 
 export default function WithdrawRequestsMain() {
   // Toast
@@ -213,7 +214,9 @@ export default function WithdrawRequestsMain() {
   return (
     <div className="p-3">
       <Table
-        data={data?.getAllWithdrawRequests?.data ?? []}
+        data={
+          data?.getAllWithdrawRequests?.data ?? generateDummyWithdrawRequests()
+        }
         columns={columns}
         selectedData={selectedData}
         setSelectedData={setSelectedData}
