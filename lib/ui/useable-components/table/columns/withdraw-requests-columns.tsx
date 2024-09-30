@@ -144,44 +144,47 @@ export const WITHDRAW_REQUESTS_TABLE_COLUMNS = () => {
         return 'warning';
     }
   }
-
-  return [
-    {
-      headerName: 'Request Id',
-      propertyName: 'requestId',
-    },
-    {
-      headerName: 'Rider',
-      propertyName: 'rider.name',
-    },
-    {
-      headerName: 'Amount',
-      propertyName: 'requestAmount',
-    },
-    {
-      headerName: 'Date',
-      propertyName: 'requestTime',
-      body: (rowData: IWithDrawRequest) => (
-        <span>{new Date(rowData.requestTime).toLocaleDateString()}</span>
-      ),
-    },
-    {
-      headerName: 'Status',
-      propertyName: 'status',
-      body: (rowData: IWithDrawRequest) => (
-        <Dropdown
-          value={options?.find((option) => option?.code === rowData.status)}
-          options={options}
-          onChange={(e) => handleDropDownChange(e, rowData)}
-          itemTemplate={itemTemplate}
-          valueTemplate={valueTemplate}
-          loading={
-            isChangingStatus.bool &&
-            status_change_loading &&
-            isChangingStatus._id === rowData._id
-          }
-        />
-      ),
-    },
-  ];
+  const withdraw_requests_columns = useMemo(
+    () => [
+      {
+        headerName: 'Request Id',
+        propertyName: 'requestId',
+      },
+      {
+        headerName: 'Rider',
+        propertyName: 'rider.name',
+      },
+      {
+        headerName: 'Amount',
+        propertyName: 'requestAmount',
+      },
+      {
+        headerName: 'Date',
+        propertyName: 'requestTime',
+        body: (rowData: IWithDrawRequest) => (
+          <span>{new Date(rowData.requestTime).toLocaleDateString()}</span>
+        ),
+      },
+      {
+        headerName: 'Status',
+        propertyName: 'status',
+        body: (rowData: IWithDrawRequest) => (
+          <Dropdown
+            value={options?.find((option) => option?.code === rowData.status)}
+            options={options}
+            onChange={(e) => handleDropDownChange(e, rowData)}
+            itemTemplate={itemTemplate}
+            valueTemplate={valueTemplate}
+            loading={
+              isChangingStatus.bool &&
+              status_change_loading &&
+              isChangingStatus._id === rowData._id
+            }
+          />
+        ),
+      },
+    ],
+    []
+  );
+  return withdraw_requests_columns;
 };

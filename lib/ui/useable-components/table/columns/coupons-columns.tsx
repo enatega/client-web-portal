@@ -7,7 +7,7 @@ import CustomInputSwitch from '../../custom-input-switch';
 import ActionMenu from '../../action-menu';
 
 // Hooks
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
 //GraphQL
@@ -45,7 +45,10 @@ export const COUPONS_TABLE_COLUMNS = ({
       showToast({
         title: 'Edit Coupon',
         type: 'error',
-        message: err.message || err?.cause?.message || 'Something went wrong please try again',
+        message:
+          err.message ||
+          err?.cause?.message ||
+          'Something went wrong please try again',
         duration: 2500,
       });
       setEditCouponLoading({
@@ -77,40 +80,46 @@ export const COUPONS_TABLE_COLUMNS = ({
       _id: '',
     });
   }
-
-  return [
-    {
-      headerName: 'Name',
-      propertyName: '__typename',
-    },
-    {
-      headerName: 'Code',
-      propertyName: 'title',
-    },
-    {
-      headerName: 'Discount',
-      propertyName: 'discount',
-    },
-    {
-      headerName: 'Status',
-      propertyName: 'enabled',
-      body: (rowData: ICoupon) => (
-        <div className="flex w-full cursor-pointer items-center justify-between gap-2">
-          <div className="flex w-20 items-start">
-            <CustomInputSwitch
-              isActive={rowData.enabled}
-              className={
-                rowData?.enabled ? 'p-inputswitch-checked absolute' : 'absolute'
-              }
-              onChange={() => handleEnableField(rowData)}
-              loading={
-                editCouponLoading.bool && rowData._id === editCouponLoading._id
-              }
-            />
+  const coupon_columns = useMemo(
+    () => [
+      {
+        headerName: 'Name',
+        propertyName: '__typename',
+      },
+      {
+        headerName: 'Code',
+        propertyName: 'title',
+      },
+      {
+        headerName: 'Discount',
+        propertyName: 'discount',
+      },
+      {
+        headerName: 'Status',
+        propertyName: 'enabled',
+        body: (rowData: ICoupon) => (
+          <div className="flex w-full cursor-pointer items-center justify-between gap-2">
+            <div className="flex w-20 items-start">
+              <CustomInputSwitch
+                isActive={rowData.enabled}
+                className={
+                  rowData?.enabled
+                    ? 'p-inputswitch-checked absolute'
+                    : 'absolute'
+                }
+                onChange={() => handleEnableField(rowData)}
+                loading={
+                  editCouponLoading.bool &&
+                  rowData._id === editCouponLoading._id
+                }
+              />
+            </div>
+            <ActionMenu data={rowData} items={menuItems} />
           </div>
-          <ActionMenu data={rowData} items={menuItems} />
-        </div>
-      ),
-    },
-  ];
+        ),
+      },
+    ],
+    []
+  );
+  return coupon_columns;
 };

@@ -208,7 +208,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
       },
       {
         label: 'Rejected',
-        code: 'REJECTED',
+        code: 'CANCELLED',
         body: () => <Tag value="Reject" severity="danger" rounded />,
       },
     ],
@@ -233,7 +233,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
         className={`flex flex-row-reverse items-center justify-start gap-2 ${option.code === 'PENDING' || option.code === 'ASSIGNED' ? 'hidden' : 'visible'} ${classes.dropDownItem}`}
       >
         <span>
-          {option.code === 'REJECTED'
+          {option.code === 'CANCELLED'
             ? 'Reject'
             : option.code === 'ACCEPTED'
               ? 'Accept'
@@ -243,7 +243,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
         </span>
         <FontAwesomeIcon
           icon={
-            option.code === 'REJECTED'
+            option.code === 'CANCELLED'
               ? faTrash
               : option.code === 'ACCEPTED'
                 ? faCircleCheck
@@ -251,6 +251,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
                   ? faTruck
                   : faDashboard
           }
+          color={option.code === 'CANCELLED' ? 'red' : 'black'}
         />
       </div>
     );
@@ -265,110 +266,119 @@ export const DISPATCH_TABLE_COLUMNS = () => {
         return 'info';
       case 'ACCEPTED':
         return 'success';
+      case 'CANCELLED':
+        return 'danger';
     }
   }
+  const dispatch_columns = useMemo(
+    () => [
+      {
+        propertyName: 'deliveryAddress.deliveryAddress',
+        headerName: 'Order Information',
+        body: (rowData: IActiveOrders) => (
+          <OrderSubscription rowData={rowData} />
+        ),
+      },
+      {
+        propertyName: 'restaurant.name',
+        headerName: 'Restaurant',
+      },
+      {
+        propertyName: 'paymentMethod',
+        headerName: 'Payment',
+      },
+      {
+        propertyName: 'rider.name',
+        headerName: 'Rider',
+        body: (rowData: IActiveOrders) => {
+          async function handleClick(rowData: IActiveOrders) {
+            setIsRiderLoading({
+              _id: rowData._id,
+              bool: true,
+            });
+            const { data } = await handleRiderClick(rowData);
+            data?.forEach((rider) => {
+              setRiderOptions((prev) => [
+                ...prev,
+                {
+                  label: rider.name,
+                  code: rider.name.toUpperCase(),
+                  _id: rider._id,
+                },
+              ]);
+            });
+            setIsRiderLoading({
+              _id: rowData._id,
+              bool: false,
+            });
+          }
 
-  return [
-    {
-      propertyName: 'deliveryAddress.deliveryAddress',
-      headerName: 'Order Information',
-      body: (rowData: IActiveOrders) => <OrderSubscription rowData={rowData} />,
-    },
-    {
-      propertyName: 'restaurant.name',
-      headerName: 'Restaurant',
-    },
-    {
-      propertyName: 'paymentMethod',
-      headerName: 'Payment',
-    },
-    {
-      propertyName: 'rider.name',
-      headerName: 'Rider',
-      body: (rowData: IActiveOrders) => {
-        async function handleClick(rowData: IActiveOrders) {
-          setIsRiderLoading({
-            _id: rowData._id,
-            bool: true,
-          });
-          const { data } = await handleRiderClick(rowData);
-          data?.forEach((rider) => {
-            setRiderOptions((prev) => [
-              ...prev,
-              {
-                label: rider.name,
-                code: rider.name.toUpperCase(),
-                _id: rider._id,
-              },
-            ]);
-          });
-          setIsRiderLoading({
-            _id: rowData._id,
-            bool: false,
-          });
-        }
+          // Selected rider
+          let selectedRider: IDropdownSelectItem = {
+            label: rowData?.rider?.name.toString() ?? 'Select Rider',
+            code:
+              rowData?.rider?.name.toString().toUpperCase() ?? 'SELECT RIDER',
+            _id: rowData?.rider?._id.toString() ?? '',
+          };
+          return (
+            <div onClick={() => handleClick(rowData)}>
+              <Dropdown
+                options={
+                  isRiderLoading._id === rowData._id && riderOptions
+                    ? riderOptions
+                    : [selectedRider]
+                }
+                loading={
+                  isRiderLoading.bool && isRiderLoading._id === rowData._id
+                }
+                value={selectedRider ?? 'Select Rider'}
+                onChange={(e: DropdownChangeEvent) =>
+                  handleAssignRider(e.value, rowData)
+                }
+                filter={true}
+                className="outline outline-1 outline-gray-300"
+              />
+            </div>
+          );
+        },
+      },
+      {
+        propertyName: 'createdAt',
+        headerName: 'Order Time',
+        body: (rowData: IActiveOrders) => (
+          <span>
+            {new Date(rowData.createdAt)
+              .toLocaleDateString()
+              .concat(', ', new Date(rowData.createdAt).toLocaleTimeString())}
+          </span>
+        ),
+      },
+      {
+        propertyName: 'orderStatus',
+        headerName: 'Status',
 
-        // Selected rider
-        let selectedRider: IDropdownSelectItem = {
-          label: rowData?.rider?.name.toString() ?? 'Select Rider',
-          code: rowData?.rider?.name.toString().toUpperCase() ?? 'SELECT RIDER',
-          _id: rowData?.rider?._id.toString() ?? '',
-        };
-        return (
-          <div onClick={() => handleClick(rowData)}>
+        body: (rowData: IActiveOrders) => {
+          let currentStatus = actionStatusOptions.find(
+            (status: IDropdownSelectItem) =>
+              status.code === rowData?.orderStatus
+          );
+          return (
             <Dropdown
-              options={
-                isRiderLoading._id === rowData._id && riderOptions
-                  ? riderOptions
-                  : [selectedRider]
-              }
+              value={currentStatus}
+              onChange={(e) => handleStatusDropDownChange(e, rowData)}
+              options={actionStatusOptions}
+              itemTemplate={itemTemplate}
+              valueTemplate={valueTemplate}
               loading={
-                isRiderLoading.bool && isRiderLoading._id === rowData._id
+                isStatusUpdating.bool && isStatusUpdating._id === rowData._id
               }
-              value={selectedRider ?? 'Select Rider'}
-              onChange={(e: DropdownChangeEvent) =>
-                handleAssignRider(e.value, rowData)
-              }
-              filter={true}
               className="outline outline-1 outline-gray-300"
             />
-          </div>
-        );
+          );
+        },
       },
-    },
-    {
-      propertyName: 'createdAt',
-      headerName: 'Order Time',
-      body: (rowData: IActiveOrders) => (
-        <span>
-          {new Date(rowData.createdAt)
-            .toLocaleDateString()
-            .concat(', ', new Date(rowData.createdAt).toLocaleTimeString())}
-        </span>
-      ),
-    },
-    {
-      propertyName: 'orderStatus',
-      headerName: 'Status',
-
-      body: (rowData: IActiveOrders) => {
-        let currentStatus = actionStatusOptions.find(
-          (status: IDropdownSelectItem) => status.code === rowData?.orderStatus
-        );
-        return (
-          <Dropdown
-            value={currentStatus}
-            onChange={(e) => handleStatusDropDownChange(e, rowData)}
-            options={actionStatusOptions}
-            itemTemplate={itemTemplate}
-            valueTemplate={valueTemplate}
-            loading={
-              isStatusUpdating.bool && isStatusUpdating._id === rowData._id
-            }
-            className="outline outline-1 outline-gray-300"
-          />
-        );
-      },
-    },
-  ];
+    ],
+    []
+  );
+  return dispatch_columns;
 };

@@ -313,8 +313,8 @@ export const generateDummyCoupons = (count: number = 10) => {
       _id: `coupon_${i + 1}`,
       title: `coupon_${i + 1}`,
       __typename: `coupon_${i + 1}`,
-      discount: Math.floor(Math.random()*i+15),
-      enabled: (Math.random()*3)>2,
+      discount: Math.floor(Math.random() * i + 15),
+      enabled: Math.random() * 3 > 2,
     });
   }
   return coupons;
