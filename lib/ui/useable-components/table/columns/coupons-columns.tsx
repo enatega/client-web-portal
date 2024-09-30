@@ -45,7 +45,7 @@ export const COUPONS_TABLE_COLUMNS = ({
       showToast({
         title: 'Edit Coupon',
         type: 'error',
-        message: err.message || 'Something went wrong please try again',
+        message: err.message || err?.cause?.message || 'Something went wrong please try again',
         duration: 2500,
       });
       setEditCouponLoading({

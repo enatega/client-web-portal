@@ -88,12 +88,12 @@ export default function CuisineForm({
   ];
 
   // API Handlers
-  function onError({ graphQLErrors, networkError }: ApolloError) {
+  function onError({ cause, networkError }: ApolloError) {
     showToast({
       type: 'error',
       title: `${isEditing.bool ? 'Edit' : 'New'}Cuisine`,
       message:
-        graphQLErrors[0]?.message ??
+        cause?.message ??
         networkError?.message ??
         `Cuisine ${isEditing.bool ? 'Editio' : 'Creation'}  Failed`,
       duration: 2500,
