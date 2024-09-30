@@ -101,7 +101,6 @@ const TippingAddForm = () => {
             <CustomNumberTextField
               name="tip1"
               placeholder="Tip 1 e.g 10"
-              maxLength={35}
               min={1}
               max={100}
               value={values.tip1}
@@ -115,7 +114,6 @@ const TippingAddForm = () => {
             <CustomNumberTextField
               name="tip2"
               placeholder="Tip 2 e.g 20"
-              maxLength={35}
               min={1}
               max={100}
               isLoading={loading}
