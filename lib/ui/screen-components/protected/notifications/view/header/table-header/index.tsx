@@ -1,15 +1,15 @@
-//css
+// CSS
 import classes from './table-header.module.css';
 
-//components
+// Components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { ICuisineTableHeaderProps } from '@/lib/utils/interfaces/cuisine.interface';
 
-//icons
+// Icons
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
-//prime react
+// Prime react
 import { Checkbox } from 'primereact/checkbox';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { useRef, useState } from 'react';
@@ -20,10 +20,10 @@ export default function NotificationTableHeader({
   selectedActions,
   setSelectedActions,
 }: ICuisineTableHeaderProps) {
-  //ref
+  // Ref
   const overlayPanelRef = useRef<OverlayPanel>(null);
 
-  //states
+  // States
   const [searchValue, setSearchValue] = useState('');
 
   // Handle checkbox toggle
@@ -46,8 +46,8 @@ export default function NotificationTableHeader({
   ];
 
   return (
-    <div className="flex flex-col mb-4 gap-6">
-      <div className="w-fit flex flex-colm:flex-row items-center gap-2  ml-4 mt-4">
+    <div className="mb-4 flex flex-col gap-6">
+      <div className="flex-colm:flex-row ml-4 mt-4 flex w-fit items-center gap-2">
         <div className="w-60">
           <CustomTextField
             type="text"
@@ -67,7 +67,7 @@ export default function NotificationTableHeader({
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   placeholder="Search"
-                  className="w-full h-8"
+                  className="h-8 w-full"
                   type="text"
                   name="search"
                   showLabel={false}
@@ -82,7 +82,7 @@ export default function NotificationTableHeader({
                   .map((item, index) => (
                     <div
                       key={index}
-                      className={`${classes.filter} flex justify-between items-center my-2`}
+                      className={`${classes.filter} my-2 flex items-center justify-between`}
                     >
                       <div className="flex">
                         <Checkbox
@@ -111,7 +111,7 @@ export default function NotificationTableHeader({
           </OverlayPanel>
 
           <TextIconClickable
-            className="border border-dotted border-[#E4E4E7] rounded text-black w-20"
+            className="w-20 rounded border border-dotted border-[#E4E4E7] text-black"
             icon={faAdd}
             iconStyles={{ color: 'black' }}
             title={selectedActions.length > 0 ? 'Filter' : 'Action'}

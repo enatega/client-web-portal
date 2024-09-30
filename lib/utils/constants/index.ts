@@ -1,4 +1,3 @@
-export * from '../../ui/useable-components/table/columns/user-columns';
 export * from './banners';
 export * from './country-codes';
 export * from './global';
@@ -10,3 +9,4 @@ export * from './timing';
 export * from './url';
 export * from './vendor';
 export * from './geo-location';
+export * from './banners';

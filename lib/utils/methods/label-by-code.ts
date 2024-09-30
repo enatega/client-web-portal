@@ -5,5 +5,5 @@ export function getLabelByCode(
   code: string
 ): string {
   const foundItem = items.find((item) => item.code === code);
-  return foundItem ? foundItem.label : ''; // Return empty string if no item is found
+  return foundItem?.label ?? ''; // Return empty string if no item is found
 }

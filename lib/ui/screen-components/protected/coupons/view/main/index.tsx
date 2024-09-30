@@ -1,11 +1,11 @@
-//css
+// CSS
 import './index.module.css';
 
-//graphQL
+// GraphQL
 import { DELETE_COUPON, EDIT_COUPON, GET_COUPONS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 
-//interfaces
+// Interfaces
 import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   ICoupon,
@@ -18,14 +18,14 @@ import {
   IFilterType,
 } from '@/lib/utils/interfaces/table.interface';
 
-//prime react
+// Prime react
 import { FilterMatchMode } from 'primereact/api';
 
-//hooks
+// Hooks
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
-//components
+// Components
 import { ToastContext } from '@/lib/context/toast.context';
 import CustomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
@@ -33,7 +33,7 @@ import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import Table from '@/lib/ui/useable-components/table';
 import CouponTableHeader from '../header/table-header';
 
-//icons
+// Icons
 import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -43,18 +43,52 @@ export default function CouponsMain({
   isEditing,
   setIsEditing,
 }: ICouponMainProps) {
-  //toast
+  // Toast
   const { showToast } = useContext(ToastContext);
-  //refs
+
+  // Refs
   const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
 
-  //queries
+  // States
+  const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
+    useState<IEditPopupVal>({
+      _id: '',
+      bool: false,
+    });
+  const [editCouponLoading, setEditCouponLoading] = useState({
+    _id: '',
+    bool: false,
+  });
+  const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
+  const [isDeleting, setIsDeleting] = useState<IEditState<ICoupon>>({
+    bool: false,
+    data: {
+      __typename: '',
+      _id: '',
+      discount: 0,
+      enabled: false,
+      title: '',
+    },
+  });
+  const [globalFilterValue, setGlobalFilterValue] = useState('');
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
 
+  // Filters
+  const filters: IFilterType = {
+    global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
+
+    enabled: {
+      value: selectedActions.length > 0 ? selectedActions : null,
+      matchMode: FilterMatchMode.CONTAINS,
+    },
+  };
+
+  // Queries
   const { data, fetch, loading } = useLazyQueryQL(
     GET_COUPONS
   ) as ILazyQueryResult<IGetCouponsData | undefined, undefined>;
 
-  //mutations
+  // Mutations
   const [deleteCoupon, { loading: deleteCouponLoading }] = useMutation(
     DELETE_COUPON,
     {
@@ -101,41 +135,7 @@ export default function CouponsMain({
     },
   });
 
-  //states
-  const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
-    useState<IEditPopupVal>({
-      _id: '',
-      bool: false,
-    });
-  const [editCouponLoading, setEditCouponLoading] = useState({
-    _id: '',
-    bool: false,
-  });
-  const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
-  const [isDeleting, setIsDeleting] = useState<IEditState<ICoupon>>({
-    bool: false,
-    data: {
-      __typename: '',
-      _id: '',
-      discount: 0,
-      enabled: false,
-      title: '',
-    },
-  });
-  const [globalFilterValue, setGlobalFilterValue] = useState('');
-  const [selectedActions, setSelectedActions] = useState<string[]>([]);
-
-  //filters
-  const filters: IFilterType = {
-    global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
-
-    enabled: {
-      value: selectedActions.length > 0 ? selectedActions : null,
-      matchMode: FilterMatchMode.CONTAINS,
-    },
-  };
-
-  // handle enabled toggle (locally)
+  // Handlers
   async function handleEnableField(rowData: ICoupon) {
     setEditCouponLoading({
       bool: true,
@@ -158,7 +158,6 @@ export default function CouponsMain({
     });
   }
 
-  //handle final delete
   async function deleteItem() {
     await deleteCoupon({
       variables: {
@@ -171,7 +170,7 @@ export default function CouponsMain({
     });
   }
 
-  //column
+  // Columns
   const columns: IColumnConfig<ICoupon>[] = [
     {
       headerName: 'Name',
@@ -189,8 +188,8 @@ export default function CouponsMain({
       headerName: 'Status',
       propertyName: 'enabled',
       body: (rowData: ICoupon) => (
-        <div className="flex gap-2 items-center w-full justify-between cursor-pointer">
-          <div className="w-20 flex items-start">
+        <div className="flex w-full cursor-pointer items-center justify-between gap-2">
+          <div className="flex w-20 items-start">
             <CustomInputSwitch
               isActive={rowData.enabled}
               className={
@@ -217,7 +216,7 @@ export default function CouponsMain({
           ) : (
             <FontAwesomeIcon
               icon={faEllipsisVertical}
-              className="hover:scale-105 p-1 cursor-pointer"
+              className="cursor-pointer p-1 hover:scale-105"
               onClick={() =>
                 setIsEditDeletePopupOpen({
                   _id: rowData?._id,
@@ -231,11 +230,7 @@ export default function CouponsMain({
     },
   ];
 
-  //useEffects
-  useEffect(() => {
-    fetch();
-  }, []);
-
+  // UseEffects
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -260,9 +255,29 @@ export default function CouponsMain({
       setVisible(false);
     }
   }, [data, isEditing.bool]);
-  console.log({ data: data?.coupons });
+
+  useEffect(() => {
+    fetch();
+  }, []);
+
   return (
-    <div>
+    <div className="p-3">
+      <Table
+        columns={columns}
+        data={data?.coupons ?? []}
+        selectedData={selectedData}
+        setSelectedData={(e) => setSelectedData(e)}
+        loading={loading}
+        header={
+          <CouponTableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
+          />
+        }
+        filters={filters}
+      />
       <DeleteDialog
         onConfirm={deleteItem}
         onHide={() =>
@@ -280,22 +295,6 @@ export default function CouponsMain({
         visible={isDeleting.bool}
         loading={deleteCouponLoading}
         message="Are you sure to delete the coupon?"
-      />
-      <Table
-        columns={columns}
-        data={data?.coupons ?? []}
-        selectedData={selectedData}
-        setSelectedData={(e) => setSelectedData(e)}
-        loading={loading}
-        header={
-          <CouponTableHeader
-            globalFilterValue={globalFilterValue}
-            onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
-            selectedActions={selectedActions}
-            setSelectedActions={setSelectedActions}
-          />
-        }
-        filters={filters}
       />
     </div>
   );

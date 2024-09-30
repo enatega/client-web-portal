@@ -75,13 +75,13 @@ export default function SignupMain() {
   });
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="h-full xlg:w-1/6 lg:w-2/6 md:w-3/6 sm:w-full">
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="xlg:w-1/6 h-full sm:w-full md:w-3/6 lg:w-2/6">
         <Card className="w-full">
           <div className="flex flex-col gap-2">
-            <div className="flex flex-col mb-2 p-2">
+            <div className="mb-2 flex flex-col p-2">
               <span className="text-2xl">Let&apos;s get started!</span>
-              <span className="text-gray-400 text-sm">
+              <span className="text-sm text-gray-400">
                 First, let&apos;s create your Enatega account
               </span>
             </div>
@@ -214,9 +214,9 @@ export default function SignupMain() {
                         />
                       </div>
 
-                      <div className="flex flex-col gap-2 mb-2 p-2">
+                      <div className="mb-2 flex flex-col gap-2 p-2">
                         <Divider align="left" className="m-0">
-                          <div className="inline-flex align-items-center">
+                          <div className="align-items-center inline-flex">
                             <i className="pi pi-lock mr-2"></i>
                             <b>Password Strength</b>
                           </div>
@@ -226,7 +226,7 @@ export default function SignupMain() {
                           return (
                             <div
                               key={index}
-                              className={`${errors.password?.includes(pmessage) ? 'text-red-500' : 'text-gray-500'}  text-sm`}
+                              className={`${errors.password?.includes(pmessage) ? 'text-red-500' : 'text-gray-500'} text-sm`}
                             >
                               <i className="pi pi-times mr-2" />
                               <span>{pmessage}</span>
@@ -236,7 +236,7 @@ export default function SignupMain() {
                       </div>
 
                       <CustomButton
-                        className="w-full h-12 bg-transparent text-black border-gray-300 hover:bg-whit px-32"
+                        className="hover:bg-whit h-12 w-full border-gray-300 bg-transparent px-32 text-black"
                         label="Create Account"
                         rounded={true}
                         icon="pi pi-google"

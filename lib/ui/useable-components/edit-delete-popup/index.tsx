@@ -56,13 +56,13 @@ export default function EditDeletePopup<T>({
   return (
     <div
       ref={popupRef}
-      className="flex flex-col gap-2 p-2 rounded-lg right-8  bg-white shadow-xl border border-gray-200 w-fit items-start justify-start absolute"
+      className="absolute right-8 flex w-fit flex-col items-start justify-start gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-xl"
     >
-      <button onClick={handleEditTrigger} className="flex gap-x-1 items-center">
+      <button onClick={handleEditTrigger} className="flex items-center gap-x-1">
         <FontAwesomeIcon
           title="Edit"
           icon={faEdit}
-          className="w-4 h-4 text-gray-600"
+          className="h-4 w-4 text-gray-600"
         />
         <span className="text-sm">Edit</span>
       </button>
@@ -78,7 +78,7 @@ export default function EditDeletePopup<T>({
             bool: false,
           });
         }}
-        className="flex gap-x-1 items-center"
+        className="flex items-center gap-x-1"
       >
         <FontAwesomeIcon
           color="red"

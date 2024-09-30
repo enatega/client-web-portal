@@ -35,7 +35,7 @@ export default function CustomPasswordTextField({
         className="cursor-pointer"
         onClick={() => setIsVisible((prevState) => !prevState)}
       >
-        <FontAwesomeIcon icon={_icon} className=" cursor-pointer mt-3" />
+        <FontAwesomeIcon icon={_icon} className="mt-3 cursor-pointer" />
       </InputIcon>
 
       <div className="flex flex-col gap-y-1">
@@ -46,7 +46,7 @@ export default function CustomPasswordTextField({
         )}
         <InputText
           type={isVisible ? 'text' : 'password'}
-          className={`w-full h-10 border px-0 text-sm border-gray-300 focus:outline-none focus:shadow-none border-inherit ${className}`}
+          className={`h-10 w-full border border-gray-300 border-inherit px-0 text-sm focus:shadow-none focus:outline-none ${className}`}
           placeholder={placeholder}
           {...props}
         />

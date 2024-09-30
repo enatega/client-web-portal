@@ -6,7 +6,7 @@ import OrderStats from '@/lib/ui/screen-components/protected/restaurant(vendor)/
 
 export default function AdminVendorDashboard() {
   return (
-    <div className="space-y-6 w-full p-4 h-[calc(100vh-2rem)] overflow-y-auto pb-8">
+    <div className="h-[calc(100vh-2rem)] w-full space-y-6 overflow-y-auto p-4 pb-8">
       <OrderStats />
       <GrowthOverView />
     </div>

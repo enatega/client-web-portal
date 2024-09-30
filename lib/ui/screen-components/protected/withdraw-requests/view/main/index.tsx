@@ -1,26 +1,26 @@
-//graphQL
+//GraphQL
 import {
   GET_ALL_WITHDRAW_REQUESTS,
   UPDATE_WITHDRAW_REQUEST,
 } from '@/lib/api/graphql';
 
-//interfaces
+// Interfaces
 import { IDropdownSelectItem, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   IGetWithDrawRequestsData,
   IWithDrawRequest,
 } from '@/lib/utils/interfaces/withdraw-request.interface';
 
-//hooks
+// Hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useContext, useEffect, useMemo, useState } from 'react';
 
-//prime react
+// Prime react
 import { FilterMatchMode } from 'primereact/api';
 import { Dropdown, DropdownProps } from 'primereact/dropdown';
 import { Tag } from 'primereact/tag';
 
-//components
+// Components
 import { ToastContext } from '@/lib/context/toast.context';
 import Table from '@/lib/ui/useable-components/table';
 import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
@@ -32,25 +32,26 @@ import {
   faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 
-//icons
+// Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import WithdrawRequestTableHeader from '../header/table-header';
 
 export default function WithdrawRequestsMain() {
-  //toast
+  // Toast
   const { showToast } = useContext(ToastContext);
-  //states
+
+  // States
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
   const [selectedData, setSelectedData] = useState<IWithDrawRequest[]>([]);
   const [requests, setRequests] = useState<IWithDrawRequest[]>([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-  //queries
+  // Queries
   const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
     fetchPolicy: 'cache-and-network',
   }) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
 
-  //filters
+  // Filters
   const filters = {
     global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
     status: {
@@ -59,7 +60,7 @@ export default function WithdrawRequestsMain() {
     },
   };
 
-  //status dropdown options
+  // Status dropdown options
   const options = useMemo(
     () => [
       {
@@ -81,7 +82,7 @@ export default function WithdrawRequestsMain() {
     []
   );
 
-  //mutation
+  // Mutation
   const [updateWithdrawReqStatus] = useMutation(UPDATE_WITHDRAW_REQUEST, {
     onError: (err) => {
       showToast({
@@ -92,7 +93,7 @@ export default function WithdrawRequestsMain() {
     },
   });
 
-  // find severity
+  // Find severity
   function findSeverity(code: string | undefined) {
     switch (code) {
       case 'REQUESTED':
@@ -106,7 +107,7 @@ export default function WithdrawRequestsMain() {
     }
   }
 
-  //templates
+  // Templates
   const valueTemplate = (option: IDropdownSelectItem) => {
     return (
       <Tag
@@ -136,7 +137,7 @@ export default function WithdrawRequestsMain() {
     );
   };
 
-  // handle drop down change
+  // Handle drop down change
   const handleDropDownChange = (
     e: DropdownProps,
     rowData: IWithDrawRequest
@@ -168,7 +169,7 @@ export default function WithdrawRequestsMain() {
     }
   };
 
-  //columns
+  // Columns
   const columns: IColumnConfig<IWithDrawRequest>[] = [
     {
       headerName: 'Request Id',
@@ -204,32 +205,30 @@ export default function WithdrawRequestsMain() {
     },
   ];
 
-  // useEffects
+  // UseEffects
   useEffect(() => {
     fetch();
   }, []);
 
   return (
-    <div className="w-full">
-      {data?.getAllWithdrawRequests && (
-        <Table
-          data={data.getAllWithdrawRequests.data ?? []}
-          columns={columns}
-          selectedData={selectedData}
-          setSelectedData={setSelectedData}
-          isSelectable={true}
-          header={
-            <WithdrawRequestTableHeader
-              globalFilterValue={globalFilterValue}
-              onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
-              selectedActions={selectedActions}
-              setSelectedActions={setSelectedActions}
-            />
-          }
-          filters={filters}
-          loading={loading}
-        />
-      )}
+    <div className="p-3">
+      <Table
+        data={data?.getAllWithdrawRequests?.data ?? []}
+        columns={columns}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+        isSelectable={true}
+        header={
+          <WithdrawRequestTableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
+          />
+        }
+        filters={filters}
+        loading={loading}
+      />
     </div>
   );
 }

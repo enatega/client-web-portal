@@ -102,15 +102,15 @@ export default function LoginEmailPasswordMain() {
   };
 
   return (
-    <div className="h-full w-screen flex items-center justify-center">
+    <div className="flex h-full w-screen items-center justify-center">
       <div className="w-full md:w-1/2 lg:w-[30%]">
         <Card>
           <div className="flex flex-col gap-2">
-            <div className="flex flex-col items-center mb-2 p-2 gap-y-[0.5rem]">
-              <span className="text-3xl font-semibold font-inter text-center">
+            <div className="mb-2 flex flex-col items-center gap-y-[0.5rem] p-2">
+              <span className="font-inter text-center text-3xl font-semibold">
                 Login to your account
               </span>
-              <span className="text-[#667085] text-base font-normal font-inter text-center">
+              <span className="font-inter text-center text-base font-normal text-[#667085]">
                 Welcome back! Please enter your details.
               </span>
             </div>
@@ -155,7 +155,7 @@ export default function LoginEmailPasswordMain() {
 
                       <div className="mb-2">
                         <CustomPasswordTextField
-                          className="w-full h-[2.4rem]"
+                          className="h-[2.4rem] w-full"
                           placeholder="Password"
                           name="password"
                           maxLength={20}
@@ -176,7 +176,7 @@ export default function LoginEmailPasswordMain() {
                       </div>
 
                       <CustomButton
-                        className="w-full h-10 px-32 bg-[#18181B] text-white border border-black hover-border-black hover:bg-white hover:text-black"
+                        className="hover-border-black h-10 w-full border border-black bg-[#18181B] px-32 text-white hover:bg-white hover:text-black"
                         label="Login"
                         type="submit"
                         loading={loading}

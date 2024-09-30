@@ -32,7 +32,7 @@ export default function VendorsScreen() {
   const { isRestaurantFormVisible } = useContext(RestaurantContext);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex h-screen flex-col">
       <VendorHeader
         selectedVendorFilter={selectedVendorFilter}
         setSelectedVendorFilter={setSelectedVendorFilter}

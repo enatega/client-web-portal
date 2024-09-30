@@ -44,12 +44,12 @@ const Table = <T extends ITableExtends>({
       tableStyle={{
         minWidth: '50rem',
         minHeight: 'auto',
-        maxHeight: '500px',
+        maxHeight: '480px',
       }}
       selectionMode={isSelectable ? 'checkbox' : null}
       filters={filters}
       scrollable={true}
-      scrollHeight="500px"
+      scrollHeight="480px"
       removableSort
     >
       {isSelectable && (

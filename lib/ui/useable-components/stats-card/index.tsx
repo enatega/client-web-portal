@@ -22,13 +22,13 @@ export default function StatsCard({
   ) : (
     <Link href={route}>
       <div className="card cursor-pointer">
-        <div className="flex justify-between items-center mb-2">
+        <div className="mb-2 flex items-center justify-between">
           <span className="text-gray-600">{label}</span>
 
           {icon && <FontAwesomeIcon icon={icon} />}
         </div>
         <div className="text-2xl font-semibold"> {formatCurrency(total)}</div>
-        <div className="text-green-500 text-sm"> {description}</div>
+        <div className="text-sm text-green-500"> {description}</div>
       </div>
     </Link>
   );

@@ -41,12 +41,12 @@ const CommissionRateHeader: React.FC<ICommissionRateHeaderProps> = ({
   };
 
   return (
-    <div className="flex flex-col mb-4 gap-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div className="flex flex-row sm:flex-col w-full sm:w-auto items-center gap-4">
+    <div className="mb-4 flex flex-col gap-6">
+      <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <div className="flex w-full flex-row items-center gap-4 sm:w-auto sm:flex-col">
           <div className="sm:hidden">
             <TextIconClickable
-              className="border border-dotted border-[#E4E4E7] rounded-full w-10 h-10 flex items-center justify-center"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-dotted border-[#E4E4E7]"
               icon={faAdd}
               iconStyles={{ color: 'black' }}
               onClick={(e) => overlayPanelRef.current?.toggle(e)}
@@ -67,7 +67,7 @@ const CommissionRateHeader: React.FC<ICommissionRateHeaderProps> = ({
 
         <div className="hidden sm:block">
           <TextIconClickable
-            className="border border-dotted border-[#E4E4E7] rounded text-black w-44"
+            className="w-44 rounded border border-dotted border-[#E4E4E7] text-black"
             icon={faAdd}
             iconStyles={{ color: 'black' }}
             title="Commission Rate"
@@ -85,9 +85,9 @@ const CommissionRateHeader: React.FC<ICommissionRateHeaderProps> = ({
                 .map((item, index) => (
                   <div
                     key={index}
-                    className={`${classes.filter} flex justify-between items-center my-2`}
+                    className={`${classes.filter} my-2 flex items-center justify-between`}
                   >
-                    <div className="flex items-center ">
+                    <div className="flex items-center">
                       <Checkbox
                         inputId={`action-${item.value}`}
                         checked={selectedActions.includes(item.value)}
@@ -105,7 +105,7 @@ const CommissionRateHeader: React.FC<ICommissionRateHeaderProps> = ({
                 ))}
             </div>
             <p
-              className="mt-3 text-center text-sm cursor-pointer"
+              className="mt-3 cursor-pointer text-center text-sm"
               onClick={() => setSelectedActions([])}
             >
               Clear filters

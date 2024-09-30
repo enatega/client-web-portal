@@ -9,6 +9,7 @@ import {
   IBannersResponse,
   ICategory,
   IDropdownSelectItem,
+  IFoodGridItem,
   IOptions,
   IRestaurantResponse,
   IStatsCardProps,
@@ -313,4 +314,20 @@ export const generateDummyCoupons = (count: number = 10) => {
     });
   }
   return coupons;
+};
+
+export const generateDummyFoods = (count: number = 10): IFoodGridItem[] => {
+  const foods: IFoodGridItem[] = [];
+
+  for (let i = 0; i < count; i++) {
+    foods.push({
+      _id: `food_${i + 1}`,
+      title: `Food ${i + 1}`,
+      description: `Description for Food ${i + 1}`,
+      image: '',
+      category: { label: `food_category_${i + 1}`, code: `${i + 1}` },
+    });
+  }
+
+  return foods;
 };

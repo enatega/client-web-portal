@@ -1,26 +1,29 @@
-//interfaces
+//Interfaces
 import { INotification } from '@/lib/utils/interfaces/notification.interface';
 import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 
-//prime react
+//Prime react
 import { FilterMatchMode } from 'primereact/api';
 
-//hooks
+//Hooks
 import { ChangeEvent, useState } from 'react';
 
-//components
-import Table from '@/lib/ui/useable-components/table';
+//Components
 import NotificationTableHeader from '../header/table-header';
+import Table from '@/lib/ui/useable-components/table';
 
 export default function NotificationMain() {
-  //filters
+  // States
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
+
+  // Filters
   const [filters, setFilters] = useState({
     global: { value: '', matchMode: FilterMatchMode.CONTAINS },
   });
 
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-  //global filters change
+  // Global filters change
   const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     let _filters = { ...filters };
@@ -31,9 +34,7 @@ export default function NotificationMain() {
     setGlobalFilterValue(value);
   };
 
-  const [selectedActions, setSelectedActions] = useState<string[]>([]);
-
-  //columns
+  // Columns
   const columns: IColumnConfig<INotification>[] = [
     {
       propertyName: 'title',
@@ -52,8 +53,9 @@ export default function NotificationMain() {
       headerName: 'Status',
     },
   ];
+
   return (
-    <div>
+    <div className="p-3">
       <Table
         columns={columns}
         data={[]}

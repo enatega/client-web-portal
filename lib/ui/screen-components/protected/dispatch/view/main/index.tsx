@@ -1,7 +1,7 @@
 //css
 import classes from './index.module.css';
 
-// queries
+// GraphQL
 import {
   ASSIGN_RIDER,
   GET_ACTIVE_ORDERS,
@@ -10,11 +10,11 @@ import {
   UPDATE_STATUS,
 } from '@/lib/api/graphql';
 
-//components
+//Components
 import Table from '@/lib/ui/useable-components/table';
 import DispatchTableHeader from '../header/table-header';
 
-//inrfaces
+//Inrfaces
 import { IDropdownSelectItem, ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   IActiveOrders,
@@ -25,12 +25,12 @@ import {
 } from '@/lib/utils/interfaces/dispatch.interface';
 import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 
-//prime react
+//Prime react
 import { FilterMatchMode } from 'primereact/api';
 import { Tag } from 'primereact/tag';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 
-//hooks
+//Hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import {
@@ -40,10 +40,10 @@ import {
   useSubscription,
 } from '@apollo/client';
 
-//contexts
+//Contexts
 import { ToastContext } from '@/lib/context/toast.context';
 
-//icons
+//Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleCheck,
@@ -53,9 +53,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function DispatchMain() {
-  //toast
+  // Toast
   const { showToast } = useContext(ToastContext);
-  //states
+
+  // States
   const [selectedData, setSelectedData] = useState<IActiveOrders[]>([]);
   const [riderOptions, setRiderOptions] = useState<IDropdownSelectItem[]>([]);
   const [isRiderLoading, setIsRiderLoading] = useState({
@@ -69,7 +70,7 @@ export default function DispatchMain() {
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
 
-  //filters
+  // Filters
   const filters = {
     global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
     orderStatus: {
@@ -77,7 +78,8 @@ export default function DispatchMain() {
       matchMode: FilterMatchMode.IN,
     },
   };
-  //queries
+
+  // Queries
   const {
     data: active_orders_data,
     fetch: fetchActiveOrders,
@@ -87,7 +89,12 @@ export default function DispatchMain() {
     debounceMs: 5000,
   }) as ILazyQueryResult<IGetActiveOrders | undefined, undefined>;
 
-  //mutaions
+  const [fetch] = useLazyQuery(GET_RIDERS_BY_ZONE) as LazyQueryResultTuple<
+    IGetRidersByZone | undefined,
+    IGetRidersByZoneVariables
+  >;
+
+  // Mutaions
   const [updateStatus] = useMutation(UPDATE_STATUS, {
     onError: (err) =>
       showToast({
@@ -119,10 +126,7 @@ export default function DispatchMain() {
     refetchQueries: [{ query: GET_ACTIVE_ORDERS }],
   });
 
-  const [fetch] = useLazyQuery(GET_RIDERS_BY_ZONE) as LazyQueryResultTuple<
-    IGetRidersByZone | undefined,
-    IGetRidersByZoneVariables
-  >;
+  // Handlers
   const handleRiderClick = async (
     rowData: IActiveOrders
   ): Promise<{ data?: IRidersByZone[]; loading: boolean }> => {
@@ -167,25 +171,7 @@ export default function DispatchMain() {
     });
   };
 
-  // order subscription
-  const useOrderSubscription = (rowData: IActiveOrders) => {
-    useSubscription(SUBSCRIPTION_ORDER, {
-      variables: {
-        _id: rowData._id,
-      },
-      onError: (err) => {
-        console.log({ err });
-      },
-      fetchPolicy: 'network-only',
-    });
-  };
-  // order subscription comp
-  const OrderSubscription = ({ rowData }: { rowData: IActiveOrders }) => {
-    useOrderSubscription(rowData);
-    return <p>{rowData.deliveryAddress.deliveryAddress}</p>;
-  };
-
-  // status options
+  // Status options
   const actionStatusOptions = useMemo(
     () => [
       {
@@ -242,9 +228,26 @@ export default function DispatchMain() {
     }
   };
 
-  // status templates
+  // Order Subscription
+  const useOrderSubscription = (rowData: IActiveOrders) => {
+    useSubscription(SUBSCRIPTION_ORDER, {
+      variables: {
+        _id: rowData._id,
+      },
+      onError: (err) => {
+        console.log({ err });
+      },
+      fetchPolicy: 'network-only',
+    });
+  };
+  const OrderSubscription = ({ rowData }: { rowData: IActiveOrders }) => {
+    useOrderSubscription(rowData);
+    return <p>{rowData.deliveryAddress.deliveryAddress}</p>;
+  };
+
+  // Status templates
   const valueTemplate = (option: IDropdownSelectItem) => (
-    <div className="flex gap-2 items-center justify-start">
+    <div className="flex items-center justify-start gap-2">
       <Tag
         severity={severityChecker(option?.code)}
         value={option?.label}
@@ -257,7 +260,7 @@ export default function DispatchMain() {
     if (option.code === 'PENDING' || option.code === 'ASSIGNED') return;
     return (
       <div
-        className={`flex flex-row-reverse gap-2 items-center justify-start ${option.code === 'PENDING' || option.code === 'ASSIGNED' ? 'hidden' : 'visible'} ${classes.dropDownItem}`}
+        className={`flex flex-row-reverse items-center justify-start gap-2 ${option.code === 'PENDING' || option.code === 'ASSIGNED' ? 'hidden' : 'visible'} ${classes.dropDownItem}`}
       >
         <span>
           {option.code === 'REJECTED'
@@ -283,7 +286,7 @@ export default function DispatchMain() {
     );
   };
 
-  //severity checker
+  // Severity checker
   function severityChecker(status: string | undefined) {
     switch (status) {
       case 'PENDING':
@@ -295,7 +298,7 @@ export default function DispatchMain() {
     }
   }
 
-  //columns
+  // Columns
   const colums: IColumnConfig<IActiveOrders>[] = [
     {
       propertyName: 'deliveryAddress.deliveryAddress',
@@ -336,7 +339,7 @@ export default function DispatchMain() {
           });
         }
 
-        //selected rider
+        // Selected rider
         let selectedRider: IDropdownSelectItem = {
           label: rowData?.rider?.name.toString() ?? 'Select Rider',
           code: rowData?.rider?.name.toString().toUpperCase() ?? 'SELECT RIDER',
@@ -358,7 +361,7 @@ export default function DispatchMain() {
                 handleAssignRider(e.value, rowData)
               }
               filter={true}
-              className="outline outline-gray-300 outline-1"
+              className="outline outline-1 outline-gray-300"
             />
           </div>
         );
@@ -393,19 +396,20 @@ export default function DispatchMain() {
             loading={
               isStatusUpdating.bool && isStatusUpdating._id === rowData._id
             }
-            className="outline outline-gray-300 outline-1"
+            className="outline outline-1 outline-gray-300"
           />
         );
       },
     },
   ];
 
-  //useEffects
+  // UseEffects
   useEffect(() => {
     fetchActiveOrders();
   }, []);
+
   return (
-    <div>
+    <div className="p-3">
       <Table
         columns={colums}
         data={active_orders_data?.getActiveOrders ?? []}

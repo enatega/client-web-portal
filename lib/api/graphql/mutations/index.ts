@@ -15,3 +15,5 @@ export * from './tippings';
 export * from './vendor';
 export * from './withdraw-requests';
 export * from './zone';
+export * from './configuration';
+export * from './food';
