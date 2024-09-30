@@ -10,7 +10,7 @@ import { ChangeEvent, useState } from 'react';
 
 //components
 import Table from '@/lib/ui/useable-components/table';
-import TableHeader from '@/lib/ui/useable-components/table-header';
+import NotificationTableHeader from '../header/table-header';
 
 export default function NotificationMain() {
   //filters
@@ -30,6 +30,9 @@ export default function NotificationMain() {
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
+
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
+
   //columns
   const columns: IColumnConfig<INotification>[] = [
     {
@@ -57,12 +60,11 @@ export default function NotificationMain() {
         selectedData={[]}
         setSelectedData={() => {}}
         header={
-          <TableHeader
+          <NotificationTableHeader
             globalFilterValue={globalFilterValue}
             onGlobalFilterChange={onGlobalFilterChange}
-            selectedStatuses={[]}
-            setSelectedStatuses={() => {}}
-            statusOptions={[]}
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
           />
         }
         filters={filters}

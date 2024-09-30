@@ -16,6 +16,7 @@ import {
 } from '../interfaces';
 import { IRiderResponse } from '../interfaces/rider.interface';
 import { IUserResponse } from '../interfaces/users.interface';
+import { ICoupon } from '../interfaces/coupons.interface';
 
 export const dummyStatsData: IStatsCardProps[] = [
   {
@@ -298,4 +299,18 @@ export const generateDummyZones = (count: number = 10): IZoneResponse[] => {
   }
 
   return zones;
+};
+
+export const generateDummyCoupons = (count: number = 10) => {
+  const coupons: ICoupon[] = [];
+  for (let i = 0; i < count; i++) {
+    coupons.push({
+      _id: `coupon_${i + 1}`,
+      title: `coupon_${i + 1}`,
+      __typename: `coupon_${i + 1}`,
+      discount: i + 3,
+      enabled: true,
+    });
+  }
+  return coupons;
 };

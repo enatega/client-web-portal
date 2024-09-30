@@ -1,12 +1,15 @@
+//Components
 import NotificationForm from '@/lib/ui/screen-components/protected/notifications/form';
-import NotificationHeader from '@/lib/ui/screen-components/protected/notifications/view/header';
+import NotificationHeader from '@/lib/ui/screen-components/protected/notifications/view/header/screen-header';
 import NotificationMain from '@/lib/ui/screen-components/protected/notifications/view/main';
+
+//Hooks
 import { useState } from 'react';
 
 export default function NotificationsScreen() {
-  //states
+  //States
   const [visible, setVisible] = useState(false);
-  // handle button click
+  // Handle button click
   const handleButtonClick = () => {
     setVisible(true);
   };
