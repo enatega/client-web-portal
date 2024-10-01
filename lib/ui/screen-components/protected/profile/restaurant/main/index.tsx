@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ProfileLogoSVG } from '@/lib/utils/assets/profileLogo';
+import { ProfileLogoSVG } from '@/lib/utils/assets/svgs/profile';
 import {
   IInfoItemProps,
 } from '@/lib/utils/interfaces/profile/restaurant.profile.interface';
