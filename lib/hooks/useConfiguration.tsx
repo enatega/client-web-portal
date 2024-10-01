@@ -73,8 +73,8 @@ export const useConfiguration = () => {
   const APP_TEST_OTP = configuration?.testOtp;
 
   return {
-    SERVER_URL: BACKEND_URL.LOCAL.SERVER_URL,
-    WS_SERVER_URL: BACKEND_URL.LOCAL.WS_SERVER_URL,
+    SERVER_URL: BACKEND_URL.LIVE.SERVER_URL,
+    WS_SERVER_URL: BACKEND_URL.LIVE.WS_SERVER_URL,
     COLORS,
 
     AMPLITUDE_API_KEY_WEB,
