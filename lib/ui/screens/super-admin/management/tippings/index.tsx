@@ -1,6 +1,6 @@
 //Components
 import TippingAddForm from '@/lib/ui/screen-components/protected/tipping/add-form/add-form';
-import TippingHeader from '@/lib/ui/screen-components/protected/tipping/header';
+import TippingHeader from '@/lib/ui/screen-components/protected/tipping/view/header';
 
 export default function TippingScreen() {
   return (

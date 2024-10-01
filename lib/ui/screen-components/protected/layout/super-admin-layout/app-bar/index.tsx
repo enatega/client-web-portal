@@ -94,26 +94,26 @@ const AppTopbar = () => {
   return (
     <div className={`${classes['layout-topbar']}`}>
       <div className="flex items-center gap-x-3">
-        <div id='sidebar-opening-icon'>
+        <div id="sidebar-opening-icon">
           <button onClick={() => showSidebar()}>
             <FontAwesomeIcon icon={faBars} />
           </button>
         </div>
-        <div className="flex items-center bg-black text-white p-2 px-3">
+        <div className="flex items-center bg-black p-2 px-3 text-white">
           <span className="text-xl font-bold">H</span>
         </div>
         <span className="ml-2 text-lg font-semibold">
           {toTextCase(APP_NAME, 'upper')}
         </span>
       </div>
-      <div className="hidden md:flex items-center space-x-5">
+      <div className="hidden items-center space-x-5 md:flex">
         <TextIconClickable
           icon={faMap}
           title={ZONE}
           className={
             pathname === '/zone'
-              ? 'bg-primary-color text-white rounded'
-              : 'bg-transparent hover:bg-secondary-color hover:rounded'
+              ? 'rounded bg-primary-color text-white'
+              : 'bg-transparent hover:rounded hover:bg-secondary-color'
           }
           iconStyles={{
             color: pathname === '/zone' ? 'white' : 'gray',
@@ -125,8 +125,8 @@ const AppTopbar = () => {
           title={DISPATCH}
           className={
             pathname === '/dispatch'
-              ? 'bg-primary-color text-white rounded'
-              : 'bg-transparent hover:bg-secondary-color hover:rounded'
+              ? 'rounded bg-primary-color text-white'
+              : 'bg-transparent hover:rounded hover:bg-secondary-color'
           }
           iconStyles={{ color: pathname === '/dispatch' ? 'white' : 'gray' }}
           onClick={() => onRedirectToPage('/dispatch')}
@@ -136,8 +136,8 @@ const AppTopbar = () => {
           title={SETTINGS}
           className={
             pathname === '/settings'
-              ? 'bg-primary-color text-white rounded'
-              : 'bg-transparent hover:bg-secondary-color hover:rounded'
+              ? 'rounded bg-primary-color text-white'
+              : 'bg-transparent hover:rounded hover:bg-secondary-color'
           }
           iconStyles={{ color: pathname === '/settings' ? 'white' : 'gray' }}
           onClick={() => onRedirectToPage('/settings')}
@@ -147,8 +147,8 @@ const AppTopbar = () => {
           title={LANGUAGE}
           className={
             pathname === '/language'
-              ? 'bg-primary-color text-white rounded'
-              : 'bg-transparent hover:bg-secondary-color hover:rounded'
+              ? 'rounded bg-primary-color text-white'
+              : 'bg-transparent hover:rounded hover:bg-secondary-color'
           }
           iconStyles={{ color: pathname === '/language' ? 'white' : 'gray' }}
           onClick={() => onRedirectToPage('/language')}
@@ -174,7 +174,7 @@ const AppTopbar = () => {
       </div>
       {isMenuOpen && (
         <div
-          className="absolute top-8 right-4 bg-white shadow-lg rounded-lg p-4 z-50"
+          className="absolute right-4 top-8 z-50 rounded-lg bg-white p-4 shadow-lg"
           ref={containerRef}
         >
           <div className="flex flex-col items-center space-y-4">

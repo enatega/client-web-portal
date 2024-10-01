@@ -7,11 +7,11 @@ const CustomTab = ({
   setSelectedTab,
 }: ICustomTabProps) => {
   return (
-    <div className="w-fit h-10 flex space-x-2 p-1 bg-gray-100 rounded">
+    <div className="flex h-10 w-fit space-x-2 rounded bg-gray-100 p-1">
       {options.map((option) => (
         <div
           key={String(option)}
-          className={`flex items-center justify-center px-4  rounded cursor-pointer ${
+          className={`flex cursor-pointer items-center justify-center rounded px-4 ${
             selectedTab === option
               ? 'bg-white text-black shadow'
               : 'text-gray-500'

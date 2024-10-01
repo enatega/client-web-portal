@@ -7,13 +7,13 @@ import { Card } from 'primereact/card';
 
 export default function PhoneVerificationMain() {
   return (
-    <div className="h-full w-full flex items-center justify-center">
+    <div className="flex h-full w-full items-center justify-center">
       <div className="w-2/6">
         <Card>
-          <div className="flex flex-col mb-2 p-2">
+          <div className="mb-2 flex flex-col p-2">
             <i className="pi pi-mobile mb-4" style={{ fontSize: '50px' }} />
             <span className="text-3xl">What&apos;s your mobile number?</span>
-            <span className="text-gray-400 text-sm">
+            <span className="text-sm text-gray-400">
               We need this to verify and secure your account.
             </span>
           </div>
@@ -28,7 +28,7 @@ export default function PhoneVerificationMain() {
             />
 
             <CustomButton
-              className="w-full h-12 bg-primary-color text-white border-primary-color hover:bg-white hover:text-primary-color"
+              className="h-12 w-full border-primary-color bg-primary-color text-white hover:bg-white hover:text-primary-color"
               label="Continue"
               rounded={true}
             />

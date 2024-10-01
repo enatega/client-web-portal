@@ -10,3 +10,6 @@ export * from './rider';
 export * from './tipping';
 export * from './vendor';
 export * from './zone';
+export * from './configuration';
+export * from './food'
+export * from './variation'

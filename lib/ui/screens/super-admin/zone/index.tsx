@@ -18,7 +18,7 @@ export default function ZoneScreen() {
 
   return (
     <>
-      <div className="flex flex-col p-3 h-screen overflow-hidden">
+      <div className="flex h-screen flex-col overflow-hidden p-3">
         <ZoneHeader setIsAddZoneVisible={setIsAddRiderVisible} />
         <div className="flex-grow overflow-y-auto">
           <ZoneMain

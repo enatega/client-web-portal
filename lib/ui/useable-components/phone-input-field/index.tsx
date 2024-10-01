@@ -20,7 +20,7 @@ export default function CustomPhoneTextField({
   const [selectedCountryCode, setSelectedCountryCode] = useState('+44');
 
   return !isLoading ? (
-    <div className="relative w-full flex flex-col justify-center gap-y-1">
+    <div className="relative flex w-full flex-col justify-center gap-y-1">
       {showLabel && (
         <label htmlFor="phone" className="text-sm font-[500]">
           {placeholder}
@@ -28,10 +28,10 @@ export default function CustomPhoneTextField({
       )}
       <div
         style={style}
-        className={`flex items-center border border-gray-300 rounded-md overflow-hidden ${className}`}
+        className={`flex items-center overflow-hidden rounded-md border border-gray-300 ${className}`}
       >
         <Dropdown
-          className="bg-gray-200 border-r border-gray-300 p-2 rounded-l-sm focus:outline-none"
+          className="rounded-l-sm border-r border-gray-300 bg-gray-200 p-2 focus:outline-none"
           options={CountryCodes}
           value={selectedCountryCode}
           optionLabel="label"
@@ -43,7 +43,7 @@ export default function CustomPhoneTextField({
           value={value}
           onChange={onChange}
           placeholder={placeholder}
-          className="flex-1 p-2 border-none rounded-r-sm focus:outline-none"
+          className="flex-1 rounded-r-sm border-none p-2 focus:outline-none"
         />
       </div>
     </div>

@@ -6,6 +6,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ISeverityStyles } from '../interfaces/toast.interface';
 
+export const MIN_PRICE = 0.00000001
+export const MAX_PRICE=99999
+
 export const SEVERITY_STYLES: ISeverityStyles = {
   error: {
     bgColor: '#FFC5C5',

@@ -32,7 +32,6 @@ import { DELETE_ZONE, GET_ZONES } from '@/lib/api/graphql';
 // Data
 import { generateDummyZones } from '@/lib/utils/dummy';
 
-
 export default function ZoneMain({
   setIsAddZoneVisible,
   setZone,

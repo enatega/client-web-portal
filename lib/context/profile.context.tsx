@@ -2,11 +2,26 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 import { GET_RESTAURANT_PROFILE } from '@/lib/api/graphql';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { useQueryGQL } from '../hooks/useQueryQL';
-import { IQueryResult, IProfileContextData, IProfileProviderProps, IRestaurantProfileProps } from '../utils/interfaces';
+import {
+  IQueryResult,
+  IProfileContextData,
+  IProfileProviderProps,
+} from '../utils/interfaces';
+import { IRestaurantProfileProps } from '../utils/interfaces';
 
 export const ProfileContext = createContext<IProfileContextData>({} as IProfileContextData);
 
-export const ProfileProvider: React.FC<IProfileProviderProps> = ({ children }) => {
+// export const useProfileContext = () => {
+//   const context = useContext(ProfileContext);
+//   if (context === undefined) {
+//     throw new Error('useProfileContext must be used within a ProfileProvider');
+//   }
+//   return context;
+// };
+
+export const ProfileProvider: React.FC<IProfileProviderProps> = ({
+  children,
+}) => {
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
   const { restaurantId } = restaurantLayoutContextData;
 
@@ -18,10 +33,11 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({ children }) =
     { id: restaurantId },
     {
       enabled: !!restaurantId,
-      fetchPolicy: "network-only",
+      fetchPolicy: 'network-only',
       debounceMs: 300,
       onCompleted: (data: unknown) => {
-        console.log("Profile data fetched:", data);
+        console.log('Profile data fetched:', data);
+        // You can perform any actions with the fetched data here
       },
     }
   ) as IQueryResult<IRestaurantProfileProps | undefined, undefined>;
@@ -54,5 +70,7 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({ children }) =
     refetchRestaurantProfile,
   };
 
-  return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>;
+  return (
+    <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
+  );
 };

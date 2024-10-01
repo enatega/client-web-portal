@@ -13,7 +13,7 @@ export default function CustomTextField({
   ...props
 }: ITextFieldProps) {
   return !isLoading ? (
-    <div className={`w-full flex flex-col justify-center gap-y-1`}>
+    <div className={`flex w-full flex-col justify-center gap-y-1`}>
       {showLabel && (
         <label htmlFor="username" className="text-sm font-[500]">
           {placeholder}
@@ -21,7 +21,7 @@ export default function CustomTextField({
       )}
 
       <InputText
-        className={`w-full h-10 border px-2 text-sm border-gray-300 rounded-lg focus:outline-none focus:shadow-none ${className}`}
+        className={`h-10 w-full rounded-lg border border-gray-300 px-2 text-sm focus:shadow-none focus:outline-none ${className}`}
         placeholder={placeholder}
         {...props}
       />

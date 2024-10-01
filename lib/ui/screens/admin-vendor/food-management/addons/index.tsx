@@ -17,13 +17,12 @@ export default function AddonsScreen() {
   return (
     <div className="screen-container">
       <AddonsHeader setIsAddAddonVisible={setIsAddAddonVisible} />
-      
-        <AddonsMain
-          setIsAddAddonVisible={setIsAddAddonVisible}
-          setAddon={setAddon}
-        />
-  
-    
+
+      <AddonsMain
+        setIsAddAddonVisible={setIsAddAddonVisible}
+        setAddon={setAddon}
+      />
+
       <AddonsAddForm
         addon={addon}
         onHide={() => {

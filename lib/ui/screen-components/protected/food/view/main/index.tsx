@@ -7,16 +7,16 @@ import { FilterMatchMode } from 'primereact/api';
 
 // Interface and Types
 import {
+  IActionMenuItem,
   // IActionMenuItem,
   IFoodByRestaurantResponse,
   IFoodGridItem,
-  // IFoodMainComponentsProps,
   IQueryResult,
 } from '@/lib/utils/interfaces';
 
 // Components
 import Table from '@/lib/ui/useable-components/table';
-import CategoryTableHeader from '../header/table-header';
+
 
 // Utilities and Data
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
@@ -27,20 +27,16 @@ import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
 
 // GraphQL
-import {
-  DELETE_FOOD,
-} from '@/lib/api/graphql';
+import { DELETE_FOOD } from '@/lib/api/graphql';
 import { GET_FOODS_BY_RESTAURANT_ID } from '@/lib/api/graphql/queries';
 
 // Context
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { FOODS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/foods-columns';
 import { onTransformRetaurantsByIdToFoods } from '@/lib/utils/methods/transformer';
+import FoodsTableHeader from '../header/table-header';
 
-export default function FoodsMain(/* {
-  setIsAddFoodVisible,
-  setFood,
-}: IFoodMainComponentsProps */) {
+export default function FoodsMain() {
   // Context
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
   const restaurantId = restaurantLayoutContextData?.restaurantId || '';
@@ -112,14 +108,13 @@ export default function FoodsMain(/* {
   }
 
   // Constants
- /*  const menuItems: IActionMenuItem<IFoodGridItem>[] = [
+  const menuItems: IActionMenuItem<IFoodGridItem>[] = [
     {
       label: 'Edit',
       command: (data?: IFoodGridItem) => {
         if (data) {
-          setIsAddFoodVisible(true);
-
-          setFood(data);
+          //setIsAddFoodVisible(true);
+          //setFood(data);
         }
       },
     },
@@ -127,17 +122,17 @@ export default function FoodsMain(/* {
       label: 'Delete',
       command: (data?: IFoodGridItem) => {
         if (data) {
-          setDeleteId(data._id);
+          setDeleteId(data._id ?? "");
         }
       },
     },
-  ]; */
+  ];
 
   return (
     <div className="p-3">
       <Table
         header={
-          <CategoryTableHeader
+          <FoodsTableHeader
             globalFilterValue={globalFilterValue}
             onGlobalFilterChange={onGlobalFilterChange}
           />
@@ -147,7 +142,7 @@ export default function FoodsMain(/* {
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
         loading={loading}
-        columns={FOODS_TABLE_COLUMNS(/* { menuItems } */)}
+        columns={FOODS_TABLE_COLUMNS({ menuItems })}
       />
       <DeleteDialog
         loading={mutationLoading}

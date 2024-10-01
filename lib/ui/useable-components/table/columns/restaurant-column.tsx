@@ -17,7 +17,7 @@ import CustomInputSwitch from '../../custom-input-switch';
 // Interfaces
 import { IRestaurantResponse } from '@/lib/utils/interfaces';
 
-// Utils and Constants 
+// Utils and Constants
 import { onUseLocalStorage } from '@/lib/utils/methods';
 
 // Icons

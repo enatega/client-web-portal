@@ -1,4 +1,3 @@
-// components/ProfileHeader.tsx
 import React, { useContext } from 'react';
 
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -32,3 +31,4 @@ const ProfileHeader: React.FC = () => {
 };
 
 export default ProfileHeader;
+

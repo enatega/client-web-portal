@@ -453,3 +453,4 @@ export default function UpdateRestaurantDetails({
     </div>
   );
 }
+

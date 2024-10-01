@@ -23,12 +23,15 @@ import { useContext, useEffect, useState } from 'react';
 
 // Table column definitions
 import { COMMISSION_RATE_COLUMNS } from '@/lib/ui/useable-components/table/columns/comission-rate-columns';
+import { COMMISSION_RATE_ACTIONS } from '@/lib/utils/constants';
 
 interface RestaurantsData {
   restaurants: IRestaurantResponse[];
 }
 
 export default function CommissionRateMain() {
+
+  // States
   const [restaurants, setRestaurants] = useState<IRestaurantResponse[]>([]);
   const [editingRestaurantIds, setEditingRestaurantIds] = useState<Set<string>>(
     new Set()
@@ -39,37 +42,22 @@ export default function CommissionRateMain() {
   const [loadingRestaurant, setLoadingRestaurant] = useState<string | null>(
     null
   );
-  const [selectedActions,] = useState<string[]>([]);
-  const [searchTerm,] = useState<string>('');
+  const [selectedActions] = useState<string[]>([]);
+  const [searchTerm] = useState<string>('');
 
+  // Context
   const { showToast } = useContext(ToastContext);
+
+  // Query
   const { data, error, refetch, loading } = useQueryGQL(GET_RESTAURANTS, {
     fetchPolicy: 'network-only',
   }) as IQueryResult<RestaurantsData | undefined, undefined>;
 
+  // Mutation
   const [updateCommissionMutation] = useMutation(updateCommission);
 
-  const COMMISSION_RATE_ACTIONS = {
-    MORE_THAN_5: 'More than 5%',
-    MORE_THAN_10: 'More than 10%',
-    MORE_THAN_20: 'More than 20%',
-  };
 
-  useEffect(() => {
-    if (data?.restaurants) {
-      setRestaurants(data.restaurants);
-    } else if (error) {
-      console.error('Error fetching restaurants:', error);
-      showToast({
-        type: 'error',
-        title: 'Error Fetching Restaurants',
-        message:
-          'An error occurred while fetching restaurants. Please try again later.',
-        duration: 2000,
-      });
-    }
-  }, [data, error]);
-
+  // Handlers
   const handleSave = async (restaurantId: string) => {
     const restaurant = restaurants.find((r) => r._id === restaurantId);
     if (restaurant) {
@@ -159,29 +147,36 @@ export default function CommissionRateMain() {
     });
   };
 
-  const filteredRestaurants = getFilteredRestaurants();
 
-  const columns = COMMISSION_RATE_COLUMNS({
-    handleSave,
-    handleCommissionRateChange,
-    loadingRestaurant,
-  });
-
-  // const handleSearch = (value: string) => {
-  //   setSearchTerm(value);
-  // };
+  // Use Effects
+  useEffect(() => {
+    if (data?.restaurants) {
+      setRestaurants(data.restaurants);
+    } else if (error) {
+      console.error('Error fetching restaurants:', error);
+      showToast({
+        type: 'error',
+        title: 'Error Fetching Restaurants',
+        message:
+          'An error occurred while fetching restaurants. Please try again later.',
+        duration: 2000,
+      });
+    }
+  }, [data, error]);
 
   return (
     <div className="p-3">
-   
-        <Table
-          data={loading ? generateDummyCommissionRates() : filteredRestaurants}
-          setSelectedData={setSelectedRestaurants}
-          selectedData={selectedRestaurants}
-          columns={columns}
-          loading={loading}
-        />
- 
+      <Table
+        data={loading ? generateDummyCommissionRates() : getFilteredRestaurants()}
+        setSelectedData={setSelectedRestaurants}
+        selectedData={selectedRestaurants}
+        columns={COMMISSION_RATE_COLUMNS({
+          handleSave,
+          handleCommissionRateChange,
+          loadingRestaurant,
+        })}
+        loading={loading}
+      />
     </div>
   );
 }

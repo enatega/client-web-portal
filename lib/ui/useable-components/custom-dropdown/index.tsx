@@ -18,14 +18,14 @@ const CustomDropdownComponent = ({
 }: IDropdownComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
     return (
-      <div className="flex align-items-center">
+      <div className="align-items-center flex">
         <div>{option.label}</div>
       </div>
     );
   };
 
   return !isLoading ? (
-    <div className={`w-full flex flex-col justify-center gap-y-1`}>
+    <div className={`flex w-full flex-col justify-center gap-y-1`}>
       {showLabel && (
         <label htmlFor="username" className="text-sm font-[500]">
           {placeholder}
@@ -39,7 +39,7 @@ const CustomDropdownComponent = ({
         optionLabel="label"
         placeholder={placeholder}
         itemTemplate={itemTemplate}
-        className="w-full md:w-20rem h-10 p-0 m-0 border text-sm align-middle border-gray-300 focus:outline-none focus:shadow-none p-dropdown-no-box-shadow"
+        className="md:w-20rem p-dropdown-no-box-shadow m-0 h-10 w-full border border-gray-300 p-0 align-middle text-sm focus:shadow-none focus:outline-none"
         panelClassName="border-gray-200 border-2"
         filter={filter}
         checkmark={true}

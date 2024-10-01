@@ -3,7 +3,7 @@ import { Skeleton } from 'primereact/skeleton';
 export default function DashboardStatsCardSkeleton() {
   return (
     <div className="card cursor-pointer">
-      <div className="flex justify-between items-center mb-2">
+      <div className="mb-2 flex items-center justify-between">
         <Skeleton width="60%" height="1rem" className="mb-2"></Skeleton>
         <Skeleton shape="circle" size="2.5rem"></Skeleton>
       </div>

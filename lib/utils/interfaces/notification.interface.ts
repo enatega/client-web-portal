@@ -2,9 +2,10 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { IFilterType } from './table.interface';
 
 export interface INotification {
-  title: '';
-  description: '';
-  createdAt: '';
+  _id: string;
+  title: string;
+  description: string;
+  createdAt: string;
 }
 
 export interface INotificationFormProps {
@@ -12,9 +13,7 @@ export interface INotificationFormProps {
   visible: boolean;
 }
 
-export interface INotificationMainProps {
-
-}
+export interface INotificationMainProps {}
 
 export interface INotificationTableProps {
   onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;

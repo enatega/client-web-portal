@@ -6,7 +6,7 @@ import { ICustomShapeComponentProps } from '@/lib/utils/interfaces';
 export default function CustomShape({
   selected,
   onClick,
-  hidenNames=[],
+  hidenNames = [],
 }: ICustomShapeComponentProps) {
   const items = [
     {
@@ -43,10 +43,14 @@ export default function CustomShape({
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+    <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
       {items.map((item, index: number) => {
-
-        if(hidenNames.some((hidden: string) => hidden.toLowerCase() === item.value)) return;
+        if (
+          hidenNames.some(
+            (hidden: string) => hidden.toLowerCase() === item.value
+          )
+        )
+          return;
 
         return (
           <button
@@ -55,7 +59,7 @@ export default function CustomShape({
               item.value === selected
                 ? 'bg-black text-white'
                 : 'bg-[#F4F4F5] text-black'
-            } rounded-lg shadow w-30 h-30 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none active:bg-gray-800`}
+            } w-30 h-30 transform rounded-lg shadow transition duration-300 ease-in-out hover:scale-105 focus:outline-none active:bg-gray-800`}
             onClick={() => onClick(item.value)}
           >
             {item.child}

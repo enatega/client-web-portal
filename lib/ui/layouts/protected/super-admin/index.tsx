@@ -27,7 +27,7 @@ const Layout = ({ children }: IProvider) => {
           <SuperAdminSidebar />
         </div>
         <div
-          className={`w-full h-auto lg:ml-45 md:ml-${isSidebarVisible ? 64 : 20}`}
+          className={`lg:ml-45 h-auto w-full md:ml-${isSidebarVisible ? 64 : 20}`}
         >
           {children}
         </div>

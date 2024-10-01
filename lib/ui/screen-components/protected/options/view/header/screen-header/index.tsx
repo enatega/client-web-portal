@@ -10,7 +10,7 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 const OptionHeader = ({ setIsAddOptionsVisible }: IOptionsHeaderProps) => {
   return (
-    <div className="w-full flex-shrink-0 sticky top-0 bg-white z-10 shadow-sm p-3">
+    <div className="sticky top-0 z-10 w-full flex-shrink-0 bg-white p-3 shadow-sm">
       <div className="flex w-full justify-between">
         <HeaderText text="Option" />
         <TextIconClickable
