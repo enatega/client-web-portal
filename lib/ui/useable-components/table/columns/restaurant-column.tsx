@@ -42,7 +42,7 @@ export const RESTAURANT_TABLE_COLUMNS = ({
   const [deleteRestaurant] = useMutation(DELETE_RESTAURANT, {
     onCompleted: () => {
       showToast({
-        type: 'error',
+        type: 'success',
         title: 'Restaurant Status',
         message: `Restaurant has been marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'}`,
         duration: 2000,
