@@ -160,7 +160,7 @@ export default function VendorDetails({
   }, []);
 
   return (
-    <div className="w-full h-full flex items-center justify-start">
+    <div className="flex h-full w-full items-center justify-start">
       <div className="h-full w-full">
         <div className="flex flex-col gap-2">
           <div>
@@ -186,8 +186,8 @@ export default function VendorDetails({
                 return (
                   <Form onSubmit={handleSubmit}>
                     <div className="space-y-3">
-                      <div className="flex flex-col sm:flex-row sm:items-center lg:items-center gap-4">
-                        <div className="flex items-center justify-end flex-shrink-0">
+                      <div className="flex flex-col gap-4 sm:flex-row sm:items-center lg:items-center">
+                        <div className="flex flex-shrink-0 items-center justify-end">
                           <CustomInputSwitch
                             label="Add Vendor"
                             isActive={showAddForm}
@@ -310,9 +310,9 @@ export default function VendorDetails({
                           </div>
                         </div>
                       )}
-                      <div className="flex justify-end mt-4">
+                      <div className="mt-4 flex justify-end">
                         <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                          className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
                           label="Save & Next"
                           type="submit"
                           loading={isSubmitting}

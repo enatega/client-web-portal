@@ -6,11 +6,11 @@ export default function VendorMobilesTabs({
   setActiveTab,
 }: IVendorMobileTabsComponentProps) {
   return (
-    <div className="sm:hidden flex border-b bg-gray-100">
+    <div className="flex border-b bg-gray-100 sm:hidden">
       <button
-        className={`flex-1 py-2 px-4 text-center ${
+        className={`flex-1 px-4 py-2 text-center ${
           activeTab === 'vendors'
-            ? 'bg-white font-bold border-b-2 border-black'
+            ? 'border-b-2 border-black bg-white font-bold'
             : ''
         }`}
         onClick={() => setActiveTab('vendors')}
@@ -18,9 +18,9 @@ export default function VendorMobilesTabs({
         Vendors
       </button>
       <button
-        className={`flex-1 py-2 px-4 text-center ${
+        className={`flex-1 px-4 py-2 text-center ${
           activeTab === 'restaurants'
-            ? 'bg-white font-bold border-b-2 border-black'
+            ? 'border-b-2 border-black bg-white font-bold'
             : ''
         }`}
         onClick={() => setActiveTab('restaurants')}

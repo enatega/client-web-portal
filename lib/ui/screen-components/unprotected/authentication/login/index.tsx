@@ -14,27 +14,27 @@ export default function LoginMain() {
   const router = useRouter();
 
   return (
-    <div className="h-full w-screen gap-4 flex  items-center justify-center">
+    <div className="flex h-full w-screen items-center justify-center gap-4">
       <div className="w-1/3">
         <Card>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col text-center">
               <span className="text-2xl">Welcome!</span>
-              <span className="text-gray-400 text-sm">
+              <span className="text-sm text-gray-400">
                 Sign up or Login to continue
               </span>
             </div>
 
-            <div className="flex flex-col gap-2 items-center justify-center">
+            <div className="flex flex-col items-center justify-center gap-2">
               <CustomButton
-                className="w-full h-12 bg-transparent text-black border border-gray-30 hover:bg-gray-100"
+                className="border-gray-30 h-12 w-full border bg-transparent text-black hover:bg-gray-100"
                 label="Login with Google"
                 rounded={true}
                 icon="pi pi-google"
               />
 
               <CustomButton
-                className="w-full h-12 bg-black text-white border-gray-30 hover:bg-gray-100 px-32: hover:text-black"
+                className="border-gray-30 px-32: h-12 w-full bg-black text-white hover:bg-gray-100 hover:text-black"
                 label="Login with Apple"
                 rounded={true}
                 icon="pi pi-apple"
@@ -43,16 +43,16 @@ export default function LoginMain() {
 
             <Divider />
 
-            <div className="flex flex-col gap-2 items-center justify-center">
+            <div className="flex flex-col items-center justify-center gap-2">
               <CustomButton
-                className="w-full h-12 bg-primary-color text-white border border-gray-30 hover:bg-gray-100 hover:text-black"
+                className="border-gray-30 h-12 w-full border bg-primary-color text-white hover:bg-gray-100 hover:text-black"
                 label="Login"
                 rounded={true}
                 onClick={() => router.push('/authentication/login')}
               />
 
               <CustomButton
-                className="w-full h-12 bg-secondary-color text-white border border-gray-30 hover:bg-gray-100 hover:text-black"
+                className="border-gray-30 h-12 w-full border bg-secondary-color text-white hover:bg-gray-100 hover:text-black"
                 label="Sign up"
                 rounded={true}
                 onClick={() => router.push('/authentication/sign-up')}
@@ -60,7 +60,7 @@ export default function LoginMain() {
             </div>
 
             <div className="text-center">
-              <span className="text-gray-400 text-sm">
+              <span className="text-sm text-gray-400">
                 By signing up, you agree to our&nbsp;
                 <span className="font-bold">Terms and Conditions&nbsp;</span>
                 and<span className="font-bold">&nbsp;Privacy Policy.</span>

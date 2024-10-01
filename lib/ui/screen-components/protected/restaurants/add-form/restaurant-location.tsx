@@ -33,7 +33,7 @@ export default function RestaurantLocation({
   });
 
   return (
-    <div className="w-full h-full flex items-center justify-start">
+    <div className="flex h-full w-full items-center justify-start">
       <div className="h-full w-full">
         <div className="flex flex-col gap-2">
           <div>
@@ -47,7 +47,7 @@ export default function RestaurantLocation({
               {({ handleSubmit }) => {
                 return (
                   <Form onSubmit={handleSubmit}>
-                    <div className="space-y-3 mb-2 ">
+                    <div className="mb-2 space-y-3">
                       <CustomGoogleMapsLocationBounds
                         onStepChange={onStepChange}
                       />

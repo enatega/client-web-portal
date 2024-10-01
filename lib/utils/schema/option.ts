@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { MAX_PRICE, MIN_PRICE } from '../constants';
 
 export const OptionSchema = Yup.object({
   options: Yup.array()
@@ -8,8 +9,8 @@ export const OptionSchema = Yup.object({
         title: Yup.string().min(2).max(50).required('Required'),
         description: Yup.string().min(2).max(50).optional(),
         price: Yup.number()
-          .min(1, 'Minimum price is 1')
-          .max(99999)
+          .min(MIN_PRICE, 'Minimum value must be greater than 0')
+          .max(MAX_PRICE)
           .required('Required'),
       })
     )

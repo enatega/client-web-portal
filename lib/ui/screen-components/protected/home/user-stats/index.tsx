@@ -42,7 +42,7 @@ export default function UserStats() {
   }) as IQueryResult<IRidersResponseGraphQL | undefined, undefined>;
 
   return (
-    <div className="grid items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       <StatsCard
         label="Total User"
         total={usersCount?.data?.users?.length ?? 0}

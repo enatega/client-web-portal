@@ -46,3 +46,9 @@ export interface IWithDrawRequestsTableProps {
   onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
   setSelectedStatuses: Dispatch<SetStateAction<string[]>>;
 }
+export interface IWithdrawRequestsTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  selectedActions: string[];
+  setSelectedActions: Dispatch<SetStateAction<string[]>>;
+}

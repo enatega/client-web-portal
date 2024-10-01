@@ -1,5 +1,5 @@
-import { IActionMenuProps, IZoneResponse } from "@/lib/utils/interfaces";
-import ActionMenu from "../../action-menu";
+import { IActionMenuProps, IZoneResponse } from '@/lib/utils/interfaces';
+import ActionMenu from '../../action-menu';
 
 export const ZONE_TABLE_COLUMNS = ({
   menuItems,

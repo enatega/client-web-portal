@@ -31,7 +31,7 @@ if (lastCommitMsg) {
   if (lastCommitMatch) {
     const [, , , lastVersion] = lastCommitMatch.slice(1);
 
-  /*   if (description === lastDescription) {
+    /*   if (description === lastDescription) {
       console.error('Description must be different from the previous commit.');
       process.exit(1);
     } */

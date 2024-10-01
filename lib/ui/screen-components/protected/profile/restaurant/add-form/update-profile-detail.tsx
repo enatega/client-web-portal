@@ -55,7 +55,7 @@ import { toTextCase } from '@/lib/utils/methods';
 import { RestaurantSchema } from '@/lib/utils/schema/restaurant';
 import { ApolloCache, ApolloError, useMutation } from '@apollo/client';
 
-const initialValues: IUpdateProfileForm  = {
+const initialValues: IUpdateProfileForm = {
   name: '',
   username: '',
   password: '',
@@ -69,7 +69,7 @@ const initialValues: IUpdateProfileForm  = {
   image: '',
   logo: '',
   email: '',
-  orderprefix: ''
+  orderprefix: '',
 };
 
 export default function UpdateRestaurantDetails({
@@ -206,10 +206,10 @@ export default function UpdateRestaurantDetails({
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-start">
+    <div className="flex h-full w-full items-center justify-start">
       <div className="h-full w-full">
         <div className="flex flex-col gap-2">
-          <div className="flex flex-col mb-2">
+          <div className="mb-2 flex flex-col">
             <span className="text-lg">Update Profile</span>
           </div>
 
@@ -232,8 +232,7 @@ export default function UpdateRestaurantDetails({
               }) => {
                 return (
                   <Form onSubmit={handleSubmit}>
-                    <div className="space-y-3 mb-2">
-                    
+                    <div className="mb-2 space-y-3">
                       <div>
                         <CustomIconTextField
                           type="email"
@@ -325,7 +324,7 @@ export default function UpdateRestaurantDetails({
                       <div>
                         <CustomNumberField
                           suffix=" m"
-                          min={0} 
+                          min={0}
                           max={500}
                           placeholder="Delivery Time"
                           name="deliveryTime"
@@ -373,7 +372,7 @@ export default function UpdateRestaurantDetails({
                           minFractionDigits={2}
                           maxFractionDigits={2}
                           name="salesTax"
-                          maxLength={20}
+                      
                           showLabel={true}
                           value={values.salesTax}
                           onChange={setFieldValue}
@@ -449,7 +448,7 @@ export default function UpdateRestaurantDetails({
                           }}
                         />
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 border border-gray-200 p-4 rounded-lg">
+                      <div className="grid grid-cols-1 gap-4 rounded-lg border border-gray-200 p-4 sm:grid-cols-2">
                         <CustomUploadImageComponent
                           key="logo"
                           name="logo"
@@ -482,9 +481,9 @@ export default function UpdateRestaurantDetails({
                         />
                       </div>
 
-                      <div className="flex justify-end mt-4">
+                      <div className="mt-4 flex justify-end">
                         <CustomButton
-                          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                          className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
                           label="Add"
                           type="submit"
                           loading={isSubmitting}

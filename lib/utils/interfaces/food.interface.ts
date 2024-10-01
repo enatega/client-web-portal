@@ -1,10 +1,38 @@
 import { TSideBarFormPosition } from '../types/sidebar';
+import { IVariationForm } from './forms';
 import {
   IDropdownSelectItem,
   IGlobalComponentProps,
   IGlobalTableHeaderProps,
+  IStepperFormProps,
 } from './global.interface';
+import { IProvider } from './layout.interface';
 
+
+// Context
+export interface IFoodContextPropData {
+  food?: {
+    _id: IDropdownSelectItem | null;
+    data: IFoodGridItem
+    variations: IVariationForm[]
+  };
+  isEditing?: boolean;
+}
+
+export interface IFoodContextProps {
+  isFoodFormVisible: boolean;
+  onFoodFormVisible: (status: boolean) => void;
+  activeIndex: number;
+  onActiveStepChange: (activeStep: number) => void;
+  onClearFoodData: () => void;
+  foodContextData: IFoodContextPropData | null;
+  onSetFoodContextData: (data: Partial<IFoodContextPropData>) => void;
+}
+
+export interface IFoodProvider extends IProvider {}
+
+
+///////////
 export interface IFoodHeaderProps extends IGlobalComponentProps {
   setIsAddFoodVisible: (visible: boolean) => void;
 }
@@ -12,27 +40,35 @@ export interface IFoodTableHeaderProps extends IGlobalTableHeaderProps {}
 
 export interface IFoodAddFormComponentProps extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
-  isAddFoodVisible: boolean;
-  onHide: () => void;
-  food: IFoodGridItem | null;
 }
 
 export interface IFoodMainComponentsProps extends IGlobalComponentProps {
-  setIsAddFoodVisible: React.Dispatch<React.SetStateAction<boolean>>;
-  setFood: React.Dispatch<React.SetStateAction<IFoodGridItem | null>>;
 }
 
 
+// Components
+export interface IFoodDetailsComponentProps
+  extends IGlobalComponentProps {
+  stepperProps?: IStepperFormProps;
+  categoryDropdown: IDropdownSelectItem[];
+}
+export interface IFoodVariationsAddRestaurantComponentProps
+  extends IGlobalComponentProps {
+  stepperProps?: IStepperFormProps;
+}
+export interface IFoodAddonsRestaurantLocationComponentProps
+  extends IGlobalComponentProps {
+  stepperProps?: IStepperFormProps;
+}
 
 /* API */
 export interface IFoodGridItem {
   _id: string;
   title: string;
   description: string;
-  category: IDropdownSelectItem,
+  category: IDropdownSelectItem | null,
   image: string;
 }
-
 
 export interface IVariation {
   _id: string;

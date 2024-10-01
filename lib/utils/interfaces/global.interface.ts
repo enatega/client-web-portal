@@ -10,8 +10,9 @@ export interface IGlobalComponentProps extends IGlobalProps {
   className?: string;
 }
 export interface IDropdownSelectItem {
-  label: string;
-  code: string;
+  _id?: string;
+  label?: string;
+  code?: string;
   body?: () => void;
 }
 

@@ -1,48 +1,45 @@
-import { IGlobalComponentProps } from "../global.interface";
-import { IProvider } from "../layout.interface";
+import { IGlobalComponentProps } from '../global.interface';
+import { IProvider } from '../layout.interface';
 import { IQueryResult } from '@/lib/utils/interfaces';
 
-
-export interface IProfileProviderProps extends IProvider{
-}
+export interface IProfileProviderProps extends IProvider {}
 
 export interface IProfileHeaderProps extends IGlobalComponentProps {
-    setIsUpdateProfileVisible: (visible: boolean) => void;
-  }
+  setIsUpdateProfileVisible: (visible: boolean) => void;
+}
 
-  export interface IRestaurantProfileData extends IGlobalComponentProps {
-    restaurant: IRestaurantProfileData | undefined;
-    restaurantName: string;
-    username: string;
-    password: string;
-    image: string;
-    logo: string;
-    name: string;
-    address: string;
-    deliveryTime?: number;
-    minimumOrder?: number;
-    tax?: number;
-    orderPrefix: string;
-    shopType: string;
-    cuisines: string;
-  }
+export interface IRestaurantProfileData extends IGlobalComponentProps {
+  restaurant: IRestaurantProfileData | undefined;
+  restaurantName: string;
+  username: string;
+  password: string;
+  image: string;
+  logo: string;
+  name: string;
+  address: string;
+  deliveryTime?: number;
+  minimumOrder?: number;
+  tax?: number;
+  orderPrefix: string;
+  shopType: string;
+  cuisines: string;
+}
 
-  export interface IRestaurantProfileProps extends IGlobalComponentProps {
-   restaurant: IRestaurantProfileData
-  }
+export interface IRestaurantProfileProps extends IGlobalComponentProps {
+  restaurant: IRestaurantProfileData;
+}
 
-  export interface IInfoItemProps extends IGlobalComponentProps {
-    label?: string;
-    value?: string;
-  }
+export interface IInfoItemProps extends IGlobalComponentProps {
+  label?: string;
+  value?: string;
+}
 
-  export interface IProfileContextData extends IGlobalComponentProps {
-    isUpdateProfileVisible: boolean;
-    setIsUpdateProfileVisible: (isVisible: boolean) => void;
-    handleUpdateProfile: () => void;
-    restaurantProfileResponse: IQueryResult< IRestaurantProfileProps | undefined, undefined>;
-  }
-  
-
-
-  
+export interface IProfileContextData extends IGlobalComponentProps {
+  isUpdateProfileVisible: boolean;
+  setIsUpdateProfileVisible: (isVisible: boolean) => void;
+  handleUpdateProfile: () => void;
+  restaurantProfileResponse: IQueryResult<
+    IRestaurantProfileProps | undefined,
+    undefined
+  >;
+}

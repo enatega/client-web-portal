@@ -29,7 +29,7 @@ const RestaurantLayout = ({ children }: IProvider) => {
           <AdminSidebar />
         </div>
         <div
-          className={`w-full h-full lg:ml-45 md:ml-${isAdminSidebarVisible ? 64 : 20}`}
+          className={`lg:ml-45 h-full w-full md:ml-${isAdminSidebarVisible ? 64 : 20}`}
         >
           {children}
         </div>

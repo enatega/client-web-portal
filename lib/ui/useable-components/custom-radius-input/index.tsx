@@ -50,14 +50,14 @@ export default function CustomRadiusInputField({
       <div className="relative flex items-center">
         {/* Decrease */}
         <div
-          className="absolute left-2 h-6 w-6 rounded-full border flex items-center justify-center hover:bg-slate-200 border-[#E4E4E7]"
+          className="absolute left-2 flex h-6 w-6 items-center justify-center rounded-full border border-[#E4E4E7] hover:bg-slate-200"
           onClick={handleDecrease}
         >
           <span className="text-gray-500">-</span>
         </div>
 
         <InputText
-          className={`${classes.numberInput} w-full h-11 border px-8 text-center focus:outline-none focus:shadow-none border-inherit ${className}`}
+          className={`${classes.numberInput} h-11 w-full border border-inherit px-8 text-center focus:shadow-none focus:outline-none ${className}`}
           name={name}
           value={value.toString()}
           {...props}
@@ -65,7 +65,7 @@ export default function CustomRadiusInputField({
 
         {/* Increase */}
         <div
-          className="absolute right-2 h-6 w-6 rounded-full border flex items-center justify-center hover:bg-slate-200 border-[#E4E4E7]"
+          className="absolute right-2 flex h-6 w-6 items-center justify-center rounded-full border border-[#E4E4E7] hover:bg-slate-200"
           onClick={handleIncrease}
         >
           <span className="text-gray-500">+</span>

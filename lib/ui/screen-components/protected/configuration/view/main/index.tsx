@@ -15,7 +15,7 @@ import VerificationAddForm from '../../add-form/verification';
 
 const ConfigMain = () => {
   return (
-    <div className="h-[calc(100vh-110px)] space-y-6 overflow-y-auto py-5">
+    <div className="space-y-6 p-3">
       <NodeMailerAddForm />
       <StripeAddForm />
       <PayPalAddForm />
