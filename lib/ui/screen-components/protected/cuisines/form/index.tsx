@@ -1,27 +1,27 @@
 'use client';
-//contexts
+// Contexts
 import { CREATE_CUISINE, EDIT_CUISINE, GET_CUISINES } from '@/lib/api/graphql';
 
-//contexts
+// Contexts
 import { ToastContext } from '@/lib/context/toast.context';
 
-//components
+// Components
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 
-//interfaces
+// Interfaces
 import { IAddCuisineProps } from '@/lib/utils/interfaces/cuisine.interface';
 
-//schema
+// Schema
 import { CuisineFormSchema } from '@/lib/utils/schema';
 import { Form, Formik } from 'formik';
 
-//prime react
+// Prime react
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Sidebar } from 'primereact/sidebar';
 
-//hooks
+// Hooks
 import { ApolloError, useMutation } from '@apollo/client';
 import { useContext } from 'react';
 import CustomUploadImageComponent from '@/lib/ui/useable-components/upload/upload-image';
@@ -34,7 +34,10 @@ export default function CuisineForm({
   isEditing,
   visible,
 }: IAddCuisineProps) {
-  // initial values
+  //Toast
+  const { showToast } = useContext(ToastContext);
+
+  // Initial values
   const initialValues = {
     _id: isEditing.bool ? isEditing?.data?._id : '',
     name: isEditing.bool ? isEditing?.data?.name : '',
@@ -46,10 +49,7 @@ export default function CuisineForm({
     image: isEditing.bool ? isEditing.data.image : '',
   };
 
-  //toast
-  const { showToast } = useContext(ToastContext);
-
-  //mutations
+  // Mutations
   const [CreateCuisine, { loading: createCuisineLoading }] = useMutation(
     CREATE_CUISINE,
     {
@@ -81,19 +81,19 @@ export default function CuisineForm({
     }
   );
 
-  // shop type options
+  // Shop type options
   const shopTypeOptions = [
     { label: 'Restaurant', code: 'restaurant' },
     { label: 'Shop', code: 'shop' },
   ];
 
   // API Handlers
-  function onError({ graphQLErrors, networkError }: ApolloError) {
+  function onError({ cause, networkError }: ApolloError) {
     showToast({
       type: 'error',
       title: `${isEditing.bool ? 'Edit' : 'New'}Cuisine`,
       message:
-        graphQLErrors[0]?.message ??
+        cause?.message ??
         networkError?.message ??
         `Cuisine ${isEditing.bool ? 'Editio' : 'Creation'}  Failed`,
       duration: 2500,
@@ -108,7 +108,7 @@ export default function CuisineForm({
       className="w-full sm:w-[450px]"
     >
       <div className="flex flex-col gap-4">
-        <h2 className="font-bold mb-3 text-xl">
+        <h2 className="mb-3 text-xl font-bold">
           {isEditing.bool ? 'Edit' : 'Add'} Cuisine
         </h2>
         <Formik
@@ -244,7 +244,7 @@ export default function CuisineForm({
                   />
 
                   <button
-                    className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"
+                    className="float-end my-2 block rounded-md bg-black px-12 py-2 text-white"
                     disabled={
                       isSubmitting || createCuisineLoading || editCuisineLoading
                     }
@@ -254,7 +254,7 @@ export default function CuisineForm({
                     createCuisineLoading ||
                     editCuisineLoading ? (
                       <ProgressSpinner
-                        className="w-6 h-6 items-center self-center m-0 p-0"
+                        className="m-0 h-6 w-6 items-center self-center p-0"
                         strokeWidth="5"
                         style={{ fill: 'white', accentColor: 'white' }}
                         color="white"

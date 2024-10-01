@@ -7,7 +7,6 @@ export default function DispatchScreen() {
     <div className="screen-container">
       <DispatchHeader />
       <DispatchMain />
-    
     </div>
   );
 }

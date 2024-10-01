@@ -27,7 +27,7 @@ const ActionMenu = <T,>({ items, data }: IActionMenuProps<T>) => {
           event.stopPropagation();
           menu.current?.toggle(event);
         }}
-        className="w-full h-full"
+        className="h-full w-full"
       >
         <FontAwesomeIcon icon={faEllipsisV} />
       </button>

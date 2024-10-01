@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 // Core
 import { useContext, useEffect } from 'react';
@@ -53,10 +53,10 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
     <div className="relative">
       <aside
         id="super-admin-sidebar"
-        className={`box-border transition-all duration-300 ease-in-out overflow-hidden transform ${isSidebarVisible ? 'translate-x-0 w-64' : '-translate-x-full w-0'}`}
+        className={`box-border transform overflow-hidden transition-all duration-300 ease-in-out ${isSidebarVisible ? 'w-64 translate-x-0' : 'w-0 -translate-x-full'}`}
       >
         <nav
-          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isSidebarVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isSidebarVisible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         >
           <ul className="flex-1 pl-2">{children}</ul>
         </nav>

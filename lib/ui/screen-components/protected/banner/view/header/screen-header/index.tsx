@@ -12,11 +12,11 @@ const BannersHeader = ({
   setIsAddBannerVisible,
 }: IBannersHeaderComponentsProps) => {
   return (
-    <div className="w-full flex-shrink-0 sticky top-0 bg-white z-10 shadow-sm p-3">
+    <div className="sticky top-0 z-10 w-full flex-shrink-0 bg-white p-3 shadow-sm">
       <div className="flex w-full justify-between">
         <HeaderText text="Banners" />
         <TextIconClickable
-          className="sm:w-auto bg-black text-white border-gray-300 rounded"
+          className="rounded border-gray-300 bg-black text-white sm:w-auto"
           icon={faAdd}
           iconStyles={{ color: 'white' }}
           title="Add Banner"

@@ -15,7 +15,7 @@ const ConfigCard = ({
   // SendGrid
   // Web Configuration
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg border w-full">
+    <div className="flex w-full flex-col overflow-hidden rounded-lg border">
       {/* header */}
       <div className="flex items-center justify-between bg-[#F4F4F5] p-4">
         <span className="select-none text-lg font-bold">{cardTitle}</span>

@@ -53,10 +53,10 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
     <div className="relative">
       <aside
         id="admin-sidebar"
-        className={`box-border transition-all duration-300 ease-in-out overflow-hidden transform ${isAdminSidebarVisible ? 'translate-x-0 w-64' : '-translate-x-full w-0'}`}
+        className={`box-border transform overflow-hidden transition-all duration-300 ease-in-out ${isAdminSidebarVisible ? 'w-64 translate-x-0' : 'w-0 -translate-x-full'}`}
       >
         <nav
-          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isAdminSidebarVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isAdminSidebarVisible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         >
           <ul className="flex-1 pl-2">{children}</ul>
         </nav>
@@ -66,7 +66,8 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
 }
 
 export default function MakeSidebar() {
-  const { isAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
+  const { isAdminSidebarVisible } =
+    useContext<LayoutContextProps>(LayoutContext);
 
   const navBarItems: ISidebarMenuItem[] = [
     {
@@ -150,7 +151,11 @@ export default function MakeSidebar() {
       <AdminSidebar>
         <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
           {navBarItems.map((item, index) => (
-            <SidebarItem key={index} expanded={isAdminSidebarVisible} {...item} />
+            <SidebarItem
+              key={index}
+              expanded={isAdminSidebarVisible}
+              {...item}
+            />
           ))}
         </div>
       </AdminSidebar>

@@ -1,28 +1,28 @@
 'use client';
-//queries
+// GraphQL
 import { CREATE_COUPON, EDIT_COUPON, GET_COUPONS } from '@/lib/api/graphql';
 
-//contexts
+// Contexts
 import { ToastContext } from '@/lib/context/toast.context';
 
-//components
+// Components
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomNumberField from '@/lib/ui/useable-components/number-input-field';
 
-//interfaces
+// Interfaces
 import { IAddCouponProps } from '@/lib/utils/interfaces/coupons.interface';
 
-//schema
+// Schema
 import { CouponFormSchema } from '@/lib/utils/schema/coupon';
 
-//formik
+// Formik
 import { Form, Formik } from 'formik';
 
-//prime react
+// Prime react
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Sidebar } from 'primereact/sidebar';
 
-//hooks
+// Hooks
 import { useMutation } from '@apollo/client';
 import { ChangeEvent, useContext } from 'react';
 import CustomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
@@ -35,7 +35,10 @@ export default function CouponForm({
   visible,
   setIsEditing,
 }: IAddCouponProps) {
-  //initial values
+  // Toast
+  const { showToast } = useContext(ToastContext);
+
+  // Initial values
   const initialValues = {
     _id: isEditing.bool ? isEditing?.data?._id : '',
     title: isEditing.bool ? isEditing?.data?.title : '',
@@ -43,7 +46,7 @@ export default function CouponForm({
     enabled: isEditing.bool ? isEditing?.data?.enabled : true,
   };
 
-  //mutations
+  // Mutations
   const [CreateCoupon, { loading: createCouponLoading }] = useMutation(
     CREATE_COUPON,
     {
@@ -92,8 +95,6 @@ export default function CouponForm({
       },
     }
   );
-  //toast
-  const { showToast } = useContext(ToastContext);
 
   return (
     <Sidebar
@@ -158,11 +159,11 @@ export default function CouponForm({
               <div className="space-y-4">
                 <div className="flex gap-4">
                   <h2>{isEditing.bool ? 'Edit' : 'Add'} Coupon</h2>
-                  <div className="flex gap-x-1 items-center">
+                  <div className="flex items-center gap-x-1">
                     {values.enabled ? 'Enabled' : 'Disabled'}
                     <CustomInputSwitch
                       onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                        setFieldValue('enabld', e.target.checked)
+                        setFieldValue('enabled', e.target.checked)
                       }
                       isActive={values.enabled}
                       className={values.enabled ? 'p-inputswitch-checked' : ''}
@@ -207,7 +208,7 @@ export default function CouponForm({
                 />
 
                 <button
-                  className="float-end rounded-md w-fit h-10 bg-black text-white border-gray-300 px-8"
+                  className="float-end h-10 w-fit rounded-md border-gray-300 bg-black px-8 text-white"
                   disabled={
                     isSubmitting || editCouponLoading || createCouponLoading
                   }
@@ -215,7 +216,7 @@ export default function CouponForm({
                 >
                   {isSubmitting || editCouponLoading || createCouponLoading ? (
                     <ProgressSpinner
-                      className="w-6 h-6 items-center self-center m-0 p-0"
+                      className="m-0 h-6 w-6 items-center self-center p-0"
                       strokeWidth="5"
                       style={{ fill: 'white', accentColor: 'white' }}
                       color="white"

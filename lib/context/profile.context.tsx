@@ -4,10 +4,16 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { GET_RESTAURANT_PROFILE } from '@/lib/api/graphql';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { useQueryGQL } from '../hooks/useQueryQL';
-import { IQueryResult, IProfileContextData, IProfileProviderProps } from '../utils/interfaces';
+import {
+  IQueryResult,
+  IProfileContextData,
+  IProfileProviderProps,
+} from '../utils/interfaces';
 import { IRestaurantProfileProps } from '../utils/interfaces';
 
-export const ProfileContext = createContext<IProfileContextData>({} as IProfileContextData);
+export const ProfileContext = createContext<IProfileContextData>(
+  {} as IProfileContextData
+);
 
 // export const useProfileContext = () => {
 //   const context = useContext(ProfileContext);
@@ -17,7 +23,9 @@ export const ProfileContext = createContext<IProfileContextData>({} as IProfileC
 //   return context;
 // };
 
-export const ProfileProvider: React.FC<IProfileProviderProps> = ({ children }) => {
+export const ProfileProvider: React.FC<IProfileProviderProps> = ({
+  children,
+}) => {
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
   const { restaurantId } = restaurantLayoutContextData;
 
@@ -30,10 +38,10 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({ children }) =
     },
     {
       enabled: !!restaurantId,
-      fetchPolicy:"network-only",
+      fetchPolicy: 'network-only',
       debounceMs: 300,
       onCompleted: (data: unknown) => {
-        console.log("Profile data fetched:", data);
+        console.log('Profile data fetched:', data);
         // You can perform any actions with the fetched data here
       },
     }
@@ -56,5 +64,7 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({ children }) =
     restaurantProfileResponse,
   };
 
-  return <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>;
+  return (
+    <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
+  );
 };

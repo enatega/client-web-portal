@@ -93,4 +93,4 @@ export const EDIT_RESTAURANT = `mutation EditRestaurant($restaurantInput:Restaur
     }
     shopType
   }
-}`
+}`;

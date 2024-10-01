@@ -16,7 +16,7 @@ import {
 
 // Components
 import Table from '@/lib/ui/useable-components/table';
-import CategoryTableHeader from '../header/table-header';
+
 
 // Utilities and Data
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
@@ -27,15 +27,14 @@ import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import useToast from '@/lib/hooks/useToast';
 
 // GraphQL
-import {
-  DELETE_FOOD,
-} from '@/lib/api/graphql';
+import { DELETE_FOOD } from '@/lib/api/graphql';
 import { GET_FOODS_BY_RESTAURANT_ID } from '@/lib/api/graphql/queries';
 
 // Context
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { FOODS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/foods-columns';
 import { onTransformRetaurantsByIdToFoods } from '@/lib/utils/methods/transformer';
+import FoodsTableHeader from '../header/table-header';
 
 export default function FoodsMain() {
   // Context
@@ -133,7 +132,7 @@ export default function FoodsMain() {
     <div className="p-3">
       <Table
         header={
-          <CategoryTableHeader
+          <FoodsTableHeader
             globalFilterValue={globalFilterValue}
             onGlobalFilterChange={onGlobalFilterChange}
           />

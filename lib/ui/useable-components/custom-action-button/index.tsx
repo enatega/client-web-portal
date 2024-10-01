@@ -17,7 +17,7 @@ export default function CustomActionActionButton({
       setSelectedItems={handleOptionChange}
       placeholder={title}
       dropDownIcon={Icon}
-      className="border border-dashed border-gray-400 h-custom-button w-32 bg-transparent"
+      className="h-custom-button w-32 border border-dashed border-gray-400 bg-transparent"
     />
   );
 }

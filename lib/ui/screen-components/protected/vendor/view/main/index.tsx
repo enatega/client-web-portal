@@ -56,18 +56,18 @@ export default function VendorMain({
     : restaurantByOwnerResponse?.data?.restaurantByOwner?.restaurants;
 
   return (
-    <div className="flex flex-col sm:flex-row flex-grow overflow-hidden">
+    <div className="flex flex-grow flex-col overflow-hidden sm:flex-row">
       <div
-        className={`w-full sm:w-1/3 bg-white border-gray-200 overflow-y-auto ${
+        className={`w-full overflow-y-auto border-gray-200 bg-white sm:w-1/3 ${
           activeTab === 'vendors' ? '' : 'hidden sm:block'
         }`}
       >
         {/* Mobile-only header for Vendors section */}
-        <div className="sm:hidden mt-3 p-3 border-b">
-          <div className="flex justify-between items-center mb-4">
+        <div className="mt-3 border-b p-3 sm:hidden">
+          <div className="mb-4 flex items-center justify-between">
             <HeaderText text="Vendors" />
             <TextIconClickable
-              className="sm:w-auto  bg-black text-white border-gray-300 rounded"
+              className="rounded border-gray-300 bg-black text-white sm:w-auto"
               icon={faAdd}
               iconStyles={{ color: 'white' }}
               title="Add Vendor"
@@ -110,8 +110,8 @@ export default function VendorMain({
               />
             ))
           ) : (
-            <div className="flex justify-center items-center h-64 px-4">
-              <div className="text-gray-500 text-base sm:text-lg font-semibold text-center">
+            <div className="flex h-64 items-center justify-center px-4">
+              <div className="text-center text-base font-semibold text-gray-500 sm:text-lg">
                 No Vendors Found.
               </div>
             </div>
@@ -120,17 +120,17 @@ export default function VendorMain({
       </div>
 
       <div
-        className={`flex-1 px-2 overflow-y-auto border-l border-gray-200 ${
+        className={`flex-1 overflow-y-auto border-l border-gray-200 px-2 ${
           activeTab === 'restaurants' ? '' : 'hidden sm:block'
         }`}
       >
         {/* Header for Restaurants section */}
-        <div className="pt-3 pb-2  border-b">
-          <div className="flex justify-between items-center mb-4">
+        <div className="border-b pb-2 pt-3">
+          <div className="mb-4 flex items-center justify-between">
             <div className="hidden sm:block">
               <HeaderText text="Restaurants" />
             </div>
-            <div className="sm:hidden flex flex-col">
+            <div className="flex flex-col sm:hidden">
               <HeaderText text="Restaurants" />
 
               <Chip
@@ -139,14 +139,14 @@ export default function VendorMain({
               />
             </div>
             <TextIconClickable
-              className="sm:w-auto  bg-black text-white border-gray-300 rounded"
+              className="rounded border-gray-300 bg-black text-white sm:w-auto"
               icon={faAdd}
               iconStyles={{ color: 'white' }}
               title="Add Restaurant"
               onClick={() => onSetRestaurantFormVisible(true)}
             />
           </div>
-          <div className="flex flex-col sm:flex-row items-start md:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="flex flex-col items-start space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 md:items-center">
             <div className="w-full sm:w-60">
               <CustomTextField
                 type="text"
@@ -170,7 +170,7 @@ export default function VendorMain({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-16 pt-">
+        <div className="pt- grid grid-cols-1 gap-6 pb-16 sm:grid-cols-2">
           {restaurantByOwnerResponse?.loading ? (
             new Array(10)
               .fill(0)
@@ -180,8 +180,8 @@ export default function VendorMain({
               <RestaurantCard key={restaurant._id} restaurant={restaurant} />
             ))
           ) : (
-            <div className="flex justify-center items-center h-64 px-4 col-span-full">
-              <div className="text-gray-500 text-base sm:text-lg font-semibold text-center">
+            <div className="col-span-full flex h-64 items-center justify-center px-4">
+              <div className="text-center text-base font-semibold text-gray-500 sm:text-lg">
                 No Restaurants Found.
               </div>
             </div>

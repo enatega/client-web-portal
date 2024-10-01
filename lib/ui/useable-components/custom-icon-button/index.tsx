@@ -8,7 +8,7 @@ export default function CustomIconButton({
 }: IGlobalButtonProps) {
   return (
     <Button
-      className="bg-black py-2 px-3 rounded-md flex gap-3 items-center justify-center hover:bg-[#272727]"
+      className="flex items-center justify-center gap-3 rounded-md bg-black px-3 py-2 hover:bg-[#272727]"
       onClick={() => setVisible(true)}
     >
       <span>

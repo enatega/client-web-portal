@@ -88,14 +88,14 @@ const AppTopbar = () => {
             <FontAwesomeIcon icon={faBars} />
           </button>
         </div>
-        <div className="flex items-center bg-black text-white p-2 px-3">
+        <div className="flex items-center bg-black p-2 px-3 text-white">
           <span className="text-xl font-bold">H</span>
         </div>
         <span className="ml-2 text-lg font-semibold">
           {toTextCase(APP_NAME, 'upper')}
         </span>
       </div>
-      <div className="hidden md:flex items-center space-x-6">
+      <div className="hidden items-center space-x-6 md:flex">
         <div className="flex items-center space-x-1">
           <Avatar
             label="V"
@@ -114,7 +114,7 @@ const AppTopbar = () => {
       </div>
       {isMenuOpen && (
         <div
-          className="absolute top-8 right-4 bg-white shadow-lg rounded-lg p-4 z-50"
+          className="absolute right-4 top-8 z-50 rounded-lg bg-white p-4 shadow-lg"
           ref={containerRef}
         >
           <div className="flex flex-col items-center space-y-4">

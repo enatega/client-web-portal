@@ -61,8 +61,6 @@ export interface IFoodAddonsRestaurantLocationComponentProps
   stepperProps?: IStepperFormProps;
 }
 
-
-
 /* API */
 export interface IFoodGridItem {
   _id: string;
@@ -71,7 +69,6 @@ export interface IFoodGridItem {
   category: IDropdownSelectItem | null,
   image: string;
 }
-
 
 export interface IVariation {
   _id: string;

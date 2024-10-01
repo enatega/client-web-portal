@@ -1,11 +1,11 @@
-//components
+//Components
 import HeaderText from '@/lib/ui/useable-components/header-text';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
-//interfaces
+//Interfaces
 import { ICouponScreenHeaderProps } from '@/lib/utils/interfaces/coupons.interface';
 
-//icons
+//Icons
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 export default function CouponScreenHeader({
@@ -16,7 +16,7 @@ export default function CouponScreenHeader({
       <div className="flex w-full justify-between">
         <HeaderText text="Coupons" />
         <TextIconClickable
-        className="sm:w-auto bg-black text-white border-gray-300 rounded"
+          className="rounded border-gray-300 bg-black text-white sm:w-auto"
           icon={faAdd}
           iconStyles={{ color: 'white' }}
           onClick={handleButtonClick}
