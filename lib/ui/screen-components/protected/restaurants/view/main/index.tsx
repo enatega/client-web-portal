@@ -110,7 +110,12 @@ export default function RestaurantsMain() {
   );
 
   const handleDelete = async (id: string) => {
+    try {
     hardDeleteRestaurant({ variables: { id: id } });
+    }
+    finally {
+      setDeleteId('');
+    }
   };
 
   // Constants
