@@ -36,8 +36,20 @@ export default function CustomNumberField({
       <InputNumber
         className={`h-10 w-full rounded-lg border border-gray-300 text-sm focus:shadow-none focus:outline-none ${className}`}
         placeholder={placeholder}
-        onChange={(e) => onNumberChangeHandler(e)}
-        maxLength={props.max?.toString().length}
+        onKeyDown={(e) => {
+          if (
+            props.max !== undefined &&
+            Number(e.currentTarget.value ?? 0) > props.max
+          ) {
+            e.preventDefault();
+          }
+        }}
+        onChange={(e) => {
+          if (props.max !== undefined && Number(e.value ?? 0) > props.max) {
+            return;
+          }
+          onNumberChangeHandler(e);
+        }}
         {...props}
       />
     </div>

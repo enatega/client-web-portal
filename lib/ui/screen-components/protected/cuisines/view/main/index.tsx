@@ -1,41 +1,40 @@
-//graphQL
+// GrpphQL
 import { DELETE_CUISINE, GET_CUISINES } from '@/lib/api/graphql';
 
-//intefaces
-import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
+// Interfaces
+import {
+  IActionMenuItem,
+  IEditState,
+  ILazyQueryResult,
+} from '@/lib/utils/interfaces';
 import {
   ICuisine,
   ICuisineMainProps,
   IGetCuisinesData,
 } from '@/lib/utils/interfaces/cuisine.interface';
-import { IColumnConfig } from '@/lib/utils/interfaces/table.interface';
 import { FilterMatchMode } from 'primereact/api';
 
-// hooks
+//  Contexts
 import { ToastContext } from '@/lib/context/toast.context';
 
-//hooks
+// Hooks
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 import { useMutation } from '@apollo/client';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
-//components
+// Components
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
-import EditDeletePopup from '@/lib/ui/useable-components/edit-delete-popup';
 import Table from '@/lib/ui/useable-components/table';
-import { IEditPopupVal } from '@/lib/utils/interfaces/coupons.interface';
-import { faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Image from 'next/image';
 import CuisineTableHeader from '../header/table-header';
+import { generateDummyCuisines } from '@/lib/utils/dummy';
+import { CUISINE_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/cuisine-columns';
 
 export default function CuisinesMain({
-  visible,
   setVisible,
   isEditing,
   setIsEditing,
 }: ICuisineMainProps) {
-  //mutations
+  //Mutations
   const [deleteCuisine, { loading: deleteCuisineLoading }] = useMutation(
     DELETE_CUISINE,
     {
@@ -43,20 +42,11 @@ export default function CuisinesMain({
     }
   );
 
-  //toast
+  // Toast
   const { showToast } = useContext(ToastContext);
 
-  //refs
-  const editDeletePopupRef = useRef<HTMLDivElement | null>(null);
-
-  //states
+  // States
   const [selectedData, setSelectedData] = useState<ICuisine[]>([]);
-  const [isEditDeletePopupOpen, setIsEditDeletePopupOpen] =
-    useState<IEditPopupVal>({
-      _id: '',
-      bool: false,
-    });
-
   const [isDeleting, setIsDeleting] = useState<IEditState<ICuisine>>({
     bool: false,
     data: {
@@ -72,7 +62,7 @@ export default function CuisinesMain({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-  //filters
+  // Filters
   const filters = {
     global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
     shopType: {
@@ -81,102 +71,56 @@ export default function CuisinesMain({
     },
   };
 
-  //queries
+  // Queries
   const { data, fetch } = useLazyQueryQL(GET_CUISINES, {
     onCompleted: () => setIsLoading(false),
   }) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
 
-  //columns
-  const cuisineColumns: IColumnConfig<ICuisine>[] = [
+  // Menu Items
+  const menuItems: IActionMenuItem<ICuisine>[] = [
     {
-      headerName: 'Image',
-      propertyName: 'image',
-      body: (data: ICuisine) => {
-        return (
-          <Image
-            src={
-              data?.image
-                ? data?.image
-                : 'https://images.pexels.com/photos/699953/pexels-photo-699953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            }
-            alt={data?.description ?? 'cuisine'}
-            width={30}
-            height={30}
-            className="rounded-md"
-          />
-        );
+      label: 'Edit',
+      command: (data?: ICuisine) => {
+        if (data) {
+          setIsEditing({
+            bool: true,
+            data: data,
+          });
+          setIsDeleting({
+            bool: false,
+            data: { ...isDeleting.data },
+          });
+        }
       },
     },
     {
-      headerName: 'Name',
-      propertyName: 'name',
-    },
-    {
-      headerName: 'Vendor',
-      propertyName: 'description',
-    },
-    {
-      headerName: 'Shop Type',
-      propertyName: 'shopType',
-    },
-    {
-      headerName: 'Action',
-      propertyName: 'action',
-      body: (rowData: ICuisine) => (
-        <div className="three-dots">
-          {isEditDeletePopupOpen._id === rowData?._id &&
-          isEditDeletePopupOpen.bool ? (
-            <div className="editdeletepoup-container" ref={editDeletePopupRef}>
-              <EditDeletePopup
-                setIsEditing={setIsEditing}
-                setVisible={setVisible}
-                setIsDeleting={setIsDeleting}
-                data={rowData}
-                visible={visible}
-                setIsEditDeletePopupOpen={setIsEditDeletePopupOpen}
-              />
-            </div>
-          ) : (
-            <FontAwesomeIcon
-              icon={faEllipsisVertical}
-              className="hover:scale-105 p-1 cursor-pointer"
-              onClick={() =>
-                setIsEditDeletePopupOpen({
-                  _id: rowData?._id,
-                  bool: true,
-                })
-              }
-            />
-          )}
-        </div>
-      ),
+      label: 'Delete',
+      command: (data?: ICuisine) => {
+        if (data) {
+          setIsDeleting({
+            bool: true,
+            data: data,
+          });
+          setIsEditing({
+            bool: false,
+            data: { ...isEditing.data },
+          });
+        }
+      },
     },
   ];
 
-  //handle final delete
+  // Handlers
   async function deleteItem() {
     try {
-      await deleteCuisine({
-        variables: {
-          id: isDeleting?.data?._id,
-        },
-      });
+      await deleteCuisine({ variables: { id: isDeleting?.data?._id } });
       showToast({
         title: 'Delete Cuisine',
         type: 'success',
         message: 'Cuisine has been deleted successfully',
         duration: 2000,
       });
-      setIsEditDeletePopupOpen({
-        _id: '',
-        bool: false,
-      });
-      setIsDeleting({
-        bool: false,
-        data: {
-          ...isDeleting.data,
-        },
-      });
+      setIsDeleting({ bool: false, data: { ...isDeleting.data } });
     } catch (err) {
       console.log(err);
       showToast({
@@ -188,61 +132,25 @@ export default function CuisinesMain({
     }
   }
 
-  //useEffects
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        editDeletePopupRef.current &&
-        !editDeletePopupRef.current.contains(event.target as Node)
-      ) {
-        setIsEditDeletePopupOpen({ _id: '', bool: false });
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [setIsEditDeletePopupOpen]);
-
-  useEffect(() => {
+  const onFetchCuisines = () => {
     setIsLoading(true);
     fetch();
-  }, []);
+  };
+
+  // UseEffects
+  useEffect(() => {
+    setVisible(isEditing.bool);
+  }, [data, isEditing.bool]);
 
   useEffect(() => {
-    if (isEditing.bool) {
-      setVisible(true);
-    } else {
-      setVisible(false);
-    }
-  }, [data, isEditing.bool]);
+    onFetchCuisines();
+  }, []);
+
   return (
-    <div>
-      <DeleteDialog
-        onConfirm={deleteItem}
-        onHide={() => {
-          setIsDeleting({
-            bool: false,
-            data: {
-              ...isDeleting.data,
-            },
-          });
-          setIsEditing({
-            bool: false,
-            data: {
-              ...isEditing.data,
-            },
-          });
-        }}
-        visible={isDeleting.bool}
-        loading={deleteCuisineLoading}
-        message="Are you sure to delete the cuisine?"
-      />
+    <div className="p-3">
       <Table
-        columns={cuisineColumns}
-        data={data?.cuisines ?? []}
+        columns={CUISINE_TABLE_COLUMNS({ menuItems })}
+        data={data?.cuisines || (isLoading ? generateDummyCuisines() : [])}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e as ICuisine[])}
         filters={filters}
@@ -255,6 +163,16 @@ export default function CuisinesMain({
             setSelectedActions={setSelectedActions}
           />
         }
+      />
+      <DeleteDialog
+        onConfirm={deleteItem}
+        onHide={() => {
+          setIsDeleting({ bool: false, data: { ...isDeleting.data } });
+          setIsEditing({ bool: false, data: { ...isEditing.data } });
+        }}
+        visible={isDeleting.bool}
+        loading={deleteCuisineLoading}
+        message="Are you sure to delete the cuisine?"
       />
     </div>
   );

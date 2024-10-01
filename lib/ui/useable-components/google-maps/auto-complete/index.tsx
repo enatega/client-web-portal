@@ -92,10 +92,10 @@ export default function TemplateDemo() {
   }, []);
 
   return (
-    <div className={`w-full flex flex-col justify-center gap-y-1 p-2`}>
+    <div className={`flex w-full flex-col justify-center gap-y-1 p-2`}>
       <div className="relative">
         <AutoComplete
-          className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none pr-16`}
+          className={`h-11 w-full border border-gray-300 px-2 pr-16 text-sm focus:shadow-none focus:outline-none`}
           field="name"
           value={selectedCountry}
           suggestions={filteredCountries}
@@ -106,7 +106,7 @@ export default function TemplateDemo() {
 
         {selectedCountry && (
           <button
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            className="absolute right-2 top-1/2 -translate-y-1/2 transform text-gray-500 hover:text-gray-700"
             onClick={() => setSelectedCountry(null)}
           >
             <i className="fas fa-times"></i>
@@ -114,7 +114,7 @@ export default function TemplateDemo() {
           </button>
         )}
         <button
-          className="absolute right-8 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+          className="absolute right-8 top-1/2 -translate-y-1/2 transform text-gray-500 hover:text-gray-700"
           onClick={() => {
             /* Add location functionality here */
           }}

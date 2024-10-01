@@ -26,12 +26,12 @@ export default function VendorHeader({
     useContext(VendorContext);
 
   return (
-    <div className="w-full border-b p-3 flex-shrink-0 sm:block hidden">
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+    <div className="hidden w-full flex-shrink-0 border-b p-3 sm:block">
+      <div className="mb-4 flex flex-col items-center justify-between sm:flex-row">
         <HeaderText text="Vendors" />
 
         <TextIconClickable
-          className="sm:w-auto bg-black text-white border-gray-300 rounded"
+          className="rounded border-gray-300 bg-black text-white sm:w-auto"
           icon={faAdd}
           iconStyles={{ color: 'white' }}
           title="Add Vendor"
@@ -41,7 +41,7 @@ export default function VendorHeader({
         />
       </div>
 
-      <div className="w-fit flex flex-colm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4">
+      <div className="flex-colm:flex-row flex w-fit items-center space-y-4 sm:space-x-4 sm:space-y-0">
         <div className="w-60">
           <CustomTextField
             type="text"

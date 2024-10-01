@@ -1,18 +1,14 @@
-//queries
+// GraphQL
 import { SEND_NOTIFICATION_USER } from '@/lib/api/graphql';
 
-//contexts
+// Contexts
 import { ToastContext } from '@/lib/context/toast.context';
 
-//icons
-
-//prime react
-
-//components
+//Components
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 
-//hooks & react interfaces
+// Hooks & react interfaces
 import { INotificationFormProps } from '@/lib/utils/interfaces/notification.interface';
 import { NotificationSchema } from '@/lib/utils/schema/notification';
 import { useMutation } from '@apollo/client';
@@ -25,16 +21,16 @@ export default function NotificationForm({
   setVisible,
   visible,
 }: INotificationFormProps) {
-  //toast
+  //Toast
   const { showToast } = useContext(ToastContext);
 
-  //intial state
+  //Intial state
   const initialValues = {
     title: '',
     body: '',
   };
 
-  //mutation
+  //Mutation
   const [sendNotificationUser] = useMutation(SEND_NOTIFICATION_USER);
 
   return (
@@ -79,7 +75,7 @@ export default function NotificationForm({
         {({ handleSubmit, handleChange, values, isSubmitting }) => {
           return (
             <Form onSubmit={handleSubmit}>
-              <div className="flex flex-col mb-2">
+              <div className="mb-2 flex flex-col">
                 <span className="text-lg">Send Notification</span>
               </div>
               <div className="space-y-4">
@@ -87,7 +83,7 @@ export default function NotificationForm({
                   value={values.title}
                   onChange={handleChange}
                   name="title"
-                  className="w-full py-2 px-1 text-sm"
+                  className="w-full px-1 py-2 text-sm"
                   showLabel={true}
                   placeholder="Title"
                   type="text"
@@ -115,13 +111,13 @@ export default function NotificationForm({
                 />
 
                 <button
-                  className="block float-end bg-black rounded-md px-12 py-2 my-2 text-white"
+                  className="float-end my-2 block rounded-md bg-black px-12 py-2 text-white"
                   disabled={isSubmitting}
                   type="submit"
                 >
                   {isSubmitting ? (
                     <ProgressSpinner
-                      className="w-6 h-6 items-center self-center m-0 p-0"
+                      className="m-0 h-6 w-6 items-center self-center p-0"
                       strokeWidth="5"
                       style={{ fill: 'white', accentColor: 'white' }}
                       color="white"

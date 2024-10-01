@@ -6,9 +6,7 @@ export default function DispatchScreen() {
   return (
     <div className="screen-container">
       <DispatchHeader />
-      <div className="flex-grow overflow-y-auto">
-        <DispatchMain />
-      </div>
+      <DispatchMain />
     </div>
   );
 }

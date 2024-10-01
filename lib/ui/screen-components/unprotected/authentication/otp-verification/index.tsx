@@ -9,35 +9,35 @@ import { InputOtp } from 'primereact/inputotp';
 
 export default function OTPVerificationMain() {
   return (
-    <div className="h-full w-full flex items-center justify-center">
+    <div className="flex h-full w-full items-center justify-center">
       <div className="w-2/6">
         <Card>
-          <div className="flex flex-col mb-2 p-2 items-center">
+          <div className="mb-2 flex flex-col items-center p-2">
             <span className="text-xl">
               We have sent OTP code to john@email.com
             </span>
-            <span className="text-gray-400 text-sm">
+            <span className="text-sm text-gray-400">
               Please check your inbox
             </span>
           </div>
 
           <div className="flex flex-col gap-3">
-            <div className="w-full h-26 flex justify-center">
+            <div className="h-26 flex w-full justify-center">
               <InputOtp />
             </div>
 
             <div className="flex justify-center">
-              <span className="text-gray-400 text-sm">Valid for 1min</span>
+              <span className="text-sm text-gray-400">Valid for 1min</span>
             </div>
 
             <CustomButton
-              className="w-full h-12 bg-primary-color text-white border-primary-color hover:bg-white hover:text-primary-color"
+              className="h-12 w-full border-primary-color bg-primary-color text-white hover:bg-white hover:text-primary-color"
               label="Continue"
               rounded={true}
             />
 
             <CustomButton
-              className="w-full h-full bg-transparent text-black border-secondary-border-color hover:bg-gray-100"
+              className="h-full w-full border-secondary-border-color bg-transparent text-black hover:bg-gray-100"
               label="Resend OTP"
               rounded={true}
             />

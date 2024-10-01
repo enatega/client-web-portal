@@ -95,47 +95,47 @@ function CustomUploadImageComponent({
   // Upload
 
   return (
-    <div className="flex flex-col gap-y-2 items-center justify-center mt-3 p-4">
-      <div className="relative w-20 h-20" style={style}>
+    <div className="mt-3 flex flex-col items-center justify-center gap-y-2 p-4">
+      <div className="relative h-20 w-20" style={style}>
         {imageFile ? (
-          <div className="relative w-full h-full borde">
+          <div className="borde relative h-full w-full">
             <Image
-              className="w-full h-full rounded-full border border-gray-300"
+              className="h-full w-full rounded-full border border-gray-300"
               alt="User avatar"
               src={imageFile}
               width={80}
               height={80}
             />
             {isUploading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+              <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black bg-opacity-50">
                 <CustomLoader />
               </div>
             )}
           </div>
         ) : showExistingImage && existingImageUrl ? (
-          <div className="relative w-full h-full">
+          <div className="relative h-full w-full">
             <Image
-              className="w-full h-full rounded-full border border-gray-300"
+              className="h-full w-full rounded-full border border-gray-300"
               alt="Existing avatar"
               src={existingImageUrl}
               width={80}
               height={80}
             />
             {isUploading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+              <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black bg-opacity-50">
                 <CustomLoader />
               </div>
             )}
           </div>
         ) : (
-          <div className="relative w-full h-full">
+          <div className="relative h-full w-full">
             <Avatar
               label="Image"
-              className="w-full h-full rounded-full border border-gray-300"
+              className="h-full w-full rounded-full border border-gray-300"
               style={style}
             />
             {isUploading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-full">
+              <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black bg-opacity-50">
                 <CustomLoader />
               </div>
             )}
@@ -145,7 +145,7 @@ function CustomUploadImageComponent({
 
       <label
         htmlFor={`${name}-upload`}
-        className="flex items-center justify-center cursor-pointer bg-green-100 hover:bg-green-200 text-green-700 font-medium text-xs py-1 px-3 rounded-full transition duration-300 ease-in-out"
+        className="flex cursor-pointer items-center justify-center rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700 transition duration-300 ease-in-out hover:bg-green-200"
       >
         <span>{title}</span>
       </label>

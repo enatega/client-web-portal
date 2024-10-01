@@ -16,7 +16,7 @@ export default function TextIconClickable({
 }: TextIconClickableProps) {
   return (
     <div
-      className={`text-icon-clickable-container ${twMerge('text-sm flex items-center justify-center', className)}`}
+      className={`text-icon-clickable-container ${twMerge('flex items-center justify-center text-sm', className)}`}
       onClick={onClick}
     >
       {/* Conditionally render the loader or the icon */}
