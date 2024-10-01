@@ -1,5 +1,3 @@
-import React from 'react';
-import { ILoginResponse } from '../utils/interfaces';
 import { useUserContext } from './useUser';
 
 const useCheckAllowedRoutes = <T extends { text: string }>(arr: T[]): T[] => {

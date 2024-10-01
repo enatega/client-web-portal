@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { ILoginResponse } from '../utils/interfaces';
 import { APP_NAME } from '../utils/constants';
 
