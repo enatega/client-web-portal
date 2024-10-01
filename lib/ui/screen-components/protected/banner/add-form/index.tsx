@@ -230,7 +230,7 @@ const BannersAddForm = ({
                             }
                             showLabel={true}
                             name="screen"
-                            loading={loading}
+                            isLoading={loading}
                             selectedItem={values.screen}
                             setSelectedItem={setFieldValue}
                             style={{
