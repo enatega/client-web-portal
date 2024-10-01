@@ -66,9 +66,9 @@ export const useQueryGQL = <
     [refetch, debounceMs, retry, retryDelayMs]
   );
 
-  const handleRefetch = async () => {
+  const handleRefetch = async (variables: V = {} as V) => {
     if (enabled) {
-      await debouncedRefetch();
+      await debouncedRefetch(variables);
     }
   };
 
