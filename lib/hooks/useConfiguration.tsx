@@ -71,6 +71,8 @@ export const useConfiguration = () => {
   const APP_TERMS = configuration?.termsAndConditions;
   const APP_PRIVACY = configuration?.privacyPolicy;
   const APP_TEST_OTP = configuration?.testOtp;
+  const CURRENCY_CODE = configuration?.currency;
+  const CURRENCY_SYMBOL = configuration?.currency;
 
   return {
     SERVER_URL: BACKEND_URL.LIVE.SERVER_URL,
@@ -148,5 +150,9 @@ export const useConfiguration = () => {
     // APP
     SKIP_EMAIL_VERIFICATION,
     SKIP_MOBILE_VERIFICATION,
+
+    //CURRENCY
+    CURRENCY_CODE,
+    CURRENCY_SYMBOL,
   };
 };

@@ -12,6 +12,7 @@ import GoogleClientAddForm from '../../add-form/google-client';
 import FirebaseAdminAddForm from '../../add-form/firebase-admin';
 import AppConfigAddForm from '../../add-form/app-config';
 import VerificationAddForm from '../../add-form/verification';
+import CurrencyAddForm from '../../add-form/currency';
 
 const ConfigMain = () => {
   return (
@@ -19,7 +20,7 @@ const ConfigMain = () => {
       <NodeMailerAddForm />
       <StripeAddForm />
       <PayPalAddForm />
-      {/* Currency */}
+      <CurrencyAddForm />
       <DeliveryRateAddForm />
       <TwilioAddForm />
       <SentryAddForm />
