@@ -1,4 +1,4 @@
 export interface INotificationErrors {
-  title: ['Required'];
-  body: ['Required'];
+  title: string[];
+  body: string[];
 }

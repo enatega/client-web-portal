@@ -1,5 +1,5 @@
 export interface ICouponErrors {
-  title: ['Required'];
-  discount: ['Required'];
-  enabled: ['Required'];
+  title: string[];
+  discount: string[];
+  enabled: string[];
 }
