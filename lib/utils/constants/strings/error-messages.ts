@@ -64,6 +64,7 @@ export const ProfileErrors: IUpdateProfileFormErrors = {
   email: ['Required', 'Invalid email'],
   username: ['Required', 'Invalid email'],
   password: ['Required', ...PasswordErrors],
+  confirmPassword: ['Required', 'Password must match'],
   address: ['Required'],
   deliveryTime: ['Required'],
   minOrder: ['Required'],

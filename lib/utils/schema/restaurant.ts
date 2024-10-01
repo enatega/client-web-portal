@@ -54,3 +54,6 @@ export const RestaurantSchema = Yup.object().shape({
   image: Yup.string().url('Invalid image URL').required('Required'),
   logo: Yup.string().url('Invalid logo URL').required('Required'),
 });
+
+
+

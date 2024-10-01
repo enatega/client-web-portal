@@ -10,9 +10,9 @@ const ProfileHeader: React.FC = () => {
   const profileContext = useContext(ProfileContext);
 
   const onUpdateProfileClick = () => {
-    console.log('Update Profile button clicked');
     profileContext?.handleUpdateProfile();
   };
+
 
 
   return (

@@ -11,7 +11,7 @@ import {
 } from '@/lib/utils/interfaces';
 
 // Icons
-import CustomGoogleMapsLocationBounds from '@/lib/ui/useable-components/google-maps/location-bounds-restaurant(vendor)';
+import UpdateRestaurantLocationBounds from '@/lib/ui/useable-components/google-maps/location-bounds-profile-restaurants';
 
 const initialValues: IVendorForm = {
   name: '',
@@ -48,7 +48,7 @@ export default function UpdateRestaurantLocation({
                 return (
                   <Form onSubmit={handleSubmit}>
                     <div className="space-y-3 mb-2 ">
-                      <CustomGoogleMapsLocationBounds
+                      <UpdateRestaurantLocationBounds
                         onStepChange={onStepChange}
                       />
                     </div>

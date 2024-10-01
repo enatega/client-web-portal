@@ -5,6 +5,7 @@ export interface IUpdateProfileFormErrors {
   name: string[];
   username: string[];
   password: string[];
+  confirmPassword: string[]
   address: string[];
   deliveryTime: string[];
   minOrder: string[];

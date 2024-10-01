@@ -6,6 +6,7 @@ import {
 import { Avatar } from 'primereact/avatar';
 import { ProfileContext } from '@/lib/context/profile.context';
 import RestaurantProfileSkeleton from '@/lib/ui/useable-components/custom-skeletons/restaurant.profile.skeleton';
+import Image from 'next/image';
 
 const InfoItem: React.FC<IInfoItemProps> = ({ label, value }) => (
   <div>
@@ -40,7 +41,7 @@ const RestaurantMain: React.FC = () => {
             <p className="text-xs text-gray-500 mb-4">Images</p>
             <div className="flex space-x-2">
               {restaurant?.image ? (
-                <img
+                <Image
                   src={restaurant?.image}
                   alt="Restaurant logo"
                   className="object-cover rounded"
@@ -51,7 +52,7 @@ const RestaurantMain: React.FC = () => {
                 <Avatar label="I" className="w-24 h-24" />
               )}
               {restaurant?.logo ? (
-                <img
+                <Image
                   src={restaurant?.logo}
                   alt="Restaurant logo"
                   className="object-cover rounded"
