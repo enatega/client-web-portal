@@ -3,7 +3,7 @@ import ConfigMain from '@/lib/ui/screen-components/protected/configuration/view/
 
 export default function ConfigurationsScreen() {
   return (
-    <div className="flex flex-col p-3 h-screen overflow-hidden">
+    <div className="screen-container">
       <ConfigHeader />
       <ConfigMain />
     </div>

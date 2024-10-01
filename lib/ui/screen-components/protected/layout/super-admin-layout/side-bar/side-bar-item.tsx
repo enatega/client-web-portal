@@ -17,12 +17,12 @@ function HoveredSubMenuItem({ icon, text, active }: SubMenuItemProps) {
   return (
     <div
       className={`my-2 rounded-md p-2 ${
-        active ? 'bg-gray-300' : ' hover:bg-indigo-50'
+        active ? 'bg-gray-300' : 'hover:bg-indigo-50'
       }`}
     >
-      <div className="flex items-center justify-center ">
+      <div className="flex items-center justify-center">
         {icon && (
-          <span className="text-primary-500 h-6 w-6 ">
+          <span className="text-primary-500 h-6 w-6">
             <FontAwesomeIcon icon={icon} />
           </span>
         )}
@@ -72,21 +72,14 @@ export default function SidebarItem({
   const isActive = pathname.includes(route ?? '');
 
   return (
-    <div className={`flex flex-col mt-[0.4rem]`}>
+    <div className={`mt-[0.4rem] flex flex-col`}>
       <div>
         <button
-          className={`
-    
-         group relative  flex w-full cursor-pointer
-         items-center rounded-md px-3
-         py-2  transition-colors
-         ${
-           isActive && !subMenu
-             ? `bg-${isClickable ? bg_color : ''} text-${isClickable ? text_color : '[#71717A]'}`
-             : `bg-${bg_color} text-${text_color} hover:bg-secondary-color`
-         }
-         ${!expanded && 'hidden sm:flex'}
-     `}
+          className={`group relative flex w-full cursor-pointer items-center rounded-md px-3 py-2 transition-colors ${
+            isActive && !subMenu
+              ? `bg-${isClickable ? bg_color : ''} text-${isClickable ? text_color : '[#71717A]'}`
+              : `bg-${bg_color} text-${text_color} hover:bg-secondary-color`
+          } ${!expanded && 'hidden sm:flex'} `}
           onClick={() => {
             if (!isParent || isClickable) {
               router.push(route ?? '');
@@ -96,7 +89,7 @@ export default function SidebarItem({
           }}
         >
           {icon && (
-            <span className="card-h1  w-6">
+            <span className="card-h1 w-6">
               <FontAwesomeIcon icon={icon} />
             </span>
           )}
@@ -118,12 +111,7 @@ export default function SidebarItem({
 
           {!expanded && (
             <div
-              className={`
-            text-primary-500 invisible absolute left-full ml-6 -translate-x-3
-            rounded-md bg-indigo-100 px-2
-            py-1 text-sm opacity-20 transition-all
-            group-hover:visible group-hover:translate-x-0 group-hover:opacity-100
-        `}
+              className={`text-primary-500 invisible absolute left-full ml-6 -translate-x-3 rounded-md bg-indigo-100 px-2 py-1 text-sm opacity-20 transition-all group-hover:visible group-hover:translate-x-0 group-hover:opacity-100`}
             >
               {!subMenu
                 ? text
@@ -140,10 +128,10 @@ export default function SidebarItem({
         </button>
       </div>
       <ul
-        className={`${classes['sub-menu']} pl-6 relative`}
+        className={`${classes['sub-menu']} relative pl-6`}
         style={{ height: subMenuHeight }}
       >
-        <div className="absolute left-6 top-0 bottom-0 w-px bg-gray-300"></div>
+        <div className="absolute bottom-0 left-6 top-0 w-px bg-gray-300"></div>
 
         {expanded &&
           subMenu?.map((item, index) => {
@@ -152,7 +140,7 @@ export default function SidebarItem({
             return (
               <li key={index} className="relative">
                 {isActive && (
-                  <div className="absolute -left-[0.26rem] top-1/2 w-2 h-2 bg-green-500 rounded-full transform -translate-y-1/2 z-10"></div>
+                  <div className="absolute -left-[0.26rem] top-1/2 z-10 h-2 w-2 -translate-y-1/2 transform rounded-full bg-green-500"></div>
                 )}
                 <SidebarItem {...item} expanded={expanded} />
               </li>

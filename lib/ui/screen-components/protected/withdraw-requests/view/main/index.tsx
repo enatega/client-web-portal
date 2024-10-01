@@ -1,71 +1,72 @@
+//GraphQL
 import { GET_ALL_WITHDRAW_REQUESTS } from '@/lib/api/graphql';
-import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+
+// Interfaces
 import { ILazyQueryResult } from '@/lib/utils/interfaces';
 import {
   IGetWithDrawRequestsData,
   IWithDrawRequest,
 } from '@/lib/utils/interfaces/withdraw-request.interface';
+
+// Hooks
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
+import { useEffect, useState } from 'react';
+
+// Prime react
 import { FilterMatchMode } from 'primereact/api';
-import { ChangeEvent, useEffect, useState } from 'react';
-import WithdrawTable from '../body/table';
+
+// Components
+import Table from '@/lib/ui/useable-components/table';
+
+// Constants
+import WithdrawRequestTableHeader from '../header/table-header';
+import { generateDummyWithdrawRequests } from '@/lib/utils/dummy';
+import { WITHDRAW_REQUESTS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/withdraw-requests-columns';
 
 export default function WithdrawRequestsMain() {
-  //states
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-  const [requests, setRequests] = useState<IWithDrawRequest[]>([]);
-
-  //queries
-  const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
-    fetchPolicy: 'network-only',
-  }) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
-
-  //options
-  let statusOptions = [
-    {
-      label: '',
-      code: '',
-    },
-  ];
-
-  //filters
-  const [filters, setFilters] = useState({
-    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
-  });
+  // States
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
+  const [selectedData, setSelectedData] = useState<IWithDrawRequest[]>([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
 
-  //global filters change
-  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    let _filters = { ...filters };
+  // Queries
+  const { fetch, data, loading } = useLazyQueryQL(GET_ALL_WITHDRAW_REQUESTS, {
+    fetchPolicy: 'cache-and-network',
+  }) as ILazyQueryResult<IGetWithDrawRequestsData | undefined, undefined>;
 
-    _filters['global'].value = value;
-
-    setFilters(_filters);
-    setGlobalFilterValue(value);
+  // Filters
+  const filters = {
+    global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
+    status: {
+      value: selectedActions.length > 0 ? selectedActions : null,
+      matchMode: FilterMatchMode.IN,
+    },
   };
 
-  // useEffects
+  // UseEffects
   useEffect(() => {
     fetch();
   }, []);
 
-  useEffect(() => {
-    if (data) {
-      setRequests(data.getAllWithdrawRequests?.data);
-    }
-  }, [data]);
   return (
     <div className="p-3">
-      <WithdrawTable
-        data={requests ?? []}
-        globalFilterValue={globalFilterValue}
-        loading={loading}
-        onGlobalFilterChange={onGlobalFilterChange}
-        selectedStatuses={selectedStatuses}
-        setRequests={setRequests}
-        setSelectedStatuses={setSelectedStatuses}
-        statusOptions={statusOptions}
+      <Table
+        data={
+          data?.getAllWithdrawRequests?.data || (loading ? generateDummyWithdrawRequests() : [])
+        }
+        columns={WITHDRAW_REQUESTS_TABLE_COLUMNS()}
+        selectedData={selectedData}
+        setSelectedData={setSelectedData}
+        header={
+          <WithdrawRequestTableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
+          />
+        }
         filters={filters}
+        loading={loading}
       />
     </div>
   );

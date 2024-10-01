@@ -601,10 +601,10 @@ const CustomGoogleMapsLocationBounds: React.FC<
 
   return (
     <div>
-      <div className="overflow-hidden relative">
-        <div className="w-full h-[600px] object-cover">
-          <div className="absolute top-0 left-0 right-0 z-10">
-            <div className={`w-full flex flex-col justify-center gap-y-1 p-2`}>
+      <div className="relative overflow-hidden">
+        <div className="h-[600px] w-full object-cover">
+          <div className="absolute left-0 right-0 top-0 z-10">
+            <div className={`flex w-full flex-col justify-center gap-y-1 p-2`}>
               <div className="relative">
                 <AutoComplete
                   id="google-map"
@@ -612,7 +612,7 @@ const CustomGoogleMapsLocationBounds: React.FC<
                     isFetchingRestaurantDeliveryZoneInfo ||
                     isFetchingRestaurantProfile
                   }
-                  className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none p`}
+                  className={`p h-11 w-full border border-gray-300 px-2 text-sm focus:shadow-none focus:outline-none`}
                   value={inputValue}
                   dropdownIcon={
                     <FontAwesomeIcon
@@ -678,11 +678,11 @@ const CustomGoogleMapsLocationBounds: React.FC<
                     );
                   }}
                 />
-                <div className="absolute right-8 top-0 h-full flex items-center pr-2">
+                <div className="absolute right-8 top-0 flex h-full items-center pr-2">
                   {inputValue && (
                     <FontAwesomeIcon
                       icon={faTimes}
-                      className="text-gray-400 cursor-pointer mr-2"
+                      className="mr-2 cursor-pointer text-gray-400"
                       onClick={() => {
                         setInputValue('');
                         setSearch('');
@@ -767,7 +767,7 @@ const CustomGoogleMapsLocationBounds: React.FC<
 
       {/* Radius Input */}
       {deliveryZoneType === 'radius' && (
-        <div className="w-[8rem] mt-2">
+        <div className="mt-2 w-[8rem]">
           <CustomRadiusInputField
             type="number"
             name="radius"
@@ -802,9 +802,9 @@ const CustomGoogleMapsLocationBounds: React.FC<
         }}
       />
 
-      <div className="flex justify-end mt-4">
+      <div className="mt-4 flex justify-end">
         <CustomButton
-          className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+          className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
           label="Save"
           type="button"
           loading={isSubmitting}

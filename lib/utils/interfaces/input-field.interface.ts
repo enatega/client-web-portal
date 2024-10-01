@@ -35,7 +35,7 @@ export interface IPhoneTextFieldProps extends IGlobalTextFieldProps {
   onChange?: (event: InputMaskChangeEvent) => void;
 }
 export interface INumberTextFieldProps
-  extends Omit<IGlobalTextFieldProps, 'value' | 'type'> {
+  extends Omit<IGlobalTextFieldProps, 'value' | 'type' | 'maxLength'> {
   value: number | null;
   min: number;
   max?: number;

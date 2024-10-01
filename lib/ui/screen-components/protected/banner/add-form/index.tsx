@@ -48,21 +48,21 @@ const BannersAddForm = ({
     description: banner?.description || '',
     action: banner
       ? {
-        label: getLabelByCode(ACTION_TYPES, banner.action),
-        code: banner.action,
-      }
+          label: getLabelByCode(ACTION_TYPES, banner.action),
+          code: banner.action,
+        }
       : null,
     screen: banner
       ? banner.action === 'Navigate Specific Page'
         ? {
-          label: getLabelByCode(SCREEN_NAMES, banner.screen),
-          code: banner.screen,
-        }
-        : banner.action === 'Navigate Specific Store'
-          ? {
-            label: banner.screen,
+            label: getLabelByCode(SCREEN_NAMES, banner.screen),
             code: banner.screen,
           }
+        : banner.action === 'Navigate Specific Store'
+          ? {
+              label: banner.screen,
+              code: banner.screen,
+            }
           : null
       : null,
     file: banner?.file || '',
@@ -128,10 +128,10 @@ const BannersAddForm = ({
       onHide={onHide}
       className="w-full sm:w-[450px]"
     >
-      <div className="w-full h-full flex items-center justify-start">
+      <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">
           <div className="flex flex-col gap-2">
-            <div className="flex flex-col mb-2">
+            <div className="mb-2 flex flex-col">
               <span className="text-lg">{banner ? 'Edit' : 'Add'} Banner</span>
             </div>
 
@@ -224,7 +224,7 @@ const BannersAddForm = ({
                               values.action?.code === 'Navigate Specific Store'
                                 ? RESTAURANT_NAMES
                                 : values.action?.code ===
-                                  'Navigate Specific Page'
+                                    'Navigate Specific Page'
                                   ? SCREEN_NAMES
                                   : []
                             }
@@ -246,10 +246,11 @@ const BannersAddForm = ({
                         </div>
 
                         <div
-                          className={`${errors.file && !values.file
-                            ? 'border-red-500'
-                            : 'border-gray-200'
-                            } border p-4 rounded-lg`}
+                          className={`${
+                            errors.file && !values.file
+                              ? 'border-red-500'
+                              : 'border-gray-200'
+                          } rounded-lg border p-4`}
                         >
                           <CustomUploadImageComponent
                             key={'file'}
@@ -261,9 +262,9 @@ const BannersAddForm = ({
                           />
                         </div>
 
-                        <div className="flex justify-end mt-4">
+                        <div className="mt-4 flex justify-end">
                           <CustomButton
-                            className="w-fit h-10 bg-black text-white border-gray-300 px-8"
+                            className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
                             label={banner ? 'Update' : 'Add'}
                             type="submit"
                             loading={mutationLoading}

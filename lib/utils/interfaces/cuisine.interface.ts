@@ -19,15 +19,12 @@ export interface IGetCuisinesVariables {}
 
 export interface IAddCuisineProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
-  setCuisines: Dispatch<SetStateAction<ICuisine[]>>;
   setIsEditing: Dispatch<
     SetStateAction<{
       bool: boolean;
       data: ICuisine;
     }>
   >;
-  addCuisineLocally: (cuisine: ICuisine) => void;
-  cuisines: ICuisine[];
   isEditing: IEditState<ICuisine>;
   visible: boolean;
 }
@@ -54,4 +51,12 @@ export interface ICuisineScreenHeaderProps {
 export interface ICuisineMainProps {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
+  isEditing: IEditState<ICuisine>;
+  setIsEditing: Dispatch<SetStateAction<IEditState<ICuisine>>>;
+}
+export interface ICuisineTableHeaderProps {
+  globalFilterValue: string;
+  onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  selectedActions: string[];
+  setSelectedActions: Dispatch<SetStateAction<string[]>>;
 }

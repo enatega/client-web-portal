@@ -43,7 +43,7 @@ export default function CustomIconTextField({
         )}
         <InputText
           className={twMerge(
-            `w-full h-10 rounded-lg px-2 text-sm border border-gray-300 focus:outline-none focus:shadow-none`,
+            `h-10 w-full rounded-lg border border-gray-300 px-2 text-sm focus:shadow-none focus:outline-none`,
             className
           )}
           placeholder={placeholder}

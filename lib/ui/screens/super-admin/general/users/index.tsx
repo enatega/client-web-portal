@@ -3,7 +3,7 @@ import UsersMain from '@/lib/ui/screen-components/protected/users/view/main';
 
 export default function UsersScreen() {
   return (
-    <div className="flex flex-col h-[90vh] overflow-auto">
+    <div className="flex h-[90vh] flex-col overflow-auto">
       <UserHeader />
 
       <UsersMain />

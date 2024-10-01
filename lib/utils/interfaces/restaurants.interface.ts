@@ -4,6 +4,7 @@ import {
   IGlobalComponentProps,
   IStepperFormProps,
 } from './global.interface';
+import { IProvider } from './layout.interface';
 
 export interface IRestaurantsContextPropData {
   restaurant?: {
@@ -26,7 +27,7 @@ export interface IRestaurantsContextProps {
   onSetRestaurantsContextData: (data: IRestaurantsContextPropData) => void;
 }
 
-export interface IRestaurantsProvider extends IGlobalComponentProps {}
+export interface IRestaurantsProvider extends IProvider {}
 
 export interface IRestaurantsAddFormComponentProps
   extends IGlobalComponentProps {

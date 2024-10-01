@@ -219,15 +219,15 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
 
   return (
     <div>
-      <div className="overflow-hidden relative">
-        <div className="w-full h-[600px] object-cover">
-          <div className="absolute top-0 left-0 right-0 z-10">
-            <div className={`w-full flex flex-col justify-center gap-y-1 p-2`}>
+      <div className="relative overflow-hidden">
+        <div className="h-[600px] w-full object-cover">
+          <div className="absolute left-0 right-0 top-0 z-10">
+            <div className={`flex w-full flex-col justify-center gap-y-1 p-2`}>
               <div className="relative">
                 <AutoComplete
                   id="google-map"
                   disabled={false}
-                  className={`w-full h-11 border px-2 text-sm border-gray-300 focus:outline-none focus:shadow-none p`}
+                  className={`p h-11 w-full border border-gray-300 px-2 text-sm focus:shadow-none focus:outline-none`}
                   value={inputValue}
                   dropdownIcon={
                     <FontAwesomeIcon
@@ -293,11 +293,11 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
                     );
                   }}
                 />
-                <div className="absolute right-8 top-0 h-full flex items-center pr-2">
+                <div className="absolute right-8 top-0 flex h-full items-center pr-2">
                   {inputValue && (
                     <FontAwesomeIcon
                       icon={faTimes}
-                      className="text-gray-400 cursor-pointer mr-2"
+                      className="mr-2 cursor-pointer text-gray-400"
                       onClick={() => {
                         setInputValue('');
                         setSearch('');
@@ -360,7 +360,7 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
           switch (val) {
             case 'polygon':
               setPath(DEFAULT_POLYGON);
-              break
+              break;
             case 'point':
               setPath([]);
               break;

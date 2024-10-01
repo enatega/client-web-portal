@@ -43,20 +43,20 @@ export default function CustomPopupMenu<T>({
   return (
     <div
       ref={popupRef}
-      className="flex flex-col gap-2  rounded-lg   bg-white shadow-xl border border-gray-200 w-full"
+      className="flex w-full flex-col gap-2 rounded-lg border border-gray-200 bg-white shadow-xl"
     >
       {items.map((item: IPopupMenuItem<T>, index) => {
         return (
           <button
             key={`${item.title}-${index}`}
-            className="flex items-center gap-2 hover:bg-gray-100 p-2 rounded transition-colors"
+            className="flex items-center gap-2 rounded p-2 transition-colors hover:bg-gray-100"
             onClick={item.fn}
           >
             {item?.icon ? (
               <FontAwesomeIcon
                 title="Edit"
                 icon={item.icon}
-                className={`w-4 h-4 ${item.color}`}
+                className={`h-4 w-4 ${item.color}`}
               />
             ) : null}
             {item.title ? (

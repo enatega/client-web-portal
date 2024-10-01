@@ -12,7 +12,7 @@ import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 import { BANNERS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/banners-columns';
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
-import BannerTableHeader from '../table-header';
+import BannerTableHeader from '../header/table-header';
 
 // Interfaces and Types
 import {
@@ -64,6 +64,7 @@ export default function BannersMain({
       refetchQueries: [{ query: GET_BANNERS }],
     }
   );
+
 
   const menuItems: IActionMenuItem<IBannersResponse>[] = [
     {

@@ -1,29 +1,50 @@
-import { GET_COUPONS } from '@/lib/api/graphql';
+// CSS
+import './index.module.css';
+
+// GraphQL
+import { DELETE_COUPON, GET_COUPONS } from '@/lib/api/graphql';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
-import { IEditState, ILazyQueryResult } from '@/lib/utils/interfaces';
+
+// Interfaces
+import {
+  IActionMenuItem,
+  IEditState,
+  ILazyQueryResult,
+} from '@/lib/utils/interfaces';
 import {
   ICoupon,
   ICouponMainProps,
   IGetCouponsData,
 } from '@/lib/utils/interfaces/coupons.interface';
 import { IFilterType } from '@/lib/utils/interfaces/table.interface';
-import { FilterMatchMode } from 'primereact/api';
-import { ChangeEvent, useEffect, useState } from 'react';
-import CouponForm from '../../form';
-import CouponTable from '../body/table';
 
-export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
-  // edit/delete states which are to be circulated in the whole coupons module
-  const [isEditing, setIsEditing] = useState<IEditState<ICoupon>>({
-    bool: false,
-    data: {
-      __typename: '',
-      _id: '',
-      discount: 0,
-      enabled: false,
-      title: '',
-    },
-  });
+// Prime react
+import { FilterMatchMode } from 'primereact/api';
+
+// Hooks
+import { useContext, useEffect, useState } from 'react';
+import { useMutation } from '@apollo/client';
+
+// Components
+import { ToastContext } from '@/lib/context/toast.context';
+import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import Table from '@/lib/ui/useable-components/table';
+import CouponTableHeader from '../header/table-header';
+
+// Constants
+import { generateDummyCoupons } from '@/lib/utils/dummy';
+import { COUPONS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/coupons-columns';
+
+export default function CouponsMain({
+  setVisible,
+  isEditing,
+  setIsEditing,
+}: ICouponMainProps) {
+  // Toast
+  const { showToast } = useContext(ToastContext);
+
+  // States
+  const [selectedData, setSelectedData] = useState<ICoupon[]>([]);
   const [isDeleting, setIsDeleting] = useState<IEditState<ICoupon>>({
     bool: false,
     data: {
@@ -34,75 +55,97 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
       title: '',
     },
   });
-
-  //filters
-  const [filters, setFilters] = useState<IFilterType>({
-    global: { value: '', matchMode: FilterMatchMode.CONTAINS },
-  });
-
   const [globalFilterValue, setGlobalFilterValue] = useState('');
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
 
-  //global filters change
-  const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    let _filters = { ...filters };
+  // Filters
+  const filters: IFilterType = {
+    global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
 
-    _filters['global'].value = value;
-
-    setFilters(_filters);
-    setGlobalFilterValue(value);
+    enabled: {
+      value: selectedActions.length > 0 ? selectedActions : null,
+      matchMode: FilterMatchMode.CONTAINS,
+    },
   };
 
-  const [coupons, setCoupons] = useState<ICoupon[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-
-  //options
-  let statusOptions = [
-    {
-      label: 'Enabled',
-      code: 'enabled',
-    },
-    {
-      label: 'Disabled',
-      code: 'disabled',
-    },
-    {
-      label: 'All',
-      code: 'all',
-    },
-  ];
-
-  //query
+  // Queries
   const { data, fetch, loading } = useLazyQueryQL(
-    GET_COUPONS,
-    {}
+    GET_COUPONS
   ) as ILazyQueryResult<IGetCouponsData | undefined, undefined>;
 
-  //handle add cuisine locally to append child in the cuisine array
-  const handleAddCouponLocally = (coupon: ICoupon) => {
-    setCoupons((prevCoupons: ICoupon[]) => [
-      coupon,
-      ...prevCoupons.filter((c) => c._id !== coupon._id),
-    ]);
-    setIsEditing({
-      bool: false,
-      data: { ...isEditing.data },
+  // Mutations
+  const [deleteCoupon, { loading: deleteCouponLoading }] = useMutation(
+    DELETE_COUPON,
+    {
+      refetchQueries: [{ query: GET_COUPONS }],
+      onCompleted: () => {
+        showToast({
+          title: 'Delete Coupon',
+          type: 'success',
+          message: 'Coupon has been deleted successfully',
+          duration: 2000,
+        });
+      },
+      onError: (err) => {
+        showToast({
+          title: 'Delete Coupon',
+          type: 'error',
+          message: err.message || 'An unknown error occured, please try again',
+          duration: 2000,
+        });
+      },
+    }
+  );
+
+  // Delete Item
+  async function deleteItem() {
+    await deleteCoupon({
+      variables: {
+        id: isDeleting?.data?._id,
+      },
     });
     setIsDeleting({
       bool: false,
-      data: { ...isEditing.data },
+      data: { ...isDeleting.data },
     });
-  };
+  }
 
-  //useEffects
-  useEffect(() => {
-    fetch();
-  }, []);
+  // Menu Items
+  const menuItems: IActionMenuItem<ICoupon>[] = [
+    {
+      label: 'Edit',
+      command: (data?: ICoupon) => {
+        if (data) {
+          setIsEditing({
+            bool: true,
+            data: data,
+          });
+          setIsDeleting({
+            bool: false,
+            data: { ...isDeleting.data },
+          });
+        }
+      },
+    },
+    {
+      label: 'Delete',
+      command: (data?: ICoupon) => {
+        if (data) {
+          setIsDeleting({
+            bool: true,
+            data: data,
+          });
+          setIsEditing({
+            bool: false,
+            data: { ...isEditing.data },
+          });
+        }
+      },
+    },
+  ];
 
+  // UseEffects
   useEffect(() => {
-    if (data) {
-      setCoupons(data.coupons);
-    }
     if (isEditing.bool) {
       setVisible(true);
     } else {
@@ -111,61 +154,44 @@ export default function CouponsMain({ setVisible, visible }: ICouponMainProps) {
   }, [data, isEditing.bool]);
 
   useEffect(() => {
-    let filteredCoupons: ICoupon[];
+    fetch();
+  }, []);
 
-    if (selectedStatuses.length > 0) {
-      const enabledSelected = selectedStatuses.some(
-        (status: string) => status === 'enabled'
-      );
-      const disabledSelected = selectedStatuses.some(
-        (status: string) => status === 'disabled'
-      );
-      const bothEnabledAndDisabled = enabledSelected && disabledSelected;
-
-      filteredCoupons = coupons.filter((coupon) =>
-        selectedStatuses.some((status) =>
-          status === 'all'
-            ? true
-            : enabledSelected
-              ? coupon.enabled
-              : disabledSelected
-                ? !coupon.enabled
-                : bothEnabledAndDisabled
-        )
-      );
-      setCoupons(filteredCoupons);
-    } else {
-      if (data?.coupons) {
-        setCoupons(data.coupons);
-      }
-    }
-  }, [selectedStatuses]);
   return (
     <div className="p-3">
-      <CouponTable
-        data={coupons}
+      <Table
+        columns={COUPONS_TABLE_COLUMNS({ menuItems })}
+        data={data?.coupons || (loading ? generateDummyCoupons(): [])}
+        selectedData={selectedData}
+        setSelectedData={(e) => setSelectedData(e)}
         loading={loading}
+        header={
+          <CouponTableHeader
+            globalFilterValue={globalFilterValue}
+            onGlobalFilterChange={(e) => setGlobalFilterValue(e.target.value)}
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
+          />
+        }
         filters={filters}
-        visible={visible}
-        isDeleting={isDeleting}
-        globalFilterValue={globalFilterValue}
-        statusOptions={statusOptions}
-        selectedStatuses={selectedStatuses}
-        setCoupons={setCoupons}
-        onGlobalFilterChange={onGlobalFilterChange}
-        setIsEditing={setIsEditing}
-        setSelectedStatuses={setSelectedStatuses}
-        setIsDeleting={setIsDeleting}
-        setVisible={setVisible}
       />
-      <CouponForm
-        coupons={coupons}
-        isEditing={isEditing}
-        visible={visible}
-        handleAddCouponLocally={handleAddCouponLocally}
-        setCoupons={setCoupons}
-        setIsEditing={setIsEditing}
-        setVisible={setVisible}
+      <DeleteDialog
+        onConfirm={deleteItem}
+        onHide={() =>
+          setIsDeleting({
+            bool: false,
+            data: {
+              __typename: '',
+              _id: '',
+              discount: 0,
+              enabled: false,
+              title: '',
+            },
+          })
+        }
+        visible={isDeleting.bool}
+        loading={deleteCouponLoading}
+        message="Are you sure to delete the coupon?"
       />
     </div>
   );

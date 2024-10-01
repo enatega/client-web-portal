@@ -20,12 +20,12 @@ const DeleteDialog = ({
         label="No"
         icon="pi pi-times"
         onClick={onHide}
-        className="border text-black px-5 h-9 border-gray-300 rounded"
+        className="h-9 rounded border border-gray-300 px-5 text-black"
       />
       <CustomButton
         loading={loading}
         label="Confirm"
-        className="bg-red-500 px-4 h-9 text-white border-gray-300 rounded"
+        className="h-9 rounded border-gray-300 bg-red-500 px-4 text-white"
         icon="pi pi-check"
         onClick={onConfirm}
       />
