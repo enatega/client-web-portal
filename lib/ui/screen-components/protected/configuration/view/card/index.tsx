@@ -11,11 +11,8 @@ const ConfigCard = ({
   toggleValue,
   toggleOnChange = () => {},
 }: IConfigCardComponentProps) => {
-  // Form Submission Email
-  // SendGrid
-  // Web Configuration
   return (
-    <div className="flex w-full flex-col overflow-hidden rounded-lg border">
+    <div className="flex w-full sm:w-2/3 mx-auto flex-col overflow-hidden rounded-lg border">
       {/* header */}
       <div className="flex items-center justify-between bg-[#F4F4F5] p-4">
         <span className="select-none text-lg font-bold">{cardTitle}</span>

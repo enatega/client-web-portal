@@ -12,6 +12,7 @@ import { PrimeReactProvider } from 'primereact/api';
 // Providers
 import { LayoutProvider } from '@/lib/context/layout.context';
 import { SidebarProvider } from '@/lib/context/sidebar.context';
+import { UserProvider } from '@/lib/context/user-context';
 
 // Service
 
@@ -25,7 +26,20 @@ import { useSetupApollo } from '@/lib/hooks/useSetApollo';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './global.css';
+import withPermissionsGuard from '@/lib/ui/guards/PermissionsGuard';
 const inter = Inter({ subsets: ['latin'] });
+
+const ProtectedLayout = withPermissionsGuard(
+  ({ children }: { children: React.ReactNode }) => {
+    return (
+      <LayoutProvider>
+        <SidebarProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </SidebarProvider>
+      </LayoutProvider>
+    );
+  }
+);
 
 export default function RootLayout({
   children,
@@ -39,6 +53,7 @@ export default function RootLayout({
   const value = {
     ripple: true,
   };
+
   return (
     <html lang="en">
       <head>
@@ -49,11 +64,9 @@ export default function RootLayout({
         <PrimeReactProvider value={value}>
           <ApolloProvider client={client}>
             <ConfigurationProvider>
-              <LayoutProvider>
-                <SidebarProvider>
-                  <ToastProvider>{children}</ToastProvider>
-                </SidebarProvider>
-              </LayoutProvider>
+              <UserProvider>
+                <ProtectedLayout>{children}</ProtectedLayout>
+              </UserProvider>
             </ConfigurationProvider>
           </ApolloProvider>
         </PrimeReactProvider>

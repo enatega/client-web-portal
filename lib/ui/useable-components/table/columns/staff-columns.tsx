@@ -14,7 +14,7 @@ export const STAFF_TABLE_COLUMNS = ({
   return [
     { headerName: 'Name', propertyName: 'name' },
     { headerName: 'Email', propertyName: 'email' },
-    { headerName: 'Password', propertyName: 'password' },
+    { headerName: 'Password', propertyName: 'plainPassword' },
     { headerName: 'Phone', propertyName: 'phone' },
     // ? Should this be added as it will make table overflow on normal screens
     // {

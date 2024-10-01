@@ -16,7 +16,7 @@ import CurrencyAddForm from '../../add-form/currency';
 
 const ConfigMain = () => {
   return (
-    <div className="space-y-6 p-3">
+    <div className="space-y-6 flex  flex-col  p-3">
       <NodeMailerAddForm />
       <StripeAddForm />
       <PayPalAddForm />
