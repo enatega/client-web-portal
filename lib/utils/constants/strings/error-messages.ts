@@ -156,5 +156,6 @@ export const FoodErrors: IFoodErrors = {
 export const VariationErrors: IVariationErrors = {
   title: ["Required"],
   discount: ["Required"],
-  price: ["Required",'Minimum value must be greater than 0']
+  price: ["Required",'Minimum value must be greater than 0'],
+  addons: ["Required",'Addons field must have at least 1 items']
 }

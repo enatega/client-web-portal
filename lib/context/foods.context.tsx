@@ -23,7 +23,7 @@ export const FoodsProvider = ({ children }: IFoodProvider) => {
   const [foodContextData, setFoodContextData] =
     useState<IFoodContextPropData | null>({
       food: {
-        _id: null,
+        _id: "",
         data: {} as IFoodGridItem,
         variations: []
       },
@@ -47,7 +47,7 @@ export const FoodsProvider = ({ children }: IFoodProvider) => {
     onFoodFormVisible(false);
     onSetFoodContextData({
       food: {
-        _id: null,
+        _id: "",
         data: {} as IFoodGridItem,
         variations:[]
       },

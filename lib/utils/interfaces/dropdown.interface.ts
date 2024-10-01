@@ -7,6 +7,11 @@ interface ISelectionComponentProps extends IGlobalComponentProps {
   isLoading?: boolean;
 }
 
+export interface IDropdownExtraButton {
+  onChange: () => void;
+  title: string;
+}
+
 export interface IMultiSelectComponentProps extends ISelectionComponentProps {
   name: string;
   optionLabel?: string;
@@ -18,6 +23,7 @@ export interface IMultiSelectComponentProps extends ISelectionComponentProps {
   options: IDropdownSelectItem[];
   dropDownIcon?: IconDefinition;
   onChange?: (selected: IDropdownSelectItem[]) => void;
+  extraFooterButton?: IDropdownExtraButton
 }
 
 export interface IDropdownComponentProps extends ISelectionComponentProps {
@@ -28,8 +34,9 @@ export interface IDropdownComponentProps extends ISelectionComponentProps {
   showLabel?: boolean;
   invalid?: boolean;
   filter?: boolean;
-  loading?: boolean;
+
   selectedItem: IDropdownSelectItem | null;
   setSelectedItem: (key: string, item: IDropdownSelectItem) => void;
   options: IDropdownSelectItem[];
+  extraFooterButton?: IDropdownExtraButton
 }

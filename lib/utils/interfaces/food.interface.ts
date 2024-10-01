@@ -12,7 +12,7 @@ import { IProvider } from './layout.interface';
 // Context
 export interface IFoodContextPropData {
   food?: {
-    _id: IDropdownSelectItem | null;
+    _id: string;
     data: IFoodGridItem
     variations: IVariationForm[]
   };
@@ -50,7 +50,6 @@ export interface IFoodMainComponentsProps extends IGlobalComponentProps {
 export interface IFoodDetailsComponentProps
   extends IGlobalComponentProps {
   stepperProps?: IStepperFormProps;
-  categoryDropdown: IDropdownSelectItem[];
 }
 export interface IFoodVariationsAddRestaurantComponentProps
   extends IGlobalComponentProps {
@@ -68,15 +67,16 @@ export interface IFoodGridItem {
   description: string;
   category: IDropdownSelectItem | null,
   image: string;
+  variations?: IVariation[]
 }
 
-export interface IVariation {
+export interface IVariation  {
   _id: string;
   title: string;
   price: number;
   discounted: number;
   addons: string[];
-  __typename: string;
+  __typename?: string;
 }
 
 export interface IFood {
