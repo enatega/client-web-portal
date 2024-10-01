@@ -8,7 +8,7 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { CustomProgressIndicatorComponentProps } from '@/lib/utils/interfaces';
 
 const CustomLoader: React.FC<CustomProgressIndicatorComponentProps> = ({
-  size = '30px',
+  size = '20px',
   strokeWidth = '5', // Changed to a static color (white)
   animationDuration = '.5s',
 }) => {
