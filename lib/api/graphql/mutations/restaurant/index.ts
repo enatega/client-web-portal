@@ -32,6 +32,23 @@ export const CREATE_RESTAURANT = gql`
   }
 `;
 
+// Delete
+export const DELETE_RESTAURANT = gql`
+  mutation DeleteRestaurant($id: String!) {
+    deleteRestaurant(id: $id) {
+      _id
+      isActive
+    }
+  }
+`;
+
+export const HARD_DELETE_RESTAURANT = gql`
+  mutation HardDeleteRestaurant($id: String!) {
+    hardDeleteRestaurant(id: $id)
+  }
+`;
+
+
 export const UPDATE_DELIVERY_BOUNDS_AND_LOCATION = gql`
   mutation updateDeliveryBoundsAndLocation(
     $id: ID!
@@ -94,3 +111,5 @@ export const EDIT_RESTAURANT = `mutation EditRestaurant($restaurantInput:Restaur
     shopType
   }
 }`;
+
+

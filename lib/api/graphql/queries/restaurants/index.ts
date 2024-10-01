@@ -60,15 +60,6 @@ export const GET_RESTAURANTS_BY_OWNER = gql`
   }
 `;
 
-// Delete
-export const DELETE_RESTAURANT = gql`
-  mutation DeleteRestaurant($id: String!) {
-    deleteRestaurant(id: $id) {
-      _id
-      isActive
-    }
-  }
-`;
 
 export const GET_RESTAURANT_DELIVERY_ZONE_INFO = gql`
   query RestaurantDeliveryZoneInfo($id: ID!) {
