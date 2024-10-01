@@ -15,6 +15,7 @@ import { IZoneErrors } from '../../interfaces/forms/zone.form.interface';
 import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
 import { ICuisineErrors } from '../../interfaces/forms/cuisine.form.interface';
 import { ICouponErrors } from '../../interfaces/forms/coupon.form.interface';
+import { INotificationErrors } from '../../interfaces/forms/notification.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -140,4 +141,8 @@ export const CouponErrors: ICouponErrors = {
   title: ['Required'],
   discount: ['Required'],
   enabled: ['Required'],
+};
+export const NotificationErrors: INotificationErrors = {
+  title: ['Required'],
+  body: ['Required'],
 };

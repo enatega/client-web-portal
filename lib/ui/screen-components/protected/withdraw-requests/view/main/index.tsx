@@ -87,9 +87,7 @@ export default function WithdrawRequestsMain() {
       showToast({
         type: 'error',
         title: 'Update Withdraw Request',
-        message:
-          err?.cause?.message ||
-          'Failed to update the request',
+        message: err?.cause?.message || 'Failed to update the request',
       });
     },
   });

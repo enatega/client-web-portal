@@ -93,8 +93,7 @@ export default function DispatchMain() {
       showToast({
         type: 'error',
         message:
-          err.cause?.message||
-          'An error occured while updating the status',
+          err.cause?.message || 'An error occured while updating the status',
         title: 'Edit Order Status',
       }),
     onCompleted: () => {
@@ -181,10 +180,10 @@ export default function DispatchMain() {
     });
   };
   // order subscription comp
-  const OrderSubscription = ({rowData}:{rowData:IActiveOrders})=>{
-    useOrderSubscription(rowData)
-    return  (<p>{rowData.deliveryAddress.deliveryAddress}</p>)
-  }
+  const OrderSubscription = ({ rowData }: { rowData: IActiveOrders }) => {
+    useOrderSubscription(rowData);
+    return <p>{rowData.deliveryAddress.deliveryAddress}</p>;
+  };
 
   // status options
   const actionStatusOptions = useMemo(
@@ -301,7 +300,7 @@ export default function DispatchMain() {
     {
       propertyName: 'deliveryAddress.deliveryAddress',
       headerName: 'Order Information',
-     body:(rowData:IActiveOrders)=>(<OrderSubscription rowData={rowData} />)
+      body: (rowData: IActiveOrders) => <OrderSubscription rowData={rowData} />,
     },
     {
       propertyName: 'restaurant.name',
