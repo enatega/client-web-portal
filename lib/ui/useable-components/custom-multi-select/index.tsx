@@ -2,10 +2,16 @@
 import { IMultiSelectComponentProps } from '@/lib/utils/interfaces';
 
 // Prime React
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MultiSelect, MultiSelectChangeEvent } from 'primereact/multiselect';
+
+// UI Components
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
+import TextIconClickable from '../text-icon-clickable';
+
+// Icons
+import { faAdd } from '@fortawesome/free-solid-svg-icons/faAdd';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 
 const CustomMultiSelectComponent = ({
   name,
@@ -17,6 +23,7 @@ const CustomMultiSelectComponent = ({
   dropDownIcon,
   isLoading = false,
   onChange,
+  extraFooterButton,
   ...props
 }: IMultiSelectComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
@@ -31,8 +38,19 @@ const CustomMultiSelectComponent = ({
     const length = selectedItems ? selectedItems.length : 0;
 
     return (
-      <div className="px-3 py-2">
-        <b>{length}</b> item{length > 1 ? 's' : ''} selected.
+      <div className='flex justify-between space-x-2'>
+
+        {extraFooterButton?.title ? <TextIconClickable
+          className="w-full h-fit rounded  text-black"
+          icon={faAdd}
+          iconStyles={{ color: 'black' }}
+          title={`${extraFooterButton.title} (${length} Selected)`}
+          onClick={extraFooterButton.onChange}
+        /> : <div className="px-3 py-2">
+          <b>{length}</b> item{length > 1 ? 's' : ''} selected.
+        </div>
+
+        }
       </div>
     );
   };

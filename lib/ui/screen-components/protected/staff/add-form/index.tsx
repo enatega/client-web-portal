@@ -119,7 +119,7 @@ export default function StaffAddForm({
       visible={isAddStaffVisible}
       position={position}
       onHide={onHide}
-      className="w-full sm:w-[450px]"
+      className="w-full sm:w-[600px]"
     >
       <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">
