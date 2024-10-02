@@ -30,7 +30,7 @@ const AmplitudeAddForm = () => {
   const { AMPLITUDE_API_KEY_WEB, AMPLITUDE_API_KEY_APP } = useConfiguration();
   const { showToast } = useToast();
 
-  let initialValues = {
+  const initialValues = {
     webAmplitudeApiKey: AMPLITUDE_API_KEY_WEB || '',
     appAmplitudeApiKey: AMPLITUDE_API_KEY_APP || '',
   };

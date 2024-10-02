@@ -104,7 +104,7 @@ export const VendorProvider = ({ children }: IProvider) => {
     onVendorReponseFetchCompleted();
   }, [vendorResponse?.data]);
 
-  let value: IVendorContextProps = {
+  const value: IVendorContextProps = {
     vendorFormVisible,
     onSetVendorFormVisible,
     vendorId,

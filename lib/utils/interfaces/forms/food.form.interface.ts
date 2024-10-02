@@ -5,7 +5,7 @@ export interface IFoodErrors {
   title: string[];
   description: string[];
   image: string[];
-  category: string[]
+  category: string[];
 }
 
 export interface IFoodDetailsForm {
@@ -13,5 +13,5 @@ export interface IFoodDetailsForm {
   title: string;
   description: string;
   image: string;
-  category: IDropdownSelectItem | null
+  category: IDropdownSelectItem | null;
 }

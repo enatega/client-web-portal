@@ -2,9 +2,7 @@ import { IGlobalComponentProps } from '../global.interface';
 import { IProvider } from '../layout.interface';
 import { IQueryResult } from '@/lib/utils/interfaces';
 
-import {
-  IStepperFormProps,
-} from '../global.interface';
+import { IStepperFormProps } from '../global.interface';
 
 export interface IUpdateProfileProps extends IGlobalComponentProps {
   stepperProps?: IStepperFormProps;
@@ -32,11 +30,11 @@ export interface IRestaurantData extends IGlobalComponentProps {
   shopType: string;
   cuisines: string;
   location: {
-    coordinates : number[]
-  }
-  deliveryBounds : {
-    coordinates : [[number]]
-  }
+    coordinates: number[];
+  };
+  deliveryBounds: {
+    coordinates: [[number]];
+  };
 }
 
 export interface IRestaurantProfileProps extends IGlobalComponentProps {
@@ -60,7 +58,6 @@ export interface IProfileContextData extends IGlobalComponentProps {
   onActiveStepChange: (activeStep: number) => void;
   refetchRestaurantProfile: () => Promise<void>; // Add this line
 }
-
 
 export interface IEditRestaurant extends IGlobalComponentProps {
   _id: string;

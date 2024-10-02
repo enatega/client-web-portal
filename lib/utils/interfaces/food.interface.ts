@@ -8,13 +8,12 @@ import {
 } from './global.interface';
 import { IProvider } from './layout.interface';
 
-
 // Context
 export interface IFoodContextPropData {
   food?: {
     _id: string;
-    data: IFoodGridItem
-    variations: IVariationForm[]
+    data: IFoodGridItem;
+    variations: IVariationForm[];
   };
   isEditing?: boolean;
 }
@@ -31,7 +30,6 @@ export interface IFoodContextProps {
 
 export interface IFoodProvider extends IProvider {}
 
-
 ///////////
 export interface IFoodHeaderProps extends IGlobalComponentProps {
   setIsAddFoodVisible: (visible: boolean) => void;
@@ -42,13 +40,10 @@ export interface IFoodAddFormComponentProps extends IGlobalComponentProps {
   position?: TSideBarFormPosition;
 }
 
-export interface IFoodMainComponentsProps extends IGlobalComponentProps {
-}
-
+export interface IFoodMainComponentsProps extends IGlobalComponentProps {}
 
 // Components
-export interface IFoodDetailsComponentProps
-  extends IGlobalComponentProps {
+export interface IFoodDetailsComponentProps extends IGlobalComponentProps {
   stepperProps?: IStepperFormProps;
 }
 export interface IFoodVariationsAddRestaurantComponentProps
@@ -65,12 +60,12 @@ export interface IFoodGridItem {
   _id: string;
   title: string;
   description: string;
-  category: IDropdownSelectItem | null,
+  category: IDropdownSelectItem | null;
   image: string;
-  variations?: IVariation[]
+  variations?: IVariation[];
 }
 
-export interface IVariation  {
+export interface IVariation {
   _id: string;
   title: string;
   price: number;

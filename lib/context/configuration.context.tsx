@@ -97,7 +97,7 @@ export const ConfigurationProvider: React.FC<IConfigurationProviderProps> = ({
 
   // Handlers
   const onFetchConfiguration = () => {
-    let configuration: IConfiguration | undefined =
+    const configuration: IConfiguration | undefined =
       loading || error || !data
         ? {
             _id: '',

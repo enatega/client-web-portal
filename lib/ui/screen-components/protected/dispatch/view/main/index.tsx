@@ -54,13 +54,13 @@ export default function DispatchMain() {
     fetchActiveOrders();
   }, []);
 
-
   return (
     <div className="p-3">
       <Table
         columns={DISPATCH_TABLE_COLUMNS()}
         data={
-          active_orders_data?.getActiveOrders || (loading ? generateDummyDispatchOrders() : [])
+          active_orders_data?.getActiveOrders ||
+          (loading ? generateDummyDispatchOrders() : [])
         }
         loading={loading}
         selectedData={selectedData}

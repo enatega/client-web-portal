@@ -4,7 +4,6 @@
 import Image from 'next/image';
 import { useContext, useState } from 'react';
 
-
 // Context
 import { ToastContext } from '@/lib/context/toast.context';
 
@@ -17,9 +16,8 @@ import CustomInputSwitch from '../../custom-input-switch';
 // Interfaces
 import { IActionMenuProps, IRestaurantResponse } from '@/lib/utils/interfaces';
 
-
 // GraphQL Queries and Mutations
-import { DELETE_RESTAURANT, } from '@/lib/api/graphql';
+import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 
 // Components
 import ActionMenu from '../../action-menu';
@@ -50,7 +48,6 @@ export const RESTAURANT_TABLE_COLUMNS = ({
     },
     onError,
   });
-
 
   // Handle checkbox change
   const onHandleRestaurantStatusChange = async (
@@ -143,7 +140,9 @@ export const RESTAURANT_TABLE_COLUMNS = ({
     {
       headerName: 'Actions',
       propertyName: 'actions',
-      body: (rowData: IRestaurantResponse) => <ActionMenu items={menuItems} data={rowData} />,
+      body: (rowData: IRestaurantResponse) => (
+        <ActionMenu items={menuItems} data={rowData} />
+      ),
     },
   ];
 };

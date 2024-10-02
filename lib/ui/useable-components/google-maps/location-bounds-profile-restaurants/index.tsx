@@ -70,8 +70,7 @@ const UpdateRestaurantLocationBounds: React.FC<
   ICustomGoogleMapsLocationBoundsComponentProps
 > = ({ onStepChange }) => {
   // Context
-  const {setIsUpdateProfileVisible } =
-    useContext(ProfileContext);
+  const { setIsUpdateProfileVisible } = useContext(ProfileContext);
   const { showToast } = useContext(ToastContext);
 
   // States

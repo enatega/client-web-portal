@@ -17,7 +17,7 @@ export interface IDropdownSelectItem {
 }
 
 export interface QueryState {
-  data: {}[];
+  data: [];
   loading: boolean;
   error?: ApolloError;
 }

@@ -17,7 +17,7 @@ import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 // Custom Components
 import RestaurantsTableHeader from '../header/table-header';
 import Table from '@/lib/ui/useable-components/table';
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import { RESTAURANT_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/restaurant-column';
 
 // Constants and Interfaces
@@ -29,19 +29,27 @@ import {
 } from '@/lib/utils/interfaces';
 
 // GraphQL Queries and Mutations
-import { GET_RESTAURANTS, HARD_DELETE_RESTAURANT } from '@/lib/api/graphql';
+import {
+  DUPLICATE_RESTAURANT,
+  GET_CLONED_RESTAURANTS,
+  GET_RESTAURANTS,
+  HARD_DELETE_RESTAURANT,
+} from '@/lib/api/graphql';
 
 // Method
 import { onUseLocalStorage } from '@/lib/utils/methods';
 import { generateDummyRestaurants } from '@/lib/utils/dummy';
+import { RestaurantsContext } from '@/lib/context/restaurants.context';
 
 export default function RestaurantsMain() {
   // Context
   const { showToast } = useContext(ToastContext);
+  const { currentTab } = useContext(RestaurantsContext);
   // Hooks
   const router = useRouter();
 
   const [deleteId, setDeleteId] = useState('');
+  const [duplicateId, setDuplicateId] = useState('');
   const [selectedProducts, setSelectedProducts] = useState<
     IRestaurantResponse[]
   >([]);
@@ -57,9 +65,10 @@ export default function RestaurantsMain() {
 
   //Query
   const { data, loading } = useQueryGQL(
-    GET_RESTAURANTS,
+    currentTab === 'Actual' ? GET_RESTAURANTS : GET_CLONED_RESTAURANTS,
     {},
     {
+      fetchPolicy: currentTab === 'Actual' ? 'cache-first' : 'network-only',
       debounceMs: 300,
     }
   ) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
@@ -75,6 +84,7 @@ export default function RestaurantsMain() {
           message: `Restaurant has been deleted successfully.`,
           duration: 2000,
         });
+        setDeleteId('');
       },
       onError: ({ networkError, graphQLErrors }: ApolloError) => {
         showToast({
@@ -86,22 +96,40 @@ export default function RestaurantsMain() {
             `Restaurant delete failed`,
           duration: 2500,
         });
+        setDeleteId('');
       },
       update: (cache: ApolloCache<unknown>): void => {
         try {
-          const cachedRestaurants = data?.restaurants ?? [];
+          const cachedRestaurants =
+            currentTab === 'Actual'
+              ? data?.restaurants
+              : data?.getClonedRestaurants;
 
-          cache.writeQuery({
-            query: GET_RESTAURANTS,
-            data: {
-              restaurants: [
-                ...cachedRestaurants.filter(
-                  (restaurant: IRestaurantResponse) =>
-                    restaurant._id !== deleteId
-                ), 
-              ],
-            },
-          });
+          if (currentTab === 'Actual') {
+            cache.writeQuery({
+              query: GET_RESTAURANTS,
+              data: {
+                restaurants: [
+                  ...(cachedRestaurants || []).filter(
+                    (restaurant: IRestaurantResponse) =>
+                      restaurant._id !== deleteId
+                  ),
+                ],
+              },
+            });
+          } else {
+            cache.writeQuery({
+              query: GET_CLONED_RESTAURANTS,
+              data: {
+                getClonedRestaurants: [
+                  ...(cachedRestaurants || []).filter(
+                    (restaurant: IRestaurantResponse) =>
+                      restaurant._id !== deleteId
+                  ),
+                ],
+              },
+            });
+          }
         } finally {
           setDeleteId('');
         }
@@ -109,12 +137,56 @@ export default function RestaurantsMain() {
     }
   );
 
+  const [duplicateRestaurant, { loading: isDuplicating }] = useMutation(
+    DUPLICATE_RESTAURANT,
+    {
+      onCompleted: () => {
+        showToast({
+          type: 'success',
+          title: 'Restaurant Duplicate',
+          message: `Restaurant has been duplicated successfully.`,
+          duration: 2000,
+        });
+        setDuplicateId('');
+      },
+      onError: ({ networkError, graphQLErrors }: ApolloError) => {
+        showToast({
+          type: 'error',
+          title: 'Restaurant Duplicate',
+          message:
+            graphQLErrors[0]?.message ??
+            networkError?.message ??
+            `Restaurant duplicate failed`,
+          duration: 2500,
+        });
+        setDuplicateId('');
+      },
+    }
+  );
+
   const handleDelete = async (id: string) => {
     try {
       hardDeleteRestaurant({ variables: { id: id } });
-    }
-    finally {
+    } catch (err) {
+      showToast({
+        type: 'error',
+        title: 'Restaurant Delete',
+        message: `Restaurant delete failed.`,
+      });
       setDeleteId('');
+    }
+  };
+
+  const handleDuplicate = async (id: string) => {
+    try {
+      duplicateRestaurant({ variables: { id: id } });
+    } catch (err) {
+      showToast({
+        type: 'error',
+        title: 'Restaurant Duplicate',
+        message: `Restaurant duplicate failed.`,
+      });
+      setDuplicateId('');
     }
   };
 
@@ -130,6 +202,14 @@ export default function RestaurantsMain() {
       },
     },
     {
+      label: 'Duplicate',
+      command: (data?: IRestaurantResponse) => {
+        if (data) {
+          setDuplicateId(data._id);
+        }
+      },
+    },
+    {
       label: 'Delete',
       command: (data?: IRestaurantResponse) => {
         if (data) {
@@ -138,6 +218,9 @@ export default function RestaurantsMain() {
       },
     },
   ];
+
+  const _restaurants =
+    currentTab === 'Actual' ? data?.restaurants : data?.getClonedRestaurants;
 
   return (
     <div className="p-3">
@@ -150,7 +233,7 @@ export default function RestaurantsMain() {
             setSelectedActions={setSelectedActions}
           />
         }
-        data={data?.restaurants || (loading ? generateDummyRestaurants() : [])}
+        data={loading ? generateDummyRestaurants() : (_restaurants ?? [])}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}
@@ -158,7 +241,7 @@ export default function RestaurantsMain() {
         loading={loading}
       />
 
-      <DeleteDialog
+      <CustomDialog
         loading={isHardDeleting}
         visible={!!deleteId}
         onHide={() => {
@@ -168,6 +251,24 @@ export default function RestaurantsMain() {
           handleDelete(deleteId);
         }}
         message="Are you sure you want to delete this restaurant?"
+      />
+
+      <CustomDialog
+        loading={isDuplicating}
+        visible={!!duplicateId}
+        onHide={() => {
+          setDuplicateId('');
+        }}
+        onConfirm={() => {
+          handleDuplicate(duplicateId);
+        }}
+        title="Duplicate Restaurant"
+        message="Are you sure you want to duplicate this restaurant?"
+        buttonConfig={{
+          primaryButtonProp: {
+            bgColor: 'bg-blue-500',
+          },
+        }}
       />
     </div>
   );

@@ -8,3 +8,5 @@ export const SHOP_TYPE = [
     code: 'restaurant',
   },
 ];
+
+export const RESTAURANTS_TABS: string[] = ['Actual', 'Cloned'];

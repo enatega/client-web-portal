@@ -48,7 +48,6 @@ export const HARD_DELETE_RESTAURANT = gql`
   }
 `;
 
-
 export const UPDATE_DELIVERY_BOUNDS_AND_LOCATION = gql`
   mutation updateDeliveryBoundsAndLocation(
     $id: ID!
@@ -107,9 +106,49 @@ export const EDIT_RESTAURANT = gql`mutation EditRestaurant($restaurantInput:Rest
         startTime
         endTime
       }
+      isAvailable
+      minimumOrder
+      tax
+      openingTimes {
+        day
+        times {
+          startTime
+          endTime
+        }
+      }
+      shopType
     }
-    shopType
   }
-}`;
+`;
 
-
+export const DUPLICATE_RESTAURANT = gql`
+  mutation DuplicateRestaurant($id: String!) {
+    duplicateRestaurant(id: $id) {
+      _id
+      name
+      image
+      username
+      orderPrefix
+      slug
+      address
+      deliveryTime
+      minimumOrder
+      isActive
+      commissionRate
+      tax
+      owner {
+        _id
+        email
+        isActive
+      }
+      shopType
+      orderId
+      logo
+      password
+      location {
+        coordinates
+      }
+      cuisines
+    }
+  }
+`;

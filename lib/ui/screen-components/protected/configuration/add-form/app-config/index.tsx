@@ -29,7 +29,7 @@ const AppConfigAddForm = () => {
   const { showToast } = useToast();
 
   // Set initial values using the useConfiguration hook
-  let initialValues = {
+  const initialValues = {
     termsAndConditions: APP_TERMS ?? '',
     privacyPolicy: APP_PRIVACY ?? '',
     testOtp: APP_TEST_OTP ? +APP_TEST_OTP : null,

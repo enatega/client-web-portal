@@ -23,9 +23,8 @@ import Table from '@/lib/ui/useable-components/table';
 import FoodsTableHeader from '../header/table-header';
 import { FOODS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/foods-columns';
 
-
 // Utilities and Data
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import { generateDummyFoods } from '@/lib/utils/dummy';
 
 // Context
@@ -38,18 +37,18 @@ import useToast from '@/lib/hooks/useToast';
 
 // GraphQL
 import { DELETE_FOOD } from '@/lib/api/graphql';
-import { GET_ADDONS_BY_RESTAURANT_ID, GET_FOODS_BY_RESTAURANT_ID } from '@/lib/api/graphql/queries';
-
+import {
+  GET_ADDONS_BY_RESTAURANT_ID,
+  GET_FOODS_BY_RESTAURANT_ID,
+} from '@/lib/api/graphql/queries';
 
 // Methods
 import { onTransformRetaurantsByIdToFoods } from '@/lib/utils/methods/transformer';
 
-
-
 export default function FoodsMain() {
   // Context
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
-  const { onSetFoodContextData, onFoodFormVisible } = useContext(FoodsContext)
+  const { onSetFoodContextData, onFoodFormVisible } = useContext(FoodsContext);
   const restaurantId = restaurantLayoutContextData?.restaurantId || '';
 
   // Hooks
@@ -58,7 +57,7 @@ export default function FoodsMain() {
   // State - Table
   const [foodItems, setFoodItems] = useState<IFoodGridItem[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState({ id: "", categoryId: "" });
+  const [deleteId, setDeleteId] = useState({ id: '', categoryId: '' });
   const [selectedProducts, setSelectedProducts] = useState<IFoodGridItem[]>([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
@@ -66,7 +65,11 @@ export default function FoodsMain() {
   });
 
   // Query
-  const { data: foodsData, loading, refetch } = useQueryGQL(
+  const {
+    data: foodsData,
+    loading,
+    refetch,
+  } = useQueryGQL(
     GET_FOODS_BY_RESTAURANT_ID,
     { id: restaurantId },
     {
@@ -87,17 +90,16 @@ export default function FoodsMain() {
     }
   ) as IQueryResult<IAddonByRestaurantResponse | undefined, undefined>;
 
-
   //Mutation
   const [deleteFood, { loading: mutationLoading }] = useMutation(DELETE_FOOD, {
     variables: {
       id: deleteId,
       restaurant: restaurantId,
-      categoryId: ""
+      categoryId: '',
     },
     onCompleted: () => {
-      refetch()
-    }
+      refetch();
+    },
     /*  refetchQueries: [
        {
          query: GET_FOODS_BY_RESTAURANT_ID,
@@ -116,25 +118,22 @@ export default function FoodsMain() {
     [data?.restaurant?.addons]
   );
 
-
-
   // Handlers
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    let _filters = { ...filters };
+    const _filters = { ...filters };
     _filters['global'].value = value;
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
   // Restaurant Profile Complete
   function onFetchFoodsByRestaurantCompleted() {
-
-    if(!foodsData) return;
+    if (!foodsData) return;
 
     setIsLoading(true);
 
     const items = onTransformRetaurantsByIdToFoods(
-      foodsData ?? {} as IFoodByRestaurantResponse
+      foodsData ?? ({} as IFoodByRestaurantResponse)
     );
 
     setFoodItems(items);
@@ -156,28 +155,36 @@ export default function FoodsMain() {
       label: 'Edit',
       command: (data?: IFoodGridItem) => {
         if (data) {
+          let _variation = null;
+          const _variations =
+            data?.variations?.map(
+              ({ discounted, ...variation }: IVariation) => {
+                _variation = { ...variation };
+                delete _variation.__typename;
 
-          let _variation = null
-          const _variations = data?.variations?.map(
-            ({ discounted, ...variation }: IVariation) => {
-              _variation = {...variation}
-              delete _variation.__typename
+                return {
+                  ..._variation,
+                  discount: discounted,
+                  addons: variation.addons.map((addonId: string) => {
+                    return (
+                      addons?.find(
+                        (addon: IDropdownSelectItem) => addon.code === addonId
+                      ) ?? {}
+                    );
+                  }),
+                };
+              }
+            ) ?? [];
 
-              return {
-                ..._variation,
-                discount: discounted,
-                addons: variation.addons.map((addonId: string) => {
-                  return addons?.find((addon: IDropdownSelectItem) => addon.code === addonId) ?? {}
-                }),
-              };
-            }
-          ) ?? [];
-
-
-
-          onSetFoodContextData({ food: { _id: data._id ?? null, data: data ?? {} as IFoodGridItem, variations: _variations }, isEditing: true })
-          onFoodFormVisible(true)
-
+          onSetFoodContextData({
+            food: {
+              _id: data._id ?? null,
+              data: data ?? ({} as IFoodGridItem),
+              variations: _variations,
+            },
+            isEditing: true,
+          });
+          onFoodFormVisible(true);
         }
       },
     },
@@ -185,17 +192,16 @@ export default function FoodsMain() {
       label: 'Delete',
       command: (data?: IFoodGridItem) => {
         if (data) {
-          setDeleteId({ id: data._id, categoryId: data?.category?.code ?? "" });
+          setDeleteId({ id: data._id, categoryId: data?.category?.code ?? '' });
         }
       },
     },
   ];
 
-
-  // Use Effect 
+  // Use Effect
   useEffect(() => {
-    onFetchFoodsByRestaurantCompleted()
-  }, [foodsData?.restaurant.categories])
+    onFetchFoodsByRestaurantCompleted();
+  }, [foodsData?.restaurant.categories]);
 
   return (
     <div className="p-3">
@@ -213,11 +219,11 @@ export default function FoodsMain() {
         loading={loading}
         columns={FOODS_TABLE_COLUMNS({ menuItems })}
       />
-      <DeleteDialog
+      <CustomDialog
         loading={mutationLoading}
         visible={!!deleteId?.id}
         onHide={() => {
-          setDeleteId({ id: "", categoryId: "" });
+          setDeleteId({ id: '', categoryId: '' });
         }}
         onConfirm={() => {
           deleteFood({
@@ -228,7 +234,7 @@ export default function FoodsMain() {
                 title: 'Delete Food',
                 message: 'Food has been deleted successfully.',
               });
-              setDeleteId({ id: "", categoryId: "" });
+              setDeleteId({ id: '', categoryId: '' });
             },
           });
         }}

@@ -1,6 +1,8 @@
 {
   "extends": ["next", "next/core-web-vitals", "eslint:recommended"],
   "globals": {
+    "cy": "readonly",
+    "it": "readonly",
     "React": "readonly",
     "google": "readonly",
     "GeolocationPosition": "readonly",
@@ -16,7 +18,7 @@
     }
   },
   "plugins": [
-    "@typescript-eslint", 
+    "@typescript-eslint",
     "prettier",
     "unused-imports" // Added plugin for unused imports
   ],
@@ -36,12 +38,17 @@
     // Remove unused variables but allow unused arguments prefixed with _
     "unused-imports/no-unused-vars": [
       "warn",
-      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+      {
+        "vars": "all",
+        "varsIgnorePattern": "^_",
+        "args": "after-used",
+        "argsIgnorePattern": "^_"
+      }
     ],
 
     // Prettier-related rules
     // "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
-    
+
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "react-hooks/exhaustive-deps": "off"
