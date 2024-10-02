@@ -31,6 +31,8 @@ export interface IRestaurantContextProps {
 
   // Context Data Management
   onSetRestaurantContextData: (data: Partial<IRestaurantContextData>) => void;
+  isRestaurantModifed: boolean;
+  setRestaurantModifed: (status: boolean) => void;
 }
 
 export interface IRestaurantContextData {

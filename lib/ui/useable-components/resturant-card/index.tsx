@@ -41,7 +41,7 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   // Hooks
   const { showToast } = useContext(ToastContext);
 
-  const { restaurantByOwnerResponse } = useContext(RestaurantContext);
+  const { restaurantByOwnerResponse, isRestaurantModifed, setRestaurantModifed } = useContext(RestaurantContext);
 
   // Hooks
   const router = useRouter();
@@ -80,6 +80,7 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
         message: `Restaurant has been marked a ${isActive ? 'in-active' : 'actie'}`,
         duration: 2000,
       });
+      setRestaurantModifed(!isRestaurantModifed);
     },
     onError: ({ networkError, graphQLErrors }: ApolloError) => {
       showToast({
