@@ -190,7 +190,7 @@ export default function AddonAddForm({
       return { label: matchedOption?.label, code: matchedOption?.code };
     });
 
-    let updated_addon = addon
+    const updated_addon = addon
       ? JSON.parse(JSON.stringify(addon))
       : ({} as IAddonForm);
     delete updated_addon.options;

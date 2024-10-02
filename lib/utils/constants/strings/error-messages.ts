@@ -105,15 +105,27 @@ export const OptionErrors: IOptionErrors = {
   _id: [],
   title: ['Required'],
   description: [],
-  price: ['Required', 'Minimum value must be greater than 0', 'Maximum price is 99999'],
+  price: [
+    'Required',
+    'Minimum value must be greater than 0',
+    'Maximum price is 99999',
+  ],
 };
 
 export const AddonsErrors: IAddonsErrors = {
   _id: [],
   title: ['Required'],
   description: [],
-  quantityMinimum: ['Required', 'Minimum value must be greater than 0', 'Maximum price is 99999'],
-  quantityMaximum: ['Required', 'Minimum value must be greater than 0', 'Maximum price is 99999'],
+  quantityMinimum: [
+    'Required',
+    'Minimum value must be greater than 0',
+    'Maximum price is 99999',
+  ],
+  quantityMaximum: [
+    'Required',
+    'Minimum value must be greater than 0',
+    'Maximum price is 99999',
+  ],
   options: ['Required', 'Option field must have at least 1 items'],
 };
 
@@ -144,18 +156,16 @@ export const CouponErrors: ICouponErrors = {
   enabled: ['Required'],
 };
 
-
-
 export const FoodErrors: IFoodErrors = {
   title: ['Required'],
   description: [],
-  image: ["Required"],
+  image: ['Required'],
   category: ['Required'],
 };
 
 export const VariationErrors: IVariationErrors = {
-  title: ["Required"],
-  discount: ["Required"],
-  price: ["Required",'Minimum value must be greater than 0'],
-  addons: ["Required",'Addons field must have at least 1 items']
-}
+  title: ['Required'],
+  discount: ['Required'],
+  price: ['Required', 'Minimum value must be greater than 0'],
+  addons: ['Required', 'Addons field must have at least 1 items'],
+};

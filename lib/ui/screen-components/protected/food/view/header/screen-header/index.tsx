@@ -10,9 +10,8 @@ import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 
 const FoodHeader = () => {
-
   // Context
-  const {onFoodFormVisible} = useContext(FoodsContext)
+  const { onFoodFormVisible } = useContext(FoodsContext);
 
   return (
     <div className="w-full flex-shrink-0 sticky top-0 bg-white z-10 shadow-sm p-3">

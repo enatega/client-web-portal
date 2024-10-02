@@ -135,7 +135,7 @@ export default function CuisinesMain({
   const onFetchCuisines = () => {
     setIsLoading(true);
     fetch();
-  }
+  };
 
   // UseEffects
   useEffect(() => {
@@ -143,7 +143,7 @@ export default function CuisinesMain({
   }, [data, isEditing.bool]);
 
   useEffect(() => {
-    onFetchCuisines()
+    onFetchCuisines();
   }, []);
 
   return (

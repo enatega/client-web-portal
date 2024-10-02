@@ -60,7 +60,6 @@ export const GET_RESTAURANTS_BY_OWNER = gql`
   }
 `;
 
-
 export const GET_RESTAURANT_DELIVERY_ZONE_INFO = gql`
   query RestaurantDeliveryZoneInfo($id: ID!) {
     getRestaurantDeliveryZoneInfo(id: $id) {

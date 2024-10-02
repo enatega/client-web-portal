@@ -9,7 +9,11 @@ import { ApolloError, useMutation } from '@apollo/client';
 import { Avatar } from 'primereact/avatar';
 
 // Icons
-import { faLocationDot, faStore, faTrash } from '@fortawesome/free-solid-svg-icons';
+import {
+  faLocationDot,
+  faStore,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 // Interfaces
 import { IRestaurantCardProps } from '@/lib/utils/interfaces';
@@ -37,36 +41,37 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   // Hooks
   const { showToast } = useContext(ToastContext);
 
-  const {
-    restaurantByOwnerResponse,
-  } = useContext(RestaurantContext);
+  const { restaurantByOwnerResponse } = useContext(RestaurantContext);
 
   // Hooks
   const router = useRouter();
 
   // API
-  const [hardDeleteRestaurant, { loading: isHardDeleting }] = useMutation(HARD_DELETE_RESTAURANT, {
-    onCompleted: () => {
-      showToast({
-        type: 'success',
-        title: 'Restaurant Delete',
-        message: `Restaurant has been deleted successfully.`,
-        duration: 2000,
-      });
-      restaurantByOwnerResponse.refetch()
-    },
-    onError: ({ networkError, graphQLErrors }: ApolloError) => {
-      showToast({
-        type: 'error',
-        title: 'Restaurant Delete',
-        message:
-          graphQLErrors[0]?.message ??
-          networkError?.message ??
-          `Restaurant delete failed`,
-        duration: 2500,
-      });
-    },
-  });
+  const [hardDeleteRestaurant, { loading: isHardDeleting }] = useMutation(
+    HARD_DELETE_RESTAURANT,
+    {
+      onCompleted: () => {
+        showToast({
+          type: 'success',
+          title: 'Restaurant Delete',
+          message: `Restaurant has been deleted successfully.`,
+          duration: 2000,
+        });
+        restaurantByOwnerResponse.refetch();
+      },
+      onError: ({ networkError, graphQLErrors }: ApolloError) => {
+        showToast({
+          type: 'error',
+          title: 'Restaurant Delete',
+          message:
+            graphQLErrors[0]?.message ??
+            networkError?.message ??
+            `Restaurant delete failed`,
+          duration: 2500,
+        });
+      },
+    }
+  );
   const [deleteRestaurant, { loading }] = useMutation(DELETE_RESTAURANT, {
     onCompleted: () => {
       showToast({
@@ -105,7 +110,7 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
 
   const handleDelete = async () => {
     hardDeleteRestaurant({ variables: { id: _id } });
-  }
+  };
 
   return (
     <div className="flex flex-col rounded-lg border-2 border-[#F4F4F5] bg-white shadow-md">
@@ -134,14 +139,21 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
             text={shopType}
           />
         </div>
-        <div className='flex space-x-2'>
+        <div className="flex space-x-2">
           <CustomInputSwitch
             loading={loading}
             isActive={isActive}
             onChange={handleCheckboxChange}
-
           />
-          {(isHardDeleting) ? <CustomLoader size='20px' /> : <FontAwesomeIcon icon={faTrash} className='cursor-pointer' onClick={handleDelete} />}
+          {isHardDeleting ? (
+            <CustomLoader size="20px" />
+          ) : (
+            <FontAwesomeIcon
+              icon={faTrash}
+              className="cursor-pointer"
+              onClick={handleDelete}
+            />
+          )}
         </div>
       </div>
       <div className="mb-4 flex items-center gap-x-2 truncate px-4 text-sm text-gray-500">

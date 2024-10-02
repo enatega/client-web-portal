@@ -372,7 +372,6 @@ export default function UpdateRestaurantDetails({
                           minFractionDigits={2}
                           maxFractionDigits={2}
                           name="salesTax"
-                      
                           showLabel={true}
                           value={values.salesTax}
                           onChange={setFieldValue}

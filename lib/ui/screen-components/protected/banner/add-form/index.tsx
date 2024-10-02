@@ -37,7 +37,7 @@ const BannersAddForm = ({
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
 
-  let RESTAURANT_NAMES =
+  const RESTAURANT_NAMES =
     data?.restaurants.map((v) => {
       return { label: v.name, code: v.name };
     }) || [];
@@ -71,7 +71,7 @@ const BannersAddForm = ({
   // Hooks
   const { showToast } = useToast();
 
-  let mutation = banner ? EDIT_BANNER : CREATE_BANNER;
+  const mutation = banner ? EDIT_BANNER : CREATE_BANNER;
   const [mutate, { loading: mutationLoading }] = useMutation(mutation, {
     refetchQueries: [{ query: GET_BANNERS }],
   });

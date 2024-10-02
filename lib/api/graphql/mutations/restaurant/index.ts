@@ -48,7 +48,6 @@ export const HARD_DELETE_RESTAURANT = gql`
   }
 `;
 
-
 export const UPDATE_DELIVERY_BOUNDS_AND_LOCATION = gql`
   mutation updateDeliveryBoundsAndLocation(
     $id: ID!
@@ -111,5 +110,3 @@ export const EDIT_RESTAURANT = `mutation EditRestaurant($restaurantInput:Restaur
     shopType
   }
 }`;
-
-

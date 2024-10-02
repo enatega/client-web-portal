@@ -161,7 +161,7 @@ export default function CouponsMain({
     <div className="p-3">
       <Table
         columns={COUPONS_TABLE_COLUMNS({ menuItems })}
-        data={data?.coupons || (loading ? generateDummyCoupons(): [])}
+        data={data?.coupons || (loading ? generateDummyCoupons() : [])}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e)}
         loading={loading}

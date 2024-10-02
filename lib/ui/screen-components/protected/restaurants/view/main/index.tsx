@@ -98,7 +98,7 @@ export default function RestaurantsMain() {
                 ...cachedRestaurants.filter(
                   (restaurant: IRestaurantResponse) =>
                     restaurant._id !== deleteId
-                ), 
+                ),
               ],
             },
           });
@@ -112,8 +112,7 @@ export default function RestaurantsMain() {
   const handleDelete = async (id: string) => {
     try {
       hardDeleteRestaurant({ variables: { id: id } });
-    }
-    finally {
+    } finally {
       setDeleteId('');
     }
   };

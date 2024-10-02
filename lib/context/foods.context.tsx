@@ -17,15 +17,14 @@ export const FoodsContext = createContext({} as IFoodContextProps);
 
 export const FoodsProvider = ({ children }: IFoodProvider) => {
   // Form Visibility
-  const [isFoodFormVisible, setFoodFormVisible] =
-    useState<boolean>(false);
+  const [isFoodFormVisible, setFoodFormVisible] = useState<boolean>(false);
 
   const [foodContextData, setFoodContextData] =
     useState<IFoodContextPropData | null>({
       food: {
-        _id: "",
+        _id: '',
         data: {} as IFoodGridItem,
-        variations: []
+        variations: [],
       },
       isEditing: false,
     });
@@ -47,24 +46,21 @@ export const FoodsProvider = ({ children }: IFoodProvider) => {
     onFoodFormVisible(false);
     onSetFoodContextData({
       food: {
-        _id: "",
+        _id: '',
         data: {} as IFoodGridItem,
-        variations:[]
+        variations: [],
       },
-      
+
       isEditing: false,
-    })
+    });
   };
 
-  const onSetFoodContextData = (
-    data: Partial<IFoodContextPropData>
-  ) => {
+  const onSetFoodContextData = (data: Partial<IFoodContextPropData>) => {
     setFoodContextData((prevData) => ({
       ...prevData,
       ...data,
     }));
   };
-
 
   const value: IFoodContextProps = {
     // Form Visibility
@@ -81,8 +77,6 @@ export const FoodsProvider = ({ children }: IFoodProvider) => {
   };
 
   return (
-    <FoodsContext.Provider value={value}>
-      {children}
-    </FoodsContext.Provider>
+    <FoodsContext.Provider value={value}>{children}</FoodsContext.Provider>
   );
 };
