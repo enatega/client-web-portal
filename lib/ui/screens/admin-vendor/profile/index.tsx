@@ -14,12 +14,10 @@ export default function ProfileScreen() {
   useContext(ProfileContext);
 
   return (
-    <div className="flex flex-col p-3 h-screen">
-      <div className="flex-grow overflow-y-auto">
+    <div className="screen-container p-4">
         <ProfileHeader />
         <RestaurantMain />
-        
-      </div>
+      
       {isUpdateProfileVisible && <UpdateRestaurantsProfileForm />}
       
     </div>
