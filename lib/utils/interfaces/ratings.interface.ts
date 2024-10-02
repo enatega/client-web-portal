@@ -1,18 +1,13 @@
 import { IGlobalComponentProps } from './global.interface';
 
-export interface IProfileCardProps extends IGlobalComponentProps {
-  name: string;
-  jobTitle: string;
-  rating: number;
-  imageSrc: string;
-  reviewContent: string;
+export interface IProfileCardProps extends IRating {
   orderId: string;
   createdAt: string;
 }
 
 export interface IRating extends IGlobalComponentProps {
   name: string;
-  jobTitle: string;
+  orderedItems: string;
   rating: number;
   imageSrc: string;
   reviewContent: string;
@@ -45,6 +40,6 @@ export interface ICustomDataViewProps extends IGlobalComponentProps {
   header: React.ReactNode;
 }
 
-export interface IItems extends IGlobalComponentProps {
+export interface IItem extends IGlobalComponentProps {
   title: string;
 }

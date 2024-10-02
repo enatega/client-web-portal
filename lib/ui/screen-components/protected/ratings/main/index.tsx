@@ -5,7 +5,7 @@ import CustomDataView from '@/lib/ui/useable-components/data-view';
 import RatingsHeaderDataView from '../header/table-header';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import RatingSkeleton from '@/lib/ui/useable-components/custom-skeletons/rating.card.skeleton';
-import { IItems, IReview } from '@/lib/utils/interfaces';
+import { IItem, IReview } from '@/lib/utils/interfaces';
 
 const RatingMain: React.FC = () => {
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
@@ -35,10 +35,10 @@ const RatingMain: React.FC = () => {
     if (searchTerm) {
       filtered = filtered.filter(
         (review: IReview) =>
-          review.order.user.name
+          review.order?.user?.name
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) ||
-          review.order.items.some((item: IItems) =>
+          review.order?.items?.some((item: IItem) =>
             item.title.toLowerCase().includes(searchTerm.toLowerCase())
           )
       );
@@ -73,7 +73,7 @@ const RatingMain: React.FC = () => {
 
   return (
     <div className="p-3">
-      {(!data || !data.reviews || data.reviews.length === 0 || filteredReviews.length === 0) ? (
+      {(!data || !data.reviews || data.reviews.length === 0) ? (
         <div className="text-center">
           <p className="mt-8 text-gray-600">No records found</p>
         </div>
