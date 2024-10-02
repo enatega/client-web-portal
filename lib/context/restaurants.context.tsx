@@ -48,7 +48,6 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
     setActiveIndex(0);
   };
 
-
   // Vendor
   const onSetRestaurantsContextData = (vendor: IRestaurantsContextPropData) => {
     setRestaurantsContextData(vendor);

@@ -12,8 +12,6 @@ const ProfileHeader: React.FC = () => {
     profileContext?.handleUpdateProfile();
   };
 
-
-
   return (
     <div className="w-full flex-shrink-0 sticky top-0 bg-white z-10 shadow-sm p-3">
       <div className="flex w-full justify-between">
@@ -31,4 +29,3 @@ const ProfileHeader: React.FC = () => {
 };
 
 export default ProfileHeader;
-

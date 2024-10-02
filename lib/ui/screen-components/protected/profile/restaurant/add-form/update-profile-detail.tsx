@@ -38,7 +38,7 @@ export default function UpdateRestaurantDetails({
   stepperProps,
 }: IUpdateProfileProps) {
   const { onStepChange, order } = stepperProps ?? {
-    onStepChange: () => { },
+    onStepChange: () => {},
     order: -1,
   };
 
@@ -105,9 +105,9 @@ export default function UpdateRestaurantDetails({
         null,
       cuisines: Array.isArray(restaurantData?.cuisines)
         ? restaurantData.cuisines.map((cuisine) => ({
-          label: toTextCase(cuisine, 'title'),
-          code: cuisine,
-        }))
+            label: toTextCase(cuisine, 'title'),
+            code: cuisine,
+          }))
         : [],
       image: restaurantData?.image ?? '',
       logo: restaurantData?.logo ?? '',
@@ -452,4 +452,3 @@ export default function UpdateRestaurantDetails({
     </div>
   );
 }
-

@@ -5,7 +5,7 @@ export interface IUpdateProfileFormErrors {
   name: string[];
   username: string[];
   password: string[];
-  confirmPassword: string[]
+  confirmPassword: string[];
   address: string[];
   deliveryTime: string[];
   minOrder: string[];
@@ -34,4 +34,3 @@ export interface IUpdateProfileForm {
   email: string;
   orderprefix: string;
 }
-
