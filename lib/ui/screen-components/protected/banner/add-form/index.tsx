@@ -38,7 +38,7 @@ const BannersAddForm = ({
   }) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
 
   const RESTAURANT_NAMES =
-    data?.restaurants.map((v) => {
+    data?.restaurants?.map((v) => {
       return { label: v.name, code: v.name };
     }) || [];
 
