@@ -1,26 +1,38 @@
 // Core
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
-// Interface
+// Third-party libraries
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ApolloError, useMutation } from '@apollo/client';
+import { Avatar } from 'primereact/avatar';
+
+// Icons
+import {
+  faLocationDot,
+  faStore,
+  faTrash,
+} from '@fortawesome/free-solid-svg-icons';
+
+// Interfaces
 import { IRestaurantCardProps } from '@/lib/utils/interfaces';
 
 // Methods
 import { onUseLocalStorage } from '@/lib/utils/methods';
 
-// Icons
-import { faLocationDot, faStore } from '@fortawesome/free-solid-svg-icons';
+// GraphQL
+import { DELETE_RESTAURANT, HARD_DELETE_RESTAURANT } from '@/lib/api/graphql';
 
-// Componetn
-import { DELETE_RESTAURANT } from '@/lib/api/graphql';
+// Contexts
 import { ToastContext } from '@/lib/context/toast.context';
-import { ApolloError, useMutation } from '@apollo/client';
-import Image from 'next/image';
-import { Avatar } from 'primereact/avatar';
+import { RestaurantContext } from '@/lib/context/restaurant.context';
+
+// Components
 import CustomButton from '../button';
 import CustomInputSwitch from '../custom-input-switch';
 import TextComponent from '../text-field';
+import CustomLoader from '../custom-progress-indicator';
 
 export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   // Props
@@ -29,10 +41,37 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   // Hooks
   const { showToast } = useContext(ToastContext);
 
+  const { restaurantByOwnerResponse, isRestaurantModifed, setRestaurantModifed } = useContext(RestaurantContext);
+
   // Hooks
   const router = useRouter();
 
   // API
+  const [hardDeleteRestaurant, { loading: isHardDeleting }] = useMutation(
+    HARD_DELETE_RESTAURANT,
+    {
+      onCompleted: () => {
+        showToast({
+          type: 'success',
+          title: 'Restaurant Delete',
+          message: `Restaurant has been deleted successfully.`,
+          duration: 2000,
+        });
+        restaurantByOwnerResponse.refetch();
+      },
+      onError: ({ networkError, graphQLErrors }: ApolloError) => {
+        showToast({
+          type: 'error',
+          title: 'Restaurant Delete',
+          message:
+            graphQLErrors[0]?.message ??
+            networkError?.message ??
+            `Restaurant delete failed`,
+          duration: 2500,
+        });
+      },
+    }
+  );
   const [deleteRestaurant, { loading }] = useMutation(DELETE_RESTAURANT, {
     onCompleted: () => {
       showToast({
@@ -41,6 +80,7 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
         message: `Restaurant has been marked a ${isActive ? 'in-active' : 'actie'}`,
         duration: 2000,
       });
+      setRestaurantModifed(!isRestaurantModifed);
     },
     onError: ({ networkError, graphQLErrors }: ApolloError) => {
       showToast({
@@ -67,6 +107,10 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
         duration: 2000,
       });
     }
+  };
+
+  const handleDelete = async () => {
+    hardDeleteRestaurant({ variables: { id: _id } });
   };
 
   return (
@@ -96,11 +140,22 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
             text={shopType}
           />
         </div>
-        <CustomInputSwitch
-          loading={loading}
-          isActive={isActive}
-          onChange={handleCheckboxChange}
-        />
+        <div className="flex space-x-2">
+          <CustomInputSwitch
+            loading={loading}
+            isActive={isActive}
+            onChange={handleCheckboxChange}
+          />
+          {isHardDeleting ? (
+            <CustomLoader size="20px" />
+          ) : (
+            <FontAwesomeIcon
+              icon={faTrash}
+              className="cursor-pointer"
+              onClick={handleDelete}
+            />
+          )}
+        </div>
       </div>
       <div className="mb-4 flex items-center gap-x-2 truncate px-4 text-sm text-gray-500">
         <FontAwesomeIcon icon={faLocationDot} />

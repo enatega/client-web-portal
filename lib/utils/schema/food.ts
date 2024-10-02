@@ -6,5 +6,4 @@ export const FoodSchema = Yup.object().shape({
   description: Yup.string().min(2).max(200).nullable(),
   category: Yup.mixed<IDropdownSelectItem>().required('Required'),
   image: Yup.string().url('Invalid image URL').required('Required'),
- 
 });

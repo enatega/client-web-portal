@@ -25,6 +25,8 @@ export interface IRestaurantsContextProps {
   onClearRestaurntsData: () => void;
   restaurantsContextData: IRestaurantsContextPropData | null;
   onSetRestaurantsContextData: (data: IRestaurantsContextPropData) => void;
+  currentTab: string;
+  onSetCurrentTab: (tab: string) => void;
 }
 
 export interface IRestaurantsProvider extends IProvider {}

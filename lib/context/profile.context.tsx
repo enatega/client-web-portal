@@ -9,7 +9,9 @@ import {
 } from '../utils/interfaces';
 import { IRestaurantProfileProps } from '../utils/interfaces';
 
-export const ProfileContext = createContext<IProfileContextData>({} as IProfileContextData);
+export const ProfileContext = createContext<IProfileContextData>(
+  {} as IProfileContextData
+);
 
 // export const useProfileContext = () => {
 //   const context = useContext(ProfileContext);
@@ -33,10 +35,10 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({
     { id: restaurantId },
     {
       enabled: !!restaurantId,
-      fetchPolicy:"network-only",
+      fetchPolicy: 'network-only',
       debounceMs: 300,
       onCompleted: (data: unknown) => {
-        console.log("Profile data fetched:", data);
+        console.log('Profile data fetched:', data);
         // You can perform any actions with the fetched data here
       },
     }

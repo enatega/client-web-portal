@@ -37,7 +37,7 @@ const SentryAddForm = () => {
   } = useConfiguration();
   const { showToast } = useToast();
 
-  let initialValues = {
+  const initialValues = {
     dashboardSentryUrl: DASHBOARD_SENTRY_URL,
     webSentryUrl: WEB_SENTRY_URL,
     apiSentryUrl: API_SENTRY_URL,

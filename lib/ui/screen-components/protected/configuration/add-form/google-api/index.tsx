@@ -31,7 +31,7 @@ const GoogleApiAddForm = () => {
   const { showToast } = useToast();
 
   // Initial values for the form
-  let initialValues = {
+  const initialValues = {
     googleApiKey: GOOGLE_MAPS_KEY ?? '',
   };
 

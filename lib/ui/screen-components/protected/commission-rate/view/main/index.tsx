@@ -30,7 +30,6 @@ interface RestaurantsData {
 }
 
 export default function CommissionRateMain() {
-
   // States
   const [restaurants, setRestaurants] = useState<IRestaurantResponse[]>([]);
   const [editingRestaurantIds, setEditingRestaurantIds] = useState<Set<string>>(
@@ -55,7 +54,6 @@ export default function CommissionRateMain() {
 
   // Mutation
   const [updateCommissionMutation] = useMutation(updateCommission);
-
 
   // Handlers
   const handleSave = async (restaurantId: string) => {
@@ -147,7 +145,6 @@ export default function CommissionRateMain() {
     });
   };
 
-
   // Use Effects
   useEffect(() => {
     if (data?.restaurants) {
@@ -167,7 +164,9 @@ export default function CommissionRateMain() {
   return (
     <div className="p-3">
       <Table
-        data={loading ? generateDummyCommissionRates() : getFilteredRestaurants()}
+        data={
+          loading ? generateDummyCommissionRates() : getFilteredRestaurants()
+        }
         setSelectedData={setSelectedRestaurants}
         selectedData={selectedRestaurants}
         columns={COMMISSION_RATE_COLUMNS({

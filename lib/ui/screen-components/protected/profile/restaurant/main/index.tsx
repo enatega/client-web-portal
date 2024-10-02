@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { ProfileLogoSVG } from '@/lib/utils/assets/svgs/profile';
-import {
-  IInfoItemProps,
-} from '@/lib/utils/interfaces/profile/restaurant.profile.interface';
+import { IInfoItemProps } from '@/lib/utils/interfaces/profile/restaurant.profile.interface';
 import { Avatar } from 'primereact/avatar';
 import { ProfileContext } from '@/lib/context/profile.context';
 import RestaurantProfileSkeleton from '@/lib/ui/useable-components/custom-skeletons/restaurant.profile.skeleton';
@@ -17,8 +15,7 @@ const InfoItem: React.FC<IInfoItemProps> = ({ label, value }) => (
 
 const RestaurantMain: React.FC = () => {
   // Context
-  const { restaurantProfileResponse } =
-    useContext(ProfileContext);
+  const { restaurantProfileResponse } = useContext(ProfileContext);
   const restaurant = restaurantProfileResponse?.data?.restaurant;
 
   if (restaurantProfileResponse.loading) return <RestaurantProfileSkeleton />;
@@ -36,7 +33,7 @@ const RestaurantMain: React.FC = () => {
         <hr className="mb-6" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <InfoItem label="User Name" value={restaurant?.username} />
-          <InfoItem label="Password" value={restaurant?.password } />
+          <InfoItem label="Password" value={restaurant?.password} />
           <div className="md:row-span-4">
             <p className="text-xs text-gray-500 mb-4">Images</p>
             <div className="flex space-x-2">

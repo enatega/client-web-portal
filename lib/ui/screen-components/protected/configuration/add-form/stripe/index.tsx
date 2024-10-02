@@ -30,7 +30,7 @@ const StripeAddForm = () => {
   const { STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY } = useConfiguration();
   const { showToast } = useToast();
 
-  let initialValues = {
+  const initialValues = {
     publishableKey: STRIPE_PUBLIC_KEY,
     secretKey: STRIPE_SECRET_KEY,
   };

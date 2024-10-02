@@ -61,4 +61,3 @@ const UpdateRestaurantsProfileForm = ({
 };
 
 export default UpdateRestaurantsProfileForm;
-

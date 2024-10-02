@@ -31,6 +31,8 @@ export interface IRestaurantContextProps {
 
   // Context Data Management
   onSetRestaurantContextData: (data: Partial<IRestaurantContextData>) => void;
+  isRestaurantModifed: boolean;
+  setRestaurantModifed: (status: boolean) => void;
 }
 
 export interface IRestaurantContextData {
@@ -65,7 +67,8 @@ export interface IRestaurantResponse {
 }
 
 export interface IRestaurantsResponseGraphQL {
-  restaurants: IRestaurantResponse[];
+  restaurants?: IRestaurantResponse[];
+  getClonedRestaurants?: IRestaurantResponse[];
 }
 
 export interface IRestaurantByOwner {

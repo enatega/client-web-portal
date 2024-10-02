@@ -1,6 +1,6 @@
 // Core
 import { useMutation } from '@apollo/client';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 // Prime React
 import { FilterMatchMode } from 'primereact/api';
@@ -8,37 +8,47 @@ import { FilterMatchMode } from 'primereact/api';
 // Interface and Types
 import {
   IActionMenuItem,
+  IAddon,
+  IAddonByRestaurantResponse,
+  IDropdownSelectItem,
   // IActionMenuItem,
   IFoodByRestaurantResponse,
   IFoodGridItem,
   IQueryResult,
+  IVariation,
 } from '@/lib/utils/interfaces';
 
 // Components
 import Table from '@/lib/ui/useable-components/table';
-
+import FoodsTableHeader from '../header/table-header';
+import { FOODS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/foods-columns';
 
 // Utilities and Data
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import { generateDummyFoods } from '@/lib/utils/dummy';
 
 // Context
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import { FoodsContext } from '@/lib/context/foods.context';
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+
+// Hooks
 import useToast from '@/lib/hooks/useToast';
 
 // GraphQL
 import { DELETE_FOOD } from '@/lib/api/graphql';
-import { GET_FOODS_BY_RESTAURANT_ID } from '@/lib/api/graphql/queries';
+import {
+  GET_ADDONS_BY_RESTAURANT_ID,
+  GET_FOODS_BY_RESTAURANT_ID,
+} from '@/lib/api/graphql/queries';
 
-// Context
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
-import { FOODS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/foods-columns';
+// Methods
 import { onTransformRetaurantsByIdToFoods } from '@/lib/utils/methods/transformer';
-import FoodsTableHeader from '../header/table-header';
 
 export default function FoodsMain() {
   // Context
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
+  const { onSetFoodContextData, onFoodFormVisible } = useContext(FoodsContext);
   const restaurantId = restaurantLayoutContextData?.restaurantId || '';
 
   // Hooks
@@ -47,7 +57,7 @@ export default function FoodsMain() {
   // State - Table
   const [foodItems, setFoodItems] = useState<IFoodGridItem[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [deleteId, setDeleteId] = useState('');
+  const [deleteId, setDeleteId] = useState({ id: '', categoryId: '' });
   const [selectedProducts, setSelectedProducts] = useState<IFoodGridItem[]>([]);
   const [globalFilterValue, setGlobalFilterValue] = useState('');
   const [filters, setFilters] = useState({
@@ -55,45 +65,77 @@ export default function FoodsMain() {
   });
 
   // Query
-  const { loading } = useQueryGQL(
+  const {
+    data: foodsData,
+    loading,
+    refetch,
+  } = useQueryGQL(
     GET_FOODS_BY_RESTAURANT_ID,
     { id: restaurantId },
     {
       fetchPolicy: 'network-only',
       enabled: !!restaurantId,
-      onCompleted: onFetchFoodsByRestaurantCompleted,
       onError: onErrorFetchFoodsByRestaurant,
     }
   ) as IQueryResult<IFoodByRestaurantResponse | undefined, undefined>;
+
+  const { data } = useQueryGQL(
+    GET_ADDONS_BY_RESTAURANT_ID,
+    { id: restaurantId },
+    {
+      fetchPolicy: 'network-only',
+      enabled: !!restaurantId,
+      //  onCompleted: onFetchAddonsByRestaurantCompleted,
+      //  onError: onErrorFetchAddonsByRestaurant,
+    }
+  ) as IQueryResult<IAddonByRestaurantResponse | undefined, undefined>;
 
   //Mutation
   const [deleteFood, { loading: mutationLoading }] = useMutation(DELETE_FOOD, {
     variables: {
       id: deleteId,
       restaurant: restaurantId,
+      categoryId: '',
     },
-    refetchQueries: [
-      {
-        query: GET_FOODS_BY_RESTAURANT_ID,
-        variables: { id: restaurantId },
-      },
-    ],
+    onCompleted: () => {
+      refetch();
+    },
+    /*  refetchQueries: [
+       {
+         query: GET_FOODS_BY_RESTAURANT_ID,
+         fetchPolicy: 'network-only',
+         variables: { id: restaurantId },
+       },
+     ], */
   });
+
+  // Memoized Data
+  const addons = useMemo(
+    () =>
+      data?.restaurant?.addons.map((addon: IAddon) => {
+        return { label: addon.title, code: addon._id };
+      }),
+    [data?.restaurant?.addons]
+  );
 
   // Handlers
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    let _filters = { ...filters };
+    const _filters = { ...filters };
     _filters['global'].value = value;
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
   // Restaurant Profile Complete
-  function onFetchFoodsByRestaurantCompleted(data: unknown) {
+  function onFetchFoodsByRestaurantCompleted() {
+    if (!foodsData) return;
+
     setIsLoading(true);
+
     const items = onTransformRetaurantsByIdToFoods(
-      data as IFoodByRestaurantResponse
+      foodsData ?? ({} as IFoodByRestaurantResponse)
     );
+
     setFoodItems(items);
     setIsLoading(false);
   }
@@ -113,8 +155,36 @@ export default function FoodsMain() {
       label: 'Edit',
       command: (data?: IFoodGridItem) => {
         if (data) {
-          //setIsAddFoodVisible(true);
-          //setFood(data);
+          let _variation = null;
+          const _variations =
+            data?.variations?.map(
+              ({ discounted, ...variation }: IVariation) => {
+                _variation = { ...variation };
+                delete _variation.__typename;
+
+                return {
+                  ..._variation,
+                  discount: discounted,
+                  addons: variation.addons.map((addonId: string) => {
+                    return (
+                      addons?.find(
+                        (addon: IDropdownSelectItem) => addon.code === addonId
+                      ) ?? {}
+                    );
+                  }),
+                };
+              }
+            ) ?? [];
+
+          onSetFoodContextData({
+            food: {
+              _id: data._id ?? null,
+              data: data ?? ({} as IFoodGridItem),
+              variations: _variations,
+            },
+            isEditing: true,
+          });
+          onFoodFormVisible(true);
         }
       },
     },
@@ -122,11 +192,16 @@ export default function FoodsMain() {
       label: 'Delete',
       command: (data?: IFoodGridItem) => {
         if (data) {
-          setDeleteId(data._id ?? "");
+          setDeleteId({ id: data._id, categoryId: data?.category?.code ?? '' });
         }
       },
     },
   ];
+
+  // Use Effect
+  useEffect(() => {
+    onFetchFoodsByRestaurantCompleted();
+  }, [foodsData?.restaurant.categories]);
 
   return (
     <div className="p-3">
@@ -144,23 +219,22 @@ export default function FoodsMain() {
         loading={loading}
         columns={FOODS_TABLE_COLUMNS({ menuItems })}
       />
-      <DeleteDialog
+      <CustomDialog
         loading={mutationLoading}
-        visible={!!deleteId}
+        visible={!!deleteId?.id}
         onHide={() => {
-          setDeleteId('');
+          setDeleteId({ id: '', categoryId: '' });
         }}
         onConfirm={() => {
           deleteFood({
-            variables: { id: deleteId },
+            variables: { ...deleteId, restaurant: restaurantId },
             onCompleted: () => {
               showToast({
                 type: 'success',
-                title: 'Delete Option',
-                message: 'Option has been deleted successfully.',
-                duration: 3000,
+                title: 'Delete Food',
+                message: 'Food has been deleted successfully.',
               });
-              setDeleteId('');
+              setDeleteId({ id: '', categoryId: '' });
             },
           });
         }}

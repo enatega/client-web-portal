@@ -92,7 +92,7 @@ export default function ZoneAddForm({
           onHide();
         },
         onError: ({ graphQLErrors, networkError }: ApolloError) => {
-          let message =
+          const message =
             graphQLErrors[0]?.message ??
             networkError?.message ??
             'Something went wrong. Please try again';
@@ -112,7 +112,7 @@ export default function ZoneAddForm({
       visible={isAddZoneVisible}
       position={position}
       onHide={onHide}
-      className="w-full sm:w-[450px]"
+      className="w-full sm:w-[600px]"
     >
       <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">

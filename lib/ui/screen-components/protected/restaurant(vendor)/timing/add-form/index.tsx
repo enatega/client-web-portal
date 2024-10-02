@@ -71,9 +71,9 @@ const TimingAddForm = () => {
   // Form Submission
   const handleSubmit = (values: ITimingForm[]) => {
     //conversion from 'HH:MM' to ["HH","MM"]
-    let formattedData = [...values].map((v) => {
-      let tempTime = [...v.times];
-      let formattedTime = tempTime.map((time) => {
+    const formattedData = [...values].map((v) => {
+      const tempTime = [...v.times];
+      const formattedTime = tempTime.map((time) => {
         return {
           startTime: time.startTime?.split(':'),
           endTime: time.endTime?.split(':'),
@@ -245,7 +245,7 @@ const TimingAddForm = () => {
                               <button
                                 type="button"
                                 onClick={() => {
-                                  let prev = [...values[dayIndex].times];
+                                  const prev = [...values[dayIndex].times];
                                   prev.splice(timeIndex, 1);
                                   setFieldValue(`${dayIndex}.times`, prev);
                                 }}
@@ -256,7 +256,7 @@ const TimingAddForm = () => {
                             ) : (
                               <button
                                 onClick={() => {
-                                  let prev = [...values[dayIndex].times];
+                                  const prev = [...values[dayIndex].times];
                                   prev.push({ startTime: null, endTime: null });
                                   setFieldValue(`${dayIndex}.times`, prev);
                                 }}

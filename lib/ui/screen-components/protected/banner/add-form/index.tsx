@@ -37,8 +37,8 @@ const BannersAddForm = ({
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
 
-  let RESTAURANT_NAMES =
-    data?.restaurants.map((v) => {
+  const RESTAURANT_NAMES =
+    data?.restaurants?.map((v) => {
       return { label: v.name, code: v.name };
     }) || [];
 
@@ -71,7 +71,7 @@ const BannersAddForm = ({
   // Hooks
   const { showToast } = useToast();
 
-  let mutation = banner ? EDIT_BANNER : CREATE_BANNER;
+  const mutation = banner ? EDIT_BANNER : CREATE_BANNER;
   const [mutate, { loading: mutationLoading }] = useMutation(mutation, {
     refetchQueries: [{ query: GET_BANNERS }],
   });
@@ -126,7 +126,7 @@ const BannersAddForm = ({
       visible={isAddBannerVisible}
       position={position}
       onHide={onHide}
-      className="w-full sm:w-[450px]"
+      className="w-full sm:w-[600px]"
     >
       <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">
@@ -230,7 +230,7 @@ const BannersAddForm = ({
                             }
                             showLabel={true}
                             name="screen"
-                            loading={loading}
+                            isLoading={loading}
                             selectedItem={values.screen}
                             setSelectedItem={setFieldValue}
                             style={{

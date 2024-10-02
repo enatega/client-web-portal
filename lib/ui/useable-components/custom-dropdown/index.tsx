@@ -4,6 +4,8 @@ import { IDropdownComponentProps } from '@/lib/utils/interfaces';
 // Prime React
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import TextIconClickable from '../text-icon-clickable';
 
 const CustomDropdownComponent = ({
   name,
@@ -14,12 +16,29 @@ const CustomDropdownComponent = ({
   showLabel,
   isLoading = false,
   filter = true,
+  extraFooterButton,
   ...props
 }: IDropdownComponentProps) => {
   const itemTemplate = (option: { label: string }) => {
     return (
       <div className="align-items-center flex">
         <div>{option.label}</div>
+      </div>
+    );
+  };
+
+  const panelFooterTemplate = () => {
+    return (
+      <div className="flex justify-between space-x-2">
+        {extraFooterButton?.title && (
+          <TextIconClickable
+            className="w-full h-fit rounded  text-black"
+            icon={faAdd}
+            iconStyles={{ color: 'black' }}
+            title={extraFooterButton.title}
+            onClick={extraFooterButton.onChange}
+          />
+        )}
       </div>
     );
   };
@@ -43,6 +62,7 @@ const CustomDropdownComponent = ({
         panelClassName="border-gray-200 border-2"
         filter={filter}
         checkmark={true}
+        panelFooterTemplate={panelFooterTemplate}
         {...props}
       />
     </div>

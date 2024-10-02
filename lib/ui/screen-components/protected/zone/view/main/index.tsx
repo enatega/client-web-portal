@@ -15,7 +15,7 @@ import {
 } from '@/lib/utils/interfaces';
 
 // UI Components
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 import RidersTableHeader from '../header/table-header';
 
@@ -63,7 +63,7 @@ export default function ZoneMain({
   // For global search
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    let _filters = { ...filters };
+    const _filters = { ...filters };
     _filters['global'].value = value;
     setFilters(_filters);
     setGlobalFilterValue(value);
@@ -105,7 +105,7 @@ export default function ZoneMain({
         loading={loading}
         columns={ZONE_TABLE_COLUMNS({ menuItems })}
       />
-      <DeleteDialog
+      <CustomDialog
         loading={mutationLoading}
         visible={!!deleteId}
         onHide={() => {

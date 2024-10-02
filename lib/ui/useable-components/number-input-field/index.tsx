@@ -37,7 +37,10 @@ export default function CustomNumberField({
         className={`h-10 w-full rounded-lg border border-gray-300 text-sm focus:shadow-none focus:outline-none ${className}`}
         placeholder={placeholder}
         onKeyDown={(e) => {
-          if (props.max !== undefined && Number(e.currentTarget.value ?? 0) > props.max) {
+          if (
+            props.max !== undefined &&
+            Number(e.currentTarget.value ?? 0) > props.max
+          ) {
             e.preventDefault();
           }
         }}
