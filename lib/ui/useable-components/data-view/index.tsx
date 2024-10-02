@@ -15,7 +15,7 @@ const CustomDataView: React.FC<ICustomDataViewProps> = ({
       <div className="col-12 sm:col-6 lg:col-4 xl:col-3 mb-2">
         <ProfileCard
           name={review.order.user.name}
-          jobTitle={review.order.items.map((item) => item.title).join(', ')}
+          orderedItems={review.order.items.map((item) => item.title).join(', ')}
           rating={review.rating}
           imageSrc={review.restaurant.image}
           reviewContent={review.description}
