@@ -5,28 +5,45 @@ import { Dialog } from 'primereact/dialog';
 import CustomButton from '../button';
 
 // Interface and Types
-import { IDeleteDialogProps } from '@/lib/utils/interfaces/dialog.interface';
+import { IDialogComponentProps } from '@/lib/utils/interfaces/dialog.interface';
 
-const DeleteDialog = ({
+const CustomDialog = ({
+  title = 'Confirm Deletion',
+  message,
   visible,
   onHide,
   onConfirm,
-  message,
   loading,
-}: IDeleteDialogProps) => {
+  buttonConfig,
+}: IDialogComponentProps) => {
+  const {
+    primaryButtonProp: {
+      label: primaryButtonLabel = 'Confirm',
+      icon: primaryButtonIcon = 'pi pi-check',
+      textColor: primaryButtonTextColor = 'text-white',
+      bgColor: primaryButtonBGColor = 'bg-red-500',
+    } = {},
+    secondaryButtonProp: {
+      label: secondaryButtonLabel = 'Cancel',
+      icon: secondaryButtonIcon = 'pi pi-times',
+      textColor: secondaryButtonTextColor = 'text-black',
+      bgColor: secondaryButtonBGColor = 'bg-transparent',
+    } = {},
+  } = buttonConfig || {};
+
   const footer = (
     <div className="space-x-2">
       <CustomButton
-        label="No"
-        icon="pi pi-times"
+        label={secondaryButtonLabel || 'Cancel'}
+        icon={secondaryButtonIcon || 'pi pi-times'}
         onClick={onHide}
-        className="h-9 rounded border border-gray-300 px-5 text-black"
+        className={`h-9 rounded border border-gray-300 px-5 ${secondaryButtonBGColor} ${secondaryButtonTextColor}`}
       />
       <CustomButton
         loading={loading}
-        label="Confirm"
-        className="h-9 rounded border-gray-300 bg-red-500 px-4 text-white"
-        icon="pi pi-check"
+        label={primaryButtonLabel || 'Confirm'}
+        className={`h-9 rounded border-gray-300 px-4 ${primaryButtonBGColor} ${primaryButtonTextColor}`}
+        icon={primaryButtonIcon || 'pi pi-check'}
         onClick={onConfirm}
       />
     </div>
@@ -37,7 +54,7 @@ const DeleteDialog = ({
       visible={visible}
       style={{ width: '32rem' }}
       breakpoints={{ '960px': '75vw', '641px': '90vw' }}
-      header="Confirm Deletion"
+      header={title}
       modal
       footer={footer}
       onHide={onHide}
@@ -49,4 +66,4 @@ const DeleteDialog = ({
   );
 };
 
-export default DeleteDialog;
+export default CustomDialog;

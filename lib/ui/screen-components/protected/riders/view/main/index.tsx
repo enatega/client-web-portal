@@ -14,7 +14,7 @@ import {
 
 // UI Components
 import RidersTableHeader from '../header/table-header';
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 import { RIDER_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/rider-columns';
 
@@ -108,7 +108,7 @@ export default function RidersMain({
         loading={loading}
         columns={RIDER_TABLE_COLUMNS({ menuItems })}
       />
-      <DeleteDialog
+      <CustomDialog
         loading={mutationLoading}
         visible={!!deleteId}
         onHide={() => {

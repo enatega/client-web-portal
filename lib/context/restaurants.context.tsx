@@ -9,6 +9,7 @@ import {
   IRestaurantsContextProps,
   IRestaurantsProvider,
 } from '@/lib/utils/interfaces';
+import { RESTAURANTS_TABS } from '../utils/constants';
 
 // Types
 
@@ -18,6 +19,7 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
   // Form Visibility
   const [isRestaurantsFormVisible, setRestaurantsFormVisible] =
     useState<boolean>(false);
+  const [currentTab, setCurrentTab] = useState<string>(RESTAURANTS_TABS[0]);
 
   const [restaurantsContextData, setRestaurantsContextData] =
     useState<IRestaurantsContextPropData | null>({
@@ -51,6 +53,10 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
     setRestaurantsContextData(vendor);
   };
 
+  const onSetCurrentTab = (tab: string) => {
+    setCurrentTab(tab);
+  };
+
   const value: IRestaurantsContextProps = {
     // Form Visibility
     isRestaurantsFormVisible,
@@ -63,6 +69,9 @@ export const RestaurantsProvider = ({ children }: IRestaurantsProvider) => {
     // Context Data
     restaurantsContextData,
     onSetRestaurantsContextData,
+    // Tabs
+    currentTab,
+    onSetCurrentTab,
   };
 
   return (

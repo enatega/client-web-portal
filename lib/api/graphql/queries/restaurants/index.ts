@@ -34,6 +34,32 @@ export const GET_RESTAURANTS = gql`
   }
 `;
 
+export const GET_CLONED_RESTAURANTS = gql`
+  query getClonedRestaurants {
+    getClonedRestaurants {
+      _id
+      name
+      image
+      username
+      orderPrefix
+      slug
+      address
+      deliveryTime
+      minimumOrder
+      isActive
+      commissionRate
+      username
+      tax
+      owner {
+        _id
+        email
+        isActive
+      }
+      shopType
+    }
+  }
+`;
+
 export const GET_RESTAURANTS_BY_OWNER = gql`
   query RestaurantByOwner($id: String) {
     restaurantByOwner(id: $id) {

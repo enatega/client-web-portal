@@ -29,9 +29,9 @@
   "rules": {
     // Allow .tsx and .jsx extensions for JSX files
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
-    "no-unused-vars": "off", // Turn off core rule in favor of the plugin
-    "@typescript-eslint/no-unused-vars": "off", // If using TypeScript
-    "unused-imports/no-unused-imports": "warn", // Warn about unused imports
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": "error",
     "react-hooks/exhaustive-deps": "off"

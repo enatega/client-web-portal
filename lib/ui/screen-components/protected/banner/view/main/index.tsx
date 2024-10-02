@@ -8,7 +8,7 @@ import { FilterMatchMode } from 'primereact/api';
 import useToast from '@/lib/hooks/useToast';
 
 // Custom Components
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 import { BANNERS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/banners-columns';
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
@@ -103,7 +103,7 @@ export default function BannersMain({
         columns={BANNERS_TABLE_COLUMNS({ menuItems })}
         loading={loading}
       />
-      <DeleteDialog
+      <CustomDialog
         loading={mutationLoading}
         visible={!!deleteId}
         onHide={() => {

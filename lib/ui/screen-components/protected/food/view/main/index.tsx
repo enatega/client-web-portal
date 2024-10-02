@@ -24,7 +24,7 @@ import FoodsTableHeader from '../header/table-header';
 import { FOODS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/foods-columns';
 
 // Utilities and Data
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import { generateDummyFoods } from '@/lib/utils/dummy';
 
 // Context
@@ -219,7 +219,7 @@ export default function FoodsMain() {
         loading={loading}
         columns={FOODS_TABLE_COLUMNS({ menuItems })}
       />
-      <DeleteDialog
+      <CustomDialog
         loading={mutationLoading}
         visible={!!deleteId?.id}
         onHide={() => {

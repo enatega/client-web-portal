@@ -65,7 +65,8 @@ export interface IRestaurantResponse {
 }
 
 export interface IRestaurantsResponseGraphQL {
-  restaurants: IRestaurantResponse[];
+  restaurants?: IRestaurantResponse[];
+  getClonedRestaurants?: IRestaurantResponse[];
 }
 
 export interface IRestaurantByOwner {
