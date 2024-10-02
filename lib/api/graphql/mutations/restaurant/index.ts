@@ -84,21 +84,27 @@ export const UPDATE_DELIVERY_BOUNDS_AND_LOCATION = gql`
   }
 `;
 
-export const EDIT_RESTAURANT = gql`
-  mutation EditRestaurant($restaurantInput: RestaurantProfileInput!) {
-    editRestaurant(restaurant: $restaurantInput) {
-      _id
-      orderId
-      orderPrefix
-      name
-      image
-      logo
-      slug
-      address
-      username
-      password
-      location {
-        coordinates
+export const EDIT_RESTAURANT = gql`mutation EditRestaurant($restaurantInput:RestaurantProfileInput!){
+  editRestaurant(restaurant:$restaurantInput){
+    _id
+    orderId
+    orderPrefix
+    name
+    image
+    logo
+    slug
+    address
+    username
+    password
+    location{coordinates}
+    isAvailable
+    minimumOrder
+    tax
+    openingTimes{
+      day
+      times{
+        startTime
+        endTime
       }
       isAvailable
       minimumOrder
