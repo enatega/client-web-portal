@@ -128,6 +128,11 @@ export default function MakeSidebar() {
           isParent: false,
         },
         {
+          text: 'Orders',
+          route: '/management/orders',
+          isParent: false,
+        },
+        {
           text: 'Coupons',
           route: '/management/coupons',
           isParent: false,
