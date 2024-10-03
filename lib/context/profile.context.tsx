@@ -1,6 +1,4 @@
-'use client';
-
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { GET_RESTAURANT_PROFILE } from '@/lib/api/graphql';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { useQueryGQL } from '../hooks/useQueryQL';
@@ -30,12 +28,11 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({
   const { restaurantId } = restaurantLayoutContextData;
 
   const [isUpdateProfileVisible, setIsUpdateProfileVisible] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const restaurantProfileResponse = useQueryGQL(
     GET_RESTAURANT_PROFILE,
-    {
-      id: restaurantId,
-    },
+    { id: restaurantId },
     {
       enabled: !!restaurantId,
       fetchPolicy: 'network-only',
@@ -51,6 +48,14 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({
     setIsUpdateProfileVisible(true);
   };
 
+  const onActiveStepChange = (activeStep: number) => {
+    setActiveIndex(activeStep);
+  };
+
+  const refetchRestaurantProfile = async (): Promise<void> => {
+    restaurantProfileResponse.refetch();
+  };
+
   useEffect(() => {
     if (restaurantId) {
       restaurantProfileResponse.refetch();
@@ -62,6 +67,9 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({
     setIsUpdateProfileVisible,
     handleUpdateProfile,
     restaurantProfileResponse,
+    activeIndex,
+    onActiveStepChange,
+    refetchRestaurantProfile,
   };
 
   return (

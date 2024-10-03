@@ -314,7 +314,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
           }
 
           // Selected rider
-          let selectedRider: IDropdownSelectItem = {
+          const selectedRider: IDropdownSelectItem = {
             label: rowData?.rider?.name.toString() ?? 'Select Rider',
             code:
               rowData?.rider?.name.toString().toUpperCase() ?? 'SELECT RIDER',
@@ -358,7 +358,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
         headerName: 'Status',
 
         body: (rowData: IActiveOrders) => {
-          let currentStatus = actionStatusOptions.find(
+          const currentStatus = actionStatusOptions.find(
             (status: IDropdownSelectItem) =>
               status.code === rowData?.orderStatus
           );

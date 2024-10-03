@@ -36,5 +36,5 @@ export * from './vendor.interface';
 export * from './zone.interface';
 export * from './payment.card.interface';
 export * from './profile/restaurant.profile.interface'
-export * from './food.interface'
-
+export * from './food.interface';
+export * from './ratings.interface';

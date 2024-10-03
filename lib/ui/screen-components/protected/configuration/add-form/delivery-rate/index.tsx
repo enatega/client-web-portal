@@ -30,7 +30,7 @@ const DeliveryRateAddForm = () => {
   const { DELIVERY_RATE, COST_TYPE } = useConfiguration();
   const { showToast } = useToast();
 
-  let initialValues: IDeliveryRateForm = {
+  const initialValues: IDeliveryRateForm = {
     deliveryRate: DELIVERY_RATE ?? null,
     costType: COST_TYPE,
   };

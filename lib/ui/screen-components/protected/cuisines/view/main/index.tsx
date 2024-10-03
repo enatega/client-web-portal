@@ -23,7 +23,7 @@ import { useMutation } from '@apollo/client';
 import { useContext, useEffect, useState } from 'react';
 
 // Components
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 import CuisineTableHeader from '../header/table-header';
 import { generateDummyCuisines } from '@/lib/utils/dummy';
@@ -135,7 +135,7 @@ export default function CuisinesMain({
   const onFetchCuisines = () => {
     setIsLoading(true);
     fetch();
-  }
+  };
 
   // UseEffects
   useEffect(() => {
@@ -143,7 +143,7 @@ export default function CuisinesMain({
   }, [data, isEditing.bool]);
 
   useEffect(() => {
-    onFetchCuisines()
+    onFetchCuisines();
   }, []);
 
   return (
@@ -164,7 +164,7 @@ export default function CuisinesMain({
           />
         }
       />
-      <DeleteDialog
+      <CustomDialog
         onConfirm={deleteItem}
         onHide={() => {
           setIsDeleting({ bool: false, data: { ...isDeleting.data } });

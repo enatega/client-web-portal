@@ -32,6 +32,22 @@ export const CREATE_RESTAURANT = gql`
   }
 `;
 
+// Delete
+export const DELETE_RESTAURANT = gql`
+  mutation DeleteRestaurant($id: String!) {
+    deleteRestaurant(id: $id) {
+      _id
+      isActive
+    }
+  }
+`;
+
+export const HARD_DELETE_RESTAURANT = gql`
+  mutation HardDeleteRestaurant($id: String!) {
+    hardDeleteRestaurant(id: $id)
+  }
+`;
+
 export const UPDATE_DELIVERY_BOUNDS_AND_LOCATION = gql`
   mutation updateDeliveryBoundsAndLocation(
     $id: ID!
@@ -68,29 +84,75 @@ export const UPDATE_DELIVERY_BOUNDS_AND_LOCATION = gql`
   }
 `;
 
-export const EDIT_RESTAURANT = `mutation EditRestaurant($restaurantInput:RestaurantProfileInput!){
-  editRestaurant(restaurant:$restaurantInput){
-    _id
-    orderId
-    orderPrefix
-    name
-    image
-    logo
-    slug
-    address
-    username
-    password
-    location{coordinates}
-    isAvailable
-    minimumOrder
-    tax
-    openingTimes{
-      day
-      times{
-        startTime
-        endTime
+export const EDIT_RESTAURANT = gql`
+  mutation EditRestaurant($restaurantInput: RestaurantProfileInput!) {
+    editRestaurant(restaurant: $restaurantInput) {
+      _id
+      orderId
+      orderPrefix
+      name
+      image
+      logo
+      slug
+      address
+      username
+      password
+      location {
+        coordinates
+      }
+      isAvailable
+      minimumOrder
+      tax
+      openingTimes {
+        day
+        times {
+          startTime
+          endTime
+        }
+        isAvailable
+        minimumOrder
+        tax
+        openingTimes {
+          day
+          times {
+            startTime
+            endTime
+          }
+        }
+        shopType
       }
     }
-    shopType
   }
-}`;
+`;
+
+export const DUPLICATE_RESTAURANT = gql`
+  mutation DuplicateRestaurant($id: String!) {
+    duplicateRestaurant(id: $id) {
+      _id
+      name
+      image
+      username
+      orderPrefix
+      slug
+      address
+      deliveryTime
+      minimumOrder
+      isActive
+      commissionRate
+      tax
+      owner {
+        _id
+        email
+        isActive
+      }
+      shopType
+      orderId
+      logo
+      password
+      location {
+        coordinates
+      }
+      cuisines
+    }
+  }
+`;

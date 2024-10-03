@@ -36,7 +36,7 @@ const TwilioAddForm = () => {
   } = useConfiguration();
   const { showToast } = useToast();
 
-  let initialValues = {
+  const initialValues = {
     twilioAccountSid: TWILIO_ACCOUNT_SID,
     twilioAuthToken: TWILIO_AUTH_TOKEN,
     twilioPhoneNumber: TWILIO_PHONE_NUMBER ? +TWILIO_PHONE_NUMBER : null,

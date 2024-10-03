@@ -35,7 +35,7 @@ const GoogleClientAddForm = () => {
   const { showToast } = useToast();
 
   // Set initial values using the configuration
-  let initialValues = {
+  const initialValues = {
     webClientID: GOOGLE_CLIENT_ID || '',
     androidClientID: GOOGLE_CLIENT_ID_ANDRIOD || '',
     iOSClientID: GOOGLE_CLIENT_ID_IOS || '',

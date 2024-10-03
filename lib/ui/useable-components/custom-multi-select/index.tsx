@@ -38,19 +38,20 @@ const CustomMultiSelectComponent = ({
     const length = selectedItems ? selectedItems.length : 0;
 
     return (
-      <div className='flex justify-between space-x-2'>
-
-        {extraFooterButton?.title ? <TextIconClickable
-          className="w-full h-fit rounded  text-black"
-          icon={faAdd}
-          iconStyles={{ color: 'black' }}
-          title={`${extraFooterButton.title} (${length} Selected)`}
-          onClick={extraFooterButton.onChange}
-        /> : <div className="px-3 py-2">
-          <b>{length}</b> item{length > 1 ? 's' : ''} selected.
-        </div>
-
-        }
+      <div className="flex justify-between space-x-2">
+        {extraFooterButton?.title ? (
+          <TextIconClickable
+            className="w-full h-fit rounded  text-black"
+            icon={faAdd}
+            iconStyles={{ color: 'black' }}
+            title={`${extraFooterButton.title} (${length} Selected)`}
+            onClick={extraFooterButton.onChange}
+          />
+        ) : (
+          <div className="px-3 py-2">
+            <b>{length}</b> item{length > 1 ? 's' : ''} selected.
+          </div>
+        )}
       </div>
     );
   };

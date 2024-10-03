@@ -28,7 +28,7 @@ const NodeMailerAddForm = () => {
   const { EMAIL_NAME, EMAIL, PASSWORD, ENABLE_EMAIL } = useConfiguration();
   const { showToast } = useToast();
 
-  let initialValues = {
+  const initialValues = {
     email: EMAIL,
     password: PASSWORD,
     emailName: EMAIL_NAME,

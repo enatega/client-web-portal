@@ -29,7 +29,7 @@ const VerificationAddForm = () => {
   const { showToast } = useToast();
 
   // Set initial values using the useConfiguration hook
-  let initialValues = {
+  const initialValues = {
     skipEmailVerification: SKIP_EMAIL_VERIFICATION ?? false,
     skipMobileVerification: SKIP_MOBILE_VERIFICATION ?? false,
   };

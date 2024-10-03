@@ -3,7 +3,6 @@
 // Core
 import Image from 'next/image';
 import { useContext, useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 // Context
 import { ToastContext } from '@/lib/context/toast.context';
@@ -15,23 +14,21 @@ import { ApolloError, useMutation } from '@apollo/client';
 import CustomInputSwitch from '../../custom-input-switch';
 
 // Interfaces
-import { IRestaurantResponse } from '@/lib/utils/interfaces';
-
-// Utils and Constants
-import { onUseLocalStorage } from '@/lib/utils/methods';
-
-// Icons
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { IActionMenuProps, IRestaurantResponse } from '@/lib/utils/interfaces';
 
 // GraphQL Queries and Mutations
 import { DELETE_RESTAURANT } from '@/lib/api/graphql';
 
-export const RESTAURANT_TABLE_COLUMNS = () => {
+// Components
+import ActionMenu from '../../action-menu';
+
+export const RESTAURANT_TABLE_COLUMNS = ({
+  menuItems,
+}: {
+  menuItems: IActionMenuProps<IRestaurantResponse>['items'];
+}) => {
   // Context
   const { showToast } = useContext(ToastContext);
-  // Hooks
-  const router = useRouter();
 
   // State
   const [deletingRestaurant, setDeletingRestaurant] = useState<{
@@ -43,7 +40,7 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
   const [deleteRestaurant] = useMutation(DELETE_RESTAURANT, {
     onCompleted: () => {
       showToast({
-        type: 'error',
+        type: 'success',
         title: 'Restaurant Status',
         message: `Restaurant has been marked as ${deletingRestaurant.isActive ? 'in-active' : 'active'}`,
         duration: 2000,
@@ -143,18 +140,9 @@ export const RESTAURANT_TABLE_COLUMNS = () => {
     {
       headerName: 'Actions',
       propertyName: 'actions',
-      body: (rowData: IRestaurantResponse) => {
-        return (
-          <FontAwesomeIcon
-            icon={faEye}
-            className="ml-5 cursor-pointer"
-            onClick={() => {
-              onUseLocalStorage('save', 'restaurantId', rowData?._id);
-              router.push(`/admin/restaurant/`);
-            }}
-          />
-        );
-      },
+      body: (rowData: IRestaurantResponse) => (
+        <ActionMenu items={menuItems} data={rowData} />
+      ),
     },
   ];
 };

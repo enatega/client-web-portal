@@ -27,7 +27,7 @@ import { useMutation } from '@apollo/client';
 
 // Components
 import { ToastContext } from '@/lib/context/toast.context';
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 import CouponTableHeader from '../header/table-header';
 
@@ -161,7 +161,7 @@ export default function CouponsMain({
     <div className="p-3">
       <Table
         columns={COUPONS_TABLE_COLUMNS({ menuItems })}
-        data={data?.coupons || (loading ? generateDummyCoupons(): [])}
+        data={data?.coupons || (loading ? generateDummyCoupons() : [])}
         selectedData={selectedData}
         setSelectedData={(e) => setSelectedData(e)}
         loading={loading}
@@ -175,7 +175,7 @@ export default function CouponsMain({
         }
         filters={filters}
       />
-      <DeleteDialog
+      <CustomDialog
         onConfirm={deleteItem}
         onHide={() =>
           setIsDeleting({

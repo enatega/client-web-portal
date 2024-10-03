@@ -8,7 +8,7 @@ import Image from 'next/image';
 
 const InfoItem: React.FC<IInfoItemProps> = ({ label, value }) => (
   <div>
-    <p className="mb-2 text-xs text-gray-500">{label}</p>
+    <p className="text-xs text-gray-500 mb-2">{label}</p>
     <p className="font-medium">{value || 'N/A'}</p>
   </div>
 );
@@ -21,9 +21,9 @@ const RestaurantMain: React.FC = () => {
   if (restaurantProfileResponse.loading) return <RestaurantProfileSkeleton />;
 
   return (
-    <div className="mt-8 flex items-center justify-center">
-      <div className="w-full rounded border-2 border-dotted border-inherit bg-white p-8">
-        <div className="mb-6 flex items-center">
+    <div className="flex items-center justify-center mt-8">
+      <div className="bg-white p-8 w-full border-2 border-dotted rounded border-inherit">
+        <div className="flex items-center mb-6">
           <ProfileLogoSVG width="55" height="55" strokeColor="#1E1E1E" />
           <div className="ml-2">
             <h1 className="text-xs text-gray-500">Restaurant Name</h1>
@@ -31,33 +31,33 @@ const RestaurantMain: React.FC = () => {
           </div>
         </div>
         <hr className="mb-6" />
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <InfoItem label="User Name" value={restaurant?.username} />
           <InfoItem label="Password" value={restaurant?.password} />
           <div className="md:row-span-4">
-            <p className="mb-4 text-xs text-gray-500">Images</p>
+            <p className="text-xs text-gray-500 mb-4">Images</p>
             <div className="flex space-x-2">
               {restaurant?.image ? (
                 <Image
                   src={restaurant?.image}
-                  alt="i-portrait.png"
-                  className="rounded object-cover"
+                  alt="Restaurant logo"
+                  className="object-cover rounded"
                   width={96}
                   height={96}
                 />
               ) : (
-                <Avatar label="Image" className="h-24 w-24" />
+                <Avatar label="I" className="w-24 h-24" />
               )}
-              {restaurant?.logo && !restaurant?.logo.includes('/static') ? (
+              {restaurant?.logo ? (
                 <Image
                   src={restaurant?.logo}
-                  alt="l-portrait.png"
-                  className="rounded object-cover"
+                  alt="Restaurant logo"
+                  className="object-cover rounded"
                   width={96}
                   height={96}
                 />
               ) : (
-                <Avatar label="Logo" className="h-24 w-24" />
+                <Avatar label="L" className="w-24 h-24" />
               )}
             </div>
           </div>

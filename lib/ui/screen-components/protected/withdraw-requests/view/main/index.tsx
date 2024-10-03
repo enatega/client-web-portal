@@ -52,7 +52,8 @@ export default function WithdrawRequestsMain() {
     <div className="p-3">
       <Table
         data={
-          data?.getAllWithdrawRequests?.data || (loading ? generateDummyWithdrawRequests() : [])
+          data?.getAllWithdrawRequests?.data ||
+          (loading ? generateDummyWithdrawRequests() : [])
         }
         columns={WITHDRAW_REQUESTS_TABLE_COLUMNS()}
         selectedData={selectedData}

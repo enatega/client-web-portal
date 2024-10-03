@@ -110,6 +110,11 @@ export default function MakeSidebar() {
           route: '/admin/restaurant/food-management/add-ons',
           isParent: false,
         },
+        {
+          text: 'Orders',
+          route: '/admin/restaurant/food-management/orders',
+          isParent: false,
+        },
       ],
     },
     {

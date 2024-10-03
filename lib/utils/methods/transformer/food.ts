@@ -8,11 +8,10 @@ import {
 export const onTransformRetaurantsByIdToFoods = ({
   restaurant,
 }: IFoodByRestaurantResponse): IFoodGridItem[] => {
-  let foods: IFoodGridItem[] = [];
+  const foods: IFoodGridItem[] = [];
 
   restaurant.categories.map((category: IFoodCategory) => {
     return category.foods.map((food: IFood) => {
-    
       foods.push({
         _id: food._id,
         title: food.title,

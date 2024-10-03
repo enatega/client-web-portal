@@ -28,19 +28,17 @@ const CustomDropdownComponent = ({
   };
 
   const panelFooterTemplate = () => {
-
     return (
-      <div className='flex justify-between space-x-2'>
-
-        {extraFooterButton?.title && <TextIconClickable
-          className="w-full h-fit rounded  text-black"
-          icon={faAdd}
-          iconStyles={{ color: 'black' }}
-          title={extraFooterButton.title}
-          onClick={extraFooterButton.onChange}
-        />
-
-        }
+      <div className="flex justify-between space-x-2">
+        {extraFooterButton?.title && (
+          <TextIconClickable
+            className="w-full h-fit rounded  text-black"
+            icon={faAdd}
+            iconStyles={{ color: 'black' }}
+            title={extraFooterButton.title}
+            onClick={extraFooterButton.onChange}
+          />
+        )}
       </div>
     );
   };

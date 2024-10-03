@@ -540,3 +540,20 @@ body {
   position: absolute;
   right: -35px;
 }
+
+/* Data View */
+.p-dataview-header{
+  background-color: transparent;
+  padding: 0;
+}
+
+.p-dataview-header .p-component::placeholder {
+  font-size: 14px; /* Adjust the font size as needed */
+  color: #adacac;
+  /* font-weight: 500; */
+}
+
+.p-dataview-header .p-component {
+  font-size: 14px; /* Adjust the font size as needed */
+  font-weight: lighter;
+}

@@ -23,7 +23,7 @@ export interface IMultiSelectComponentProps extends ISelectionComponentProps {
   options: IDropdownSelectItem[];
   dropDownIcon?: IconDefinition;
   onChange?: (selected: IDropdownSelectItem[]) => void;
-  extraFooterButton?: IDropdownExtraButton
+  extraFooterButton?: IDropdownExtraButton;
 }
 
 export interface IDropdownComponentProps extends ISelectionComponentProps {
@@ -38,5 +38,5 @@ export interface IDropdownComponentProps extends ISelectionComponentProps {
   selectedItem: IDropdownSelectItem | null;
   setSelectedItem: (key: string, item: IDropdownSelectItem) => void;
   options: IDropdownSelectItem[];
-  extraFooterButton?: IDropdownExtraButton
+  extraFooterButton?: IDropdownExtraButton;
 }

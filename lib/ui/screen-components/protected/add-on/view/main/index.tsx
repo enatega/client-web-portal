@@ -20,7 +20,7 @@ import { ADDON_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/a
 import CategoryTableHeader from '../header/table-header';
 
 // Utilities and Data
-import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
+import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
 import { generateDummyAddons } from '@/lib/utils/dummy';
 
 // Context
@@ -85,7 +85,7 @@ export default function OptionMain({
   // Handlers
   const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    let _filters = { ...filters };
+    const _filters = { ...filters };
     _filters['global'].value = value;
     setFilters(_filters);
     setGlobalFilterValue(value);
@@ -143,7 +143,7 @@ export default function OptionMain({
         loading={loading}
         columns={ADDON_TABLE_COLUMNS({ menuItems })}
       />
-      <DeleteDialog
+      <CustomDialog
         loading={mutationLoading}
         visible={!!deleteId}
         onHide={() => {
