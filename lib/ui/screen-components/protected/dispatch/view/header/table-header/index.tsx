@@ -47,10 +47,6 @@ export default function DispatchTableHeader({
       label: 'Accepted',
       value: 'ACCEPTED',
     },
-    {
-      label: 'Rejected',
-      value: 'CANCELLED',
-    },
   ];
 
   return (

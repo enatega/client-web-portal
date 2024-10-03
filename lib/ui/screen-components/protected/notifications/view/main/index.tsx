@@ -3,14 +3,32 @@ import { FilterMatchMode } from 'primereact/api';
 
 //Hooks
 import { ChangeEvent, useState } from 'react';
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 
 //Components
 import NotificationTableHeader from '../header/table-header';
 import Table from '@/lib/ui/useable-components/table';
+
+// Constants
 import { generateDummyNotifications } from '@/lib/utils/dummy';
 import { NOTIFICATIONS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/notification-columns';
 
+// GraphQL
+import { GET_NOTIFICATIONS } from '@/lib/api/graphql';
+
+// import { ToastContext } from '@/lib/context/toast.context';
+import { ILazyQueryResult } from '@/lib/utils/interfaces';
+import { IGetNotification } from '@/lib/utils/interfaces/notification.interface';
+
 export default function NotificationMain() {
+  // Toast
+  // const { showToast } = useContext(ToastContext);
+
+  // Queries
+  const { data, loading } = useLazyQueryQL(GET_NOTIFICATIONS, {
+    fetchPolicy: 'cache-and-network',
+  }) as ILazyQueryResult<IGetNotification | undefined, undefined>;
+
   // States
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
 
@@ -36,7 +54,7 @@ export default function NotificationMain() {
     <div className="p-3">
       <Table
         columns={NOTIFICATIONS_TABLE_COLUMNS()}
-        data={generateDummyNotifications()}
+        data={data?.notifications ?? generateDummyNotifications()}
         selectedData={[]}
         setSelectedData={() => {}}
         header={
@@ -48,6 +66,7 @@ export default function NotificationMain() {
           />
         }
         filters={filters}
+        loading={loading}
       />
     </div>
   );

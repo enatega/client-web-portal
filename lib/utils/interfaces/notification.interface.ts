@@ -8,6 +8,10 @@ export interface INotification {
   createdAt: string;
 }
 
+export interface IGetNotification {
+  notifications: INotification[];
+}
+
 export interface INotificationFormProps {
   setVisible: Dispatch<SetStateAction<boolean>>;
   visible: boolean;
