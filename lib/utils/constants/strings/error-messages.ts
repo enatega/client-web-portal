@@ -69,6 +69,7 @@ export const ProfileErrors: IUpdateProfileFormErrors = {
   email: ['Required', 'Invalid email'],
   username: ['Required', 'Invalid email'],
   password: ['Required', ...PasswordErrors],
+  confirmPassword: ['Required', 'Password must match'],
   address: ['Required'],
   deliveryTime: ['Required'],
   minOrder: ['Required'],
@@ -172,4 +173,5 @@ export const VariationErrors: IVariationErrors = {
   title: ['Required'],
   discount: ['Required'],
   price: ['Required', 'Minimum value must be greater than 0'],
+  addons: ['Required', 'Addons field must have at least 1 items'],
 };

@@ -110,6 +110,11 @@ export default function MakeSidebar() {
           route: '/admin/restaurant/food-management/add-ons',
           isParent: false,
         },
+        {
+          text: 'Orders',
+          route: '/admin/restaurant/food-management/orders',
+          isParent: false,
+        },
       ],
     },
     {
@@ -121,6 +126,11 @@ export default function MakeSidebar() {
         {
           text: 'Timing',
           route: '/admin/restaurant/general/timing',
+          isParent: false,
+        },
+        {
+          text: 'Coupons',
+          route: '/admin/restaurant/general/coupons',
           isParent: false,
         },
         {

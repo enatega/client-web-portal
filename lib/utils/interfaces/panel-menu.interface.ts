@@ -13,6 +13,7 @@ export interface ISidebarMenuItem {
   expanded?: boolean;
   subMenu?: ISidebarMenuItem[] | null;
   isLastItem?: boolean;
+  shouldShow?: () => boolean;
 }
 
 export interface IMenuOption {

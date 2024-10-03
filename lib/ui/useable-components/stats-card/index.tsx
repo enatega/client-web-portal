@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { IStatsCardProps } from '@/lib/utils/interfaces';
 
 // Methods
-import { formatCurrency } from '@/lib/utils/methods';
+import { formatNumber, formatNumberWithCurrency } from '@/lib/utils/methods';
 import DashboardStatsCardSkeleton from '../custom-skeletons/dasboard.stats.card.skeleton';
 
 export default function StatsCard({
@@ -16,6 +16,7 @@ export default function StatsCard({
   icon,
   route,
   loading = false,
+  amountConfig,
 }: IStatsCardProps) {
   return loading ? (
     <DashboardStatsCardSkeleton />
@@ -27,8 +28,8 @@ export default function StatsCard({
 
           {icon && <FontAwesomeIcon icon={icon} />}
         </div>
-        <div className="text-2xl font-semibold"> {formatCurrency(total)}</div>
-        <div className="text-sm text-green-500"> {description}</div>
+        <div className="text-2xl font-semibold"> {amountConfig ? (amountConfig?.format === 'currency' ? formatNumberWithCurrency(total, amountConfig.currency) : formatNumber(total, amountConfig.currency)) : total}</div>
+        {description && <div className="text-sm text-green-500"> {description}</div>}
       </div>
     </Link>
   );

@@ -25,7 +25,7 @@ import { ToastContext } from '@/lib/context/toast.context';
 import { SELECTED_VENDOR } from '@/lib/utils/constants';
 import { ApolloError, useMutation } from '@apollo/client';
 import Image from 'next/image';
-import DeleteDialog from '../delete-dialog';
+import CustomDialog from '../delete-dialog';
 import CustomPopupMenu from '../popup-menu';
 import TextComponent from '../text-field';
 
@@ -188,7 +188,7 @@ export default function VendorCard({
         </div>
       </div>
 
-      <DeleteDialog
+      <CustomDialog
         loading={loading}
         visible={isDeletePopupOpen}
         onHide={onHandleHideDeleteVendor}

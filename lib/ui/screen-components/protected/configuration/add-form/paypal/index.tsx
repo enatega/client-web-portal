@@ -30,7 +30,7 @@ const PayPalAddForm = () => {
   const { PAYPAL_KEY, PAYPAL_SECRET, PAYPAL_SANDBOX } = useConfiguration();
   const { showToast } = useToast();
 
-  let initialValues = {
+  const initialValues = {
     clientId: PAYPAL_KEY,
     clientSecret: PAYPAL_SECRET,
     sandbox: PAYPAL_SANDBOX,

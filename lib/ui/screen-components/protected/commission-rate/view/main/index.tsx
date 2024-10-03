@@ -25,6 +25,8 @@ import { useContext, useEffect, useState } from 'react';
 import { COMMISSION_RATE_COLUMNS } from '@/lib/ui/useable-components/table/columns/comission-rate-columns';
 import { COMMISSION_RATE_ACTIONS } from '@/lib/utils/constants';
 
+import CommissionRateHeader from '../header/table-header';
+
 interface RestaurantsData {
   restaurants: IRestaurantResponse[];
 }
@@ -41,8 +43,8 @@ export default function CommissionRateMain() {
   const [loadingRestaurant, setLoadingRestaurant] = useState<string | null>(
     null
   );
-  const [selectedActions] = useState<string[]>([]);
-  const [searchTerm] = useState<string>('');
+  const [selectedActions, setSelectedActions] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   // Context
   const { showToast } = useContext(ToastContext);
@@ -175,7 +177,9 @@ export default function CommissionRateMain() {
           loadingRestaurant,
         })}
         loading={loading}
+        header={<CommissionRateHeader selectedActions={selectedActions} setSelectedActions={setSelectedActions} onSearch={setSearchTerm}/>}
       />
+
     </div>
   );
 }

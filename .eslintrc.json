@@ -1,6 +1,8 @@
 {
   "extends": ["next", "next/core-web-vitals", "eslint:recommended"],
   "globals": {
+    "cy": "readonly",
+    "it": "readonly",
     "React": "readonly",
     "google": "readonly",
     "GeolocationPosition": "readonly",

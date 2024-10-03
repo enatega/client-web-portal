@@ -40,6 +40,7 @@ export const RestaurantProvider = ({ children }: IProvider) => {
     useState<boolean>(false);
   // Form Flow
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isRestaurantModifed, setRestaurantModifed] = useState<boolean>(false);
 
   // API
   const restaurantByOwnerResponse = useQueryGQL(
@@ -95,7 +96,7 @@ export const RestaurantProvider = ({ children }: IProvider) => {
   // Use Effect
   useEffect(() => {
     onHandlerFilterData();
-  }, [restaurantContextData?.globalFilter]);
+  }, [restaurantContextData?.globalFilter, isRestaurantModifed]);
 
   useEffect(() => {
     restaurantByOwnerResponse.refetch();
@@ -115,6 +116,8 @@ export const RestaurantProvider = ({ children }: IProvider) => {
     activeIndex,
     onActiveStepChange,
     onClearRestaurntsData,
+    isRestaurantModifed,
+    setRestaurantModifed,
   };
 
   return (

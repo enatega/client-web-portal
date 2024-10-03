@@ -31,7 +31,7 @@ const CloudinaryAddForm = () => {
   const { CLOUDINARY_UPLOAD_URL, CLOUDINARY_API_KEY } = useConfiguration();
 
   // Set initial values
-  let initialValues = {
+  const initialValues = {
     cloudinaryUploadUrl: CLOUDINARY_UPLOAD_URL,
     cloudinaryApiKey: CLOUDINARY_API_KEY,
   };

@@ -2,7 +2,11 @@
 
 // Core
 import { Form, Formik } from 'formik';
+<<<<<<< HEAD
 import { useContext, useState } from 'react';
+=======
+import { useContext, useMemo, useState } from 'react';
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
 // Context
 import { ToastContext } from '@/lib/context/toast.context';
@@ -10,9 +14,16 @@ import { ToastContext } from '@/lib/context/toast.context';
 // Interface and Types
 import {
   ICategory,
+<<<<<<< HEAD
   ICategoryForm,
   IFoodDetailsComponentProps,
   IFoodGridItem,
+=======
+  ICategoryByRestaurantResponse,
+  IFoodDetailsComponentProps,
+  IFoodGridItem,
+  IQueryResult,
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 } from '@/lib/utils/interfaces';
 import { IFoodDetailsForm } from '@/lib/utils/interfaces/forms/food.form.interface';
 
@@ -27,6 +38,7 @@ import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomUploadImageComponent from '@/lib/ui/useable-components/upload/upload-image';
 
+<<<<<<< HEAD
 // Schema
 import { CategorySchema, FoodSchema } from '@/lib/utils/schema';
 import { FoodsContext } from '@/lib/context/foods.context';
@@ -38,6 +50,13 @@ import {
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { useMutation } from '@apollo/client';
 import HeaderText from '@/lib/ui/useable-components/header-text';
+=======
+// API
+import { GET_CATEGORY_BY_RESTAURANT_ID } from '@/lib/api/graphql';
+
+// Schema
+import { FoodSchema } from '@/lib/utils/schema';
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
 const initialValues: IFoodDetailsForm = {
   _id: null,
@@ -61,15 +80,35 @@ export default function FoodDetails({
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const [foodInitialValues, setFoodInitialValues] = useState(initialValues);
   // Context
+<<<<<<< HEAD
   const { onSetFoodContextData } = useContext(FoodsContext);
   const { showToast } = useContext(ToastContext);
+=======
+  const { onSetFoodContextData, foodContextData } = useContext(FoodsContext);
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
   const {
     restaurantLayoutContextData: { restaurantId },
   } = useContext(RestaurantLayoutContext);
 
+<<<<<<< HEAD
   // Mutation
   const [createCategory, { loading: mutationLoading }] = useMutation(
     CREATE_CATEGORY,
+=======
+  // State
+  const [isAddCategoryVisible, setIsAddCategoryVisible] = useState(false);
+  const [category, setCategory] = useState<ICategory | null>(null);
+  const [foodInitialValues] = useState(
+    foodContextData?.isEditing || foodContextData?.food?.data?.title
+      ? { ...initialValues, ...foodContextData?.food?.data }
+      : { ...initialValues }
+  );
+
+  // Query
+  const { data, loading: categoriesLoading } = useQueryGQL(
+    GET_CATEGORY_BY_RESTAURANT_ID,
+    { id: restaurantId ?? '' },
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
     {
       refetchQueries: [
         {
@@ -124,12 +163,28 @@ export default function FoodDetails({
         });
       },
     }
+<<<<<<< HEAD
+=======
+  ) as IQueryResult<ICategoryByRestaurantResponse | undefined, undefined>;
+
+  // Memoized Data
+  const categoriesDropdown = useMemo(
+    () =>
+      data?.restaurant?.categories.map((category: ICategory) => {
+        return { label: category.title, code: category._id };
+      }),
+    [data?.restaurant?.categories]
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
   );
 
   // Handlers
   const onFoodSubmitHandler = (values: IFoodDetailsForm) => {
     const foodData: IFoodGridItem = {
+<<<<<<< HEAD
       _id: '',
+=======
+      _id: foodContextData?.food?.data?._id ?? '',
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
       title: values.title,
       description: values.description,
       category: values.category,
@@ -137,6 +192,7 @@ export default function FoodDetails({
     };
 
     onSetFoodContextData({
+<<<<<<< HEAD
       food: { _id: null, data: foodData, variations: [] },
     });
     onStepChange(order + 1);
@@ -153,11 +209,25 @@ export default function FoodDetails({
       },
     });
   };
+=======
+      food: {
+        _id: '',
+        data: foodData,
+        variations:
+          (foodContextData?.food?.variations ?? []).length > 0
+            ? (foodContextData?.food?.variations ?? [])
+            : [],
+      },
+    });
+    onStepChange(order + 1);
+  };
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
   return (
     <div className="w-full h-full flex items-center justify-start">
       <div className="h-full w-full">
         <div className="flex flex-col gap-2">
+<<<<<<< HEAD
           <div className="flex items-center justify-end flex-shrink-0 mt-3">
             <CustomInputSwitch
               label="Add Category"
@@ -217,6 +287,8 @@ export default function FoodDetails({
             </div>
           )}
 
+=======
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
           <div>
             <Formik
               initialValues={foodInitialValues}
@@ -238,6 +310,7 @@ export default function FoodDetails({
                 return (
                   <Form onSubmit={handleSubmit}>
                     <div className="space-y-3">
+<<<<<<< HEAD
                       {!showAddForm && (
                         <div>
                           <CustomDropdownComponent
@@ -259,6 +332,32 @@ export default function FoodDetails({
                           />
                         </div>
                       )}
+=======
+                      <div>
+                        <CustomDropdownComponent
+                          name="category"
+                          placeholder="Select Category"
+                          showLabel={true}
+                          selectedItem={values.category}
+                          setSelectedItem={setFieldValue}
+                          options={categoriesDropdown ?? []}
+                          isLoading={categoriesLoading}
+                          extraFooterButton={{
+                            title: 'Add New Category',
+                            onChange: () => setIsAddCategoryVisible(true),
+                          }}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'category',
+                              errors?.category,
+                              FoodErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
+                      </div>
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
                       <div>
                         <CustomTextField
@@ -307,6 +406,19 @@ export default function FoodDetails({
                           name="image"
                           title="Upload Image"
                           onSetImageUrl={setFieldValue}
+<<<<<<< HEAD
+=======
+                          existingImageUrl={
+                            foodContextData?.isEditing ||
+                            foodContextData?.food?.data?.image
+                              ? (values.image ?? '')
+                              : ''
+                          }
+                          showExistingImage={
+                            foodContextData?.isEditing ||
+                            !!foodContextData?.food?.data?.image
+                          }
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'image',
@@ -335,6 +447,18 @@ export default function FoodDetails({
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+
+      <CategoryAddForm
+        category={category}
+        onHide={() => {
+          setIsAddCategoryVisible(false);
+          setCategory(null);
+        }}
+        isAddCategoryVisible={isAddCategoryVisible}
+      />
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
     </div>
   );
 }

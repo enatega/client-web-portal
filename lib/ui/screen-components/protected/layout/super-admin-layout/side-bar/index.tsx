@@ -21,6 +21,9 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
 
+// Constants and Utiils
+import useCheckAllowedRoutes from '@/lib/hooks/useCheckAllowedRoutes';
+
 // Components
 import SidebarItem from './side-bar-item';
 
@@ -88,7 +91,7 @@ export default function MakeSidebar() {
       route: '/general',
       isParent: true,
       icon: faCog,
-      subMenu: [
+      subMenu: useCheckAllowedRoutes([
         {
           text: 'Vendors',
           route: '/general/vendors',
@@ -114,17 +117,25 @@ export default function MakeSidebar() {
           route: '/general/staff',
           isParent: false,
         },
-      ],
+      ]),
+      shouldShow: function () {
+        return this.subMenu ? this.subMenu.length > 0 : false;
+      },
     },
     {
       text: 'Management',
       route: '/management',
       isParent: true,
       icon: faSliders,
-      subMenu: [
+      subMenu: useCheckAllowedRoutes([
         {
           text: 'Configuration',
           route: '/management/configurations',
+          isParent: false,
+        },
+        {
+          text: 'Orders',
+          route: '/management/orders',
           isParent: false,
         },
         {
@@ -162,7 +173,10 @@ export default function MakeSidebar() {
           route: '/management/notifications',
           isParent: false,
         },
-      ],
+      ]),
+      shouldShow: function () {
+        return this.subMenu ? this.subMenu.length > 0 : false;
+      },
     },
   ];
 
@@ -170,9 +184,11 @@ export default function MakeSidebar() {
     <>
       <SuperAdminSidebar>
         <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
-          {navBarItems.map((item, index) => (
-            <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
-          ))}
+          {navBarItems.map((item, index) =>
+            item.shouldShow && !item.shouldShow() ? null : (
+              <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
+            )
+          )}
         </div>
       </SuperAdminSidebar>
     </>

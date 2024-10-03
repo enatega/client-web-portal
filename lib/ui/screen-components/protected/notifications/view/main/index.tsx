@@ -42,7 +42,7 @@ export default function NotificationMain() {
   // Global filters change
   const onGlobalFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    let _filters = { ...filters };
+    const _filters = { ...filters };
 
     _filters['global'].value = value;
 

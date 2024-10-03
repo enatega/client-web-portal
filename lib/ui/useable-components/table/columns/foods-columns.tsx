@@ -4,6 +4,9 @@ import {
 } from '@/lib/utils/interfaces';
 // import ActionMenu from '../../action-menu';
 import Image from 'next/image';
+// Interface
+import { IActionMenuProps, IFoodGridItem } from '@/lib/utils/interfaces';
+
 import ActionMenu from '../../action-menu';
 
 export const FOODS_TABLE_COLUMNS = ({
@@ -22,14 +25,12 @@ export const FOODS_TABLE_COLUMNS = ({
     {
       headerName: 'Image',
       propertyName: 'image',
-      body: (item: IFoodGridItem) => {
-        console.log({ item });
-        return item.image ? (
+      body: (item: IFoodGridItem) =>
+        item.image ? (
           <Image src={item.image} width={40} height={40} alt="item.png" />
         ) : (
           <></>
-        );
-      },
+        ),
     },
     {
       propertyName: 'actions',

@@ -1,7 +1,11 @@
 'use client';
 
 // Core imports
+<<<<<<< HEAD
 import { useContext, useMemo, useRef } from 'react';
+=======
+import { useContext, useRef } from 'react';
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
 // PrimeReact components
 import { Sidebar } from 'primereact/sidebar';
@@ -33,6 +37,7 @@ const FoodForm = ({ position = 'right' }: IFoodAddFormComponentProps) => {
     onClearFoodData,
     onActiveStepChange,
   } = useContext(FoodsContext);
+<<<<<<< HEAD
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
 
   // Query
@@ -56,6 +61,8 @@ const FoodForm = ({ position = 'right' }: IFoodAddFormComponentProps) => {
       }),
     [data?.restaurant?.categories]
   );
+=======
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
   // Handlers
   const onHandleStepChange = (order: number) => {
@@ -91,9 +98,12 @@ const FoodForm = ({ position = 'right' }: IFoodAddFormComponentProps) => {
                 order: activeIndex,
               }}
             />
+<<<<<<< HEAD
           </StepperPanel>
           <StepperPanel header="Add Addons">
             <div>Addons</div>
+=======
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
           </StepperPanel>
         </Stepper>
       </div>

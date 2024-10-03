@@ -17,8 +17,17 @@ import { MAX_PRICE, MIN_PRICE, VariationErrors } from '@/lib/utils/constants';
 
 // Interfaces
 import {
+<<<<<<< HEAD
   IFoodGridItem,
   IFoodVariationsAddRestaurantComponentProps,
+=======
+  IAddon,
+  IAddonByRestaurantResponse,
+  IDropdownSelectItem,
+  IFoodGridItem,
+  IFoodVariationsAddRestaurantComponentProps,
+  IQueryResult,
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 } from '@/lib/utils/interfaces';
 import { onErrorMessageMatcher } from '@/lib/utils/methods';
 
@@ -29,11 +38,30 @@ import { VariationSchema } from '@/lib/utils/schema';
 import { faAdd, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useContext } from 'react';
 import { FoodsContext } from '@/lib/context/foods.context';
+<<<<<<< HEAD
+=======
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import {
+  CREATE_FOOD,
+  EDIT_FOOD,
+  GET_ADDONS_BY_RESTAURANT_ID,
+  GET_FOODS_BY_RESTAURANT_ID,
+} from '@/lib/api/graphql';
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+import { ToastContext } from '@/lib/context/toast.context';
+import CustomMultiSelectComponent from '@/lib/ui/useable-components/custom-multi-select';
+import AddonAddForm from '../../../add-on/add-form';
+import { useMutation } from '@apollo/client';
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
 const initialFormValuesTemplate: IVariationForm = {
   title: '',
   price: 0,
   discount: 0,
+<<<<<<< HEAD
+=======
+  addons: null,
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 };
 
 export default function VariationAddForm({
@@ -46,6 +74,7 @@ export default function VariationAddForm({
     order: -1,
   };
 
+<<<<<<< HEAD
   // Context
   const { onSetFoodContextData, foodContextData } = useContext(FoodsContext);
 
@@ -95,6 +124,176 @@ export default function VariationAddForm({
                 const _errors: FormikErrors<IVariationForm>[] =
                   (errors?.variations as FormikErrors<IVariationForm>[]) ?? [];
 
+=======
+  // State
+  const [isAddAddonVisible, setIsAddAddonVisible] = useState(false);
+  const [addon, setAddon] = useState<IAddon | null>(null);
+
+  // Context
+  const { showToast } = useContext(ToastContext);
+  const { onSetFoodContextData, foodContextData, onClearFoodData } =
+    useContext(FoodsContext);
+  const {
+    restaurantLayoutContextData: { restaurantId },
+  } = useContext(RestaurantLayoutContext);
+
+  // Constants
+  const initialValues = {
+    variations:
+      foodContextData?.isEditing ||
+      (foodContextData?.food?.variations ?? [])?.length > 0
+        ? (foodContextData?.food?.variations ?? [])
+        : [
+            {
+              ...initialFormValuesTemplate,
+            },
+          ],
+  };
+
+  // Query
+  const { data, loading } = useQueryGQL(
+    GET_ADDONS_BY_RESTAURANT_ID,
+    { id: restaurantId },
+    {
+      fetchPolicy: 'network-only',
+      enabled: !!restaurantId,
+      onCompleted: onFetchAddonsByRestaurantCompleted,
+      onError: onErrorFetchAddonsByRestaurant,
+    }
+  ) as IQueryResult<IAddonByRestaurantResponse | undefined, undefined>;
+
+  const [createFood] = useMutation(
+    foodContextData?.isEditing ? EDIT_FOOD : CREATE_FOOD,
+    {
+      refetchQueries: [
+        {
+          query: GET_FOODS_BY_RESTAURANT_ID,
+          variables: { id: restaurantId },
+        },
+      ],
+      onCompleted: () => {
+        showToast({
+          type: 'success',
+          title: `${foodContextData?.isEditing ? 'Edit' : 'New'} Food`,
+          message: `Food has been ${foodContextData?.isEditing ? 'edited' : 'added'} successfully.`,
+        });
+
+        onClearFoodData();
+      },
+      onError: (error) => {
+        let message = '';
+        try {
+          message = error.graphQLErrors[0]?.message;
+        } catch (err) {
+          message = 'Something went wrong.';
+        }
+        showToast({
+          type: 'error',
+          title: 'New Food',
+          message,
+        });
+      },
+    }
+  );
+
+  // Memoized Data
+  const addonsDropdown = useMemo(
+    () =>
+      data?.restaurant?.addons.map((addon: IAddon) => {
+        return { label: addon.title, code: addon._id };
+      }),
+    [data?.restaurant?.addons]
+  );
+
+  // API Handlers
+  function onFetchAddonsByRestaurantCompleted() {}
+  function onErrorFetchAddonsByRestaurant() {
+    showToast({
+      type: 'error',
+      title: 'Addons Fetch',
+      message: 'Addons fetch failed',
+      duration: 2500,
+    });
+  }
+
+  // Handlers
+  const onHandleSubmit = ({ variations }: { variations: IVariationForm[] }) => {
+    try {
+      const _variations = variations.map(
+        ({ discount, ...item }: IVariationForm) => {
+          return {
+            ...item,
+            discounted: discount,
+            addons: item?.addons?.map((item: IDropdownSelectItem) => item.code),
+          };
+        }
+      );
+
+      const foodInput = {
+        _id: foodContextData?.food?._id ?? '',
+        restaurant: restaurantId,
+        ...foodContextData?.food?.data,
+        category: foodContextData?.food?.data.category?.code,
+        variations: _variations,
+      };
+
+      createFood({
+        variables: {
+          foodInput,
+        },
+      });
+    } catch (err) {
+      showToast({
+        type: 'error',
+        title: `${foodContextData?.isEditing ? 'Edit' : 'New'} Food`,
+        message: `Food ${foodContextData?.isEditing ? 'edit' : 'creation'} failed`,
+        duration: 2500,
+      });
+    }
+  };
+
+  const onBackClickHandler = ({
+    variations,
+  }: {
+    variations: IVariationForm[];
+  }) => {
+    console.log({ back: foodContextData });
+    onSetFoodContextData({
+      food: {
+        _id: foodContextData?.food?._id ?? '',
+        data: foodContextData?.food?.data ?? ({} as IFoodGridItem),
+        variations: variations,
+      },
+    });
+    onStepChange(order - 1);
+  };
+
+  return (
+    <div className="flex h-full w-full items-center justify-start">
+      <div className="h-full w-full">
+        <div className="flex flex-col gap-2">
+          <div className="mb-2 flex flex-col">
+            <span className="text-lg">Add Variation</span>
+          </div>
+
+          <div className="mb-2">
+            <Formik
+              initialValues={initialValues}
+              validationSchema={VariationSchema}
+              onSubmit={onHandleSubmit}
+              enableReinitialize
+            >
+              {({
+                values,
+                errors,
+                isSubmitting,
+                setFieldValue,
+                handleSubmit,
+              }: FormikProps<{ variations: IVariationForm[] }>) => {
+                const _errors: FormikErrors<IVariationForm>[] =
+                  (errors?.variations as FormikErrors<IVariationForm>[]) ?? [];
+
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                 return (
                   <Form onSubmit={handleSubmit}>
                     <div>
@@ -110,10 +309,19 @@ export default function VariationAddForm({
                                       key={`variations-${index}`}
                                     >
                                       <div className="relative">
+<<<<<<< HEAD
                                         {!!index && (
                                           <button
                                             className="absolute -right-1 top-2"
                                             onClick={() => remove(index)}
+=======
+                                        {(foodContextData?.isEditing ||
+                                          !!index) && (
+                                          <button
+                                            className="absolute -right-1 top-2"
+                                            onClick={() => remove(index)}
+                                            type="button"
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                                           >
                                             <FontAwesomeIcon
                                               icon={faTimes}
@@ -154,7 +362,11 @@ export default function VariationAddForm({
                                               />
                                             </div>
 
+<<<<<<< HEAD
                                             <div className="col-span-6 sm:col-span-6">
+=======
+                                            <div className="relative col-span-6 sm:col-span-6">
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                                               <CustomNumberField
                                                 name={`variations[${index}].price`}
                                                 min={MIN_PRICE}
@@ -179,6 +391,7 @@ export default function VariationAddForm({
                                                       : '',
                                                 }}
                                               />
+<<<<<<< HEAD
                                             </div>
                                             <div className="col-span-6 sm:col-span-6">
                                               <CustomNumberField
@@ -189,6 +402,32 @@ export default function VariationAddForm({
                                                 minFractionDigits={0}
                                                 maxFractionDigits={2}
                                                 placeholder="Discount"
+=======
+                                              {value.discount > 0 && (
+                                                <div className="absolute bottom-[-15px] left-[2px] font-semibold text-[10px] flex gap-2">
+                                                  <p>
+                                                    Actual Price&nbsp;: &nbsp;
+                                                    <span className="line-through">
+                                                      {value.price +
+                                                        value.discount}
+                                                    </span>
+                                                  </p>
+                                                  ,
+                                                  <p>
+                                                    Discounted Price&nbsp;:
+                                                    &nbsp;
+                                                    <span>{value.price}</span>
+                                                  </p>
+                                                </div>
+                                              )}
+                                            </div>
+
+                                            <div className="col-span-6 sm:col-span-6">
+                                              <CustomNumberField
+                                                name={`variations[${index}].discount`}
+                                                min={0}
+                                                placeholder="Discount Price"
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                                                 showLabel={true}
                                                 value={value.discount}
                                                 onChangeFieldValue={
@@ -206,6 +445,37 @@ export default function VariationAddForm({
                                                 }}
                                               />
                                             </div>
+<<<<<<< HEAD
+=======
+
+                                            <div className="col-span-12 sm:col-span-12">
+                                              <CustomMultiSelectComponent
+                                                name={`variations[${index}].addons`}
+                                                placeholder="Addons"
+                                                options={addonsDropdown ?? []}
+                                                selectedItems={value.addons}
+                                                setSelectedItems={setFieldValue}
+                                                showLabel={true}
+                                                extraFooterButton={{
+                                                  title: 'Add New Addon',
+                                                  onChange: () =>
+                                                    setIsAddAddonVisible(true),
+                                                }}
+                                                isLoading={loading}
+                                                style={{
+                                                  borderColor:
+                                                    onErrorMessageMatcher(
+                                                      'addons',
+                                                      _errors[index]
+                                                        ?.addons as string,
+                                                      VariationErrors
+                                                    )
+                                                      ? 'red'
+                                                      : '',
+                                                }}
+                                              />
+                                            </div>
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                                           </div>
                                         </Fieldset>
                                       </div>
@@ -226,12 +496,28 @@ export default function VariationAddForm({
                         )}
                       </FieldArray>
 
+<<<<<<< HEAD
                       <div className="mt-4 flex justify-end">
+=======
+                      <div className="mt-4 flex justify-between">
+                        <CustomButton
+                          className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
+                          label={'Back'}
+                          type="button"
+                          onClick={() => {
+                            onBackClickHandler(values);
+                          }}
+                        />
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                         <CustomButton
                           className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
                           label={'Add'}
                           type="submit"
+<<<<<<< HEAD
                           loading={false} // Replace with actual loading state if available
+=======
+                          loading={isSubmitting}
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                         />
                       </div>
                     </div>
@@ -242,6 +528,18 @@ export default function VariationAddForm({
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+=======
+
+      <AddonAddForm
+        addon={addon}
+        onHide={() => {
+          setIsAddAddonVisible(false);
+          setAddon(null);
+        }}
+        isAddAddonVisible={isAddAddonVisible}
+      />
+>>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
     </div>
   );
 }

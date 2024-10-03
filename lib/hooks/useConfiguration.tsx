@@ -38,7 +38,6 @@ export const useConfiguration = () => {
     GOOGLE: configuration?.googleColor,
   };
 
-  const SENTRY_DSN = configuration?.webSentryUrl;
   const SKIP_EMAIL_VERIFICATION = configuration?.skipEmailVerification;
   const SKIP_MOBILE_VERIFICATION = configuration?.skipMobileVerification;
   const CURRENT_SYMBOL = configuration?.currencySymbol;
@@ -71,18 +70,12 @@ export const useConfiguration = () => {
   const APP_TERMS = configuration?.termsAndConditions;
   const APP_PRIVACY = configuration?.privacyPolicy;
   const APP_TEST_OTP = configuration?.testOtp;
+  const CURRENCY_CODE = configuration?.currency;
+  const CURRENCY_SYMBOL = configuration?.currency;
 
   return {
     SERVER_URL: BACKEND_URL.LIVE.SERVER_URL,
     WS_SERVER_URL: BACKEND_URL.LIVE.WS_SERVER_URL,
-    COLORS,
-
-    AMPLITUDE_API_KEY_WEB,
-    AMPLITUDE_API_KEY_APP,
-    LIBRARIES,
-    SENTRY_DSN,
-
-    CURRENT_SYMBOL,
 
     // EMAIL CONFIG
     EMAIL_NAME,
@@ -117,8 +110,10 @@ export const useConfiguration = () => {
     RESTAURANT_APP_SENTRY_URL,
     RIDER_APP_SENTRY_URL,
 
-    // GOOGLE MAPS API KEY
+    // GOOGLE MAPS
     GOOGLE_MAPS_KEY,
+    LIBRARIES,
+    COLORS,
 
     // CLOUDINARY
     CLOUDINARY_UPLOAD_URL,
@@ -148,5 +143,14 @@ export const useConfiguration = () => {
     // APP
     SKIP_EMAIL_VERIFICATION,
     SKIP_MOBILE_VERIFICATION,
+
+    //CURRENCY
+    CURRENCY_CODE,
+    CURRENCY_SYMBOL,
+    CURRENT_SYMBOL,
+
+    // AMPLITUDE
+    AMPLITUDE_API_KEY_WEB,
+    AMPLITUDE_API_KEY_APP,
   };
 };

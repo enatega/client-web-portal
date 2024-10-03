@@ -1,4 +1,3 @@
-// components/ProfileHeader.tsx
 import React, { useContext } from 'react';
 
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -10,16 +9,15 @@ const ProfileHeader: React.FC = () => {
   const profileContext = useContext(ProfileContext);
 
   const onUpdateProfileClick = () => {
-    console.log('Update Profile button clicked');
     profileContext?.handleUpdateProfile();
   };
 
   return (
-    <div className="sticky top-0 z-10 w-full flex-shrink-0 bg-white p-3 shadow-sm">
+    <div className="w-full flex-shrink-0 top-0 bg-white z-10 shadow-sm p-3">
       <div className="flex w-full justify-between">
         <HeaderText className="heading" text="Profile" />
         <TextIconClickable
-          className="rounded border-gray-300 bg-black text-white sm:w-auto"
+          className="sm:w-auto bg-black text-white border-gray-300 rounded"
           icon={faWrench}
           iconStyles={{ color: 'white' }}
           title="Update Profile"

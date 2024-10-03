@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { execSync } = require('child_process');
 
 const commitMsg = execSync('cat .git/COMMIT_EDITMSG').toString().trim();

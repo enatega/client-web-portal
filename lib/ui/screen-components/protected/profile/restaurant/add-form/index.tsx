@@ -1,61 +1,36 @@
-'use client';
-
-// Core imports
-import { useContext, useRef } from 'react';
-
-// API and GraphQL
-
-// Hooks
-
-// Context
-
-// Interfaces
-import {
-  IRestaurantContextData,
-  IRestaurantsAddFormComponentProps,
-} from '@/lib/utils/interfaces';
-
-// PrimeReact components
+import React, { useContext, useRef } from 'react';
 import { Sidebar } from 'primereact/sidebar';
 import { Stepper } from 'primereact/stepper';
 import { StepperPanel } from 'primereact/stepperpanel';
-
-// Local components
-import { RestaurantContext } from '@/lib/context/restaurant.context';
+import { ProfileContext } from '@/lib/context/profile.context';
 import UpdateRestaurantDetails from './update-profile-detail';
 import UpdateRestaurantLocation from './update-restaurant-location';
+import { IRestaurantsAddFormComponentProps } from '@/lib/utils/interfaces';
 
 const UpdateRestaurantsProfileForm = ({
   position = 'right',
 }: IRestaurantsAddFormComponentProps) => {
-  // Ref
   const stepperRef = useRef(null);
 
-  // Context
   const {
-    isRestaurantFormVisible,
-    onSetRestaurantFormVisible,
+    isUpdateProfileVisible,
+    setIsUpdateProfileVisible,
     activeIndex,
     onActiveStepChange,
-    onSetRestaurantContextData,
-  } = useContext(RestaurantContext);
+  } = useContext(ProfileContext);
 
-  // Handlers
   const onHandleStepChange = (order: number) => {
     onActiveStepChange(order);
   };
-  const onSidebarHideHandler = () => {
-    // Clean Context State
-    onActiveStepChange(0);
-    onSetRestaurantFormVisible(false);
-    onSetRestaurantContextData({} as IRestaurantContextData);
-  };
 
-  // Use Effect
+  const onSidebarHideHandler = () => {
+    onActiveStepChange(0);
+    setIsUpdateProfileVisible(false);
+  };
 
   return (
     <Sidebar
-      visible={isRestaurantFormVisible}
+      visible={isUpdateProfileVisible}
       position={position}
       onHide={onSidebarHideHandler}
       className="w-full sm:w-[600px]"

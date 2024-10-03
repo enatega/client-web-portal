@@ -92,7 +92,7 @@ export default function ZoneAddForm({
           onHide();
         },
         onError: ({ graphQLErrors, networkError }: ApolloError) => {
-          let message =
+          const message =
             graphQLErrors[0]?.message ??
             networkError?.message ??
             'Something went wrong. Please try again';

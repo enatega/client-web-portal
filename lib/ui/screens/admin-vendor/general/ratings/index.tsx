@@ -1,11 +1,12 @@
-// Components
-import RatingHeader from '@/lib/ui/screen-components/protected/ratings/header/screen-header';
+import React from 'react';
+import RatingsHeader from '@/lib/ui/screen-components/protected/ratings/header/screen-header';
+import RatingMain from '@/lib/ui/screen-components/protected/ratings/main';
 
 export default function RatingScreen() {
   return (
-    <div className="flex h-screen flex-col overflow-hidden p-3">
-      <RatingHeader />
-      <div className="flex-grow overflow-y-auto"></div>
+    <div className="screen-container">
+      <RatingsHeader />
+      <RatingMain />
     </div>
   );
 }
