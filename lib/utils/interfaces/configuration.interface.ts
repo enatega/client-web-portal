@@ -20,8 +20,8 @@ export interface IConfiguration {
   riderAppSentryUrl?: string;
   skipEmailVerification?: boolean;
   skipMobileVerification?: boolean;
-  currency: string;
-  currencySymbol: string;
+  currency?: string;
+  currencySymbol?: string;
   deliveryRate: number;
   googleMapLibraries: string;
   twilioEnabled: boolean;

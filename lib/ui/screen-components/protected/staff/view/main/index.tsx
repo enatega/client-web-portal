@@ -19,6 +19,7 @@ import StaffTableHeader from '../header/table-header';
 
 // Utilities and Data
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
+import { generateDummyStaff } from '@/lib/utils/dummy';
 
 // GraphQL
 import { GET_STAFFS } from '@/lib/api/graphql/queries/staff';
@@ -72,7 +73,7 @@ export default function StaffMain({
             onGlobalFilterChange={onGlobalFilterChange}
           />
         }
-        data={data?.staffs || []}
+        data={data?.staffs || (loading ? generateDummyStaff() : [])}
         filters={filters}
         setSelectedData={setSelectedProducts}
         selectedData={selectedProducts}

@@ -90,3 +90,14 @@ export const AppConfigValidationSchema = Yup.object().shape({
   privacyPolicy: Yup.string().required('Privacy Policy is required'),
   testOtp: Yup.number().required('Test OTP is required'),
 });
+
+export const CurrencyValidationSchema = Yup.object().shape({
+  currency: Yup.object().shape({
+    label: Yup.string().required('Required'),
+    code: Yup.string().required('Required'),
+  }),
+  currencySymbol: Yup.object().shape({
+    label: Yup.string().required('Required'),
+    code: Yup.string().required('Required'),
+  }),
+});

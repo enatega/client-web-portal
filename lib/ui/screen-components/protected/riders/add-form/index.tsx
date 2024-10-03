@@ -145,132 +145,121 @@ export default function RiderAddForm({
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-4">
-                        <div>
-                          <CustomTextField
-                            type="text"
-                            name="name"
-                            placeholder="Name"
-                            maxLength={35}
-                            value={values.name}
-                            onChange={handleChange}
-                            showLabel={true}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'name',
-                                errors?.name,
-                                RiderErrors
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </div>
-                        <div>
-                          <CustomTextField
-                            type="text"
-                            name="username"
-                            placeholder="Username"
-                            maxLength={35}
-                            value={values.username}
-                            onChange={handleChange}
-                            showLabel={true}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'username',
-                                errors?.username,
-                                RiderErrors
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </div>
+                        <CustomTextField
+                          type="text"
+                          name="name"
+                          placeholder="Name"
+                          maxLength={35}
+                          value={values.name}
+                          onChange={handleChange}
+                          showLabel={true}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'name',
+                              errors?.name,
+                              RiderErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
 
-                        <div>
-                          <CustomPasswordTextField
-                            placeholder="Password"
-                            name="password"
-                            maxLength={20}
-                            value={values.password}
-                            showLabel={true}
-                            onChange={handleChange}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'password',
-                                errors?.password,
-                                RiderErrors
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </div>
+                        <CustomTextField
+                          type="text"
+                          name="username"
+                          placeholder="Username"
+                          maxLength={35}
+                          value={values.username}
+                          onChange={handleChange}
+                          showLabel={true}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'username',
+                              errors?.username,
+                              RiderErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
 
-                        <div>
-                          <CustomPasswordTextField
-                            placeholder="Confirm Password"
-                            name="confirmPassword"
-                            maxLength={20}
-                            showLabel={true}
-                            value={values.confirmPassword ?? ''}
-                            onChange={handleChange}
-                            feedback={false}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'confirmPassword',
-                                errors?.confirmPassword,
-                                RiderErrors
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </div>
+                        <CustomPasswordTextField
+                          placeholder="Password"
+                          name="password"
+                          maxLength={20}
+                          value={values.password}
+                          showLabel={true}
+                          onChange={handleChange}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'password',
+                              errors?.password,
+                              RiderErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
 
-                        <div>
-                          <CustomDropdownComponent
-                            placeholder="Zone"
-                            options={
-                              data?.zones.map((val) => {
-                                return { label: val.title, code: val._id };
-                              }) || []
-                            }
-                            showLabel={true}
-                            name="zone"
-                            selectedItem={values.zone}
-                            setSelectedItem={setFieldValue}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'zone',
-                                errors?.zone,
-                                RiderErrors
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </div>
+                        <CustomPasswordTextField
+                          placeholder="Confirm Password"
+                          name="confirmPassword"
+                          maxLength={20}
+                          showLabel={true}
+                          value={values.confirmPassword ?? ''}
+                          onChange={handleChange}
+                          feedback={false}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'confirmPassword',
+                              errors?.confirmPassword,
+                              RiderErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
 
-                        <div>
-                          <CustomNumberField
-                            min={0}
-                            placeholder="Phone Number"
-                            name="phone"
-                            showLabel={true}
-                            value={values.phone}
-                            useGrouping={false}
-                            onChange={setFieldValue}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'phone',
-                                errors?.phone,
-                                RiderErrors
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </div>
+                        <CustomDropdownComponent
+                          placeholder="Zone"
+                          options={
+                            data?.zones.map((val) => {
+                              return { label: val.title, code: val._id };
+                            }) || []
+                          }
+                          showLabel={true}
+                          name="zone"
+                          selectedItem={values.zone}
+                          setSelectedItem={setFieldValue}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'zone',
+                              errors?.zone,
+                              RiderErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
+
+                        <CustomNumberField
+                          min={0}
+                          placeholder="Phone Number"
+                          name="phone"
+                          showLabel={true}
+                          value={values.phone}
+                          useGrouping={false}
+                          onChange={setFieldValue}
+                          style={{
+                            borderColor: onErrorMessageMatcher(
+                              'phone',
+                              errors?.phone,
+                              RiderErrors
+                            )
+                              ? 'red'
+                              : '',
+                          }}
+                        />
 
                         <div className="mt-4 flex justify-end">
                           <CustomButton

@@ -44,9 +44,9 @@ export default function StaffAddForm({
     email: '',
     phone: null,
     isActive: true,
-    password: '',
     ...staff,
-    confirmPassword: staff ? staff.password : '',
+    password: staff ? staff.plainPassword : '',
+    confirmPassword: staff ? staff.plainPassword : '',
     permissions: staff
       ? staff.permissions?.map((p) => {
           return { label: p, code: p };
@@ -68,9 +68,7 @@ export default function StaffAddForm({
     values: IStaffForm,
     { resetForm }: FormikHelpers<IStaffForm>
   ) => {
-    console.log(values);
     try {
-      console.log('inside');
       mutate({
         variables: {
           staffInput: {
@@ -146,7 +144,10 @@ export default function StaffAddForm({
                   setFieldValue,
                 }) => {
                   return (
-                    <Form onSubmit={handleSubmit}>
+                    <Form
+                      onClick={() => console.log(errors)}
+                      onSubmit={handleSubmit}
+                    >
                       <div className="space-y-4">
                         <div>
                           <CustomTextField

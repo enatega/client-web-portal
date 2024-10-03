@@ -292,7 +292,7 @@ export default function VariationAddForm({
                                               />
                                             </div>
 
-                                            <div className="col-span-6 sm:col-span-6">
+                                            <div className="relative col-span-6 sm:col-span-6">
                                               <CustomNumberField
                                                 name={`variations[${index}].price`}
                                                 min={MIN_PRICE}
@@ -317,17 +317,30 @@ export default function VariationAddForm({
                                                       : '',
                                                 }}
                                               />
+                                              {value.discount > 0 && (
+                                                <div className="absolute bottom-[-15px] left-[2px] font-semibold text-[10px] flex gap-2">
+                                                  <p>
+                                                    Actual Price&nbsp;: &nbsp;
+                                                    <span className="line-through">
+                                                      {value.price +
+                                                        value.discount}
+                                                    </span>
+                                                  </p>
+                                                  ,
+                                                  <p>
+                                                    Discounted Price&nbsp;:
+                                                    &nbsp;
+                                                    <span>{value.price}</span>
+                                                  </p>
+                                                </div>
+                                              )}
                                             </div>
 
                                             <div className="col-span-6 sm:col-span-6">
                                               <CustomNumberField
-                                                prefix="%"
                                                 name={`variations[${index}].discount`}
                                                 min={0}
-                                                max={100}
-                                                minFractionDigits={0}
-                                                maxFractionDigits={2}
-                                                placeholder="Discount"
+                                                placeholder="Discount Price"
                                                 showLabel={true}
                                                 value={value.discount}
                                                 onChangeFieldValue={
