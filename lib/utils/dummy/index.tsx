@@ -22,6 +22,7 @@ import { ICuisine } from '../interfaces/cuisine.interface';
 import { INotification } from '../interfaces/notification.interface';
 import { IWithDrawRequest } from '../interfaces/withdraw-request.interface';
 import { IActiveOrders } from '../interfaces/dispatch.interface';
+import { ICouponRestaurantResponse } from '../interfaces/coupons-restaurant.interface';
 
 export const dummyStatsData: IStatsCardProps[] = [
   {
@@ -416,4 +417,22 @@ export const generateDummyFoods = (count: number = 10): IFoodGridItem[] => {
   }
 
   return foods;
+};
+
+export const generateDummyCouponsRestaurant = (
+  count: number = 10
+): ICouponRestaurantResponse[] => {
+  const coupons: ICouponRestaurantResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    coupons.push({
+      _id: `rider_${i + 1}`,
+      title: `rider${i + 1}`,
+      discount: i + 1,
+      enabled: Math.random() > 0.5,
+      __typename: 'Rider',
+    });
+  }
+
+  return coupons;
 };

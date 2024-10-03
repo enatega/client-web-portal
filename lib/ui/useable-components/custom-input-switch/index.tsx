@@ -9,7 +9,9 @@ export default function CustomInputSwitch({
   reverse = false,
 }: ICustomInputSwitchComponentProps) {
   return loading ? (
-    <CustomLoader />
+    <div className="ml-4">
+      <CustomLoader size="14.7px" />
+    </div>
   ) : (
     <label className="ml-2 flex flex-shrink-0 cursor-pointer items-center">
       <div className="relative">

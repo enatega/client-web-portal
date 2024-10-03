@@ -124,6 +124,11 @@ export default function MakeSidebar() {
           isParent: false,
         },
         {
+          text: 'Coupons',
+          route: '/admin/restaurant/general/coupons',
+          isParent: false,
+        },
+        {
           text: 'Payments',
           route: '/admin/restaurant/general/payments',
           isParent: false,

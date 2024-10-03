@@ -14,19 +14,24 @@ import { LayoutProvider } from '@/lib/context/layout.context';
 import { SidebarProvider } from '@/lib/context/sidebar.context';
 import { UserProvider } from '@/lib/context/user-context';
 
-// Service
+// Context
+import { ConfigurationProvider } from '@/lib/context/configuration.context';
+import { ToastProvider } from '@/lib/context/toast.context';
+
+// HOC
+import withPermissionsGuard from '@/lib/api/hoc/PermissionsGuard';
 
 // Configuration
 import { FontawesomeConfig } from '@/lib/config';
 
 // Styles
-import { ConfigurationProvider } from '@/lib/context/configuration.context';
-import { ToastProvider } from '@/lib/context/toast.context';
-import { useSetupApollo } from '@/lib/hooks/useSetApollo';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './global.css';
-import withPermissionsGuard from '@/lib/ui/guards/PermissionsGuard';
+
+// Apollo
+import { useSetupApollo } from '@/lib/hooks/useSetApollo';
+
 const inter = Inter({ subsets: ['latin'] });
 
 const ProtectedLayout = withPermissionsGuard(

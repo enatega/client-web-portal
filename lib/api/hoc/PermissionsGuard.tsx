@@ -5,10 +5,10 @@ import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-const withPermissionsGuard = <P extends object>(
-  Component: React.ComponentType<P>
+const withPermissionsGuard = <T extends object>(
+  Component: React.ComponentType<T>
 ) => {
-  const WrappedComponent = (props: P) => {
+  const WrappedComponent = (props: T) => {
     const pathname = usePathname();
     const router = useRouter();
     const { user } = useUserContext();
