@@ -14,7 +14,9 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
   const [showModal, setShowModal] = useState(false);
 
   const handleReviewClick = () => {
-    setShowModal(true);
+    if (reviewContent) {
+      setShowModal(true);
+    }
   };
 
   const handleCloseModal = () => {
@@ -41,14 +43,19 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
           </div>
           <button
             onClick={handleReviewClick}
-            className="flex items-center border px-2 py-1 rounded"
+            className={`flex items-center border px-2 py-1 rounded ${
+              reviewContent 
+                ? 'hover:bg-gray-100' 
+                : 'opacity-50 cursor-not-allowed'
+            }`}
+            disabled={!reviewContent}
           >
             <span className="mr-1">💬</span>
             <span>Review</span>
           </button>
         </div>
       </div>
-      { reviewContent && showModal && (
+      {reviewContent && showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full relative">
             <h2 className="text-xl font-semibold mb-4">Review</h2>
