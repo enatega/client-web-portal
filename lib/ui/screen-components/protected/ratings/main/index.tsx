@@ -19,9 +19,7 @@ const RatingMain: React.FC = () => {
   });
 
   useEffect(() => {
-    if (data) {
-      filterReviews();
-    }
+    filterReviews();
   }, [data, selectedActions, searchTerm]);
 
   const filterReviews = () => {
