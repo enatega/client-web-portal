@@ -9,13 +9,13 @@ import CustomInputSwitch from '../../custom-input-switch';
 import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { ICouponRestaurantResponse } from '@/lib/utils/interfaces/coupons-restaurant.interface';
 
+// Context
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+
 // GraphQL
-import { GET_RIDERS, TOGGLE_RIDER } from '@/lib/api/graphql';
 import { useMutation } from '@apollo/client';
 import { EDIT_RESTAURANT_COUPON } from '@/lib/api/graphql/mutations/coupons-restaurant';
 import { GET_RESTAURANT_COUPONS } from '@/lib/api/graphql/queries/coupons-restaurant';
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
-import { title } from 'process';
 
 export const COUPONS_RESTAURANT_TABLE_COLUMNS = ({
   menuItems,

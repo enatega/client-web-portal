@@ -1,5 +1,5 @@
 // Interface and Types
-import { IRiderHeaderProps } from '@/lib/utils/interfaces/rider.interface';
+import { ICouponRestaurantHeaderProps } from '@/lib/utils/interfaces/coupons-restaurant.interface';
 
 // Components
 import HeaderText from '@/lib/ui/useable-components/header-text';
@@ -7,7 +7,6 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 // Icons
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
-import { ICouponRestaurantHeaderProps } from '@/lib/utils/interfaces/coupons-restaurant.interface';
 
 const CouponsHeader = ({
   setIsAddCouponVisible,

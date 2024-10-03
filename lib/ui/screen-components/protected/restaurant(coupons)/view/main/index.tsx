@@ -1,5 +1,4 @@
 // Core
-import { useMutation, useQuery } from '@apollo/client';
 import { useContext, useState } from 'react';
 
 // Prime React
@@ -7,9 +6,11 @@ import { FilterMatchMode } from 'primereact/api';
 
 // Interface and Types
 import {
-  IRiderResponse,
-  IRidersDataResponse,
-} from '@/lib/utils/interfaces/rider.interface';
+  ICouponRestaurantGQLResponse,
+  ICouponRestaurantMainComponentsProps,
+  ICouponRestaurantResponse,
+} from '@/lib/utils/interfaces/coupons-restaurant.interface';
+import { IQueryResult } from '@/lib/utils/interfaces';
 
 // UI Components
 import CouponsTableHeader from '../header/table-header';
@@ -19,6 +20,7 @@ import Table from '@/lib/ui/useable-components/table';
 
 // Utilities and Data
 import { IActionMenuItem } from '@/lib/utils/interfaces/action-menu.interface';
+import { generateDummyCouponsRestaurant } from '@/lib/utils/dummy';
 
 // Hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
@@ -28,21 +30,9 @@ import useToast from '@/lib/hooks/useToast';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 
 // GraphQL and Utilities
-import { DELETE_RIDER, GET_RIDERS } from '@/lib/api/graphql';
-import { IQueryResult } from '@/lib/utils/interfaces';
 import { GET_RESTAURANT_COUPONS } from '@/lib/api/graphql/queries/coupons-restaurant';
-
-// Data
-import {
-  generateDummyCouponsRestaurant,
-  generateDummyRiders,
-} from '@/lib/utils/dummy';
-import {
-  ICouponRestaurantGQLResponse,
-  ICouponRestaurantMainComponentsProps,
-  ICouponRestaurantResponse,
-} from '@/lib/utils/interfaces/coupons-restaurant.interface';
 import { DELETE_RESTAURANT_COUPON } from '@/lib/api/graphql/mutations/coupons-restaurant';
+import { useMutation } from '@apollo/client';
 
 export default function CouponsMain({
   setIsAddCouponVisible,
