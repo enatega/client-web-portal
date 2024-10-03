@@ -12,6 +12,7 @@ import {
   IFoodGridItem,
   IOptions,
   IRestaurantResponse,
+  IStaffResponse,
   IStatsCardProps,
   IZoneResponse,
 } from '../interfaces';
@@ -435,4 +436,24 @@ export const generateDummyCouponsRestaurant = (
   }
 
   return coupons;
+};
+
+export const generateDummyStaff = (count: number = 10): IStaffResponse[] => {
+  const staffs: IStaffResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    staffs.push({
+      __typename: 'Staff',
+      _id: `staff_${i + 1}`,
+      name: `Staff ${i + 1}`,
+      email: `staff${i + 1}@example.com`, // updated email to be more realistic
+      plainPassword: `password${i + 1}`,
+      password: `password${i + 1}`,
+      phone: 1234567890 + i,
+      permissions: ['Dummy'],
+      isActive: Math.random() > 0.5,
+    });
+  }
+
+  return staffs;
 };

@@ -14,7 +14,7 @@ import { IQueryResult } from '@/lib/utils/interfaces';
 
 // UI Components
 import CouponsTableHeader from '../header/table-header';
-import { COUPONS_RESTAURANT_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/coupons-restaurant';
+import { COUPONS_RESTAURANT_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/coupons-restaurant-columns';
 import DeleteDialog from '@/lib/ui/useable-components/delete-dialog';
 import Table from '@/lib/ui/useable-components/table';
 
