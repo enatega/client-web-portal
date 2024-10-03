@@ -63,13 +63,6 @@ export const dummyOrderStatsData: IStatsCardProps[] = [
     route: '/general/users',
   },
   {
-    label: 'COD Orders',
-    total: 7689,
-    description: '2.4% up from yesterday',
-
-    route: '#',
-  },
-  {
     label: 'Total Sales',
     total: 20689,
     description: '6.1% down from yesterday',
@@ -77,7 +70,14 @@ export const dummyOrderStatsData: IStatsCardProps[] = [
     route: '#',
   },
   {
-    label: 'COD Sales',
+    label: 'COD Orders',
+    total: 7689,
+    description: '2.4% up from yesterday',
+    route: '#',
+  },
+
+  {
+    label: 'Card Orders',
     total: 12689,
     description: '1.9% up from yesterday',
 

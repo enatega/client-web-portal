@@ -2,13 +2,15 @@
 
 // Component
 import GrowthOverView from '@/lib/ui/screen-components/protected/home/growth-overview';
+import StatesTable from '@/lib/ui/screen-components/protected/home/stats-table';
 import UserStats from '@/lib/ui/screen-components/protected/home/user-stats';
 
 export default function Home() {
   return (
-    <div className="h-[calc(100vh-2rem)] w-full space-y-6 overflow-y-auto p-4 pb-8">
+    <div className="screen-container">
       <UserStats />
       <GrowthOverView />
+      <StatesTable />
     </div>
   );
 }
