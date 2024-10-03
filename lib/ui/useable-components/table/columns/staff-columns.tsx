@@ -3,12 +3,11 @@ import { useState } from 'react';
 
 // Custom Components
 import ActionMenu from '@/lib/ui/useable-components/action-menu';
-import Toggle from '../../toggle';
+import CustomInputSwitch from '../../custom-input-switch';
 
 // Interfaces and Types
 import { IStaffResponse } from '@/lib/utils/interfaces';
 import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
-import CustomInputSwitch from '../../custom-input-switch';
 import { useMutation } from '@apollo/client';
 import { EDIT_STAFF } from '@/lib/api/graphql/mutations/staff';
 import { GET_STAFFS } from '@/lib/api/graphql/queries/staff';
