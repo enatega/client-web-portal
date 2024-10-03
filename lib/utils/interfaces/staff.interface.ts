@@ -12,7 +12,7 @@ export interface IStaffResponse {
   name: string;
   email: string;
   password: string;
-  plainPassword?: string;
+  plainPassword: string;
   phone: number;
   isActive: boolean;
   permissions: string[];
