@@ -109,18 +109,8 @@ export const EDIT_RESTAURANT = gql`
           startTime
           endTime
         }
-        isAvailable
-        minimumOrder
-        tax
-        openingTimes {
-          day
-          times {
-            startTime
-            endTime
-          }
-        }
-        shopType
       }
+      shopType
     }
   }
 `;
