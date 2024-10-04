@@ -22,6 +22,7 @@ export interface ILoginResponse {
   email: string;
   userType: string;
   restaurants: ISignInOwnerRestaurants[];
+  permissions?: String[];
   __typename: string;
 }
 

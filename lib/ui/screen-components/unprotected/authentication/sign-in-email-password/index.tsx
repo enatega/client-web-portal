@@ -38,6 +38,7 @@ import { ApolloError, useMutation } from '@apollo/client';
 import { onUseLocalStorage } from '@/lib/utils/methods';
 import { SignInSchema } from '@/lib/utils/schema';
 import { useRouter } from 'next/navigation';
+import { useUserContext } from '@/lib/hooks/useUser';
 
 const initialValues: ISignInForm = {
   email: '',
@@ -50,6 +51,7 @@ export default function LoginEmailPasswordMain() {
 
   // Hooks
   const router = useRouter();
+  const { setUser } = useUserContext();
 
   // API
   const [onLogin, { loading }] = useMutation(OWNER_LOGIN, {
@@ -60,9 +62,15 @@ export default function LoginEmailPasswordMain() {
   // API Handlers
   function onCompleted({ ownerLogin }: IOwnerLoginDataResponse) {
     onUseLocalStorage('save', `user-${APP_NAME}`, JSON.stringify(ownerLogin));
+    setUser(ownerLogin);
     let redirect_url = '/general/vendors';
+
     if (ownerLogin?.userType === 'VENDOR') {
       redirect_url = '/general/restaurants';
+    }
+
+    if (ownerLogin?.userType === 'STAFF') {
+      redirect_url = '/home';
     }
 
     router.replace(redirect_url);

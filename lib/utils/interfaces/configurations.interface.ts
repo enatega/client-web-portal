@@ -1,4 +1,4 @@
-import { IGlobalComponentProps } from './global.interface';
+import { IDropdownSelectItem, IGlobalComponentProps } from './global.interface';
 
 export interface IConfigCardComponentProps extends IGlobalComponentProps {
   toggleLabel?: string;
@@ -88,4 +88,9 @@ export interface IAppConfigForm {
 export interface IVerificationConfigForm {
   skipEmailVerification: boolean;
   skipMobileVerification: boolean;
+}
+
+export interface ICurrencyForm {
+  currency: IDropdownSelectItem | null;
+  currencySymbol: IDropdownSelectItem | null;
 }

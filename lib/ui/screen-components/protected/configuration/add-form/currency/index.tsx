@@ -3,7 +3,6 @@
 import { Form, Formik } from 'formik';
 
 // Components
-import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 import ConfigCard from '../../view/card';
 
 // Toast
@@ -13,50 +12,54 @@ import useToast from '@/lib/hooks/useToast';
 import { useConfiguration } from '@/lib/hooks/useConfiguration';
 
 // Interfaces and Types
-import { IPaypalForm } from '@/lib/utils/interfaces/configurations.interface';
+import { ICurrencyForm } from '@/lib/utils/interfaces/configurations.interface';
 
 // Utils and Constants
-import { PayPalValidationSchema } from '@/lib/utils/schema';
+import { CurrencyValidationSchema } from '@/lib/utils/schema';
 
 // GraphQL
 import {
   GET_CONFIGURATION,
-  SAVE_PAYPAL_CONFIGURATION,
+  SAVE_CURRENCY_CONFIGURATION,
 } from '@/lib/api/graphql';
 import { useMutation } from '@apollo/client';
+import { currencies, currenciesSymbol } from '@/lib/utils/constants/currency';
+import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
 
 const CurrencyAddForm = () => {
   // Hooks
-  const { PAYPAL_KEY, PAYPAL_SECRET, PAYPAL_SANDBOX } = useConfiguration();
+  const { CURRENCY_CODE } = useConfiguration();
   const { showToast } = useToast();
 
-  const initialValues = {
-    clientId: PAYPAL_KEY,
-    clientSecret: PAYPAL_SECRET,
-    sandbox: PAYPAL_SANDBOX,
+  let initialValues = {
+    currency: CURRENCY_CODE
+      ? { code: CURRENCY_CODE, label: CURRENCY_CODE }
+      : null,
+    currencySymbol: CURRENCY_CODE
+      ? currenciesSymbol.find((v) => v.currency === CURRENCY_CODE) || null
+      : null,
   };
 
   const [mutate, { loading: mutationLoading }] = useMutation(
-    SAVE_PAYPAL_CONFIGURATION,
+    SAVE_CURRENCY_CONFIGURATION,
     {
       refetchQueries: [{ query: GET_CONFIGURATION }],
     }
   );
 
-  const handleSubmit = (values: IPaypalForm) => {
+  const handleSubmit = (values: ICurrencyForm) => {
     mutate({
       variables: {
         configurationInput: {
-          clientId: values.clientId,
-          clientSecret: values.clientSecret,
-          sandbox: values.sandbox,
+          currency: values?.currency?.code,
+          currencySymbol: values.currencySymbol?.code,
         },
       },
       onCompleted: () => {
         showToast({
           type: 'success',
           title: 'Success!',
-          message: 'PayPal Configurations Updated',
+          message: 'Currency Configurations Updated',
           duration: 3000,
         });
       },
@@ -81,53 +84,40 @@ const CurrencyAddForm = () => {
     <div>
       <Formik
         initialValues={initialValues}
-        validationSchema={PayPalValidationSchema}
+        validationSchema={CurrencyValidationSchema}
         onSubmit={handleSubmit}
         enableReinitialize
       >
-        {({
-          values,
-          errors,
-          touched,
-          handleSubmit,
-          handleChange,
-          setFieldValue,
-        }) => {
+        {({ values, errors, touched, handleSubmit, setFieldValue }) => {
           return (
-            <Form onSubmit={handleSubmit}>
+            <Form onClick={() => console.log(errors)} onSubmit={handleSubmit}>
               <ConfigCard
-                cardTitle={'PayPal'}
+                cardTitle={'Currency'}
                 buttonLoading={mutationLoading}
-                toggleLabel={'Sandbox'}
-                toggleOnChange={() => {
-                  setFieldValue('sandbox', !values.sandbox);
-                }}
-                toggleValue={values.sandbox}
               >
-                <div className="grid grid-cols-2 gap-4">
-                  <CustomPasswordTextField
-                    placeholder="Publishable Key"
-                    name="clientId"
-                    maxLength={20}
-                    value={values.clientId}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <CustomDropdownComponent
+                    placeholder="Choose Currency"
+                    options={currencies}
                     showLabel={true}
-                    onChange={handleChange}
+                    name="currency"
+                    selectedItem={values.currency}
+                    setSelectedItem={setFieldValue}
                     style={{
                       borderColor:
-                        errors.clientId && touched.clientId ? 'red' : '',
+                        errors?.currency && touched.currency ? 'red' : '',
                     }}
                   />
-
-                  <CustomPasswordTextField
-                    placeholder="Client Secret"
-                    name="clientSecret"
-                    maxLength={20}
-                    value={values.clientSecret}
+                  <CustomDropdownComponent
+                    placeholder="Choose Currency Symbol"
+                    options={currenciesSymbol}
                     showLabel={true}
-                    onChange={handleChange}
+                    name="currencySymbol"
+                    selectedItem={values.currencySymbol}
+                    setSelectedItem={setFieldValue}
                     style={{
                       borderColor:
-                        errors.clientSecret && touched.clientSecret
+                        errors?.currencySymbol && touched.currencySymbol
                           ? 'red'
                           : '',
                     }}

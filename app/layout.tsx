@@ -12,20 +12,39 @@ import { PrimeReactProvider } from 'primereact/api';
 // Providers
 import { LayoutProvider } from '@/lib/context/layout.context';
 import { SidebarProvider } from '@/lib/context/sidebar.context';
+import { UserProvider } from '@/lib/context/user-context';
 
-// Service
+// Context
+import { ConfigurationProvider } from '@/lib/context/configuration.context';
+import { ToastProvider } from '@/lib/context/toast.context';
+
+// HOC
+import withPermissionsGuard from '@/lib/api/hoc/PermissionsGuard';
 
 // Configuration
 import { FontawesomeConfig } from '@/lib/config';
 
 // Styles
-import { ConfigurationProvider } from '@/lib/context/configuration.context';
-import { ToastProvider } from '@/lib/context/toast.context';
-import { useSetupApollo } from '@/lib/hooks/useSetApollo';
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './global.css';
+
+// Apollo
+import { useSetupApollo } from '@/lib/hooks/useSetApollo';
+
 const inter = Inter({ subsets: ['latin'] });
+
+const ProtectedLayout = withPermissionsGuard(
+  ({ children }: { children: React.ReactNode }) => {
+    return (
+      <LayoutProvider>
+        <SidebarProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </SidebarProvider>
+      </LayoutProvider>
+    );
+  }
+);
 
 export default function RootLayout({
   children,
@@ -39,6 +58,7 @@ export default function RootLayout({
   const value = {
     ripple: true,
   };
+
   return (
     <html lang="en">
       <head>
@@ -49,11 +69,9 @@ export default function RootLayout({
         <PrimeReactProvider value={value}>
           <ApolloProvider client={client}>
             <ConfigurationProvider>
-              <LayoutProvider>
-                <SidebarProvider>
-                  <ToastProvider>{children}</ToastProvider>
-                </SidebarProvider>
-              </LayoutProvider>
+              <UserProvider>
+                <ProtectedLayout>{children}</ProtectedLayout>
+              </UserProvider>
             </ConfigurationProvider>
           </ApolloProvider>
         </PrimeReactProvider>

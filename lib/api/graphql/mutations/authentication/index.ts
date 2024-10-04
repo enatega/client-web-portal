@@ -14,6 +14,7 @@ export const OWNER_LOGIN = gql`
         image
         address
       }
+      permissions
     }
   }
 `;
