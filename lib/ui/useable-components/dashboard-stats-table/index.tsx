@@ -21,7 +21,7 @@ export default function DashboardStatsTable({ loading, title, data, amountConfig
 
                         <div key={index} className={`flex justify-between py-2 ${index !== data.length - 1 ? 'border-b border-gray-300' : ''}`}>
                             <span className="text-gray-800">{item.label}</span>
-                            <span className="text-gray-800">{amountConfig ? (amountConfig?.format === 'currency' ? formatNumberWithCurrency(item.value, amountConfig.currency) : formatNumber(item.value, amountConfig.currency)) : item.value}</span>
+                            <span className="text-gray-800">{amountConfig ? (amountConfig?.format === 'currency' ? formatNumberWithCurrency(item.value, amountConfig.currency) : formatNumber(item.value)) : item.value}</span>
                         </div>
 
 

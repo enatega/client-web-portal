@@ -1,17 +1,20 @@
-export const formatNumber = (amount: number, locale: string = 'en-US') => {
-  return new Intl.NumberFormat(locale, {
+export const formatNumber = (amount: number) => {
+  return new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
   }).format(amount);
 };
 
 export const formatNumberWithCurrency = (
   amount: number,
-  currency: string,
+  currency: string = 'USD',
   locale: string = 'en-US'
 ) => {
-  return new Intl.NumberFormat(locale, {
+  const _locale = locale || 'en-US';
+  const _currency = currency || 'USD';
+
+  return new Intl.NumberFormat(_locale, {
     style: 'currency',
-    currency: currency,
+    currency: _currency,
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);

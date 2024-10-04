@@ -26,7 +26,7 @@ export default function DashboardRestaurantStatsTable({ loading, title, data, am
 
                     <div className={`flex justify-between py-2`}>
                         <span className="text-gray-800">Total Orders</span>
-                        <span className="text-gray-800">{amountConfig ? formatNumber(total_orders, amountConfig.currency) : total_orders}</span>
+                        <span className="text-gray-800">{amountConfig ? formatNumber(total_orders) : total_orders}</span>
                     </div>
 
                     <div className={`flex justify-between py-2`}>
