@@ -15,8 +15,11 @@ import HeaderText from '@/lib/ui/useable-components/header-text';
 // Constants
 import { DASHBOARD_PAYMENT_METHOD } from '@/lib/utils/constants';
 import DashboardStatsTableSkeleton from '@/lib/ui/useable-components/custom-skeletons/dashboard.stats.table.skeleton';
+import { useConfiguration } from '@/lib/hooks/useConfiguration';
 
 export default function RestaurantStatesTable({ dateFilter }: IDashboardRestaurantStatesTableComponentsProps) {
+
+    const { CURRENCY_CODE } = useConfiguration()
 
     // Context
     const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
@@ -67,7 +70,7 @@ export default function RestaurantStatesTable({ dateFilter }: IDashboardRestaura
                                 }
                             </div> :
                                 dashboardOrderSalesDetailsByPaymentMethod[method as keyof typeof dashboardOrderSalesDetailsByPaymentMethod]?.map((item, index) => {
-                                    return <DashboardRestaurantStatsTable key={index} loading={salesDetailsLoading} title={item._type} data={item.data} amountConfig={{ currency: "INR" }} />
+                                    return <DashboardRestaurantStatsTable key={index} loading={salesDetailsLoading} title={item._type} data={item.data} amountConfig={{ currency: CURRENCY_CODE ?? "USD" }} />
                                 })
                             }
                         </div>

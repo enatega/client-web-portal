@@ -9,12 +9,16 @@ import StatsCard from '@/lib/ui/useable-components/stats-card';
 import { faCashRegister, faCreditCard, faMoneyBillWave, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useMemo } from 'react';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+import { useConfiguration } from '@/lib/hooks/useConfiguration';
 
 export default function UserStats({ dateFilter }: IDashboardOrderStatsComponentsProps) {
 
 
   // Context
   const { restaurantLayoutContextData: { restaurantId } } = useContext(RestaurantLayoutContext);
+  // COntext
+  const { CURRENCY_CODE } = useConfiguration()
+
 
 
   const { data, loading } = useQueryGQL(GET_DASHBOARD_RESTAURANT_ORDERS, {
@@ -74,7 +78,7 @@ export default function UserStats({ dateFilter }: IDashboardOrderStatsComponents
         icon={faCashRegister}
         route="/food-management/orders"
         loading={loading}
-        amountConfig={{ format: 'currency', currency: 'USD' }}
+        amountConfig={{ format: 'currency', currency: CURRENCY_CODE ?? 'USD' }}
       />
 
     </div>
