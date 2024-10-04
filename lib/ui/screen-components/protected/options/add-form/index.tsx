@@ -156,7 +156,6 @@ export default function OptionAddForm({
                   const _errors: FormikErrors<IOptionForm>[] =
                     (errors?.options as FormikErrors<IOptionForm>[]) ?? [];
 
-                  console.log({ _errors });
 
                   return (
                     <Form onSubmit={handleSubmit}>

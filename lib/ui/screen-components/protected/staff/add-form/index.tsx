@@ -49,8 +49,8 @@ export default function StaffAddForm({
     confirmPassword: staff ? staff.password : '',
     permissions: staff
       ? staff.permissions?.map((p) => {
-          return { label: p, code: p };
-        })
+        return { label: p, code: p };
+      })
       : [],
   };
 
@@ -68,9 +68,7 @@ export default function StaffAddForm({
     values: IStaffForm,
     { resetForm }: FormikHelpers<IStaffForm>
   ) => {
-    console.log(values);
     try {
-      console.log('inside');
       mutate({
         variables: {
           staffInput: {
@@ -96,23 +94,16 @@ export default function StaffAddForm({
           onHide();
         },
         onError: (error) => {
-          console.log(error);
-          let message = '';
-          try {
-            message = error.graphQLErrors[0].message;
-          } catch (err) {
-            message = 'ActionFailedTryAgain';
-          }
           showToast({
             type: 'error',
-            title: 'Error!',
-            message,
+            title: `Staff ${staff ? 'Update' : 'Add'}`,
+            message: error.graphQLErrors[0].message ?? error.networkError?.message ?? `Failed to ${staff ? 'update' : 'add'} staff`,
             duration: 3000,
           });
         },
       });
     } catch (e) {
-      console.log(e);
+      showToast({ type: 'error', title: `Staff ${staff ? 'Update' : 'Add'}`, message: 'Something went wrong' })
     }
   };
 

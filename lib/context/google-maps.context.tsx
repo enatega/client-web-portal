@@ -1,5 +1,5 @@
 // Core
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 // Third-party libraries
 import { useJsApiLoader } from '@react-google-maps/api';
@@ -11,6 +11,7 @@ import {
   IGoogleMapsContext,
   IGoogleMapsProviderProps,
 } from '../utils/interfaces';
+import { ToastContext } from './toast.context';
 
 export const GoogleMapsContext = createContext<IGoogleMapsContext | undefined>(
   undefined
@@ -21,6 +22,9 @@ export const GoogleMapsProvider: React.FC<IGoogleMapsProviderProps> = ({
   libraries,
   children,
 }) => {
+
+  const { showToast } = useContext(ToastContext);
+
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: apiKey,
@@ -56,8 +60,8 @@ export const GoogleMapsProvider: React.FC<IGoogleMapsProviderProps> = ({
     if (apiKey) {
       unloadGoogleMapsScript(); // Unload the previous script if any
       loadGoogleMapsScript(apiKey)
-        .then(() => {})
-        .catch(() => console.error('Failed to load Google Maps script.'));
+        .then(() => { })
+        .catch(() => showToast({ type: 'error', title: "Google Maps", message: 'Failed to load Google Maps script.' }));
     }
   }, [apiKey]);
 

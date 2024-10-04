@@ -43,8 +43,16 @@ export const GET_DASHBOARD_SALES_BY_TYPE = gql`
 
 // Restaurant & Vendor
 export const GET_DASHBOARD_RESTAURANT_ORDERS = gql`
-  query GetRestaurantDashboardOrdersSalesStats($restaurant: String!) {
-    getRestaurantDashboardOrdersSalesStats(restaurant: $restaurant) {
+  query GetRestaurantDashboardOrdersSalesStats(
+    $restaurant: String!
+    $starting_date: String!
+    $ending_date: String!
+  ) {
+    getRestaurantDashboardOrdersSalesStats(
+      restaurant: $restaurant
+      starting_date: $starting_date
+      ending_date: $ending_date
+    ) {
       totalOrders
       totalSales
       totalCODOrders
@@ -53,9 +61,32 @@ export const GET_DASHBOARD_RESTAURANT_ORDERS = gql`
   }
 `;
 
+export const GET_DASHBOARD_RESTAURANT_SALES_ORDER_COUNT_DETAILS_BY_YEAR = gql`
+  query GetRestaurantDashboardSalesOrderCountDetailsByYear(
+    $restaurant: String!
+    $year: Int!
+  ) {
+    getRestaurantDashboardSalesOrderCountDetailsByYear(
+      restaurant: $restaurant
+      year: $year
+    ) {
+      salesAmount
+      ordersCount
+    }
+  }
+`;
+
 export const GET_DASHBOARD_ORDER_SALES_DETAILS_BY_PAYMENT_METHOD = gql`
-  query GetDashboardOrderSalesDetailsByPaymentMethod($restaurant: String!) {
-    getDashboardOrderSalesDetailsByPaymentMethod(restaurant: $restaurant) {
+  query GetDashboardOrderSalesDetailsByPaymentMethod(
+    $restaurant: String!
+    $starting_date: String!
+    $ending_date: String!
+  ) {
+    getDashboardOrderSalesDetailsByPaymentMethod(
+      restaurant: $restaurant
+      starting_date: $starting_date
+      ending_date: $ending_date
+    ) {
       all {
         _type
         data {

@@ -1,14 +1,19 @@
 'use client';
 
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Geocode from 'react-geocode';
 import { ILocation } from '../utils/interfaces';
 import { useConfiguration } from './useConfiguration';
+import { ToastContext } from '../context/toast.context';
 
 type LocationCallback = (error: string | null, location?: ILocation) => void;
 
 export default function useLocation() {
+
+  // Toast Context
+  const { showToast } = useContext(ToastContext);
+
   const { GOOGLE_MAPS_KEY } = useConfiguration();
 
   const latLngToGeoString = async ({
@@ -46,7 +51,7 @@ export default function useLocation() {
       },
       (error: GeolocationPositionError) => {
         callback(error.message);
-        console.log(error.message);
+        showToast({ type: 'error', title: "Current Location", message: error.message })
       }
     );
   };

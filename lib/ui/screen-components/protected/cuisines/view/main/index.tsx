@@ -122,7 +122,6 @@ export default function CuisinesMain({
       });
       setIsDeleting({ bool: false, data: { ...isDeleting.data } });
     } catch (err) {
-      console.log(err);
       showToast({
         title: 'Delete Cuisine',
         type: 'error',

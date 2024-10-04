@@ -1,7 +1,7 @@
 // Component
 import { GET_DASHBOARD_RESTAURANT_ORDERS } from '@/lib/api/graphql/queries/dashboard';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { IDashboardRestaurantOrdersSalesStatsResponseGraphQL, IQueryResult } from '@/lib/utils/interfaces';
+import { IDashboardOrderStatsComponentsProps, IDashboardRestaurantOrdersSalesStatsResponseGraphQL, IQueryResult } from '@/lib/utils/interfaces';
 import StatsCard from '@/lib/ui/useable-components/stats-card';
 
 
@@ -10,7 +10,7 @@ import { faCashRegister, faCreditCard, faMoneyBillWave, faShoppingCart } from '@
 import { useContext, useMemo } from 'react';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 
-export default function UserStats() {
+export default function UserStats({ dateFilter }: IDashboardOrderStatsComponentsProps) {
 
 
   // Context
@@ -18,7 +18,9 @@ export default function UserStats() {
 
 
   const { data, loading } = useQueryGQL(GET_DASHBOARD_RESTAURANT_ORDERS, {
-    restaurant: restaurantId
+    restaurant: restaurantId,
+    starting_date: dateFilter?.startDate,
+    ending_date: dateFilter?.endDate,
   }, {
     fetchPolicy: "network-only",
     debounceMs: 300,
@@ -35,7 +37,7 @@ export default function UserStats() {
   }, [data]);
 
   return (
-    <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="p-3 grid grid-cols-1 items-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {/* {dummyOrderStatsData.map(renderStatsCard)} */}
 
       <StatsCard
