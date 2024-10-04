@@ -8,6 +8,7 @@ import {
   IProfileProviderProps,
 } from '../utils/interfaces';
 import { IRestaurantProfileProps } from '../utils/interfaces';
+import { ToastContext } from './toast.context';
 
 export const ProfileContext = createContext<IProfileContextData>(
   {} as IProfileContextData
@@ -24,6 +25,7 @@ export const ProfileContext = createContext<IProfileContextData>(
 export const ProfileProvider: React.FC<IProfileProviderProps> = ({
   children,
 }) => {
+  const { showToast } = useContext(ToastContext);
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
   const { restaurantId } = restaurantLayoutContextData;
 
@@ -37,10 +39,12 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({
       enabled: !!restaurantId,
       fetchPolicy: 'network-only',
       debounceMs: 300,
-      onCompleted: (data: unknown) => {
-        console.log('Profile data fetched:', data);
+      onCompleted: () => {
         // You can perform any actions with the fetched data here
       },
+      onError: () => {
+        showToast({ type: 'error', title: "Profile Fetch", message: 'Failed to fetch profile' })
+      }
     }
   ) as IQueryResult<IRestaurantProfileProps | undefined, undefined>;
 

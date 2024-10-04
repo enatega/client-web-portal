@@ -6,7 +6,7 @@ import { Divider } from 'primereact/divider';
 import { GET_DASHBOARD_ORDER_SALES_DETAILS_BY_PAYMENT_METHOD } from '@/lib/api/graphql/queries/dashboard';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { IDashboardOrderSalesDetailsByPaymentMethodResponseGraphQL, IQueryResult } from '@/lib/utils/interfaces';
+import { IDashboardOrderSalesDetailsByPaymentMethodResponseGraphQL, IDashboardRestaurantStatesTableComponentsProps, IQueryResult } from '@/lib/utils/interfaces';
 
 // Component imports
 import DashboardRestaurantStatsTable from '@/lib/ui/useable-components/dashboard-restaurant-stats-table';
@@ -14,8 +14,9 @@ import HeaderText from '@/lib/ui/useable-components/header-text';
 
 // Constants
 import { DASHBOARD_PAYMENT_METHOD } from '@/lib/utils/constants';
+import DashboardStatsTableSkeleton from '@/lib/ui/useable-components/custom-skeletons/dashboard.stats.table.skeleton';
 
-export default function RestaurantStatesTable() {
+export default function RestaurantStatesTable({ dateFilter }: IDashboardRestaurantStatesTableComponentsProps) {
 
     // Context
     const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
@@ -23,6 +24,8 @@ export default function RestaurantStatesTable() {
     // API
     const { data: salesDetailsData, loading: salesDetailsLoading } = useQueryGQL(GET_DASHBOARD_ORDER_SALES_DETAILS_BY_PAYMENT_METHOD, {
         restaurant: restaurantLayoutContextData?.restaurantId ?? "",
+        starting_date: dateFilter.startDate,
+        ending_date: dateFilter.endDate,
     }, {
         fetchPolicy: "network-only",
         debounceMs: 300,
@@ -56,7 +59,13 @@ export default function RestaurantStatesTable() {
                     <div className='flex flex-col space-y-2'>
                         <HeaderText text={DASHBOARD_PAYMENT_METHOD[key]} />
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                            {
+                            {salesDetailsLoading ? <div className="flex justify-center items-center">
+                                {
+                                    new Array(9).fill(0).map((_, index) => {
+                                        return <DashboardStatsTableSkeleton key={index} />
+                                    })
+                                }
+                            </div> :
                                 dashboardOrderSalesDetailsByPaymentMethod[method as keyof typeof dashboardOrderSalesDetailsByPaymentMethod]?.map((item, index) => {
                                     return <DashboardRestaurantStatsTable key={index} loading={salesDetailsLoading} title={item._type} data={item.data} amountConfig={{ currency: "INR" }} />
                                 })

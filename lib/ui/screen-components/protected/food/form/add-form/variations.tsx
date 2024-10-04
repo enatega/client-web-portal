@@ -58,7 +58,7 @@ export default function VariationAddForm({
 }: IFoodVariationsAddRestaurantComponentProps) {
   // Props
   const { onStepChange, order } = stepperProps ?? {
-    onStepChange: () => {},
+    onStepChange: () => { },
     type: '',
     order: -1,
   };
@@ -79,13 +79,13 @@ export default function VariationAddForm({
   const initialValues = {
     variations:
       foodContextData?.isEditing ||
-      (foodContextData?.food?.variations ?? [])?.length > 0
+        (foodContextData?.food?.variations ?? [])?.length > 0
         ? (foodContextData?.food?.variations ?? [])
         : [
-            {
-              ...initialFormValuesTemplate,
-            },
-          ],
+          {
+            ...initialFormValuesTemplate,
+          },
+        ],
   };
 
   // Query
@@ -144,7 +144,7 @@ export default function VariationAddForm({
   );
 
   // API Handlers
-  function onFetchAddonsByRestaurantCompleted() {}
+  function onFetchAddonsByRestaurantCompleted() { }
   function onErrorFetchAddonsByRestaurant() {
     showToast({
       type: 'error',
@@ -195,7 +195,6 @@ export default function VariationAddForm({
   }: {
     variations: IVariationForm[];
   }) => {
-    console.log({ back: foodContextData });
     onSetFoodContextData({
       food: {
         _id: foodContextData?.food?._id ?? '',
@@ -248,18 +247,18 @@ export default function VariationAddForm({
                                       <div className="relative">
                                         {(foodContextData?.isEditing ||
                                           !!index) && (
-                                          <button
-                                            className="absolute -right-1 top-2"
-                                            onClick={() => remove(index)}
-                                            type="button"
-                                          >
-                                            <FontAwesomeIcon
-                                              icon={faTimes}
-                                              size="lg"
-                                              color="#FF6347"
-                                            />
-                                          </button>
-                                        )}
+                                            <button
+                                              className="absolute -right-1 top-2"
+                                              onClick={() => remove(index)}
+                                              type="button"
+                                            >
+                                              <FontAwesomeIcon
+                                                icon={faTimes}
+                                                size="lg"
+                                                color="#FF6347"
+                                              />
+                                            </button>
+                                          )}
                                         <Fieldset
                                           legend={`Variation ${index + 1} ${value.title ? `(${value.title})` : ''}`}
                                           toggleable

@@ -58,7 +58,7 @@ export default function NotificationForm({
               message: 'Notification has been sent successfully',
               duration: 2500,
             });
-            return setSubmitting(false);
+            setSubmitting(false);
           } catch (err) {
             setVisible(true);
             showToast({
@@ -67,7 +67,7 @@ export default function NotificationForm({
               message: 'Something went wrong',
               duration: 2500,
             });
-            return console.log(err);
+
           }
         }}
         validateOnChange={true}

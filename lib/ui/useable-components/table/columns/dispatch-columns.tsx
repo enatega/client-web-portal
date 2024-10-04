@@ -65,9 +65,6 @@ export const DISPATCH_TABLE_COLUMNS = () => {
       variables: {
         _id: rowData._id,
       },
-      onError: (err) => {
-        console.log({ err });
-      },
       fetchPolicy: 'network-only',
     });
   };
@@ -106,7 +103,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
     onCompleted: () => {
       showToast({
         type: 'success',
-        title: 'Edit Order Status',
+        title: 'Order Status',
         message: 'Order status has been updated successfully',
       });
     },
@@ -174,7 +171,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
         },
       });
     } catch (error) {
-      console.log(error);
+      showToast({ type: 'error', title: 'Order Status', message: 'Something went wrong' })
     } finally {
       setIsStatusUpdating({
         _id: rowData._id,

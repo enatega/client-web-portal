@@ -125,9 +125,6 @@ const TimingAddForm = () => {
       >
         {({ values, errors, touched, setFieldValue }) => (
           <Form
-            onClick={() => {
-              console.log(errors);
-            }}
             className="flex flex-col gap-6"
           >
             {values?.map((value, dayIndex) => {
@@ -141,11 +138,11 @@ const TimingAddForm = () => {
                           value?.times?.length > 0
                             ? []
                             : [
-                                {
-                                  startTime: '00:00',
-                                  endTime: '23:59',
-                                },
-                              ];
+                              {
+                                startTime: '00:00',
+                                endTime: '23:59',
+                              },
+                            ];
                         setFieldValue(`${dayIndex}.times`, newTimes);
                       }}
                       checked={value?.times?.length > 0}
@@ -180,11 +177,11 @@ const TimingAddForm = () => {
                                     borderColor:
                                       (
                                         errors?.[dayIndex]?.times?.[
-                                          timeIndex
+                                        timeIndex
                                         ] as FormikErrors<ITimeSlot>
                                       )?.startTime &&
-                                      touched?.[dayIndex]?.times?.[timeIndex]
-                                        ?.startTime
+                                        touched?.[dayIndex]?.times?.[timeIndex]
+                                          ?.startTime
                                         ? 'red'
                                         : '',
                                   }}
@@ -219,11 +216,11 @@ const TimingAddForm = () => {
                                     borderColor:
                                       (
                                         errors?.[dayIndex]?.times?.[
-                                          timeIndex
+                                        timeIndex
                                         ] as FormikErrors<ITimeSlot>
                                       )?.endTime &&
-                                      touched?.[dayIndex]?.times?.[timeIndex]
-                                        ?.endTime
+                                        touched?.[dayIndex]?.times?.[timeIndex]
+                                          ?.endTime
                                         ? 'red'
                                         : '',
                                   }}

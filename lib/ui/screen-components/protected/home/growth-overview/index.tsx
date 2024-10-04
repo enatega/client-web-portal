@@ -129,8 +129,6 @@ export default function GrowthOverView() {
     onChartDataChange();
   }, [dashboardUsersByYear]);
 
-  console.log(dashboardUsersByYear)
-
   return (
     <div className={`w-full p-3`}>
       <h2 className="text-lg font-semibold">Growth Overview</h2>

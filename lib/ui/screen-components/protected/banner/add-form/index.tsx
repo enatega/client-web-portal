@@ -32,7 +32,7 @@ const BannersAddForm = ({
   banner,
   position = 'right',
 }: IBannersAddFormComponentProps) => {
-  console.log(banner);
+
   const { data, loading } = useQueryGQL(GET_RESTAURANTS, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
@@ -48,21 +48,21 @@ const BannersAddForm = ({
     description: banner?.description || '',
     action: banner
       ? {
-          label: getLabelByCode(ACTION_TYPES, banner.action),
-          code: banner.action,
-        }
+        label: getLabelByCode(ACTION_TYPES, banner.action),
+        code: banner.action,
+      }
       : null,
     screen: banner
       ? banner.action === 'Navigate Specific Page'
         ? {
-            label: getLabelByCode(SCREEN_NAMES, banner.screen),
-            code: banner.screen,
-          }
+          label: getLabelByCode(SCREEN_NAMES, banner.screen),
+          code: banner.screen,
+        }
         : banner.action === 'Navigate Specific Store'
           ? {
-              label: banner.screen,
-              code: banner.screen,
-            }
+            label: banner.screen,
+            code: banner.screen,
+          }
           : null
       : null,
     file: banner?.file || '',
@@ -151,7 +151,6 @@ const BannersAddForm = ({
                 }) => {
                   return (
                     <Form
-                      onClick={() => console.log(values)}
                       onSubmit={handleSubmit}
                     >
                       <div className="space-y-4">
@@ -224,7 +223,7 @@ const BannersAddForm = ({
                               values.action?.code === 'Navigate Specific Store'
                                 ? RESTAURANT_NAMES
                                 : values.action?.code ===
-                                    'Navigate Specific Page'
+                                  'Navigate Specific Page'
                                   ? SCREEN_NAMES
                                   : []
                             }
@@ -246,11 +245,10 @@ const BannersAddForm = ({
                         </div>
 
                         <div
-                          className={`${
-                            errors.file && !values.file
-                              ? 'border-red-500'
-                              : 'border-gray-200'
-                          } rounded-lg border p-4`}
+                          className={`${errors.file && !values.file
+                            ? 'border-red-500'
+                            : 'border-gray-200'
+                            } rounded-lg border p-4`}
                         >
                           <CustomUploadImageComponent
                             key={'file'}

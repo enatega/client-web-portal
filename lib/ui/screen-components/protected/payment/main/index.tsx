@@ -5,10 +5,12 @@ import { useConfiguration } from '@/lib/hooks/useConfiguration';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { IPaymentMethod } from '@/lib/utils/interfaces/payment.card.interface';
+import { ToastContext } from '@/lib/context/toast.context';
 
 export default function PaymentMain() {
   const { SERVER_URL } = useConfiguration();
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
+  const { showToast } = useContext(ToastContext);
   const { restaurantId } = restaurantLayoutContextData;
 
   const [initialLoading, setInitialLoading] = useState(true);
@@ -28,7 +30,7 @@ export default function PaymentMain() {
       const data = await response.json();
       window.location.href = data.url;
     } catch (error) {
-      console.error('Error:', error);
+      showToast({ type: 'error', title: 'Stripe Payment', message: 'Error connecting to Stripe' })
     } finally {
       setSubmittingMethod(null);
     }
@@ -79,11 +81,10 @@ export default function PaymentMain() {
     <div className="flex flex-col items-center justify-center bg-white">
       <div className="w-full rounded-lg border border-gray-200 p-8 md:p-16">
         <div
-          className={`grid gap-6 pb-16 ${
-            paymentMethods.length === 1
-              ? 'grid-cols-1 place-items-center'
-              : 'grid-cols-1 sm:grid-cols-2'
-          }`}
+          className={`grid gap-6 pb-16 ${paymentMethods.length === 1
+            ? 'grid-cols-1 place-items-center'
+            : 'grid-cols-1 sm:grid-cols-2'
+            }`}
         >
           {renderPaymentMethods()}
         </div>

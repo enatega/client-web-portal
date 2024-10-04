@@ -1,6 +1,8 @@
 import { IGlobalComponentProps } from './global.interface';
 
 // Componentns
+
+// Super Admin
 export interface IDashboardStatsTableComponentsProps
   extends IGlobalComponentProps {
   amountConfig?: {
@@ -10,6 +12,25 @@ export interface IDashboardStatsTableComponentsProps
   loading: boolean;
   title: string;
   data: { label: string; value: number }[];
+}
+
+// Restaurant & Vendor
+
+export interface IDashboardDateFilterComponentsProps {
+  dateFilter: { startDate: string; endDate: string };
+  setDateFilter: (dateFilter: { startDate: string; endDate: string }) => void;
+}
+
+export interface IDashboardOrderStatsComponentsProps {
+  dateFilter: { startDate: string; endDate: string };
+}
+
+export interface IDashboardGrowthOverviewComponentsProps {
+  dateFilter: { startDate: string; endDate: string };
+}
+
+export interface IDashboardRestaurantStatesTableComponentsProps {
+  dateFilter: { startDate: string; endDate: string };
 }
 
 export interface IDashboardRestaurantStatsTableComponentsProps
@@ -58,12 +79,20 @@ export interface IDashboardSalesByTypeResponseGraphQL {
 }
 
 // Restaurant & Vendor
+
 export interface IDashboardRestaurantOrdersSalesStatsResponseGraphQL {
   getRestaurantDashboardOrdersSalesStats: {
     totalOrders: number;
     totalSales: number;
     totalCODOrders: number;
     totalCardOrders: number;
+  };
+}
+
+export interface IDashboardRestaurantSalesOrderCountDetailsByYearResponseGraphQL {
+  getRestaurantDashboardSalesOrderCountDetailsByYear: {
+    salesAmount: number[];
+    ordersCount: number[];
   };
 }
 
