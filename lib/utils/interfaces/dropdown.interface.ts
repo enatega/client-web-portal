@@ -7,6 +7,11 @@ interface ISelectionComponentProps extends IGlobalComponentProps {
   isLoading?: boolean;
 }
 
+export interface IDropdownExtraButton {
+  onChange: () => void;
+  title: string;
+}
+
 export interface IMultiSelectComponentProps extends ISelectionComponentProps {
   name: string;
   optionLabel?: string;

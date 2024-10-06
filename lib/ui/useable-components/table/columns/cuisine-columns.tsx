@@ -55,7 +55,7 @@ export const CUISINE_TABLE_COLUMNS = ({
         ),
       },
     ],
-    []
+    [menuItems]
   );
   return cuisine_columns;
 };

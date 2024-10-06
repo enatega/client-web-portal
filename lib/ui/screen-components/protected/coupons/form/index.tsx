@@ -58,6 +58,16 @@ export default function CouponForm({
           message: 'Coupon has been added successfully',
           duration: 2000,
         });
+        setIsEditing({
+          bool: false,
+          data: {
+            __typename: '',
+            _id: '',
+            discount: 0,
+            enabled: false,
+            title: '',
+          },
+        });
       },
       onError: (err) => {
         showToast({
@@ -67,6 +77,16 @@ export default function CouponForm({
             err.message ||
             `Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
           duration: 2000,
+        });
+        setIsEditing({
+          bool: false,
+          data: {
+            __typename: '',
+            _id: '',
+            discount: 0,
+            enabled: false,
+            title: '',
+          },
         });
       },
     }
@@ -82,6 +102,16 @@ export default function CouponForm({
           message: `Coupon has been ${isEditing.bool ? 'edited' : 'added'}  successfully`,
           duration: 2000,
         });
+        setIsEditing({
+          bool: false,
+          data: {
+            __typename: '',
+            _id: '',
+            discount: 0,
+            enabled: false,
+            title: '',
+          },
+        });
       },
       onError: (err) => {
         showToast({
@@ -92,6 +122,16 @@ export default function CouponForm({
             `Coupon ${isEditing.bool ? 'Edition' : 'Creation'} Failed`,
           duration: 2000,
         });
+        setIsEditing({
+          bool: false,
+          data: {
+            __typename: '',
+            _id: '',
+            discount: 0,
+            enabled: false,
+            title: '',
+          },
+        });
       },
     }
   );
@@ -99,7 +139,9 @@ export default function CouponForm({
   return (
     <Sidebar
       visible={visible}
-      onHide={() => setVisible(false)}
+      onHide={() => {
+        setVisible(false);
+      }}
       position="right"
       className="w-full sm:w-[450px]"
     >

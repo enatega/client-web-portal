@@ -1,36 +1,52 @@
 // Component
 import { GET_DASHBOARD_RESTAURANT_ORDERS } from '@/lib/api/graphql/queries/dashboard';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { IDashboardRestaurantOrdersSalesStatsResponseGraphQL, IQueryResult } from '@/lib/utils/interfaces';
+import {
+  IDashboardRestaurantOrdersSalesStatsResponseGraphQL,
+  IQueryResult,
+} from '@/lib/utils/interfaces';
 import StatsCard from '@/lib/ui/useable-components/stats-card';
 
-
 // Interface & Types
-import { faCashRegister, faCreditCard, faMoneyBillWave, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCashRegister,
+  faCreditCard,
+  faMoneyBillWave,
+  faShoppingCart,
+} from '@fortawesome/free-solid-svg-icons';
 import { useContext, useMemo } from 'react';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 
 export default function UserStats() {
-
-
   // Context
-  const { restaurantLayoutContextData: { restaurantId } } = useContext(RestaurantLayoutContext);
+  const {
+    restaurantLayoutContextData: { restaurantId },
+  } = useContext(RestaurantLayoutContext);
 
-
-  const { data, loading } = useQueryGQL(GET_DASHBOARD_RESTAURANT_ORDERS, {
-    restaurant: restaurantId
-  }, {
-    fetchPolicy: "network-only",
-    debounceMs: 300,
-  }) as IQueryResult<IDashboardRestaurantOrdersSalesStatsResponseGraphQL | undefined, undefined>;
+  const { data, loading } = useQueryGQL(
+    GET_DASHBOARD_RESTAURANT_ORDERS,
+    {
+      restaurant: restaurantId,
+    },
+    {
+      fetchPolicy: 'network-only',
+      debounceMs: 300,
+    }
+  ) as IQueryResult<
+    IDashboardRestaurantOrdersSalesStatsResponseGraphQL | undefined,
+    undefined
+  >;
 
   const dashboardUsers = useMemo(() => {
     if (!data) return null;
     return {
-      totalOrders: data?.getRestaurantDashboardOrdersSalesStats?.totalOrders ?? 0,
+      totalOrders:
+        data?.getRestaurantDashboardOrdersSalesStats?.totalOrders ?? 0,
       totalSales: data?.getRestaurantDashboardOrdersSalesStats?.totalSales ?? 0,
-      totalCODOrders: data?.getRestaurantDashboardOrdersSalesStats?.totalCODOrders ?? 0,
-      totalCardOrders: data?.getRestaurantDashboardOrdersSalesStats?.totalCardOrders ?? 0,
+      totalCODOrders:
+        data?.getRestaurantDashboardOrdersSalesStats?.totalCODOrders ?? 0,
+      totalCardOrders:
+        data?.getRestaurantDashboardOrdersSalesStats?.totalCardOrders ?? 0,
     };
   }, [data]);
 
@@ -46,7 +62,6 @@ export default function UserStats() {
         loading={loading}
         amountConfig={{ format: 'number', currency: 'USD' }}
       />
-
 
       <StatsCard
         label="Total COD Orders"
@@ -74,7 +89,6 @@ export default function UserStats() {
         loading={loading}
         amountConfig={{ format: 'currency', currency: 'USD' }}
       />
-
     </div>
   );
 }

@@ -58,8 +58,9 @@ export default function VendorMain({
   return (
     <div className="flex flex-grow flex-col overflow-hidden sm:flex-row">
       <div
-        className={`w-full overflow-y-auto border-gray-200 bg-white sm:w-1/3 ${activeTab === 'vendors' ? '' : 'hidden sm:block'
-          }`}
+        className={`w-full overflow-y-auto border-gray-200 bg-white sm:w-1/3 ${
+          activeTab === 'vendors' ? '' : 'hidden sm:block'
+        }`}
       >
         {/* Mobile-only header for Vendors section */}
         <div className="mt-3 border-b p-3 sm:hidden">
@@ -119,8 +120,9 @@ export default function VendorMain({
       </div>
 
       <div
-        className={`flex-1 overflow-y-auto border-l border-gray-200 px-2 ${activeTab === 'restaurants' ? '' : 'hidden sm:block'
-          }`}
+        className={`flex-1 overflow-y-auto border-l border-gray-200 px-2 ${
+          activeTab === 'restaurants' ? '' : 'hidden sm:block'
+        }`}
       >
         {/* Header for Restaurants section */}
         <div className="border-b pb-2 pt-3">

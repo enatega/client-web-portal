@@ -2,7 +2,7 @@
 import { FilterMatchMode } from 'primereact/api';
 
 //Hooks
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 
 //Components
@@ -25,7 +25,7 @@ export default function NotificationMain() {
   // const { showToast } = useContext(ToastContext);
 
   // Queries
-  const { data, loading } = useLazyQueryQL(GET_NOTIFICATIONS, {
+  const { data, loading, fetch } = useLazyQueryQL(GET_NOTIFICATIONS, {
     fetchPolicy: 'cache-and-network',
   }) as ILazyQueryResult<IGetNotification | undefined, undefined>;
 
@@ -50,6 +50,11 @@ export default function NotificationMain() {
     setGlobalFilterValue(value);
   };
 
+  // UseEffects
+  useEffect(() => {
+    fetch();
+  }, []);
+  console.log(data?.notifications);
   return (
     <div className="p-3">
       <Table

@@ -6,7 +6,10 @@ import { Divider } from 'primereact/divider';
 import { GET_DASHBOARD_ORDER_SALES_DETAILS_BY_PAYMENT_METHOD } from '@/lib/api/graphql/queries/dashboard';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
-import { IDashboardOrderSalesDetailsByPaymentMethodResponseGraphQL, IQueryResult } from '@/lib/utils/interfaces';
+import {
+  IDashboardOrderSalesDetailsByPaymentMethodResponseGraphQL,
+  IQueryResult,
+} from '@/lib/utils/interfaces';
 
 // Component imports
 import DashboardRestaurantStatsTable from '@/lib/ui/useable-components/dashboard-restaurant-stats-table';
@@ -16,59 +19,72 @@ import HeaderText from '@/lib/ui/useable-components/header-text';
 import { DASHBOARD_PAYMENT_METHOD } from '@/lib/utils/constants';
 
 export default function RestaurantStatesTable() {
+  // Context
+  const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
 
-    // Context
-    const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
+  // API
+  const { data: salesDetailsData, loading: salesDetailsLoading } = useQueryGQL(
+    GET_DASHBOARD_ORDER_SALES_DETAILS_BY_PAYMENT_METHOD,
+    {
+      restaurant: restaurantLayoutContextData?.restaurantId ?? '',
+    },
+    {
+      fetchPolicy: 'network-only',
+      debounceMs: 300,
+      enabled: !!restaurantLayoutContextData?.restaurantId,
+    }
+  ) as IQueryResult<
+    IDashboardOrderSalesDetailsByPaymentMethodResponseGraphQL | undefined,
+    undefined
+  >;
 
-    // API
-    const { data: salesDetailsData, loading: salesDetailsLoading } = useQueryGQL(GET_DASHBOARD_ORDER_SALES_DETAILS_BY_PAYMENT_METHOD, {
-        restaurant: restaurantLayoutContextData?.restaurantId ?? "",
-    }, {
-        fetchPolicy: "network-only",
-        debounceMs: 300,
-        enabled: !!restaurantLayoutContextData?.restaurantId,
-    }) as IQueryResult<IDashboardOrderSalesDetailsByPaymentMethodResponseGraphQL | undefined, undefined>;
-
-    // Memo
-    const dashboardOrderSalesDetailsByPaymentMethod = useMemo(() => {
-        if (!salesDetailsData) return null;
-        return salesDetailsData?.getDashboardOrderSalesDetailsByPaymentMethod ?? null;
-    }, [salesDetailsData]);
-
-    // Constants
-    const paymentMethod = Object.keys(dashboardOrderSalesDetailsByPaymentMethod ?? {})
-
-
-
-    if (!dashboardOrderSalesDetailsByPaymentMethod) return;
-
+  // Memo
+  const dashboardOrderSalesDetailsByPaymentMethod = useMemo(() => {
+    if (!salesDetailsData) return null;
     return (
-        <div className="p-3 bg-gray-50 rounded-lg shadow-md space-y-6">
+      salesDetailsData?.getDashboardOrderSalesDetailsByPaymentMethod ?? null
+    );
+  }, [salesDetailsData]);
 
-            {paymentMethod.map((method: string) => {
+  // Constants
+  const paymentMethod = Object.keys(
+    dashboardOrderSalesDetailsByPaymentMethod ?? {}
+  );
 
-                const key: keyof typeof dashboardOrderSalesDetailsByPaymentMethod = method as keyof typeof dashboardOrderSalesDetailsByPaymentMethod;
+  if (!dashboardOrderSalesDetailsByPaymentMethod) return;
 
+  return (
+    <div className="p-3 bg-gray-50 rounded-lg shadow-md space-y-6">
+      {paymentMethod.map((method: string) => {
+        const key: keyof typeof dashboardOrderSalesDetailsByPaymentMethod =
+          method as keyof typeof dashboardOrderSalesDetailsByPaymentMethod;
 
-                if (key !== "all" && key !== "cod" && key !== "card") return;
+        if (key !== 'all' && key !== 'cod' && key !== 'card') return;
 
-                return <>
-                    <div className='flex flex-col space-y-2'>
-                        <HeaderText text={DASHBOARD_PAYMENT_METHOD[key]} />
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
-                            {
-                                dashboardOrderSalesDetailsByPaymentMethod[method as keyof typeof dashboardOrderSalesDetailsByPaymentMethod]?.map((item, index) => {
-                                    return <DashboardRestaurantStatsTable key={index} loading={salesDetailsLoading} title={item._type} data={item.data} amountConfig={{ currency: "INR" }} />
-                                })
-                            }
-                        </div>
-                    </div>
-                    <Divider className="my-4 border-t border-gray-300" />
-                </>
-            })
-            }
-
-
-        </div>
-    )
+        return (
+          <>
+            <div className="flex flex-col space-y-2">
+              <HeaderText text={DASHBOARD_PAYMENT_METHOD[key]} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                {dashboardOrderSalesDetailsByPaymentMethod[
+                  method as keyof typeof dashboardOrderSalesDetailsByPaymentMethod
+                ]?.map((item, index) => {
+                  return (
+                    <DashboardRestaurantStatsTable
+                      key={index}
+                      loading={salesDetailsLoading}
+                      title={item._type}
+                      data={item.data}
+                      amountConfig={{ currency: 'INR' }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <Divider className="my-4 border-t border-gray-300" />
+          </>
+        );
+      })}
+    </div>
+  );
 }

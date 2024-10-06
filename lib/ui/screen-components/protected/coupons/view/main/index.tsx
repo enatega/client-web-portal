@@ -106,7 +106,13 @@ export default function CouponsMain({
     });
     setIsDeleting({
       bool: false,
-      data: { ...isDeleting.data },
+      data: {
+        __typename: '',
+        _id: '',
+        discount: 0,
+        enabled: false,
+        title: '',
+      },
     });
   }
 

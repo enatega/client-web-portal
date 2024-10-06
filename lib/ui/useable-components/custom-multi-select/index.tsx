@@ -6,12 +6,15 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MultiSelect, MultiSelectChangeEvent } from 'primereact/multiselect';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
+import TextIconClickable from '../text-icon-clickable';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 const CustomMultiSelectComponent = ({
   name,
   placeholder,
   options,
   selectedItems,
+  extraFooterButton,
   setSelectedItems,
   showLabel,
   dropDownIcon,

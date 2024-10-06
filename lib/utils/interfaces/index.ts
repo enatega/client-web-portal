@@ -37,8 +37,5 @@ export * from './zone.interface';
 export * from './payment.card.interface';
 export * from './profile/restaurant.profile.interface';
 export * from './food.interface';
-<<<<<<< HEAD
-=======
 export * from './dashboard.interface';
 export * from './ratings.interface';
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79

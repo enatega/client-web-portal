@@ -4,6 +4,8 @@ import { IDropdownComponentProps } from '@/lib/utils/interfaces';
 // Prime React
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
+import TextIconClickable from '../text-icon-clickable';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 const CustomDropdownComponent = ({
   name,
@@ -14,6 +16,7 @@ const CustomDropdownComponent = ({
   showLabel,
   isLoading = false,
   filter = true,
+  extraFooterButton,
   ...props
 }: IDropdownComponentProps) => {
   const itemTemplate = (option: { label: string }) => {

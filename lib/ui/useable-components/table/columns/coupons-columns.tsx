@@ -31,7 +31,7 @@ export const COUPONS_TABLE_COLUMNS = ({
   });
 
   // Mutations
-  const [editCoupon] = useMutation(EDIT_COUPON, {
+  const [editCoupon, { loading }] = useMutation(EDIT_COUPON, {
     refetchQueries: [{ query: GET_COUPONS }],
     onCompleted: () => {
       showToast({
@@ -39,6 +39,10 @@ export const COUPONS_TABLE_COLUMNS = ({
         type: 'success',
         message: 'Coupon Status has been edited successfully',
         duration: 2500,
+      });
+      setEditCouponLoading({
+        _id: '',
+        bool: false,
       });
     },
     onError: (err) => {
@@ -60,6 +64,7 @@ export const COUPONS_TABLE_COLUMNS = ({
 
   // Handlers
   async function handleEnableField(rowData: ICoupon) {
+    console.log({ rowData });
     setEditCouponLoading({
       bool: true,
       _id: rowData._id,
@@ -75,11 +80,9 @@ export const COUPONS_TABLE_COLUMNS = ({
         couponInput: updatedCoupon,
       },
     });
-    setEditCouponLoading({
-      bool: false,
-      _id: '',
-    });
   }
+
+  // Columns
   const coupon_columns = useMemo(
     () => [
       {
@@ -97,29 +100,33 @@ export const COUPONS_TABLE_COLUMNS = ({
       {
         headerName: 'Status',
         propertyName: 'enabled',
-        body: (rowData: ICoupon) => (
-          <div className="flex w-full cursor-pointer items-center justify-between gap-2">
-            <div className="flex w-20 items-start">
-              <CustomInputSwitch
-                isActive={rowData.enabled}
-                className={
-                  rowData?.enabled
-                    ? 'p-inputswitch-checked absolute'
-                    : 'absolute'
-                }
-                onChange={() => handleEnableField(rowData)}
-                loading={
-                  editCouponLoading.bool &&
-                  rowData._id === editCouponLoading._id
-                }
-              />
+        body: (rowData: ICoupon) => {
+          console.log({
+            rowDataId: rowData._id,
+            editCouponLoadingId: editCouponLoading._id,
+            loading,
+          });
+          return (
+            <div className="flex w-full cursor-pointer items-center justify-between gap-2">
+              <div className="flex w-20 items-start">
+                <CustomInputSwitch
+                  isActive={rowData.enabled}
+                  className={
+                    rowData?.enabled
+                      ? 'p-inputswitch-checked absolute'
+                      : 'absolute'
+                  }
+                  onChange={() => handleEnableField(rowData)}
+                  loading={rowData._id === editCouponLoading._id && loading}
+                />
+              </div>
+              <ActionMenu data={rowData} items={menuItems} />
             </div>
-            <ActionMenu data={rowData} items={menuItems} />
-          </div>
-        ),
+          );
+        },
       },
     ],
-    []
+    [loading, editCouponLoading, menuItems]
   );
   return coupon_columns;
 };

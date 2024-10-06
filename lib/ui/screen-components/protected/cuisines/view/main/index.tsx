@@ -88,7 +88,14 @@ export default function CuisinesMain({
           });
           setIsDeleting({
             bool: false,
-            data: { ...isDeleting.data },
+            data: {
+              __typename: '',
+              _id: '',
+              description: '',
+              name: '',
+              shopType: '',
+              image: '',
+            },
           });
         }
       },
@@ -103,7 +110,14 @@ export default function CuisinesMain({
           });
           setIsEditing({
             bool: false,
-            data: { ...isEditing.data },
+            data: {
+              __typename: '',
+              _id: '',
+              description: '',
+              name: '',
+              shopType: '',
+              image: '',
+            },
           });
         }
       },

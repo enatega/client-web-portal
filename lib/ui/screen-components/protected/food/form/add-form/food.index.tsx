@@ -2,11 +2,7 @@
 
 // Core
 import { Form, Formik } from 'formik';
-<<<<<<< HEAD
-import { useContext, useState } from 'react';
-=======
 import { useContext, useMemo, useState } from 'react';
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
 // Context
 import { ToastContext } from '@/lib/context/toast.context';
@@ -14,16 +10,10 @@ import { ToastContext } from '@/lib/context/toast.context';
 // Interface and Types
 import {
   ICategory,
-<<<<<<< HEAD
-  ICategoryForm,
-  IFoodDetailsComponentProps,
-  IFoodGridItem,
-=======
   ICategoryByRestaurantResponse,
   IFoodDetailsComponentProps,
   IFoodGridItem,
   IQueryResult,
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 } from '@/lib/utils/interfaces';
 import { IFoodDetailsForm } from '@/lib/utils/interfaces/forms/food.form.interface';
 
@@ -38,25 +28,14 @@ import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomUploadImageComponent from '@/lib/ui/useable-components/upload/upload-image';
 
-<<<<<<< HEAD
-// Schema
-import { CategorySchema, FoodSchema } from '@/lib/utils/schema';
-import { FoodsContext } from '@/lib/context/foods.context';
-import CustomInputSwitch from '@/lib/ui/useable-components/custom-input-switch';
-import {
-  CREATE_CATEGORY,
-  GET_CATEGORY_BY_RESTAURANT_ID,
-} from '@/lib/api/graphql';
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
-import { useMutation } from '@apollo/client';
-import HeaderText from '@/lib/ui/useable-components/header-text';
-=======
 // API
 import { GET_CATEGORY_BY_RESTAURANT_ID } from '@/lib/api/graphql';
 
 // Schema
 import { FoodSchema } from '@/lib/utils/schema';
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
+import { FoodsContext } from '@/lib/context/foods.context';
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+import CategoryAddForm from '../../../category/add-form';
 
 const initialValues: IFoodDetailsForm = {
   _id: null,
@@ -69,6 +48,8 @@ export default function FoodDetails({
   stepperProps,
   categoryDropdown,
 }: IFoodDetailsComponentProps) {
+  // Toast
+  const { showToast } = useContext(ToastContext);
   // Props
   const { onStepChange, order } = stepperProps ?? {
     onStepChange: () => {},
@@ -78,23 +59,13 @@ export default function FoodDetails({
 
   // Statee
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
-  const [foodInitialValues, setFoodInitialValues] = useState(initialValues);
+
   // Context
-<<<<<<< HEAD
-  const { onSetFoodContextData } = useContext(FoodsContext);
-  const { showToast } = useContext(ToastContext);
-=======
   const { onSetFoodContextData, foodContextData } = useContext(FoodsContext);
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
   const {
     restaurantLayoutContextData: { restaurantId },
   } = useContext(RestaurantLayoutContext);
 
-<<<<<<< HEAD
-  // Mutation
-  const [createCategory, { loading: mutationLoading }] = useMutation(
-    CREATE_CATEGORY,
-=======
   // State
   const [isAddCategoryVisible, setIsAddCategoryVisible] = useState(false);
   const [category, setCategory] = useState<ICategory | null>(null);
@@ -108,7 +79,6 @@ export default function FoodDetails({
   const { data, loading: categoriesLoading } = useQueryGQL(
     GET_CATEGORY_BY_RESTAURANT_ID,
     { id: restaurantId ?? '' },
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
     {
       refetchQueries: [
         {
@@ -163,8 +133,6 @@ export default function FoodDetails({
         });
       },
     }
-<<<<<<< HEAD
-=======
   ) as IQueryResult<ICategoryByRestaurantResponse | undefined, undefined>;
 
   // Memoized Data
@@ -174,17 +142,12 @@ export default function FoodDetails({
         return { label: category.title, code: category._id };
       }),
     [data?.restaurant?.categories]
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
   );
 
   // Handlers
   const onFoodSubmitHandler = (values: IFoodDetailsForm) => {
     const foodData: IFoodGridItem = {
-<<<<<<< HEAD
-      _id: '',
-=======
       _id: foodContextData?.food?.data?._id ?? '',
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
       title: values.title,
       description: values.description,
       category: values.category,
@@ -192,24 +155,6 @@ export default function FoodDetails({
     };
 
     onSetFoodContextData({
-<<<<<<< HEAD
-      food: { _id: null, data: foodData, variations: [] },
-    });
-    onStepChange(order + 1);
-  };
-
-  const onHandleCategorySubmit = (values: ICategoryForm) => {
-    createCategory({
-      variables: {
-        category: {
-          restaurant: restaurantId,
-          _id: '',
-          title: values.title,
-        },
-      },
-    });
-  };
-=======
       food: {
         _id: '',
         data: foodData,
@@ -221,74 +166,11 @@ export default function FoodDetails({
     });
     onStepChange(order + 1);
   };
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
   return (
     <div className="w-full h-full flex items-center justify-start">
       <div className="h-full w-full">
         <div className="flex flex-col gap-2">
-<<<<<<< HEAD
-          <div className="flex items-center justify-end flex-shrink-0 mt-3">
-            <CustomInputSwitch
-              label="Add Category"
-              isActive={showAddForm}
-              onChange={() => {
-                setShowAddForm((prevState) => !prevState);
-              }}
-            />
-          </div>
-
-          {showAddForm && (
-            <div className="bg-gray-100 p-3 rounded">
-              <Formik
-                initialValues={{ title: '' }}
-                validationSchema={CategorySchema}
-                onSubmit={onHandleCategorySubmit}
-              >
-                {({ values, errors, handleChange, handleSubmit }) => {
-                  return (
-                    <Form onSubmit={handleSubmit}>
-                      <div className="space-y-4">
-                        <HeaderText text="Add Category" className="heading-4" />
-                        <div>
-                          <CustomTextField
-                            type="text"
-                            name="title"
-                            placeholder="Category Name"
-                            maxLength={35}
-                            value={values.title}
-                            onChange={handleChange}
-                            showLabel={true}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'title',
-                                errors?.title,
-                                CategoryErrors
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </div>
-
-                        <div className="mt-4 flex justify-end">
-                          <CustomButton
-                            className="h-10 w-fit border-gray-300 bg-black px-8 text-white"
-                            label="Add"
-                            type="submit"
-                            loading={mutationLoading}
-                          />
-                        </div>
-                      </div>
-                    </Form>
-                  );
-                }}
-              </Formik>
-            </div>
-          )}
-
-=======
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
           <div>
             <Formik
               initialValues={foodInitialValues}
@@ -310,29 +192,6 @@ export default function FoodDetails({
                 return (
                   <Form onSubmit={handleSubmit}>
                     <div className="space-y-3">
-<<<<<<< HEAD
-                      {!showAddForm && (
-                        <div>
-                          <CustomDropdownComponent
-                            name="category"
-                            placeholder="Select Category"
-                            showLabel={true}
-                            selectedItem={values.category}
-                            setSelectedItem={setFieldValue}
-                            options={categoryDropdown ?? []}
-                            style={{
-                              borderColor: onErrorMessageMatcher(
-                                'category',
-                                errors?.category,
-                                FoodErrors
-                              )
-                                ? 'red'
-                                : '',
-                            }}
-                          />
-                        </div>
-                      )}
-=======
                       <div>
                         <CustomDropdownComponent
                           name="category"
@@ -357,7 +216,6 @@ export default function FoodDetails({
                           }}
                         />
                       </div>
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
 
                       <div>
                         <CustomTextField
@@ -406,8 +264,6 @@ export default function FoodDetails({
                           name="image"
                           title="Upload Image"
                           onSetImageUrl={setFieldValue}
-<<<<<<< HEAD
-=======
                           existingImageUrl={
                             foodContextData?.isEditing ||
                             foodContextData?.food?.data?.image
@@ -418,7 +274,6 @@ export default function FoodDetails({
                             foodContextData?.isEditing ||
                             !!foodContextData?.food?.data?.image
                           }
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
                           style={{
                             borderColor: onErrorMessageMatcher(
                               'image',
@@ -447,8 +302,6 @@ export default function FoodDetails({
           </div>
         </div>
       </div>
-<<<<<<< HEAD
-=======
 
       <CategoryAddForm
         category={category}
@@ -458,7 +311,6 @@ export default function FoodDetails({
         }}
         isAddCategoryVisible={isAddCategoryVisible}
       />
->>>>>>> fa2f4db90be90a05bfdcf7053b263953a4812c79
     </div>
   );
 }

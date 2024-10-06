@@ -177,9 +177,14 @@ export default function CommissionRateMain() {
           loadingRestaurant,
         })}
         loading={loading}
-        header={<CommissionRateHeader selectedActions={selectedActions} setSelectedActions={setSelectedActions} onSearch={setSearchTerm}/>}
+        header={
+          <CommissionRateHeader
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
+            onSearch={setSearchTerm}
+          />
+        }
       />
-
     </div>
   );
 }

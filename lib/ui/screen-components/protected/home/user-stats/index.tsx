@@ -2,9 +2,7 @@
 import StatsCard from '@/lib/ui/useable-components/stats-card';
 
 // GraphQL Queries
-import {
-  GET_DASHBOARD_USERS,
-} from '@/lib/api/graphql';
+import { GET_DASHBOARD_USERS } from '@/lib/api/graphql';
 
 // Hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
@@ -25,7 +23,7 @@ import { useMemo } from 'react';
 
 export default function UserStats() {
   const { data, loading } = useQueryGQL(GET_DASHBOARD_USERS, {
-    fetchPolicy: "network-only",
+    fetchPolicy: 'network-only',
     debounceMs: 300,
   }) as IQueryResult<IDashboardUsersResponseGraphQL | undefined, undefined>;
 
@@ -38,7 +36,6 @@ export default function UserStats() {
       ridersCount: data?.getDashboardUsers?.ridersCount ?? 0,
     };
   }, [data]);
-
 
   return (
     <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-3">
