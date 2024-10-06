@@ -64,10 +64,21 @@ export default function NotificationForm({
                 notificationBody: values.body,
               },
             });
+            showToast({
+              title: 'New Notification',
+              type: 'success',
+              message: 'Notification has been sent successfully',
+              duration: 2500,
+            });
             setSubmitting(false);
-            return setVisible(false);
           } catch (err) {
-            return console.log(err);
+            setVisible(true);
+            showToast({
+              title: 'New Notification',
+              type: 'error',
+              message: 'Something went wrong',
+              duration: 2500,
+            });
           }
         }}
         validateOnChange={true}

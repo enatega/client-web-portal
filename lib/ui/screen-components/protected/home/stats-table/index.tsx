@@ -2,6 +2,7 @@ import {
   GET_DASHBOARD_ORDERS_BY_TYPE,
   GET_DASHBOARD_SALES_BY_TYPE,
 } from '@/lib/api/graphql/queries/dashboard';
+import { useConfiguration } from '@/lib/hooks/useConfiguration';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import DashboardStatsTable from '@/lib/ui/useable-components/dashboard-stats-table';
 import {
@@ -12,6 +13,9 @@ import {
 import React, { useMemo } from 'react';
 
 export default function StatesTable() {
+  // COntext
+  const { CURRENCY_CODE } = useConfiguration();
+
   const { data, loading } = useQueryGQL(GET_DASHBOARD_ORDERS_BY_TYPE, {
     fetchPolicy: 'network-only',
     debounceMs: 300,
@@ -48,13 +52,13 @@ export default function StatesTable() {
         loading={loading}
         title="Orders"
         data={dashboardOrdersByType ?? []}
-        amountConfig={{ format: 'number', currency: 'USD' }}
+        amountConfig={{ format: 'number', currency: CURRENCY_CODE ?? 'USD' }}
       />
       <DashboardStatsTable
         loading={salesLoading}
         title="Sales"
         data={dashboardSalesByType ?? []}
-        amountConfig={{ format: 'currency', currency: 'USD' }}
+        amountConfig={{ format: 'currency', currency: CURRENCY_CODE ?? 'USD' }}
       />
     </div>
   );

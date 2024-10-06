@@ -78,6 +78,17 @@ export interface ITimeTextField {
   name?: string;
 }
 
+export interface IDateTextField {
+  value: string | null; // Changed from Date to string
+  placeholder?: string;
+  onChange: (value: string) => void; // Changed to string
+  showLabel?: boolean;
+  isLoading?: boolean;
+  className?: string;
+  style?: CSSProperties;
+  name?: string;
+}
+
 export interface ICustomNumberTippingProps extends IGlobalTextFieldProps {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   min?: number;

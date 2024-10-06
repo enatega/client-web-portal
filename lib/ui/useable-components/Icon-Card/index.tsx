@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Rating } from 'primereact/rating';
 import { IProfileCardProps } from '@/lib/utils/interfaces';
+import Image from 'next/image';
 
 const ProfileCard: React.FC<IProfileCardProps> = ({
   name,
@@ -26,10 +27,12 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
   return (
     <div className="flex flex-col items-center p-4 border rounded-lg shadow-sm mx-auto">
       <div className="flex flex-col md:flex-row items-center w-full">
-        <img
+        <Image
           src={imageSrc}
           alt={`Restaurant image`}
-          className="w-12 h-12 rounded-full mr-4"
+          width={48}
+          height={48}
+          className="rounded-full mr-4"
         />
         <div className="flex-grow text-center md:text-left">
           <div className="font-semibold">{name}</div>

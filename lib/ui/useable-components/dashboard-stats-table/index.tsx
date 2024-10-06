@@ -35,7 +35,7 @@ export default function DashboardStatsTable({
                         item.value,
                         amountConfig.currency
                       )
-                    : formatNumber(item.value, amountConfig.currency)
+                    : formatNumber(item.value)
                   : item.value}
               </span>
             </div>

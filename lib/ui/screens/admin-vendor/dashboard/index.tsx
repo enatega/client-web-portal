@@ -1,16 +1,27 @@
 'use client';
 
+import DashboardDateFilter from '@/lib/ui/screen-components/protected/restaurant(vendor)/dashboard/date-filter';
 // Component
 import GrowthOverView from '@/lib/ui/screen-components/protected/restaurant(vendor)/dashboard/growth-overview';
 import OrderStats from '@/lib/ui/screen-components/protected/restaurant(vendor)/dashboard/order-stats';
 import RestaurantStatesTable from '@/lib/ui/screen-components/protected/restaurant(vendor)/dashboard/restaurant-stats-table';
+import { useState } from 'react';
 
 export default function AdminVendorDashboard() {
+  const [dateFilter, setDateFilter] = useState({
+    startDate: `${new Date().getFullYear()}-01-01`, // Current year, January 1st
+    endDate: `${new Date().getFullYear()}-${String(new Date().getMonth()).padStart(2, '0')}-${String(new Date(new Date().getFullYear(), new Date().getMonth(), 0).getDate()).padStart(2, '0')}`, // Last day of previous month
+  });
+
   return (
-    <div className="h-[calc(100vh-2rem)] w-full space-y-6 overflow-y-auto p-4 pb-8">
-      <OrderStats />
+    <div className="screen-container">
+      <DashboardDateFilter
+        dateFilter={dateFilter}
+        setDateFilter={setDateFilter}
+      />
+      <OrderStats dateFilter={dateFilter} />
       <GrowthOverView />
-      <RestaurantStatesTable />
+      <RestaurantStatesTable dateFilter={dateFilter} />
     </div>
   );
 }

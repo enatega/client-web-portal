@@ -2,6 +2,7 @@
 import { GET_DASHBOARD_RESTAURANT_ORDERS } from '@/lib/api/graphql/queries/dashboard';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import {
+  IDashboardOrderStatsComponentsProps,
   IDashboardRestaurantOrdersSalesStatsResponseGraphQL,
   IQueryResult,
 } from '@/lib/utils/interfaces';
@@ -16,17 +17,24 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useContext, useMemo } from 'react';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+import { useConfiguration } from '@/lib/hooks/useConfiguration';
 
-export default function UserStats() {
+export default function UserStats({
+  dateFilter,
+}: IDashboardOrderStatsComponentsProps) {
   // Context
   const {
     restaurantLayoutContextData: { restaurantId },
   } = useContext(RestaurantLayoutContext);
+  // COntext
+  const { CURRENCY_CODE } = useConfiguration();
 
   const { data, loading } = useQueryGQL(
     GET_DASHBOARD_RESTAURANT_ORDERS,
     {
       restaurant: restaurantId,
+      starting_date: dateFilter?.startDate,
+      ending_date: dateFilter?.endDate,
     },
     {
       fetchPolicy: 'network-only',
@@ -51,7 +59,7 @@ export default function UserStats() {
   }, [data]);
 
   return (
-    <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="p-3 grid grid-cols-1 items-center gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {/* {dummyOrderStatsData.map(renderStatsCard)} */}
 
       <StatsCard
@@ -87,7 +95,7 @@ export default function UserStats() {
         icon={faCashRegister}
         route="/food-management/orders"
         loading={loading}
-        amountConfig={{ format: 'currency', currency: 'USD' }}
+        amountConfig={{ format: 'currency', currency: CURRENCY_CODE ?? 'USD' }}
       />
     </div>
   );

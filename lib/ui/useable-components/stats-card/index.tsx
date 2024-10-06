@@ -33,7 +33,7 @@ export default function StatsCard({
           {amountConfig
             ? amountConfig?.format === 'currency'
               ? formatNumberWithCurrency(total, amountConfig.currency)
-              : formatNumber(total, amountConfig.currency)
+              : formatNumber(total)
             : total}
         </div>
         {description && (

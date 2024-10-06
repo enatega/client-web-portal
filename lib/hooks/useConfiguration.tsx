@@ -76,6 +76,7 @@ export const useConfiguration = () => {
   return {
     SERVER_URL: BACKEND_URL.LIVE.SERVER_URL,
     WS_SERVER_URL: BACKEND_URL.LIVE.WS_SERVER_URL,
+    COLORS,
 
     // EMAIL CONFIG
     EMAIL_NAME,
@@ -113,7 +114,6 @@ export const useConfiguration = () => {
     // GOOGLE MAPS
     GOOGLE_MAPS_KEY,
     LIBRARIES,
-    COLORS,
 
     // CLOUDINARY
     CLOUDINARY_UPLOAD_URL,

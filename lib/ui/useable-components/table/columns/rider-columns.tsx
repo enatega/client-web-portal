@@ -1,5 +1,5 @@
 // Core
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 // Custom Components
 import ActionMenu from '@/lib/ui/useable-components/action-menu';
@@ -12,6 +12,7 @@ import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 // GraphQL
 import { GET_RIDERS, TOGGLE_RIDER } from '@/lib/api/graphql';
 import { useMutation } from '@apollo/client';
+import { ToastContext } from '@/lib/context/toast.context';
 
 export const RIDER_TABLE_COLUMNS = ({
   menuItems,
@@ -23,10 +24,19 @@ export const RIDER_TABLE_COLUMNS = ({
     isActive: boolean;
   }>({ id: '', isActive: false });
 
+  const { showToast } = useContext(ToastContext);
+
   // GraphQL mutation hook
   const [mutateToggle, { loading }] = useMutation(TOGGLE_RIDER, {
     refetchQueries: [{ query: GET_RIDERS }],
     awaitRefetchQueries: true,
+    onError: () => {
+      showToast({
+        type: 'error',
+        title: 'Banner Status',
+        message: 'Status Change Failed',
+      });
+    },
   });
 
   // Handle availability toggle
@@ -35,7 +45,11 @@ export const RIDER_TABLE_COLUMNS = ({
       setSelectedRider({ id, isActive });
       await mutateToggle({ variables: { id } });
     } catch (error) {
-      console.error('Error toggling availability:', error);
+      showToast({
+        type: 'error',
+        title: 'Banner Status',
+        message: 'Something went wrong',
+      });
     } finally {
       setSelectedRider({ id: '', isActive: false });
     }

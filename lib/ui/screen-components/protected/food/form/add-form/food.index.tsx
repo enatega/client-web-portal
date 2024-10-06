@@ -5,7 +5,11 @@ import { Form, Formik } from 'formik';
 import { useContext, useMemo, useState } from 'react';
 
 // Context
-import { ToastContext } from '@/lib/context/toast.context';
+import { FoodsContext } from '@/lib/context/foods.context';
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+
+// Hooks
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 
 // Interface and Types
 import {
@@ -18,10 +22,11 @@ import {
 import { IFoodDetailsForm } from '@/lib/utils/interfaces/forms/food.form.interface';
 
 // Constants and Methods
-import { CategoryErrors, FoodErrors } from '@/lib/utils/constants';
+import { FoodErrors } from '@/lib/utils/constants';
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
 
 // Components
+import CategoryAddForm from '../../../category/add-form';
 import CustomButton from '@/lib/ui/useable-components/button';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
 import CustomDropdownComponent from '@/lib/ui/useable-components/custom-dropdown';
@@ -33,9 +38,6 @@ import { GET_CATEGORY_BY_RESTAURANT_ID } from '@/lib/api/graphql';
 
 // Schema
 import { FoodSchema } from '@/lib/utils/schema';
-import { FoodsContext } from '@/lib/context/foods.context';
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
-import CategoryAddForm from '../../../category/add-form';
 
 const initialValues: IFoodDetailsForm = {
   _id: null,
@@ -46,19 +48,13 @@ const initialValues: IFoodDetailsForm = {
 };
 export default function FoodDetails({
   stepperProps,
-  categoryDropdown,
 }: IFoodDetailsComponentProps) {
-  // Toast
-  const { showToast } = useContext(ToastContext);
   // Props
   const { onStepChange, order } = stepperProps ?? {
     onStepChange: () => {},
     type: '',
     order: -1,
   };
-
-  // Statee
-  const [showAddForm, setShowAddForm] = useState<boolean>(false);
 
   // Context
   const { onSetFoodContextData, foodContextData } = useContext(FoodsContext);
@@ -80,58 +76,8 @@ export default function FoodDetails({
     GET_CATEGORY_BY_RESTAURANT_ID,
     { id: restaurantId ?? '' },
     {
-      refetchQueries: [
-        {
-          query: GET_CATEGORY_BY_RESTAURANT_ID,
-          variables: { id: restaurantId },
-        },
-      ],
-      onCompleted: ({
-        createCategory,
-      }: {
-        createCategory: { categories: ICategory[] };
-      }) => {
-        const recent_category =
-          createCategory?.categories[createCategory?.categories?.length - 1];
-
-        if (!recent_category?._id) {
-          showToast({
-            type: 'error',
-            title: 'New Category',
-            message: 'Category creation failed.',
-          });
-          return;
-        }
-
-        setFoodInitialValues({
-          ...foodInitialValues,
-          category: {
-            label: recent_category?.title ?? '',
-            code: recent_category?._id ?? '',
-          },
-        });
-
-        showToast({
-          type: 'success',
-          title: 'New Category',
-          message: `Category has been added successfully.`,
-        });
-
-        setShowAddForm(false);
-      },
-      onError: (error) => {
-        let message = '';
-        try {
-          message = error.graphQLErrors[0]?.message;
-        } catch (err) {
-          message = 'ActionFailedTryAgain';
-        }
-        showToast({
-          type: 'error',
-          title: 'New Category',
-          message,
-        });
-      },
+      fetchPolicy: 'network-only',
+      enabled: !!restaurantId,
     }
   ) as IQueryResult<ICategoryByRestaurantResponse | undefined, undefined>;
 

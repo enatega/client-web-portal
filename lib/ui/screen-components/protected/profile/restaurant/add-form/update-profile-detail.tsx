@@ -148,7 +148,11 @@ export default function UpdateRestaurantDetails({
         },
       });
     } catch (error) {
-      console.error('Error calling editRestaurant mutation:', error);
+      showToast({
+        type: 'error',
+        title: 'Restaurant Details',
+        message: 'Something went wrong',
+      });
     }
   };
 

@@ -32,7 +32,6 @@ const BannersAddForm = ({
   banner,
   position = 'right',
 }: IBannersAddFormComponentProps) => {
-  console.log(banner);
   const { data, loading } = useQueryGQL(GET_RESTAURANTS, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
@@ -150,10 +149,7 @@ const BannersAddForm = ({
                   setFieldValue,
                 }) => {
                   return (
-                    <Form
-                      onClick={() => console.log(values)}
-                      onSubmit={handleSubmit}
-                    >
+                    <Form onSubmit={handleSubmit}>
                       <div className="space-y-4">
                         <div>
                           <CustomTextField

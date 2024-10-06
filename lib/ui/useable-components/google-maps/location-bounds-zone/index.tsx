@@ -127,7 +127,6 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
       _path[0].length > 0 &&
       _path[0][0].length > 0
     ) {
-      console.log('onsetcenter', _path);
       setPath(transformPolygon(_path[0]));
       setCenter(calculatePolygonCentroid(_path[0]));
     }

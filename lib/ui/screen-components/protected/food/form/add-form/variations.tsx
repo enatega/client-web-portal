@@ -31,7 +31,7 @@ import { VariationSchema } from '@/lib/utils/schema';
 
 // Icons
 import { faAdd, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { FoodsContext } from '@/lib/context/foods.context';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import {
@@ -195,7 +195,6 @@ export default function VariationAddForm({
   }: {
     variations: IVariationForm[];
   }) => {
-    console.log({ back: foodContextData });
     onSetFoodContextData({
       food: {
         _id: foodContextData?.food?._id ?? '',

@@ -5,10 +5,12 @@ import { useConfiguration } from '@/lib/hooks/useConfiguration';
 import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { faCreditCard } from '@fortawesome/free-solid-svg-icons';
 import { IPaymentMethod } from '@/lib/utils/interfaces/payment.card.interface';
+import { ToastContext } from '@/lib/context/toast.context';
 
 export default function PaymentMain() {
   const { SERVER_URL } = useConfiguration();
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
+  const { showToast } = useContext(ToastContext);
   const { restaurantId } = restaurantLayoutContextData;
 
   const [initialLoading, setInitialLoading] = useState(true);
@@ -28,7 +30,11 @@ export default function PaymentMain() {
       const data = await response.json();
       window.location.href = data.url;
     } catch (error) {
-      console.error('Error:', error);
+      showToast({
+        type: 'error',
+        title: 'Stripe Payment',
+        message: 'Error connecting to Stripe',
+      });
     } finally {
       setSubmittingMethod(null);
     }

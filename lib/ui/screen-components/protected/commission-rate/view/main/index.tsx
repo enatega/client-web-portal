@@ -88,7 +88,6 @@ export default function CommissionRateMain() {
           message: `Error updating commission rate for ${restaurant.name}`,
           duration: 2000,
         });
-        console.error('Error updating commission rate:', error);
       } finally {
         setLoadingRestaurant(null);
       }
@@ -152,7 +151,6 @@ export default function CommissionRateMain() {
     if (data?.restaurants) {
       setRestaurants(data.restaurants);
     } else if (error) {
-      console.error('Error fetching restaurants:', error);
       showToast({
         type: 'error',
         title: 'Error Fetching Restaurants',

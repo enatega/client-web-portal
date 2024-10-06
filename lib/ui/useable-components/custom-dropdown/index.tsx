@@ -4,8 +4,8 @@ import { IDropdownComponentProps } from '@/lib/utils/interfaces';
 // Prime React
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
-import TextIconClickable from '../text-icon-clickable';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import TextIconClickable from '../text-icon-clickable';
 
 const CustomDropdownComponent = ({
   name,
@@ -62,6 +62,7 @@ const CustomDropdownComponent = ({
         panelClassName="border-gray-200 border-2"
         filter={filter}
         checkmark={true}
+        panelFooterTemplate={panelFooterTemplate}
         {...props}
       />
     </div>

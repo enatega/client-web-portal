@@ -1,19 +1,60 @@
 // Core
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState, useContext } from 'react';
 
 // Prime React
 import { Chart } from 'primereact/chart';
+import { useQueryGQL } from '@/lib/hooks/useQueryQL';
+import { GET_DASHBOARD_RESTAURANT_SALES_ORDER_COUNT_DETAILS_BY_YEAR } from '@/lib/api/graphql';
+import {
+  IDashboardRestaurantSalesOrderCountDetailsByYearResponseGraphQL,
+  IQueryResult,
+} from '@/lib/utils/interfaces';
+import DashboardUsersByYearStatsSkeleton from '@/lib/ui/useable-components/custom-skeletons/dasboard.user.year.stats.skeleton';
+import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 
 // Dummy
-import { generateRandomUserCounts } from '@/lib/utils/dummy';
 
 export default function GrowthOverView() {
+  // Context
+  const {
+    restaurantLayoutContextData: { restaurantId },
+  } = useContext(RestaurantLayoutContext);
+
   // States
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
 
-  // Use Effect
-  useEffect(() => {
+  // Query
+  const { data, loading } = useQueryGQL(
+    GET_DASHBOARD_RESTAURANT_SALES_ORDER_COUNT_DETAILS_BY_YEAR,
+    {
+      restaurant: restaurantId,
+      year: new Date().getFullYear(),
+    },
+    {
+      fetchPolicy: 'network-only',
+      enabled: !!restaurantId,
+      debounceMs: 300,
+    }
+  ) as IQueryResult<
+    IDashboardRestaurantSalesOrderCountDetailsByYearResponseGraphQL | undefined,
+    undefined
+  >;
+
+  const dashboardSalesOrderCountDetailsByYear = useMemo(() => {
+    if (!data) return null;
+    return {
+      salesAmount:
+        data?.getRestaurantDashboardSalesOrderCountDetailsByYear?.salesAmount ??
+        [],
+      ordersCount:
+        data?.getRestaurantDashboardSalesOrderCountDetailsByYear?.ordersCount ??
+        [],
+    };
+  }, [data]);
+
+  // Handlers
+  const onChartDataChange = () => {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue(
@@ -37,36 +78,20 @@ export default function GrowthOverView() {
       ],
       datasets: [
         {
-          label: 'Total Users',
-          data: generateRandomUserCounts(),
-          fill: true,
-          borderColor: 'rgba(90, 193, 47, 1)',
-          backgroundColor: 'rgba(201, 232, 189, 0.2)',
-          tension: 0.4,
-        },
-        {
-          label: 'Total Vendors',
-          data: generateRandomUserCounts(),
-          fill: false,
-          borderColor: documentStyle.getPropertyValue('--blue-500'),
-          backgroundColor: documentStyle.getPropertyValue('--blue-100'),
-          tension: 0.4,
-        },
-        {
-          label: 'Total Restaurants',
-          data: generateRandomUserCounts(),
+          label: 'Sales Amount',
+          data: dashboardSalesOrderCountDetailsByYear?.salesAmount ?? [],
           fill: false,
           borderColor: documentStyle.getPropertyValue('--pink-500'),
           backgroundColor: documentStyle.getPropertyValue('--pink-100'),
-          tension: 0.4,
+          tension: 0.5,
         },
         {
-          label: 'Total Users',
-          data: generateRandomUserCounts(),
+          label: 'Orders Count',
+          data: dashboardSalesOrderCountDetailsByYear?.ordersCount ?? [],
           fill: false,
-          borderColor: documentStyle.getPropertyValue('--gray-500'),
-          backgroundColor: documentStyle.getPropertyValue('--gray-100'),
-          tension: 0.4,
+          borderColor: documentStyle.getPropertyValue('--blue-500'),
+          backgroundColor: documentStyle.getPropertyValue('--blue-100'),
+          tension: 0.5,
         },
       ],
     };
@@ -107,14 +132,24 @@ export default function GrowthOverView() {
 
     setChartData(data);
     setChartOptions(options);
-  }, []);
+  };
+  // Use Effect
+  useEffect(() => {
+    onChartDataChange();
+  }, [dashboardSalesOrderCountDetailsByYear]);
 
   return (
-    <div className={`w-full pb-2`}>
+    <div className={`w-full p-3`}>
       <h2 className="text-lg font-semibold">Growth Overview</h2>
-      <p className="text-gray-500">Tracking Growth Over the Year</p>
+      <p className="text-gray-500">
+        Tracking Stackholders Growth Over the Year
+      </p>
       <div className="mt-4">
-        <Chart type="line" data={chartData} options={chartOptions} />
+        {loading ? (
+          <DashboardUsersByYearStatsSkeleton />
+        ) : (
+          <Chart type="line" data={chartData} options={chartOptions} />
+        )}
       </div>
     </div>
   );

@@ -124,12 +124,7 @@ const TimingAddForm = () => {
         enableReinitialize
       >
         {({ values, errors, touched, setFieldValue }) => (
-          <Form
-            onClick={() => {
-              console.log(errors);
-            }}
-            className="flex flex-col gap-6"
-          >
+          <Form className="flex flex-col gap-6">
             {values?.map((value, dayIndex) => {
               return (
                 <div key={dayIndex} className="flex items-start gap-5">
