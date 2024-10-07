@@ -1,10 +1,11 @@
 import { gql } from '@apollo/client';
 
 export const GET_NOTIFICATIONS = gql`
-  query GetNotifications {
+  query GetNotfications {
     notifications {
-      title
       body
+      title
+      createdAt
     }
   }
 `;
