@@ -51,7 +51,7 @@ export default function FoodDetails({
 }: IFoodDetailsComponentProps) {
   // Props
   const { onStepChange, order } = stepperProps ?? {
-    onStepChange: () => {},
+    onStepChange: () => { },
     type: '',
     order: -1,
   };
@@ -98,6 +98,7 @@ export default function FoodDetails({
       description: values.description,
       category: values.category,
       image: values.image,
+      isActive: false
     };
 
     onSetFoodContextData({
@@ -212,7 +213,7 @@ export default function FoodDetails({
                           onSetImageUrl={setFieldValue}
                           existingImageUrl={
                             foodContextData?.isEditing ||
-                            foodContextData?.food?.data?.image
+                              foodContextData?.food?.data?.image
                               ? (values.image ?? '')
                               : ''
                           }

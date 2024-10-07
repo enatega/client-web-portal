@@ -97,6 +97,12 @@ export default function FoodsMain() {
       restaurant: restaurantId,
       categoryId: '',
     },
+    refetchQueries: [
+      {
+        query: GET_FOODS_BY_RESTAURANT_ID,
+        variables: { id: restaurantId },
+      },
+    ],
     onCompleted: () => {
       refetch();
     },
