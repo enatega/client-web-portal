@@ -64,6 +64,7 @@ export const COUPONS_TABLE_COLUMNS = ({
 
   // Handlers
   async function handleEnableField(rowData: ICoupon) {
+    console.log({ rowData });
     setEditCouponLoading({
       bool: true,
       _id: rowData._id,
@@ -100,6 +101,14 @@ export const COUPONS_TABLE_COLUMNS = ({
         headerName: 'Status',
         propertyName: 'enabled',
         body: (rowData: ICoupon) => {
+<<<<<<< HEAD
+=======
+          console.log({
+            rowDataId: rowData._id,
+            editCouponLoadingId: editCouponLoading._id,
+            loading,
+          });
+>>>>>>> 6b25c7e89c5a0002f082a391dcbbc51dbd9daaba
           return (
             <div className="flex w-full cursor-pointer items-center justify-between gap-2">
               <div className="flex w-20 items-start">

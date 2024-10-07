@@ -2,28 +2,24 @@
 import { IMultiSelectComponentProps } from '@/lib/utils/interfaces';
 
 // Prime React
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MultiSelect, MultiSelectChangeEvent } from 'primereact/multiselect';
-
-// UI Components
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
 import TextIconClickable from '../text-icon-clickable';
-
-// Icons
-import { faAdd } from '@fortawesome/free-solid-svg-icons/faAdd';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons/faChevronDown';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 const CustomMultiSelectComponent = ({
   name,
   placeholder,
   options,
   selectedItems,
+  extraFooterButton,
   setSelectedItems,
   showLabel,
   dropDownIcon,
   isLoading = false,
   onChange,
-  extraFooterButton,
   ...props
 }: IMultiSelectComponentProps) => {
   const itemTemplate = (option: { label: string }) => {

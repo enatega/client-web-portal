@@ -17,7 +17,7 @@ import { useMutation } from '@apollo/client';
 import { Form, Formik } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Sidebar } from 'primereact/sidebar';
-import { useContext } from 'react';
+import { ChangeEvent, useContext } from 'react';
 
 export default function NotificationForm({
   setVisible,
@@ -42,7 +42,7 @@ export default function NotificationForm({
       visible={visible}
       onHide={() => setVisible(false)}
       position="right"
-      className="w-full sm:w-[600px]"
+      className="w-full sm:w-[450px]"
     >
       <Formik
         initialValues={initialValues}
@@ -75,7 +75,7 @@ export default function NotificationForm({
         }}
         validateOnChange={true}
       >
-        {({ handleSubmit, handleChange, values, isSubmitting, errors }) => {
+        {({ handleSubmit, setFieldValue, values, isSubmitting, errors }) => {
           return (
             <Form onSubmit={handleSubmit}>
               <div className="mb-2 flex flex-col">
@@ -84,9 +84,10 @@ export default function NotificationForm({
               <div className="space-y-4">
                 <CustomTextField
                   value={values.title}
-                  onChange={handleChange}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFieldValue('title', e.target.value)
+                  }
                   name="title"
-                  className="w-full px-1 py-2 text-sm"
                   showLabel={true}
                   placeholder="Title"
                   type="text"
@@ -100,10 +101,11 @@ export default function NotificationForm({
                       : '',
                   }}
                 />
-
                 <CustomTextAreaField
                   value={values.body}
-                  onChange={handleChange}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                    setFieldValue('body', e.target.value)
+                  }
                   showLabel={true}
                   label="Description"
                   name="body"
@@ -118,6 +120,7 @@ export default function NotificationForm({
                       : '',
                   }}
                   rows={5}
+               
                 />
                 <button
                   className="float-end my-2 block rounded-md bg-black px-12 py-2 text-white"

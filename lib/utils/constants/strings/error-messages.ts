@@ -157,6 +157,10 @@ export const CouponErrors: ICouponErrors = {
   discount: ['Required'],
   enabled: ['Required'],
 };
+export const NotificationErrors: INoticiationErrors = {
+  title: ['Required'],
+  body: ['Required'],
+};
 
 export const FoodErrors: IFoodErrors = {
   title: ['Required'],
@@ -170,9 +174,4 @@ export const VariationErrors: IVariationErrors = {
   discount: ['Required'],
   price: ['Required', 'Minimum value must be greater than 0'],
   addons: ['Required', 'Addons field must have at least 1 items'],
-};
-
-export const NotificationErrors: INoticiationErrors = {
-  title: ['Required'],
-  body: ['Required'],
 };

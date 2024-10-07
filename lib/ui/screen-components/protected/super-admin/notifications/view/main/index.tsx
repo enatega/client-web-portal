@@ -18,13 +18,14 @@ import { GET_NOTIFICATIONS } from '@/lib/api/graphql';
 
 // Interfaces
 import { ILazyQueryResult } from '@/lib/utils/interfaces';
+import {  INotification } from '@/lib/utils/interfaces/notification.interface';
 
 export default function NotificationMain() {
   // Query
   const { data: notificationData, loading: notificationLoading } =
     useLazyQueryQL(GET_NOTIFICATIONS, {
       fetchPolicy: 'cache-and-network',
-    }) as ILazyQueryResult<undefined | undefined, undefined>;
+    }) as ILazyQueryResult<INotification[] | undefined, undefined>;
 
   // States
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
@@ -46,14 +47,14 @@ export default function NotificationMain() {
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
-  /*
+/*
 
 Notification Console temporary
 */
-  console.log({
-    notificationData,
-    notificationLoading,
-  });
+console.log({
+  notificationData,
+  notificationLoading
+});
   return (
     <div className="p-3">
       <Table

@@ -51,7 +51,7 @@ export default function CouponTableHeader({
 
   return (
     <div className="mb-4 flex flex-col gap-6">
-      <div className="flex-colm:flex-row flex w-fit items-center gap-2">
+      <div className="flex-colm:flex-row ml-4 mt-4 flex w-fit items-center gap-2">
         <div className="w-60">
           <CustomTextField
             type="text"

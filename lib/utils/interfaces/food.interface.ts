@@ -45,6 +45,7 @@ export interface IFoodMainComponentsProps extends IGlobalComponentProps {}
 // Components
 export interface IFoodDetailsComponentProps extends IGlobalComponentProps {
   stepperProps?: IStepperFormProps;
+  categoryDropdown: IDropdownSelectItem[];
 }
 export interface IFoodVariationsAddRestaurantComponentProps
   extends IGlobalComponentProps {
@@ -72,7 +73,7 @@ export interface IVariation {
   price: number;
   discounted: number;
   addons: string[];
-  __typename?: string;
+  __typename: string;
 }
 
 export interface IFood {
