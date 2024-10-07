@@ -10,11 +10,13 @@ import { FilterMatchMode } from 'primereact/api';
 
 // Context
 import { ToastContext } from '@/lib/context/global/toast.context';
+import { RestaurantsContext } from '@/lib/context/super-admin/restaurants.context';
 
 // Custom Hooks
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 
 // Custom Components
+import RestaurantDuplicateDialog from '../duplicate-dialog';
 import RestaurantsTableHeader from '../header/table-header';
 import Table from '@/lib/ui/useable-components/table';
 import CustomDialog from '@/lib/ui/useable-components/delete-dialog';
@@ -30,7 +32,6 @@ import {
 
 // GraphQL Queries and Mutations
 import {
-  DUPLICATE_RESTAURANT,
   GET_CLONED_RESTAURANTS,
   GET_RESTAURANTS,
   HARD_DELETE_RESTAURANT,
@@ -38,8 +39,9 @@ import {
 
 // Method
 import { onUseLocalStorage } from '@/lib/utils/methods';
+
+// Dummy
 import { generateDummyRestaurants } from '@/lib/utils/dummy';
-import { RestaurantsContext } from '@/lib/context/super-admin/restaurants.context';
 
 export default function RestaurantsMain() {
   // Context
@@ -68,7 +70,7 @@ export default function RestaurantsMain() {
     currentTab === 'Actual' ? GET_RESTAURANTS : GET_CLONED_RESTAURANTS,
     {},
     {
-      fetchPolicy: currentTab === 'Actual' ? 'cache-first' : 'network-only',
+      fetchPolicy: 'network-only',
       debounceMs: 300,
     }
   ) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
@@ -137,32 +139,8 @@ export default function RestaurantsMain() {
     }
   );
 
-  const [duplicateRestaurant, { loading: isDuplicating }] = useMutation(
-    DUPLICATE_RESTAURANT,
-    {
-      onCompleted: () => {
-        showToast({
-          type: 'success',
-          title: 'Restaurant Duplicate',
-          message: `Restaurant has been duplicated successfully.`,
-          duration: 2000,
-        });
-        setDuplicateId('');
-      },
-      onError: ({ networkError, graphQLErrors }: ApolloError) => {
-        showToast({
-          type: 'error',
-          title: 'Restaurant Duplicate',
-          message:
-            graphQLErrors[0]?.message ??
-            networkError?.message ??
-            `Restaurant duplicate failed`,
-          duration: 2500,
-        });
-        setDuplicateId('');
-      },
-    }
-  );
+
+
 
   const handleDelete = async (id: string) => {
     try {
@@ -177,18 +155,7 @@ export default function RestaurantsMain() {
     }
   };
 
-  const handleDuplicate = async (id: string) => {
-    try {
-      duplicateRestaurant({ variables: { id: id } });
-    } catch (err) {
-      showToast({
-        type: 'error',
-        title: 'Restaurant Duplicate',
-        message: `Restaurant duplicate failed.`,
-      });
-      setDuplicateId('');
-    }
-  };
+
 
   // Constants
   const menuItems: IActionMenuItem<IRestaurantResponse>[] = [
@@ -222,6 +189,8 @@ export default function RestaurantsMain() {
   const _restaurants =
     currentTab === 'Actual' ? data?.restaurants : data?.getClonedRestaurants;
 
+  console.log({ data })
+
   return (
     <div className="p-3">
       <Table
@@ -253,23 +222,15 @@ export default function RestaurantsMain() {
         message="Are you sure you want to delete this restaurant?"
       />
 
-      <CustomDialog
-        loading={isDuplicating}
+
+      <RestaurantDuplicateDialog
+        restaurantId={duplicateId}
         visible={!!duplicateId}
         onHide={() => {
           setDuplicateId('');
         }}
-        onConfirm={() => {
-          handleDuplicate(duplicateId);
-        }}
-        title="Duplicate Restaurant"
-        message="Are you sure you want to duplicate this restaurant?"
-        buttonConfig={{
-          primaryButtonProp: {
-            bgColor: 'bg-blue-500',
-          },
-        }}
       />
+
     </div>
   );
 }
