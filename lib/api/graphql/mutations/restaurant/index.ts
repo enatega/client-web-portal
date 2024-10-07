@@ -116,8 +116,8 @@ export const EDIT_RESTAURANT = gql`
 `;
 
 export const DUPLICATE_RESTAURANT = gql`
-  mutation DuplicateRestaurant($id: String!) {
-    duplicateRestaurant(id: $id) {
+  mutation DuplicateRestaurant($id: String!, $owner: String!) {
+    duplicateRestaurant(id: $id, owner: $owner) {
       _id
       name
       image
