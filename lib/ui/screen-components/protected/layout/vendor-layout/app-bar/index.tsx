@@ -14,6 +14,7 @@ import {
   faEllipsisV,
   faGlobe,
   faMap,
+  faRightFromBracket,
   faTruck,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -29,14 +30,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // Layout
 import { LayoutContext } from '@/lib/context/global/layout.context';
 
+// Hooks
+import { useUserContext } from '@/lib/hooks/useUser';
+import { useRouter } from 'next/navigation';
+
 // Interface/Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';
 
 // Constants
-import { APP_NAME } from '@/lib/utils/constants/strings/global';
+import {
+  APP_NAME,
+  DISPATCH,
+  LANGUAGE,
+  SELECTED_RESTAURANT,
+  SELECTED_VENDOR,
+  SELECTED_VENDOR_EMAIL,
+  SETTINGS,
+  ZONE,
+} from '@/lib/utils/constants';
 
 // Methods
-import { toTextCase } from '@/lib/utils/methods';
+import { onUseLocalStorage, toTextCase } from '@/lib/utils/methods';
 
 // Styles
 import classes from './app-bar.module.css';
@@ -48,6 +62,9 @@ const VendorAppTopbar = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   // Context
   const { showVendorSidebar } = useContext<LayoutContextProps>(LayoutContext);
+  const { setUser } = useUserContext();
+  // Hooks
+  const router = useRouter();
 
   // Handlers
   const onDevicePixelRatioChange = useCallback(() => {
@@ -63,6 +80,15 @@ const VendorAppTopbar = () => {
     ) {
       setIsMenuOpen(false); // Close the container or handle the click outside
     }
+  };
+
+  const onLogout = () => {
+    setUser(null);
+    onUseLocalStorage('delete', SELECTED_VENDOR);
+    onUseLocalStorage('delete', SELECTED_VENDOR_EMAIL);
+    onUseLocalStorage('delete', SELECTED_RESTAURANT);
+    onUseLocalStorage('delete', `user-${APP_NAME}`);
+    router.push('/authentication/login');
   };
 
   // Use Effects
@@ -106,6 +132,11 @@ const VendorAppTopbar = () => {
 
           <FontAwesomeIcon icon={faChevronDown} />
         </div>
+        <FontAwesomeIcon
+          onClick={onLogout}
+          className="cursor-pointer"
+          icon={faRightFromBracket}
+        />
       </div>
       <div className="md:hidden">
         <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -129,6 +160,11 @@ const VendorAppTopbar = () => {
             <TextIconClickable className="justify-between" icon={faTruck} />
             <TextIconClickable className="justify-between" icon={faCog} />
             <TextIconClickable className="justify-between" icon={faGlobe} />
+            <TextIconClickable
+              onClick={onLogout}
+              className="cursor-pointer"
+              icon={faRightFromBracket}
+            />
           </div>
         </div>
       )}
