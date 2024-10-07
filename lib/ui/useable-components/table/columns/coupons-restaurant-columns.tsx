@@ -10,7 +10,7 @@ import { IActionMenuProps } from '@/lib/utils/interfaces/action-menu.interface';
 import { ICouponRestaurantResponse } from '@/lib/utils/interfaces/coupons-restaurant.interface';
 
 // Context
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+import { RestaurantLayoutContext } from '@/lib/context/restaurant/layout-restaurant.context';
 
 // GraphQL
 import { useMutation } from '@apollo/client';

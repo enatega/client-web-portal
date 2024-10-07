@@ -6,9 +6,9 @@ import ActionMenu from '../../action-menu';
 import { ApolloError, useMutation } from '@apollo/client';
 import { GET_FOODS_BY_RESTAURANT_ID, UPDATE_FOOD_OUT_OF_STOCK } from '@/lib/api/graphql';
 import { useContext, useState } from 'react';
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 import CustomInputSwitch from '../../custom-input-switch';
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+import { RestaurantLayoutContext } from '@/lib/context/restaurant/layout-restaurant.context';
 
 export const FOODS_TABLE_COLUMNS = ({
   menuItems,

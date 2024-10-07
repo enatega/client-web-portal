@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useContext, useState } from 'react';
 
 // Context
-import { VendorContext } from '@/lib/context/vendor.context';
+import { VendorContext } from '@/lib/context/super-admin/vendor.context';
 
 // Interface
 import { IVendorCardProps } from '@/lib/utils/interfaces';
@@ -21,8 +21,8 @@ import {
 
 // Component
 import { DELETE_VENDOR, GET_VENDORS } from '@/lib/api/graphql';
-import { ToastContext } from '@/lib/context/toast.context';
-import { SELECTED_VENDOR } from '@/lib/utils/constants';
+import { ToastContext } from '@/lib/context/global/toast.context';
+import { SELECTED_VENDOR_EMAIL } from '@/lib/utils/constants';
 import { ApolloError, useMutation } from '@apollo/client';
 import Image from 'next/image';
 import CustomDialog from '../delete-dialog';
@@ -74,7 +74,7 @@ export default function VendorCard({
   const onVendorCardClicked = (_vendorId: string) => {
     onSetVendorId(_vendorId);
     onUseLocalStorage('save', 'vendorId', _vendorId.toString());
-    onUseLocalStorage('save', SELECTED_VENDOR, email);
+    onUseLocalStorage('save', SELECTED_VENDOR_EMAIL, email);
   };
 
   const onHandlerEdit = () => {
@@ -153,9 +153,8 @@ export default function VendorCard({
           {vendorId === _id && (
             <FontAwesomeIcon
               icon={faEllipsisVertical}
-              className={`p-1 ${
-                isPopupOpen ? 'text-gray-400' : 'text-white'
-              } cursor-pointer hover:scale-105`}
+              className={`p-1 ${isPopupOpen ? 'text-gray-400' : 'text-white'
+                } cursor-pointer hover:scale-105`}
               onClick={(e) => {
                 e.stopPropagation();
                 setPopupOpen(!isPopupOpen);

@@ -39,7 +39,7 @@ import {
 } from '@apollo/client';
 
 // Contexts
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 // CSS
 import classes from '../../../screen-components/protected/dispatch/view/main/index.module.css';

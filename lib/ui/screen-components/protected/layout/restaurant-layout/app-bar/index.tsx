@@ -27,7 +27,7 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // Layout
-import { LayoutContext } from '@/lib/context/layout.context';
+import { LayoutContext } from '@/lib/context/global/layout.context';
 
 // Interface/Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';
@@ -47,13 +47,13 @@ const AppTopbar = () => {
   // Ref
   const containerRef = useRef<HTMLDivElement>(null);
   // Context
-  const { showAdminSidebar } = useContext<LayoutContextProps>(LayoutContext);
+  const { showRestaurantSidebar } = useContext<LayoutContextProps>(LayoutContext);
 
   // Handlers
   const onDevicePixelRatioChange = useCallback(() => {
     setIsMenuOpen(false);
-    showAdminSidebar(false);
-  }, [showAdminSidebar]);
+    showRestaurantSidebar(false);
+  }, [showRestaurantSidebar]);
 
   const handleClickOutside = (event: MouseEvent) => {
     // Check if the clicked target is outside the container
@@ -84,7 +84,7 @@ const AppTopbar = () => {
     <div className={`${classes['layout-topbar']}`}>
       <div className="flex items-center gap-x-3">
         <div id="sidebar-opening-icon">
-          <button onClick={() => showAdminSidebar()}>
+          <button onClick={() => showRestaurantSidebar()}>
             <FontAwesomeIcon icon={faBars} />
           </button>
         </div>

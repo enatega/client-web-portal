@@ -31,7 +31,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 // GraphQL
 import { OWNER_LOGIN } from '@/lib/api/graphql';
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 import { ApolloError, useMutation } from '@apollo/client';
 
 // Schema

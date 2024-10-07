@@ -2,7 +2,7 @@
 import { useContext, useEffect } from 'react';
 
 // Context
-import { LayoutContext } from '@/lib/context/layout.context';
+import { LayoutContext } from '@/lib/context/global/layout.context';
 
 // Interface & Types
 import {
@@ -25,13 +25,13 @@ import SidebarItem from './side-bar-item';
 
 function AdminSidebar({ children }: IGlobalComponentProps) {
   // Context
-  const { isAdminSidebarVisible, showAdminSidebar } =
+  const { isRestaurantSidebarVisible, showRestaurantSidebar } =
     useContext<LayoutContextProps>(LayoutContext);
 
   // Detect clicks outside the sidebar
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const sidebar = document.getElementById('admin-sidebar');
+      const sidebar = document.getElementById('app-sidebar');
       const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
       if (
         sidebar &&
@@ -39,7 +39,7 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
         iconContainer &&
         !iconContainer.contains(event.target as Node)
       ) {
-        showAdminSidebar(false);
+        showRestaurantSidebar(false);
       }
     };
 
@@ -47,16 +47,16 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showAdminSidebar]);
+  }, [showRestaurantSidebar]);
 
   return (
     <div className="relative">
       <aside
-        id="admin-sidebar"
-        className={`box-border transform overflow-hidden transition-all duration-300 ease-in-out ${isAdminSidebarVisible ? 'w-64 translate-x-0' : 'w-0 -translate-x-full'}`}
+        id="app-sidebar"
+        className={`box-border transform overflow-hidden transition-all duration-300 ease-in-out ${isRestaurantSidebarVisible ? 'w-64 translate-x-0' : 'w-0 -translate-x-full'}`}
       >
         <nav
-          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isAdminSidebarVisible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isRestaurantSidebarVisible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         >
           <ul className="flex-1 pl-2">{children}</ul>
         </nav>
@@ -66,7 +66,7 @@ function AdminSidebar({ children }: IGlobalComponentProps) {
 }
 
 export default function MakeSidebar() {
-  const { isAdminSidebarVisible } =
+  const { isRestaurantSidebarVisible } =
     useContext<LayoutContextProps>(LayoutContext);
 
   const navBarItems: ISidebarMenuItem[] = [
@@ -163,7 +163,7 @@ export default function MakeSidebar() {
           {navBarItems.map((item, index) => (
             <SidebarItem
               key={index}
-              expanded={isAdminSidebarVisible}
+              expanded={isRestaurantSidebarVisible}
               {...item}
             />
           ))}

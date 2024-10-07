@@ -1,5 +1,5 @@
-import { ConfigurationContext } from '@/lib/context/configuration.context';
-import { ToastContext } from '@/lib/context/toast.context';
+import { ConfigurationContext } from '@/lib/context/global/configuration.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 import { uploadImageToCloudinary } from '@/lib/services';
 import {
   IConfiguration,

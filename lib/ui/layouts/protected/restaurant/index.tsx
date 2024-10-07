@@ -5,7 +5,7 @@
 import { useContext } from 'react';
 
 // Context
-import { LayoutContext } from '@/lib/context/layout.context';
+import { LayoutContext } from '@/lib/context/global/layout.context';
 
 // Components
 import AdminAppTopbar from '@/lib/ui/screen-components/protected/layout/restaurant-layout/app-bar';
@@ -16,7 +16,7 @@ import { IProvider, LayoutContextProps } from '@/lib/utils/interfaces';
 
 const RestaurantLayout = ({ children }: IProvider) => {
   // Context
-  const { isAdminSidebarVisible } =
+  const { isRestaurantSidebarVisible } =
     useContext<LayoutContextProps>(LayoutContext);
 
   return (
@@ -29,7 +29,7 @@ const RestaurantLayout = ({ children }: IProvider) => {
           <AdminSidebar />
         </div>
         <div
-          className={`lg:ml-45 h-full w-full md:ml-${isAdminSidebarVisible ? 64 : 20}`}
+          className={`lg:ml-45 h-full w-full md:ml-${isRestaurantSidebarVisible ? 64 : 20}`}
         >
           {children}
         </div>

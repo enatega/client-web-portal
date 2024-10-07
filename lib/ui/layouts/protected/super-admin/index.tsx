@@ -5,7 +5,7 @@
 import { useContext } from 'react';
 
 // Context
-import { LayoutContext } from '@/lib/context/layout.context';
+import { LayoutContext } from '@/lib/context/global/layout.context';
 
 // Components
 import AppTopbar from '@/lib/ui/screen-components/protected/layout/super-admin-layout/app-bar';
@@ -15,7 +15,7 @@ import SuperAdminSidebar from '@/lib/ui/screen-components/protected/layout/super
 import { IProvider, LayoutContextProps } from '@/lib/utils/interfaces';
 
 const Layout = ({ children }: IProvider) => {
-  const { isSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
+  const { isSuperAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
 
   return (
     <div className="layout-main">
@@ -27,7 +27,7 @@ const Layout = ({ children }: IProvider) => {
           <SuperAdminSidebar />
         </div>
         <div
-          className={`lg:ml-45 h-auto w-full md:ml-${isSidebarVisible ? 64 : 20}`}
+          className={`lg:ml-45 h-auto w-full md:ml-${isSuperAdminSidebarVisible ? 64 : 20}`}
         >
           {children}
         </div>
