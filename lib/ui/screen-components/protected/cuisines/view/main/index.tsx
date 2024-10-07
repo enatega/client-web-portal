@@ -34,13 +34,19 @@ export default function CuisinesMain({
   isEditing,
   setIsEditing,
 }: ICuisineMainProps) {
-  //Mutations
+  // Mutations
   const [deleteCuisine, { loading: deleteCuisineLoading }] = useMutation(
     DELETE_CUISINE,
     {
       refetchQueries: [{ query: GET_CUISINES }],
+      fetchPolicy: 'network-only',
     }
   );
+
+  // Queries
+  const { data, fetch } = useLazyQueryQL(GET_CUISINES, {
+    onCompleted: () => setIsLoading(false),
+  }) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
 
   // Toast
   const { showToast } = useContext(ToastContext);
@@ -67,14 +73,9 @@ export default function CuisinesMain({
     global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
     shopType: {
       value: selectedActions.length > 0 ? selectedActions : null,
-      matchMode: FilterMatchMode.CONTAINS,
+      matchMode: FilterMatchMode.EQUALS,
     },
   };
-
-  // Queries
-  const { data, fetch } = useLazyQueryQL(GET_CUISINES, {
-    onCompleted: () => setIsLoading(false),
-  }) as ILazyQueryResult<IGetCuisinesData | undefined, undefined>;
 
   // Menu Items
   const menuItems: IActionMenuItem<ICuisine>[] = [
