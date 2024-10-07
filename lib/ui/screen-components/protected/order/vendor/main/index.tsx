@@ -3,7 +3,7 @@ import Table from '@/lib/ui/useable-components/table';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import OrderTableHeader from '../header/table-header';
 import { IQueryResult } from '@/lib/utils/interfaces';
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+import { RestaurantLayoutContext } from '@/lib/context/restaurant/layout-restaurant.context';
 import { GET_ORDER_BY_RESTAURANT } from '@/lib/api/graphql';
 import { ORDER_COLUMNS } from '@/lib/ui/useable-components/table/columns/order-vendor-columns';
 import OrderTableSkeleton from '@/lib/ui/useable-components/custom-skeletons/orders.vendor.row.skeleton';
