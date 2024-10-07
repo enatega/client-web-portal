@@ -22,7 +22,6 @@ export default function VendorRestaurantsMain() {
   const {
     onSetRestaurantFormVisible,
     restaurantByOwnerResponse,
-
     restaurantContextData,
     onSetRestaurantContextData,
   } = useContext(VendorLayoutRestaurantContext);
@@ -30,8 +29,6 @@ export default function VendorRestaurantsMain() {
   const restaurants = restaurantContextData?.globalFilter
     ? restaurantContextData?.filtered
     : restaurantByOwnerResponse?.data?.restaurantByOwner?.restaurants;
-
-  console.log({ restaurantContextData })
 
   return (
     <div className="flex flex-grow flex-col overflow-hidden sm:flex-row">
