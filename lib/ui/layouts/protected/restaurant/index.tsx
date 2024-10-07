@@ -8,8 +8,8 @@ import { useContext } from 'react';
 import { LayoutContext } from '@/lib/context/global/layout.context';
 
 // Components
-import AdminAppTopbar from '@/lib/ui/screen-components/protected/layout/restaurant-layout/app-bar';
-import AdminSidebar from '@/lib/ui/screen-components/protected/layout/restaurant-layout/side-bar';
+import RestaurantAppTopbar from '@/lib/ui/screen-components/protected/layout/restaurant-layout/app-bar';
+import RestaurantSidebar from '@/lib/ui/screen-components/protected/layout/restaurant-layout/side-bar';
 
 // Interface
 import { IProvider, LayoutContextProps } from '@/lib/utils/interfaces';
@@ -22,11 +22,11 @@ const RestaurantLayout = ({ children }: IProvider) => {
   return (
     <div className="layout-main">
       <div className="layout-top-container">
-        <AdminAppTopbar />
+        <RestaurantAppTopbar />
       </div>
       <div className="layout-main-container">
         <div className="absolute left-0 z-50">
-          <AdminSidebar />
+          <RestaurantSidebar />
         </div>
         <div
           className={`lg:ml-45 h-full w-full md:ml-${isRestaurantSidebarVisible ? 64 : 20}`}

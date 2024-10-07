@@ -148,7 +148,7 @@ export default function MakeSidebar() {
 
     {
       text: 'Back to Admin',
-      route: '/home',
+      route: '/home', // If super admin redirect to /home, if vendor redirecot to /admin/vendor/restaurants
       isParent: true,
       icon: faArrowLeft,
       isClickable: true,

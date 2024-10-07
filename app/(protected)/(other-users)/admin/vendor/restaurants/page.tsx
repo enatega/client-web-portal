@@ -1,8 +1,9 @@
 'use client';
 
-import VendorRestaurants from '@/lib/ui/screen-components/protected/vendor/restaurants/view/main';
+
+import VendorRestaurantScreen from '@/lib/ui/screens/admin/vendor/restaurants';
 
 
 export default function ProfilePage() {
-  return <VendorRestaurants />;
+  return <VendorRestaurantScreen />;
 }

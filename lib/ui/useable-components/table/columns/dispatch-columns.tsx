@@ -42,7 +42,7 @@ import {
 import { ToastContext } from '@/lib/context/global/toast.context';
 
 // CSS
-import classes from '@/lib/ui/screen-components/protected/super-admin/dispatch/view/index.module.css';
+import classes from '@/lib/ui/screen-components/protected/super-admin/dispatch/view/main/index.module.css';
 
 export const DISPATCH_TABLE_COLUMNS = () => {
   // Toast

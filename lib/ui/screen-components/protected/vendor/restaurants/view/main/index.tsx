@@ -16,7 +16,7 @@ import { VendorLayoutRestaurantContext } from '@/lib/context/vendor/restaurant.c
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function VendorRestaurants() {
+export default function VendorRestaurantsMain() {
 
 
   const {
