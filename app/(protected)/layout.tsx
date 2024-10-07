@@ -1,6 +1,6 @@
 'use client';
 
-import { GoogleMapsProvider } from '@/lib/context/google-maps.context';
+import { GoogleMapsProvider } from '@/lib/context/global/google-maps.context';
 import { useConfiguration } from '@/lib/hooks/useConfiguration';
 // Layout
 import GlobalLayout from '@/lib/ui/layouts/protected/global';

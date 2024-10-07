@@ -1,8 +1,8 @@
 'use client';
-import CuisineForm from '@/lib/ui/screen-components/protected/cuisines/form';
+import CuisineForm from '@/lib/ui/screen-components/protected/super-admin/cuisines/form';
 //screen components
-import CuisineScreenHeader from '@/lib/ui/screen-components/protected/cuisines/view/header/screen-header';
-import CuisinesMain from '@/lib/ui/screen-components/protected/cuisines/view/main';
+import CuisineScreenHeader from '@/lib/ui/screen-components/protected/super-admin/cuisines/view/header/screen-header';
+import CuisinesMain from '@/lib/ui/screen-components/protected/super-admin/cuisines/view/main';
 import { IEditState } from '@/lib/utils/interfaces';
 import { ICuisine } from '@/lib/utils/interfaces/cuisine.interface';
 

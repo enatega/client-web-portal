@@ -30,12 +30,18 @@ export type LayoutConfig = {
 
 /* Layout Context */
 export interface LayoutContextProps {
-  isSidebarVisible: boolean;
-  showSidebar: (isOpen?: boolean) => void;
-  isAdminSidebarVisible: boolean;
-  showAdminSidebar: (isOpen?: boolean) => void;
+  // Super Admin
+  isSuperAdminSidebarVisible: boolean;
+  showSuperAdminSidebar: (isOpen?: boolean) => void;
+  // Restaurant
+  isRestaurantSidebarVisible: boolean;
+  showRestaurantSidebar: (isOpen?: boolean) => void;
+  // Vendor
+  isVendorSidebarVisible: boolean;
+  showVendorSidebar: (isOpen?: boolean) => void;
 }
 
+// Restaurant layout
 export interface RestaurantLayoutContextProps {
   restaurantLayoutContextData: RestaurantLayoutContextData;
   onSetRestaurantLayoutContextData: (
@@ -45,6 +51,18 @@ export interface RestaurantLayoutContextProps {
 
 export interface RestaurantLayoutContextData {
   restaurantId: string;
+}
+
+// Vendor Layout
+export interface VendorLayoutContextProps {
+  vendorLayoutContextData: VendorLayoutContextData;
+  onSetVendorLayoutContextData: (
+    data: Partial<VendorLayoutContextData>
+  ) => void;
+}
+
+export interface VendorLayoutContextData {
+  vendorId: string;
 }
 
 /* Menu */

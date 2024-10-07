@@ -25,7 +25,7 @@ import {
 } from '@/lib/api/graphql';
 
 // Context
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 // Interfaces
 import {
@@ -39,7 +39,7 @@ import {
   IRestaurantProfileProps,
 } from '@/lib/utils/interfaces';
 
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
+import { RestaurantLayoutContext } from '@/lib/context/restaurant/layout-restaurant.context';
 
 // Utilities
 import { transformPath, transformPolygon } from '@/lib/utils/methods';
@@ -60,7 +60,7 @@ import CustomButton from '../../button';
 import CustomRadiusInputField from '../../custom-radius-input';
 import CustomShape from '../shapes';
 import { DEFAULT_CENTER } from '@/lib/utils/constants';
-import { ProfileContext } from '@/lib/context/profile.context';
+import { ProfileContext } from '@/lib/context/restaurant/profile.context';
 
 const autocompleteService: {
   current: google.maps.places.AutocompleteService | null;
@@ -405,7 +405,7 @@ const UpdateRestaurantLocationBounds: React.FC<
         const lng =
           center.lng +
           (radius / (111300 * Math.cos(center.lat * (Math.PI / 180)))) *
-            Math.sin(angle);
+          Math.sin(angle);
         path.push({ lat, lng });
       }
 
@@ -429,7 +429,7 @@ const UpdateRestaurantLocationBounds: React.FC<
         const lng =
           center.lng +
           (radius / (111320 * Math.cos((center.lat * Math.PI) / 180))) *
-            Math.sin(angle);
+          Math.sin(angle);
         path.push([lng, lat]);
       }
 

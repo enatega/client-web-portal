@@ -62,6 +62,7 @@ export interface IFoodGridItem {
   description: string;
   category: IDropdownSelectItem | null;
   image: string;
+  isActive: boolean;
   variations?: IVariation[];
 }
 

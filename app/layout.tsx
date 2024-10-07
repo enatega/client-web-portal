@@ -10,13 +10,13 @@ import { Inter } from 'next/font/google';
 import { PrimeReactProvider } from 'primereact/api';
 
 // Providers
-import { LayoutProvider } from '@/lib/context/layout.context';
-import { SidebarProvider } from '@/lib/context/sidebar.context';
-import { UserProvider } from '@/lib/context/user-context';
+import { LayoutProvider } from '@/lib/context/global/layout.context';
+import { SidebarProvider } from '@/lib/context/global/sidebar.context';
+import { UserProvider } from '@/lib/context/global/user-context';
 
 // Context
-import { ConfigurationProvider } from '@/lib/context/configuration.context';
-import { ToastProvider } from '@/lib/context/toast.context';
+import { ConfigurationProvider } from '@/lib/context/global/configuration.context';
+import { ToastProvider } from '@/lib/context/global/toast.context';
 
 // HOC
 import withPermissionsGuard from '@/lib/api/hoc/PermissionsGuard';

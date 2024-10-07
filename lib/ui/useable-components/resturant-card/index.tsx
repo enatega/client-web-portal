@@ -25,8 +25,8 @@ import { onUseLocalStorage } from '@/lib/utils/methods';
 import { DELETE_RESTAURANT, HARD_DELETE_RESTAURANT } from '@/lib/api/graphql';
 
 // Contexts
-import { ToastContext } from '@/lib/context/toast.context';
-import { RestaurantContext } from '@/lib/context/restaurant.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
+import { RestaurantContext } from '@/lib/context/super-admin/restaurant.context';
 
 // Components
 import CustomButton from '../button';

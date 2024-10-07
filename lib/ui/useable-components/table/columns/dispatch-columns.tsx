@@ -39,10 +39,10 @@ import {
 } from '@apollo/client';
 
 // Contexts
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 // CSS
-import classes from '../../../screen-components/protected/dispatch/view/main/index.module.css';
+import classes from '@/lib/ui/screen-components/protected/super-admin/dispatch/view/main/index.module.css';
 
 export const DISPATCH_TABLE_COLUMNS = () => {
   // Toast
