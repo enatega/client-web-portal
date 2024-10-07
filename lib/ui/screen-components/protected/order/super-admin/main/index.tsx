@@ -1,8 +1,7 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo } from 'react';
 import Table from '@/lib/ui/useable-components/table';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { IQueryResult } from '@/lib/utils/interfaces';
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
 import { ORDER_COLUMNS } from '@/lib/ui/useable-components/table/columns/order-vendor-columns';
 import OrderTableSkeleton from '@/lib/ui/useable-components/custom-skeletons/orders.vendor.row.skeleton';
 import { IOrder, IExtendedOrder } from '@/lib/utils/interfaces';
@@ -16,7 +15,6 @@ export default function OrderSuperAdminMain() {
   const [selectedData, setSelectedData] = useState<IExtendedOrder[]>([]);
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
 
   const [page, setPage] = useState(0);
   const [rows, setRows] = useState(10);

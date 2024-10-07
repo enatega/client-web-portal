@@ -16,6 +16,6 @@ const createSkeletonRow = () => ({
 });
 
 const OrderTableSkeleton = ({ rowCount }: OrderTableSkeletonProps) => 
-  Array(rowCount).fill(null).map((_, index) => createSkeletonRow());
+  Array(rowCount).fill(null).map(() => createSkeletonRow());
 
 export default OrderTableSkeleton;

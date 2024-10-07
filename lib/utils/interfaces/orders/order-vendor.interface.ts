@@ -16,7 +16,7 @@ export interface IOrderVendorHeaderProps extends IGlobalComponentProps {
     _id: string;
     orderId: string;
     items: Array<{
-      variation: any;
+      variation: ReactNode;
       description: ReactNode;
       title: string;
       quantity: number;
@@ -33,11 +33,11 @@ export interface IOrderVendorHeaderProps extends IGlobalComponentProps {
 
   // Create a new interface that extends IOrder with the additional properties
 export interface IExtendedOrder extends IOrder {
-  paidAmount?: any;
+  paidAmount?: number;
   paymentMethod?: ReactNode;
   deliveryCharges?: number;
-  tipping?: any;
-  taxationAmount?: any;
+  tipping?: number;
+  taxationAmount?: number;
   itemsTitle?: string;
   OrderdeliveryAddress?: string;
   DateCreated?: string;
