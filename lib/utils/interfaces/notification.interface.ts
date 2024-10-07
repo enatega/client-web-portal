@@ -13,13 +13,16 @@ export interface INotificationFormProps {
   visible: boolean;
 }
 
-export interface INotificationMainProps {}
-
 export interface INotificationTableProps {
   onGlobalFilterChange: (e: ChangeEvent<HTMLInputElement>) => void;
   filters: IFilterType | undefined;
   globalFilterValue: string;
 }
+
 export interface INotificationHeaderProps {
   handleButtonClick: () => void;
+}
+
+export interface IGetNotifications {
+  notifications: INotification[];
 }

@@ -1,5 +1,5 @@
 // GraphQL
-import { SEND_NOTIFICATION_USER } from '@/lib/api/graphql';
+import { GET_NOTIFICATIONS, SEND_NOTIFICATION_USER } from '@/lib/api/graphql';
 
 // Contexts
 import { ToastContext } from '@/lib/context/global/toast.context';
@@ -31,7 +31,9 @@ export default function NotificationForm({
   };
 
   //Mutation
-  const [sendNotificationUser] = useMutation(SEND_NOTIFICATION_USER);
+  const [sendNotificationUser] = useMutation(SEND_NOTIFICATION_USER, {
+    refetchQueries: [{ query: GET_NOTIFICATIONS }],
+  });
 
   return (
     <Sidebar

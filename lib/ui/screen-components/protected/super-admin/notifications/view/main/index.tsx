@@ -3,14 +3,30 @@ import { FilterMatchMode } from 'primereact/api';
 
 //Hooks
 import { ChangeEvent, useState } from 'react';
+import { useLazyQueryQL } from '@/lib/hooks/useLazyQueryQL';
 
 //Components
 import NotificationTableHeader from '../header/table-header';
 import Table from '@/lib/ui/useable-components/table';
+
+// Constants
 import { generateDummyNotifications } from '@/lib/utils/dummy';
 import { NOTIFICATIONS_TABLE_COLUMNS } from '@/lib/ui/useable-components/table/columns/notification-columns';
 
+// GraphQL
+import { GET_NOTIFICATIONS } from '@/lib/api/graphql';
+
+// Interfaces
+import { ILazyQueryResult } from '@/lib/utils/interfaces';
+import { IGetNotifications } from '@/lib/utils/interfaces/notification.interface';
+
 export default function NotificationMain() {
+  // Query
+  const { data: notificationData, loading: notificationLoading } =
+    useLazyQueryQL(GET_NOTIFICATIONS, {
+      fetchPolicy: 'cache-and-network',
+    }) as ILazyQueryResult<IGetNotifications | undefined, undefined>;
+
   // States
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
 
@@ -31,12 +47,19 @@ export default function NotificationMain() {
     setFilters(_filters);
     setGlobalFilterValue(value);
   };
+/*
 
+Notification Console temporary
+*/
+console.log({
+  notificationData,
+  notificationLoading
+});
   return (
     <div className="p-3">
       <Table
         columns={NOTIFICATIONS_TABLE_COLUMNS()}
-        data={generateDummyNotifications()}
+        data={notificationData?.notifications ?? generateDummyNotifications()}
         selectedData={[]}
         setSelectedData={() => {}}
         header={
@@ -47,6 +70,7 @@ export default function NotificationMain() {
             setSelectedActions={setSelectedActions}
           />
         }
+        loading={notificationLoading}
         filters={filters}
       />
     </div>

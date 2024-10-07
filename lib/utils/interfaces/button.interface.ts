@@ -3,7 +3,7 @@ import { IGlobalComponentProps } from './global.interface';
 
 export interface ICustomButtonProps extends IGlobalComponentProps {
   label: string;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: () => Promise<void>;
   rounded?: boolean;
   outlined?: boolean;
   icon?: string;

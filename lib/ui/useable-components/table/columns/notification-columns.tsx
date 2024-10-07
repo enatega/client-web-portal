@@ -1,10 +1,20 @@
+'use client';
+
 // Components
+import { INotification } from '@/lib/utils/interfaces/notification.interface';
 import CustomButton from '../../button';
 
 // Hooks
 import { useMemo } from 'react';
 
 export const NOTIFICATIONS_TABLE_COLUMNS = () => {
+  // Handlers
+  async function handleResendNotification(rowData: INotification) {
+    console.log({
+      rowData,
+    });
+  }
+
   const notification_columns = useMemo(
     () => [
       {
@@ -22,10 +32,10 @@ export const NOTIFICATIONS_TABLE_COLUMNS = () => {
       {
         propertyName: 'status',
         headerName: 'Change Status',
-        body: () => {
+        body: (rowData: INotification) => {
           return (
             <CustomButton
-              onClick={() => {}}
+              onClick={() => handleResendNotification(rowData)}
               label="Resend"
               loading={false}
               type="button"
