@@ -18,9 +18,6 @@ import { UserProvider } from '@/lib/context/global/user-context';
 import { ConfigurationProvider } from '@/lib/context/global/configuration.context';
 import { ToastProvider } from '@/lib/context/global/toast.context';
 
-// HOC
-import withPermissionsGuard from '@/lib/api/hoc/PermissionsGuard';
-
 // Configuration
 import { FontawesomeConfig } from '@/lib/config';
 
@@ -33,18 +30,6 @@ import './global.css';
 import { useSetupApollo } from '@/lib/hooks/useSetApollo';
 
 const inter = Inter({ subsets: ['latin'] });
-
-const ProtectedLayout = withPermissionsGuard(
-  ({ children }: { children: React.ReactNode }) => {
-    return (
-      <LayoutProvider>
-        <SidebarProvider>
-          <ToastProvider>{children}</ToastProvider>
-        </SidebarProvider>
-      </LayoutProvider>
-    );
-  }
-);
 
 export default function RootLayout({
   children,
@@ -70,7 +55,11 @@ export default function RootLayout({
           <ApolloProvider client={client}>
             <ConfigurationProvider>
               <UserProvider>
-                <ProtectedLayout>{children}</ProtectedLayout>
+                <LayoutProvider>
+                  <SidebarProvider>
+                    <ToastProvider>{children}</ToastProvider>
+                  </SidebarProvider>
+                </LayoutProvider>
               </UserProvider>
             </ConfigurationProvider>
           </ApolloProvider>

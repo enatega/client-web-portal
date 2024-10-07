@@ -17,6 +17,7 @@ import {
   faGlobe,
   faMap,
   faTruck,
+  faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 
 // UI Components
@@ -28,19 +29,26 @@ import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 // Layout
 import { LayoutContext } from '@/lib/context/global/layout.context';
 
+// Hooks
+import { useUserContext } from '@/lib/hooks/useUser';
+
 // Interface/Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';
 
+// Constants
 import {
   APP_NAME,
   DISPATCH,
   LANGUAGE,
+  SELECTED_RESTAURANT,
+  SELECTED_VENDOR,
+  SELECTED_VENDOR_EMAIL,
   SETTINGS,
   ZONE,
 } from '@/lib/utils/constants';
 
 // Methods
-import { toTextCase } from '@/lib/utils/methods';
+import { onUseLocalStorage, toTextCase } from '@/lib/utils/methods';
 
 // Styles
 import classes from './app-bar.module.css';
@@ -51,7 +59,9 @@ const AppTopbar = () => {
   // Ref
   const containerRef = useRef<HTMLDivElement>(null);
   // Context
-  const { showSuperAdminSidebar } = useContext<LayoutContextProps>(LayoutContext);
+  const { showSuperAdminSidebar } =
+    useContext<LayoutContextProps>(LayoutContext);
+  const { setUser } = useUserContext();
   // Hooks
   const pathname = usePathname();
   const router = useRouter();
@@ -74,6 +84,15 @@ const AppTopbar = () => {
 
   const onRedirectToPage = (_route: string) => {
     router.push(_route);
+  };
+
+  const onLogout = () => {
+    setUser(null);
+    onUseLocalStorage('delete', SELECTED_VENDOR);
+    onUseLocalStorage('delete', SELECTED_VENDOR_EMAIL);
+    onUseLocalStorage('delete', SELECTED_RESTAURANT);
+    onUseLocalStorage('delete', `user-${APP_NAME}`);
+    router.push('/authentication/login');
   };
 
   // Use Effects
@@ -165,6 +184,11 @@ const AppTopbar = () => {
 
           <FontAwesomeIcon icon={faChevronDown} />
         </div>
+        <FontAwesomeIcon
+          onClick={onLogout}
+          className="cursor-pointer"
+          icon={faRightFromBracket}
+        />
       </div>
 
       <div className="md:hidden">
@@ -189,6 +213,11 @@ const AppTopbar = () => {
             <TextIconClickable className="justify-between" icon={faTruck} />
             <TextIconClickable className="justify-between" icon={faCog} />
             <TextIconClickable className="justify-between" icon={faGlobe} />
+            <TextIconClickable
+              onClick={onLogout}
+              className="cursor-pointer"
+              icon={faRightFromBracket}
+            />
           </div>
         </div>
       )}
