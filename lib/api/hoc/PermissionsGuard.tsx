@@ -25,7 +25,7 @@ const withPermissionsGuard = <T extends object>(
       const allowed = user?.permissions?.includes(findRouteName?.text);
 
       if (!allowed) {
-        router.push('/not-allowed');
+        router.replace('/forbidden');
         return null;
       }
     }
