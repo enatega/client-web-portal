@@ -98,6 +98,7 @@ export default function FoodDetails({
       description: values.description,
       category: values.category,
       image: values.image,
+      isActive: false,
     };
 
     onSetFoodContextData({

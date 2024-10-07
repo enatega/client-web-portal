@@ -18,6 +18,8 @@ export const onTransformRetaurantsByIdToFoods = ({
         description: food.description,
         category: { label: category.title, code: category._id },
         image: food.image,
+        isActive: food.isActive,
+        variations: food.variations ?? [],
       });
     });
   });

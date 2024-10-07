@@ -414,6 +414,7 @@ export const generateDummyFoods = (count: number = 10): IFoodGridItem[] => {
       description: `Description for Food ${i + 1}`,
       image: '',
       category: { label: `food_category_${i + 1}`, code: `${i + 1}` },
+      isActive: false,
     });
   }
 
