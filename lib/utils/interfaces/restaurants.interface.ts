@@ -59,3 +59,11 @@ export interface IRestaurantsRestaurantLocationComponentProps
   extends IGlobalComponentProps {
   stepperProps?: IStepperFormProps;
 }
+
+// Duplicate Dialog
+export interface IRestaurantDuplicateDialogComponentProps
+  extends IGlobalComponentProps {
+  restaurantId: string;
+  visible: boolean;
+  onHide: () => void;
+}
