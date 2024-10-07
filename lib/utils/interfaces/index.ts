@@ -38,3 +38,5 @@ export * from './payment.card.interface';
 export * from './profile/restaurant.profile.interface'
 export * from './food.interface';
 export * from './ratings.interface';
+export * from './orders/order-vendor.interface';
+export * from './orders/order-superadmin.interface';

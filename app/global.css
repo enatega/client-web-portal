@@ -557,3 +557,7 @@ body {
   font-size: 14px; /* Adjust the font size as needed */
   font-weight: lighter;
 }
+
+.row-assigned {
+  background-color: lightyellow !important;
+} 

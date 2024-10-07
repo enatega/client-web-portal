@@ -27,3 +27,11 @@
 .dialog {
   height: 100vh;
 }
+
+
+
+
+.row-assigned {
+  background-color: lightyellow !important;
+}
+

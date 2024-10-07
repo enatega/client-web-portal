@@ -24,8 +24,12 @@ export interface IDataTableProps<T> extends IGlobalComponentProps {
   filters?: IFilterType;
   size?: 'small' | 'normal' | 'large';
   loading?: boolean;
+  onPageChange?: (page: number, rows: number) => void;
+  useServerPagination?: boolean;
+  rowsPerPage?:number
 }
 
 export interface ITableExtends extends IGlobalComponentProps {
+  orderStatus?: string;
   _id: number | string;
 }
