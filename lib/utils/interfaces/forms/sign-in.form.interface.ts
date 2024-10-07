@@ -20,8 +20,9 @@ export interface ILoginResponse {
   userId: string;
   token: string;
   email: string;
-  userType: string;
+  userType: 'ADMIN' | 'STAFF' | 'VENDOR' | 'RESTAURANT';
   restaurants: ISignInOwnerRestaurants[];
+  permissions?: String[];
   __typename: string;
 }
 

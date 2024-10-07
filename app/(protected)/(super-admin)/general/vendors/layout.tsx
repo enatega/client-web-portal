@@ -1,7 +1,7 @@
 'use client';
 
-import { RestaurantProvider } from '@/lib/context/restaurant.context';
-import { VendorProvider } from '@/lib/context/vendor.context';
+import { RestaurantProvider } from '@/lib/context/super-admin/restaurant.context';
+import { VendorProvider } from '@/lib/context/super-admin/vendor.context';
 
 export default function RootLayout({
   children,

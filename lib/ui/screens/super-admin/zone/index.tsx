@@ -7,9 +7,9 @@ import React, { useState } from 'react';
 import { IZoneResponse } from '@/lib/utils/interfaces';
 
 // Components
-import ZoneAddForm from '@/lib/ui/screen-components/protected/zone/form';
-import ZoneHeader from '@/lib/ui/screen-components/protected/zone/view/header/screen-header';
-import ZoneMain from '@/lib/ui/screen-components/protected/zone/view/main';
+import ZoneAddForm from '@/lib/ui/screen-components/protected/super-admin/zone/form';
+import ZoneHeader from '@/lib/ui/screen-components/protected/super-admin/zone/view/header/screen-header';
+import ZoneMain from '@/lib/ui/screen-components/protected/super-admin/zone/view/main';
 
 export default function ZoneScreen() {
   // States

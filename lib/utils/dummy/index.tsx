@@ -12,6 +12,7 @@ import {
   IFoodGridItem,
   IOptions,
   IRestaurantResponse,
+  IStaffResponse,
   IStatsCardProps,
   IZoneResponse,
 } from '../interfaces';
@@ -22,6 +23,7 @@ import { ICuisine } from '../interfaces/cuisine.interface';
 import { INotification } from '../interfaces/notification.interface';
 import { IWithDrawRequest } from '../interfaces/withdraw-request.interface';
 import { IActiveOrders } from '../interfaces/dispatch.interface';
+import { ICouponRestaurantResponse } from '../interfaces/coupons-restaurant.interface';
 
 export const dummyStatsData: IStatsCardProps[] = [
   {
@@ -63,13 +65,6 @@ export const dummyOrderStatsData: IStatsCardProps[] = [
     route: '/general/users',
   },
   {
-    label: 'COD Orders',
-    total: 7689,
-    description: '2.4% up from yesterday',
-
-    route: '#',
-  },
-  {
     label: 'Total Sales',
     total: 20689,
     description: '6.1% down from yesterday',
@@ -77,7 +72,14 @@ export const dummyOrderStatsData: IStatsCardProps[] = [
     route: '#',
   },
   {
-    label: 'COD Sales',
+    label: 'COD Orders',
+    total: 7689,
+    description: '2.4% up from yesterday',
+    route: '#',
+  },
+
+  {
+    label: 'Card Orders',
     total: 12689,
     description: '1.9% up from yesterday',
 
@@ -447,8 +449,47 @@ export const generateDummyFoods = (count: number = 10): IFoodGridItem[] => {
       description: `Description for Food ${i + 1}`,
       image: '',
       category: { label: `food_category_${i + 1}`, code: `${i + 1}` },
+      isActive: false
     });
   }
 
   return foods;
+};
+
+export const generateDummyCouponsRestaurant = (
+  count: number = 10
+): ICouponRestaurantResponse[] => {
+  const coupons: ICouponRestaurantResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    coupons.push({
+      _id: `rider_${i + 1}`,
+      title: `rider${i + 1}`,
+      discount: i + 1,
+      enabled: Math.random() > 0.5,
+      __typename: 'Rider',
+    });
+  }
+
+  return coupons;
+};
+
+export const generateDummyStaff = (count: number = 10): IStaffResponse[] => {
+  const staffs: IStaffResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    staffs.push({
+      __typename: 'Staff',
+      _id: `staff_${i + 1}`,
+      name: `Staff ${i + 1}`,
+      email: `staff${i + 1}@example.com`, // updated email to be more realistic
+      plainPassword: `password${i + 1}`,
+      password: `password${i + 1}`,
+      phone: 1234567890 + i,
+      permissions: ['Dummy'],
+      isActive: Math.random() > 0.5,
+    });
+  }
+
+  return staffs;
 };

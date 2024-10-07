@@ -75,3 +75,7 @@ export interface ICreateVendorResponse
 export interface ICreateVendorResponseGraphQL {
   createVendor: ICreateVendorResponse;
 }
+
+/* Vendor User */
+// 1. Restaurants
+export interface IVendorRestaurantsMainComponentProps {}

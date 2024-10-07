@@ -14,7 +14,7 @@ import { useMutation } from '@apollo/client';
 import { EDIT_COUPON, GET_COUPONS } from '@/lib/api/graphql';
 
 // Contexts
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 export const COUPONS_TABLE_COLUMNS = ({
   menuItems,

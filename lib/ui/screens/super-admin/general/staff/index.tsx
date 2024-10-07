@@ -3,9 +3,9 @@
 import { useState } from 'react';
 
 // Components
-import StaffAddForm from '@/lib/ui/screen-components/protected/staff/add-form';
-import StaffHeader from '@/lib/ui/screen-components/protected/staff/view/header/screen-header';
-import StaffMain from '@/lib/ui/screen-components/protected/staff/view/main';
+import StaffAddForm from '@/lib/ui/screen-components/protected/super-admin/staff/add-form';
+import StaffHeader from '@/lib/ui/screen-components/protected/super-admin/staff/view/header/screen-header';
+import StaffMain from '@/lib/ui/screen-components/protected/super-admin/staff/view/main';
 
 // Interfaces and Types
 import { IStaffResponse } from '@/lib/utils/interfaces';

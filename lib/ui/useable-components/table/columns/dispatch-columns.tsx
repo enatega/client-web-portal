@@ -39,10 +39,10 @@ import {
 } from '@apollo/client';
 
 // Contexts
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 // CSS
-import classes from '../../../screen-components/protected/dispatch/view/main/index.module.css';
+import classes from '@/lib/ui/screen-components/protected/super-admin/dispatch/view/main/index.module.css';
 
 export const DISPATCH_TABLE_COLUMNS = () => {
   // Toast
@@ -64,9 +64,6 @@ export const DISPATCH_TABLE_COLUMNS = () => {
     useSubscription(SUBSCRIPTION_ORDER, {
       variables: {
         _id: rowData._id,
-      },
-      onError: (err) => {
-        console.log({ err });
       },
       fetchPolicy: 'network-only',
     });
@@ -106,7 +103,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
     onCompleted: () => {
       showToast({
         type: 'success',
-        title: 'Edit Order Status',
+        title: 'Order Status',
         message: 'Order status has been updated successfully',
       });
     },
@@ -174,7 +171,7 @@ export const DISPATCH_TABLE_COLUMNS = () => {
         },
       });
     } catch (error) {
-      console.log(error);
+      showToast({ type: 'error', title: 'Order Status', message: 'Something went wrong' })
     } finally {
       setIsStatusUpdating({
         _id: rowData._id,

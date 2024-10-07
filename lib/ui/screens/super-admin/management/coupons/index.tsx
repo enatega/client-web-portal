@@ -1,7 +1,7 @@
 //screen components
-import CouponForm from '@/lib/ui/screen-components/protected/coupons/form';
-import CouponScreenHeader from '@/lib/ui/screen-components/protected/coupons/view/header/screen-header';
-import CouponsMain from '@/lib/ui/screen-components/protected/coupons/view/main';
+import CouponForm from '@/lib/ui/screen-components/protected/super-admin/coupons/form';
+import CouponScreenHeader from '@/lib/ui/screen-components/protected/super-admin/coupons/view/header/screen-header';
+import CouponsMain from '@/lib/ui/screen-components/protected/super-admin/coupons/view/main';
 import { IEditState } from '@/lib/utils/interfaces';
 import { ICoupon } from '@/lib/utils/interfaces/coupons.interface';
 //hooks

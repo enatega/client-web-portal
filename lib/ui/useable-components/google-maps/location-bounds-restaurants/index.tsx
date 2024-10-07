@@ -25,8 +25,8 @@ import {
 } from '@/lib/api/graphql';
 
 // Context
-import { RestaurantsContext } from '@/lib/context/restaurants.context';
-import { ToastContext } from '@/lib/context/toast.context';
+import { RestaurantsContext } from '@/lib/context/super-admin/restaurants.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 // Interfaces
 import {
@@ -410,7 +410,7 @@ const CustomGoogleMapsLocationBounds: React.FC<
         const lng =
           center.lng +
           (radius / (111300 * Math.cos(center.lat * (Math.PI / 180)))) *
-            Math.sin(angle);
+          Math.sin(angle);
         path.push({ lat, lng });
       }
 
@@ -434,7 +434,7 @@ const CustomGoogleMapsLocationBounds: React.FC<
         const lng =
           center.lng +
           (radius / (111320 * Math.cos((center.lat * Math.PI) / 180))) *
-            Math.sin(angle);
+          Math.sin(angle);
         path.push([lng, lat]);
       }
 

@@ -4,7 +4,7 @@
 import { useContext, useEffect } from 'react';
 
 // Context
-import { LayoutContext } from '@/lib/context/layout.context';
+import { LayoutContext } from '@/lib/context/global/layout.context';
 
 // Interface & Types
 import {
@@ -21,17 +21,20 @@ import {
   faUpRightFromSquare,
 } from '@fortawesome/free-solid-svg-icons';
 
+// Constants and Utiils
+import useCheckAllowedRoutes from '@/lib/hooks/useCheckAllowedRoutes';
+
 // Components
 import SidebarItem from './side-bar-item';
 
 function SuperAdminSidebar({ children }: IGlobalComponentProps) {
-  const { isSidebarVisible, showSidebar } =
+  const { isSuperAdminSidebarVisible, showSuperAdminSidebar } =
     useContext<LayoutContextProps>(LayoutContext);
 
   // Detect clicks outside the sidebar
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const sidebar = document.getElementById('super-admin-sidebar');
+      const sidebar = document.getElementById('app-sidebar');
       const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
       if (
         sidebar &&
@@ -39,7 +42,7 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
         iconContainer &&
         !iconContainer.contains(event.target as Node)
       ) {
-        showSidebar(false);
+        showSuperAdminSidebar(false);
       }
     };
 
@@ -47,16 +50,16 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showSidebar]);
+  }, [showSuperAdminSidebar]);
 
   return (
     <div className="relative">
       <aside
-        id="super-admin-sidebar"
-        className={`box-border transform overflow-hidden transition-all duration-300 ease-in-out ${isSidebarVisible ? 'w-64 translate-x-0' : 'w-0 -translate-x-full'}`}
+        id="app-sidebar"
+        className={`box-border transform overflow-hidden transition-all duration-300 ease-in-out ${isSuperAdminSidebarVisible ? 'w-64 translate-x-0' : 'w-0 -translate-x-full'}`}
       >
         <nav
-          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isSidebarVisible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+          className={`flex h-full flex-col border-r bg-white shadow-sm transition-opacity duration-300 ${isSuperAdminSidebarVisible ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
         >
           <ul className="flex-1 pl-2">{children}</ul>
         </nav>
@@ -66,7 +69,7 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
 }
 
 export default function MakeSidebar() {
-  const { isSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
+  const { isSuperAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
 
   const navBarItems: ISidebarMenuItem[] = [
     {
@@ -88,7 +91,7 @@ export default function MakeSidebar() {
       route: '/general',
       isParent: true,
       icon: faCog,
-      subMenu: [
+      subMenu: useCheckAllowedRoutes([
         {
           text: 'Vendors',
           route: '/general/vendors',
@@ -114,14 +117,17 @@ export default function MakeSidebar() {
           route: '/general/staff',
           isParent: false,
         },
-      ],
+      ]),
+      shouldShow: function () {
+        return this.subMenu ? this.subMenu.length > 0 : false;
+      },
     },
     {
       text: 'Management',
       route: '/management',
       isParent: true,
       icon: faSliders,
-      subMenu: [
+      subMenu: useCheckAllowedRoutes([
         {
           text: 'Configuration',
           route: '/management/configurations',
@@ -167,7 +173,10 @@ export default function MakeSidebar() {
           route: '/management/notifications',
           isParent: false,
         },
-      ],
+      ]),
+      shouldShow: function () {
+        return this.subMenu ? this.subMenu.length > 0 : false;
+      },
     },
   ];
 
@@ -175,9 +184,11 @@ export default function MakeSidebar() {
     <>
       <SuperAdminSidebar>
         <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
-          {navBarItems.map((item, index) => (
-            <SidebarItem key={index} expanded={isSidebarVisible} {...item} />
-          ))}
+          {navBarItems.map((item, index) =>
+            item.shouldShow && !item.shouldShow() ? null : (
+              <SidebarItem key={index} expanded={isSuperAdminSidebarVisible} {...item} />
+            )
+          )}
         </div>
       </SuperAdminSidebar>
     </>

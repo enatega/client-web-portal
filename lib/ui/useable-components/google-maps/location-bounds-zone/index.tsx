@@ -36,7 +36,7 @@ import {
 
 // Prime React
 import { AutoComplete, AutoCompleteSelectEvent } from 'primereact/autocomplete';
-import { GoogleMapsContext } from '@/lib/context/google-maps.context';
+import { GoogleMapsContext } from '@/lib/context/global/google-maps.context';
 import CustomShape from '../shapes';
 import { DEFAULT_CENTER, DEFAULT_POLYGON } from '@/lib/utils/constants';
 
@@ -127,7 +127,6 @@ const CustomGoogleMapsLocationZoneBounds: React.FC<
       _path[0].length > 0 &&
       _path[0][0].length > 0
     ) {
-      console.log('onsetcenter', _path);
       setPath(transformPolygon(_path[0]));
       setCenter(calculatePolygonCentroid(_path[0]));
     }

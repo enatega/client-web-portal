@@ -22,7 +22,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // Contexts
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 import { Tag } from 'primereact/tag';
 
 export const WITHDRAW_REQUESTS_TABLE_COLUMNS = () => {

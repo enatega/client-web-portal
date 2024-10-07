@@ -1,33 +1,61 @@
-export const ROUTES = {
-  dashboard: {
-    route: '/dashboard',
-    children: [
-      {
-        route: '/configuraton',
-      },
-      {
-        route: '/coupons',
-      },
-      {
-        route: '/cuisines',
-      },
-      {
-        route: '/banners',
-      },
-      {
-        route: '/tipping',
-      },
-      {
-        route: '/commission-rate',
-      },
-      {
-        route: '/withdraw-request',
-      },
-      {
-        route: '/notifications',
-      },
-    ],
+export const ROUTES = [
+  {
+    text: 'Configuration',
+    route: '/management/configurations',
   },
-  general: '/general',
-  management: '/management',
+  {
+    text: 'Coupons',
+    route: '/management/coupons',
+  },
+  {
+    text: 'Cuisine',
+    route: '/management/cuisines',
+  },
+  {
+    text: 'Banners',
+    route: '/management/banners',
+  },
+  {
+    text: 'Tipping',
+    route: '/management/tippings',
+  },
+  {
+    text: 'Commission Rate',
+    route: '/management/commission-rates',
+  },
+  {
+    text: 'Withdraw Request',
+    route: '/management/withdraw-requests',
+  },
+  {
+    text: 'Notification',
+    route: '/management/notifications',
+  },
+  {
+    text: 'Vendors',
+    route: '/general/vendors',
+  },
+  {
+    text: 'Restaurants',
+    route: '/general/restaurants',
+  },
+  {
+    text: 'Riders',
+    route: '/general/riders',
+  },
+  {
+    text: 'Users',
+    route: '/general/users',
+  },
+  {
+    text: 'Staff',
+    route: '/general/staff',
+  },
+];
+
+export const DEFAULT_ROUTES = {
+  ADMIN: '/home',
+  STAFF: '/home',
+  VENDOR: '/admin/vendor/dashboard',
+  RESTAURANT: '/admin/restaurant/dashboard',
 };

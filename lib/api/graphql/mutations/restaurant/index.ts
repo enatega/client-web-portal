@@ -116,8 +116,8 @@ export const EDIT_RESTAURANT = gql`
 `;
 
 export const DUPLICATE_RESTAURANT = gql`
-  mutation DuplicateRestaurant($id: String!) {
-    duplicateRestaurant(id: $id) {
+  mutation DuplicateRestaurant($id: String!, $owner: String!) {
+    duplicateRestaurant(id: $id, owner: $owner) {
       _id
       name
       image
@@ -144,5 +144,19 @@ export const DUPLICATE_RESTAURANT = gql`
       }
       cuisines
     }
+  }
+`;
+
+export const UPDATE_FOOD_OUT_OF_STOCK = gql`
+  mutation UpdateFoodOutOfStock(
+    $id: String!
+    $restaurant: String!
+    $categoryId: String!
+  ) {
+    updateFoodOutOfStock(
+      id: $id
+      restaurant: $restaurant
+      categoryId: $categoryId
+    )
   }
 `;
