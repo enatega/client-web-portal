@@ -14,16 +14,23 @@ export const LayoutContext = createContext<LayoutContextProps>(
 );
 
 export const LayoutProvider = ({ children }: IProvider) => {
-  const [isSuperAdminSidebarVisible, setShowSuperAdminSidebar] = useState<boolean>(false);
-  const [isRestaurantSidebarVisible, setRestaurantShowSidebar] = useState<boolean>(false);
-  const [isVendorSidebarVisible, setVendorShowSidebar] = useState<boolean>(false);
+  const [isSuperAdminSidebarVisible, setShowSuperAdminSidebar] =
+    useState<boolean>(false);
+  const [isRestaurantSidebarVisible, setRestaurantShowSidebar] =
+    useState<boolean>(false);
+  const [isVendorSidebarVisible, setVendorShowSidebar] =
+    useState<boolean>(false);
 
   const onShowSuperAdminSidebarHandler = (val?: boolean) => {
-    setShowSuperAdminSidebar((prevState) => (val === undefined ? !prevState : val));
+    setShowSuperAdminSidebar((prevState) =>
+      val === undefined ? !prevState : val
+    );
   };
 
   const onShowRestaurantSidebarHandler = (val?: boolean) => {
-    setRestaurantShowSidebar((prevState) => (val === undefined ? !prevState : val));
+    setRestaurantShowSidebar((prevState) =>
+      val === undefined ? !prevState : val
+    );
   };
 
   const onShowVendorSidebarHandler = (val?: boolean) => {
@@ -39,8 +46,7 @@ export const LayoutProvider = ({ children }: IProvider) => {
     showRestaurantSidebar: onShowRestaurantSidebarHandler,
     // Vendor
     isVendorSidebarVisible,
-    showVendorSidebar: onShowVendorSidebarHandler
-
+    showVendorSidebar: onShowVendorSidebarHandler,
   };
 
   return (

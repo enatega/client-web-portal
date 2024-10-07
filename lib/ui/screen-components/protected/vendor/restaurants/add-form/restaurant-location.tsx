@@ -25,7 +25,7 @@ export default function RestaurantLocation({
   stepperProps,
 }: IRestaurantsRestaurantLocationComponentProps) {
   const { onStepChange } = stepperProps ?? {
-    onStepChange: () => { },
+    onStepChange: () => {},
   };
 
   // States
@@ -42,7 +42,7 @@ export default function RestaurantLocation({
               initialValues={formInitialValues}
               validationSchema={null}
               enableReinitialize={true}
-              onSubmit={() => { }}
+              onSubmit={() => {}}
               validateOnChange
             >
               {({ handleSubmit }) => {

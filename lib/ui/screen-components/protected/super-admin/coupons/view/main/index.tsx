@@ -63,7 +63,10 @@ export default function CouponsMain({
     global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
 
     enabled: {
-      value: selectedActions.length > 0 ? selectedActions : null,
+      value:
+        selectedActions.includes('true') && selectedActions.includes('false')
+          ? ''
+          : selectedActions,
       matchMode: FilterMatchMode.CONTAINS,
     },
   };
@@ -106,7 +109,13 @@ export default function CouponsMain({
     });
     setIsDeleting({
       bool: false,
-      data: { ...isDeleting.data },
+      data: {
+        __typename: '',
+        _id: '',
+        discount: 0,
+        enabled: false,
+        title: '',
+      },
     });
   }
 

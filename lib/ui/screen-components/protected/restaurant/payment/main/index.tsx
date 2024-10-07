@@ -30,7 +30,11 @@ export default function PaymentMain() {
       const data = await response.json();
       window.location.href = data.url;
     } catch (error) {
-      showToast({ type: 'error', title: 'Stripe Payment', message: 'Error connecting to Stripe' })
+      showToast({
+        type: 'error',
+        title: 'Stripe Payment',
+        message: 'Error connecting to Stripe',
+      });
     } finally {
       setSubmittingMethod(null);
     }
@@ -81,10 +85,11 @@ export default function PaymentMain() {
     <div className="flex flex-col items-center justify-center bg-white">
       <div className="w-full rounded-lg border border-gray-200 p-8 md:p-16">
         <div
-          className={`grid gap-6 pb-16 ${paymentMethods.length === 1
-            ? 'grid-cols-1 place-items-center'
-            : 'grid-cols-1 sm:grid-cols-2'
-            }`}
+          className={`grid gap-6 pb-16 ${
+            paymentMethods.length === 1
+              ? 'grid-cols-1 place-items-center'
+              : 'grid-cols-1 sm:grid-cols-2'
+          }`}
         >
           {renderPaymentMethods()}
         </div>

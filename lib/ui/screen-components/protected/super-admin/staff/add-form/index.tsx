@@ -49,8 +49,8 @@ export default function StaffAddForm({
     confirmPassword: staff ? staff.plainPassword : '',
     permissions: staff
       ? staff.permissions?.map((p) => {
-        return { label: p, code: p };
-      })
+          return { label: p, code: p };
+        })
       : [],
   };
 
@@ -97,13 +97,20 @@ export default function StaffAddForm({
           showToast({
             type: 'error',
             title: `Staff ${staff ? 'Update' : 'Add'}`,
-            message: error.graphQLErrors[0].message ?? error.networkError?.message ?? `Failed to ${staff ? 'update' : 'add'} staff`,
+            message:
+              error.graphQLErrors[0].message ??
+              error.networkError?.message ??
+              `Failed to ${staff ? 'update' : 'add'} staff`,
             duration: 3000,
           });
         },
       });
     } catch (e) {
-      showToast({ type: 'error', title: `Staff ${staff ? 'Update' : 'Add'}`, message: 'Something went wrong' })
+      showToast({
+        type: 'error',
+        title: `Staff ${staff ? 'Update' : 'Add'}`,
+        message: 'Something went wrong',
+      });
     }
   };
 

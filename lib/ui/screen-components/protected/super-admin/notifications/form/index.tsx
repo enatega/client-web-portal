@@ -67,7 +67,6 @@ export default function NotificationForm({
               message: 'Something went wrong',
               duration: 2500,
             });
-
           }
         }}
         validateOnChange={true}

@@ -51,7 +51,8 @@ const AppTopbar = () => {
   // Ref
   const containerRef = useRef<HTMLDivElement>(null);
   // Context
-  const { showSuperAdminSidebar } = useContext<LayoutContextProps>(LayoutContext);
+  const { showSuperAdminSidebar } =
+    useContext<LayoutContextProps>(LayoutContext);
   // Hooks
   const pathname = usePathname();
   const router = useRouter();

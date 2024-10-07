@@ -92,7 +92,7 @@ export default function OptionMain({
   };
 
   // Restaurant Profile Complete
-  function onFetchAddonsByRestaurantCompleted() { }
+  function onFetchAddonsByRestaurantCompleted() {}
   // Restaurant Zone Info Error
   function onErrorFetchAddonsByRestaurant() {
     showToast({

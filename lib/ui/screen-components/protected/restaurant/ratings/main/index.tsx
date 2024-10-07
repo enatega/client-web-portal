@@ -71,7 +71,7 @@ const RatingMain: React.FC = () => {
 
   return (
     <div className="p-3">
-      {(!data || !data.reviews || data.reviews.length === 0) ? (
+      {!data || !data.reviews || data.reviews.length === 0 ? (
         <div className="text-center">
           <p className="mt-8 text-gray-600">No records found</p>
         </div>

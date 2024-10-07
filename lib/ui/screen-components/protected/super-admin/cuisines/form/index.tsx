@@ -251,8 +251,8 @@ export default function CuisineForm({
                     type="submit"
                   >
                     {isSubmitting ||
-                      createCuisineLoading ||
-                      editCuisineLoading ? (
+                    createCuisineLoading ||
+                    editCuisineLoading ? (
                       <ProgressSpinner
                         className="m-0 h-6 w-6 items-center self-center p-0"
                         strokeWidth="5"

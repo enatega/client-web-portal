@@ -47,7 +47,8 @@ const AppTopbar = () => {
   // Ref
   const containerRef = useRef<HTMLDivElement>(null);
   // Context
-  const { showRestaurantSidebar } = useContext<LayoutContextProps>(LayoutContext);
+  const { showRestaurantSidebar } =
+    useContext<LayoutContextProps>(LayoutContext);
 
   // Handlers
   const onDevicePixelRatioChange = useCallback(() => {

@@ -88,7 +88,6 @@ export default function CommissionRateMain() {
           message: `Error updating commission rate for ${restaurant.name}`,
           duration: 2000,
         });
-
       } finally {
         setLoadingRestaurant(null);
       }
@@ -152,7 +151,6 @@ export default function CommissionRateMain() {
     if (data?.restaurants) {
       setRestaurants(data.restaurants);
     } else if (error) {
-
       showToast({
         type: 'error',
         title: 'Error Fetching Restaurants',
@@ -177,9 +175,14 @@ export default function CommissionRateMain() {
           loadingRestaurant,
         })}
         loading={loading}
-        header={<CommissionRateHeader selectedActions={selectedActions} setSelectedActions={setSelectedActions} onSearch={setSearchTerm} />}
+        header={
+          <CommissionRateHeader
+            selectedActions={selectedActions}
+            setSelectedActions={setSelectedActions}
+            onSearch={setSearchTerm}
+          />
+        }
       />
-
     </div>
   );
 }

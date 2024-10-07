@@ -41,7 +41,11 @@ export default function RestaurantCard({ restaurant }: IRestaurantCardProps) {
   // Hooks
   const { showToast } = useContext(ToastContext);
 
-  const { restaurantByOwnerResponse, isRestaurantModifed, setRestaurantModifed } = useContext(RestaurantContext);
+  const {
+    restaurantByOwnerResponse,
+    isRestaurantModifed,
+    setRestaurantModifed,
+  } = useContext(RestaurantContext);
 
   // Hooks
   const router = useRouter();

@@ -69,7 +69,8 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
 }
 
 export default function MakeSidebar() {
-  const { isSuperAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
+  const { isSuperAdminSidebarVisible } =
+    useContext<LayoutContextProps>(LayoutContext);
 
   const navBarItems: ISidebarMenuItem[] = [
     {
@@ -186,7 +187,11 @@ export default function MakeSidebar() {
         <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
           {navBarItems.map((item, index) =>
             item.shouldShow && !item.shouldShow() ? null : (
-              <SidebarItem key={index} expanded={isSuperAdminSidebarVisible} {...item} />
+              <SidebarItem
+                key={index}
+                expanded={isSuperAdminSidebarVisible}
+                {...item}
+              />
             )
           )}
         </div>

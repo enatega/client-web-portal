@@ -43,8 +43,12 @@ export const ProfileProvider: React.FC<IProfileProviderProps> = ({
         // You can perform any actions with the fetched data here
       },
       onError: () => {
-        showToast({ type: 'error', title: "Profile Fetch", message: 'Failed to fetch profile' })
-      }
+        showToast({
+          type: 'error',
+          title: 'Profile Fetch',
+          message: 'Failed to fetch profile',
+        });
+      },
     }
   ) as IQueryResult<IRestaurantProfileProps | undefined, undefined>;
 

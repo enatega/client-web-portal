@@ -91,8 +91,8 @@ export default function CouponTableHeader({
                       <div className="flex">
                         <Checkbox
                           inputId={`action-${item.value}`}
-                          checked={selectedActions.includes(item.value)}
-                          onChange={() => toggleAction(item.value)}
+                          checked={selectedActions.includes(item?.value)}
+                          onChange={() => toggleAction(item?.value)}
                           className={`${classes.checkbox}`}
                         />
                         <label

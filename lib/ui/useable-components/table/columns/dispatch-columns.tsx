@@ -171,7 +171,11 @@ export const DISPATCH_TABLE_COLUMNS = () => {
         },
       });
     } catch (error) {
-      showToast({ type: 'error', title: 'Order Status', message: 'Something went wrong' })
+      showToast({
+        type: 'error',
+        title: 'Order Status',
+        message: 'Something went wrong',
+      });
     } finally {
       setIsStatusUpdating({
         _id: rowData._id,

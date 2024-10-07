@@ -22,7 +22,6 @@ const CustomDateInput = ({
         type="date"
         className={`h-10 w-full rounded-lg border border-gray-300 px-8 text-sm outline-none focus:shadow-none focus:outline-none ${className}`}
         placeholder={placeholder}
-
         // 'HH:MM' format
         value={value ?? ''}
         onChange={(e) => {

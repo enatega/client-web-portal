@@ -70,15 +70,16 @@ export default function RestaurantDetails({
   stepperProps,
 }: IAddRestaurantComponentProps) {
   const { onStepChange, order } = stepperProps ?? {
-    onStepChange: () => { },
+    onStepChange: () => {},
     type: '',
     order: -1,
   };
 
   // Context
   const { showToast } = useContext(ToastContext);
-  const { vendorId, onSetRestaurantContextData } =
-    useContext(VendorLayoutRestaurantContext);
+  const { vendorId, onSetRestaurantContextData } = useContext(
+    VendorLayoutRestaurantContext
+  );
 
   // API
   // Mutation

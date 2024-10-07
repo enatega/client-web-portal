@@ -8,17 +8,13 @@ import RestaurantCard from '@/lib/ui/useable-components/resturant-card';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 import CustomRestaurantCardSkeleton from '@/lib/ui/useable-components/custom-skeletons/restaurant.card.skeleton';
 
-
 // Context
 import { VendorLayoutRestaurantContext } from '@/lib/context/vendor/restaurant.context';
 
 // Icons
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
-
 export default function VendorRestaurantsMain() {
-
-
   const {
     onSetRestaurantFormVisible,
     restaurantByOwnerResponse,
@@ -32,10 +28,7 @@ export default function VendorRestaurantsMain() {
 
   return (
     <div className="flex flex-grow flex-col overflow-hidden sm:flex-row">
-
-      <div
-        className={`flex-1 overflow-y-auto border-l border-gray-200 px-2`}
-      >
+      <div className={`flex-1 overflow-y-auto border-l border-gray-200 px-2`}>
         {/* Header for Restaurants section */}
         <div className="border-b pb-2 pt-3">
           <div className="mb-4 flex items-center justify-between">
@@ -61,7 +54,7 @@ export default function VendorRestaurantsMain() {
                 maxLength={35}
                 placeholder="Search Restaurants"
                 showLabel={false}
-                value={restaurantContextData?.globalFilter ?? ""}
+                value={restaurantContextData?.globalFilter ?? ''}
                 onChange={(e) =>
                   onSetRestaurantContextData({
                     globalFilter: e.target.value,

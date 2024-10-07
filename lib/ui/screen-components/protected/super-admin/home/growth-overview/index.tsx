@@ -5,7 +5,10 @@ import { useEffect, useMemo, useState } from 'react';
 import { Chart } from 'primereact/chart';
 import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { GET_DASHBOARD_USERS_BY_YEAR } from '@/lib/api/graphql';
-import { IDashboardUsersByYearResponseGraphQL, IQueryResult } from '@/lib/utils/interfaces';
+import {
+  IDashboardUsersByYearResponseGraphQL,
+  IQueryResult,
+} from '@/lib/utils/interfaces';
 import DashboardUsersByYearStatsSkeleton from '@/lib/ui/useable-components/custom-skeletons/dasboard.user.year.stats.skeleton';
 
 // Dummy
@@ -16,15 +19,19 @@ export default function GrowthOverView() {
   const [chartOptions, setChartOptions] = useState({});
 
   // Query
-  const { data, loading } = useQueryGQL(GET_DASHBOARD_USERS_BY_YEAR, {
-
-    year: new Date().getFullYear(),
-
-
-  }, {
-    fetchPolicy: "network-only",
-    debounceMs: 300,
-  }) as IQueryResult<IDashboardUsersByYearResponseGraphQL | undefined, undefined>;
+  const { data, loading } = useQueryGQL(
+    GET_DASHBOARD_USERS_BY_YEAR,
+    {
+      year: new Date().getFullYear(),
+    },
+    {
+      fetchPolicy: 'network-only',
+      debounceMs: 300,
+    }
+  ) as IQueryResult<
+    IDashboardUsersByYearResponseGraphQL | undefined,
+    undefined
+  >;
 
   const dashboardUsersByYear = useMemo(() => {
     if (!data) return null;
@@ -36,11 +43,8 @@ export default function GrowthOverView() {
     };
   }, [data]);
 
-
-
   // Handlers
   const onChartDataChange = () => {
-
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
     const textColorSecondary = documentStyle.getPropertyValue(
@@ -48,7 +52,20 @@ export default function GrowthOverView() {
     );
     const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
     const data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      labels: [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+      ],
       datasets: [
         {
           label: 'Restaurants',
@@ -122,8 +139,7 @@ export default function GrowthOverView() {
 
     setChartData(data);
     setChartOptions(options);
-
-  }
+  };
   // Use Effect
   useEffect(() => {
     onChartDataChange();
@@ -132,9 +148,15 @@ export default function GrowthOverView() {
   return (
     <div className={`w-full p-3`}>
       <h2 className="text-lg font-semibold">Growth Overview</h2>
-      <p className="text-gray-500">Tracking Stackholders Growth Over the Year</p>
+      <p className="text-gray-500">
+        Tracking Stackholders Growth Over the Year
+      </p>
       <div className="mt-4">
-        {loading ? <DashboardUsersByYearStatsSkeleton /> : <Chart type="line" data={chartData} options={chartOptions} />}
+        {loading ? (
+          <DashboardUsersByYearStatsSkeleton />
+        ) : (
+          <Chart type="line" data={chartData} options={chartOptions} />
+        )}
       </div>
     </div>
   );

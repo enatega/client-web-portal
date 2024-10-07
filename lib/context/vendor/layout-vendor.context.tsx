@@ -15,12 +15,9 @@ import { SELECTED_VENDOR } from '@/lib/utils/constants';
 // Methods
 import { onUseLocalStorage } from '@/lib/utils/methods';
 
-
-
-export const VendorLayoutContext =
-  createContext<VendorLayoutContextProps>(
-    {} as VendorLayoutContextProps
-  );
+export const VendorLayoutContext = createContext<VendorLayoutContextProps>(
+  {} as VendorLayoutContextProps
+);
 
 export const VendorLayoutProvider = ({ children }: IProvider) => {
   const [vendorLayoutContextData, setVendorLayoutContextData] =

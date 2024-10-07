@@ -28,8 +28,17 @@ export default function StatsCard({
 
           {icon && <FontAwesomeIcon icon={icon} />}
         </div>
-        <div className="text-2xl font-semibold"> {amountConfig ? (amountConfig?.format === 'currency' ? formatNumberWithCurrency(total, amountConfig.currency) : formatNumber(total)) : total}</div>
-        {description && <div className="text-sm text-green-500"> {description}</div>}
+        <div className="text-2xl font-semibold">
+          {' '}
+          {amountConfig
+            ? amountConfig?.format === 'currency'
+              ? formatNumberWithCurrency(total, amountConfig.currency)
+              : formatNumber(total)
+            : total}
+        </div>
+        {description && (
+          <div className="text-sm text-green-500"> {description}</div>
+        )}
       </div>
     </Link>
   );
