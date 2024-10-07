@@ -40,13 +40,9 @@ import { LayoutContextProps } from '@/lib/utils/interfaces';
 // Constants
 import {
   APP_NAME,
-  DISPATCH,
-  LANGUAGE,
   SELECTED_RESTAURANT,
   SELECTED_VENDOR,
   SELECTED_VENDOR_EMAIL,
-  SETTINGS,
-  ZONE,
 } from '@/lib/utils/constants';
 
 // Methods
