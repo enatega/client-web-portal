@@ -16,7 +16,9 @@ export interface IOrderVendorHeaderProps extends IGlobalComponentProps {
     _id: string;
     orderId: string;
     items: Array<{
-      variation: ReactNode;
+      variation: {
+        price: number
+      }
       description: ReactNode;
       title: string;
       quantity: number;

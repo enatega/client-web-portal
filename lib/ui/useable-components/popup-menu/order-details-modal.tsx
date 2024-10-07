@@ -35,7 +35,7 @@ const OrderDetailModal: React.FC<IOrderDetailModalProps> = ({
                     {index + 1}. {item.title}
                   </span>
                   <span className="item-price">
-                    ${item.variation.price.toFixed(2)}
+                    ${(item.variation?.price ?? 0).toFixed(2)}
                   </span>
                 </div>
               ))}
