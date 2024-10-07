@@ -18,7 +18,7 @@ export default function OrderVendorMain() {
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
   const { restaurantId } = restaurantLayoutContextData;
 
-  const [page, setPage] = useState(200);
+  const [page, setPage] = useState(0);
   const [rows, setRows] = useState(10);
 
   const { data, error, loading } = useQueryGQL(
