@@ -1,6 +1,6 @@
 //components
-import WithdrawRequestHeader from '@/lib/ui/screen-components/protected/withdraw-requests/view/header/screen-header';
-import WithdrawRequestsMain from '@/lib/ui/screen-components/protected/withdraw-requests/view/main';
+import WithdrawRequestHeader from '@/lib/ui/screen-components/protected/super-admin/withdraw-requests/view/header/screen-header';
+import WithdrawRequestsMain from '@/lib/ui/screen-components/protected/super-admin/withdraw-requests/view/main';
 
 export default function WithdrawRequestScreen() {
   return (

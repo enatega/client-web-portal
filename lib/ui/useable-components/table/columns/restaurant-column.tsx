@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useContext, useState } from 'react';
 
 // Context
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 // Apollo Client
 import { ApolloError, useMutation } from '@apollo/client';

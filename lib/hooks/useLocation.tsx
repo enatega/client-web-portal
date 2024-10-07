@@ -5,7 +5,7 @@ import { useContext, useEffect } from 'react';
 import Geocode from 'react-geocode';
 import { ILocation } from '../utils/interfaces';
 import { useConfiguration } from './useConfiguration';
-import { ToastContext } from '../context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 type LocationCallback = (error: string | null, location?: ILocation) => void;
 

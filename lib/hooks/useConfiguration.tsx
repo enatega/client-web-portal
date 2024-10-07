@@ -8,7 +8,7 @@ import { useContext } from 'react';
 import { IConfiguration } from '@/lib/utils/interfaces';
 
 // Interface
-import { ConfigurationContext } from '@/lib/context/configuration.context';
+import { ConfigurationContext } from '@/lib/context/global/configuration.context';
 import { BACKEND_URL } from '@/lib/utils/constants';
 import { Libraries } from '@react-google-maps/api';
 
@@ -74,8 +74,8 @@ export const useConfiguration = () => {
   const CURRENCY_SYMBOL = configuration?.currency;
 
   return {
-    SERVER_URL: BACKEND_URL.LOCAL.SERVER_URL,
-    WS_SERVER_URL: BACKEND_URL.LOCAL.WS_SERVER_URL,
+    SERVER_URL: BACKEND_URL.LIVE.SERVER_URL,
+    WS_SERVER_URL: BACKEND_URL.LIVE.WS_SERVER_URL,
     COLORS,
 
 

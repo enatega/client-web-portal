@@ -12,7 +12,7 @@ import { IRiderResponse } from '@/lib/utils/interfaces/rider.interface';
 // GraphQL
 import { GET_RIDERS, TOGGLE_RIDER } from '@/lib/api/graphql';
 import { useMutation } from '@apollo/client';
-import { ToastContext } from '@/lib/context/toast.context';
+import { ToastContext } from '@/lib/context/global/toast.context';
 
 export const RIDER_TABLE_COLUMNS = ({
   menuItems,

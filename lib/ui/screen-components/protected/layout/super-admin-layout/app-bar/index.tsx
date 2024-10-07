@@ -26,7 +26,7 @@ import { Avatar } from 'primereact/avatar';
 import TextIconClickable from '@/lib/ui/useable-components/text-icon-clickable';
 
 // Layout
-import { LayoutContext } from '@/lib/context/layout.context';
+import { LayoutContext } from '@/lib/context/global/layout.context';
 
 // Interface/Types
 import { LayoutContextProps } from '@/lib/utils/interfaces';
@@ -51,7 +51,7 @@ const AppTopbar = () => {
   // Ref
   const containerRef = useRef<HTMLDivElement>(null);
   // Context
-  const { showSidebar } = useContext<LayoutContextProps>(LayoutContext);
+  const { showSuperAdminSidebar } = useContext<LayoutContextProps>(LayoutContext);
   // Hooks
   const pathname = usePathname();
   const router = useRouter();
@@ -59,8 +59,8 @@ const AppTopbar = () => {
   // Handlers
   const onDevicePixelRatioChange = useCallback(() => {
     setIsMenuOpen(false);
-    showSidebar(false);
-  }, [showSidebar]);
+    showSuperAdminSidebar(false);
+  }, [showSuperAdminSidebar]);
 
   const handleClickOutside = (event: MouseEvent) => {
     // Check if the clicked target is outside the container
@@ -95,7 +95,7 @@ const AppTopbar = () => {
     <div className={`${classes['layout-topbar']}`}>
       <div className="flex items-center gap-x-3">
         <div id="sidebar-opening-icon">
-          <button onClick={() => showSidebar()}>
+          <button onClick={() => showSuperAdminSidebar()}>
             <FontAwesomeIcon icon={faBars} />
           </button>
         </div>
