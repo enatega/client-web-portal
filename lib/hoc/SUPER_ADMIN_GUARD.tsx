@@ -1,11 +1,14 @@
 'use client';
+// Core
+import { useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+
+// Hooks
 import { useUserContext } from '@/lib/hooks/useUser';
-import { APP_NAME } from '@/lib/utils/constants';
-import { ROUTES } from '@/lib/utils/constants/routes';
+
+// Constants and Utils
+import { APP_NAME, ROUTES } from '@/lib/utils/constants';
 import { onUseLocalStorage } from '@/lib/utils/methods';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
 
 const SUPER_ADMIN_GUARD = <T extends object>(
   Component: React.ComponentType<T>

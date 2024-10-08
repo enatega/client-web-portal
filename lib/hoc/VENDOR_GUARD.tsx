@@ -1,9 +1,14 @@
 'use client';
-import { useUserContext } from '@/lib/hooks/useUser';
-import { APP_NAME } from '@/lib/utils/constants';
-import { onUseLocalStorage } from '@/lib/utils/methods';
+// Core
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+
+// Hooks
+import { useUserContext } from '@/lib/hooks/useUser';
+
+// Constants and Utils
+import { APP_NAME, ROUTES } from '@/lib/utils/constants';
+import { onUseLocalStorage } from '@/lib/utils/methods';
 
 const VENDOR_GUARD = <T extends object>(Component: React.ComponentType<T>) => {
   const WrappedComponent = (props: T) => {

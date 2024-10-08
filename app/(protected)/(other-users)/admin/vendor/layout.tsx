@@ -1,7 +1,7 @@
 'use client';
 
 // HOC
-import VENDOR_GUARD from '@/lib/api/hoc/VENDOR_GUARD';
+import VENDOR_GUARD from '@/lib/hoc/VENDOR_GUARD';
 // CONTEXT
 import { VendorLayoutProvider } from '@/lib/context/vendor/layout-vendor.context';
 import VendorLayout from '@/lib/ui/layouts/protected/vendor';

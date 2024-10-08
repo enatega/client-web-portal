@@ -1,5 +1,5 @@
 'use client';
-import SUPER_ADMIN_GUARD from '@/lib/api/hoc/SUPER_ADMIN_GUARD';
+import SUPER_ADMIN_GUARD from '@/lib/hoc/SUPER_ADMIN_GUARD';
 // Layout
 import SuperAdminLayout from '@/lib/ui/layouts/protected/super-admin';
 

@@ -1,9 +1,14 @@
 'use client';
+// Core
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
+// Hooks
 import { useUserContext } from '@/lib/hooks/useUser';
+
+// Constants and Utils
 import { APP_NAME } from '@/lib/utils/constants';
 import { onUseLocalStorage } from '@/lib/utils/methods';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 
 const RESTAURANT_GUARD = <T extends object>(
   Component: React.ComponentType<T>
