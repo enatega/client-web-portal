@@ -343,7 +343,7 @@ export const generateDummyNotifications = (count: number = 10) => {
       _id: `notification_${i + 1}`,
       title: `notification_${i + 1}`,
       createdAt: new Date().toDateString(),
-      description: `notification_${i + 1}`,
+      body: `notification_${i + 1}`,
     });
   }
   return notifications;

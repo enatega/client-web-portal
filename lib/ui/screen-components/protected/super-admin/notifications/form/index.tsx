@@ -63,6 +63,7 @@ export default function NotificationForm({
               duration: 2500,
             });
             setSubmitting(false);
+            setVisible(false)
           } catch (err) {
             setVisible(true);
             showToast({
@@ -120,7 +121,6 @@ export default function NotificationForm({
                       : '',
                   }}
                   rows={5}
-               
                 />
                 <button
                   className="float-end my-2 block rounded-md bg-black px-12 py-2 text-white"
