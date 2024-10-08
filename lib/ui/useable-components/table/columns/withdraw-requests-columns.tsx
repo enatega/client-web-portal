@@ -167,7 +167,6 @@ export const WITHDRAW_REQUESTS_TABLE_COLUMNS = () => {
         headerName: 'Date',
         propertyName: 'requestTime',
         body: (rowData: IWithDrawRequest) => {
-          console.log({ status: rowData.status });
           return (
             <span>{new Date(rowData.requestTime).toLocaleDateString()}</span>
           );

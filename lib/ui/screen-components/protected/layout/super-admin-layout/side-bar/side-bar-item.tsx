@@ -16,14 +16,14 @@ import classes from './side-bar.module.css';
 function HoveredSubMenuItem({ icon, text, active }: SubMenuItemProps) {
   return (
     <div
-      className={`my-2 rounded-md p-2 ${
-        active ? 'bg-gray-300' : 'hover:bg-indigo-50'
-      }`}
+      className={`my-2 rounded-md p-2 ${active ? 'bg-gray-300' : 'hover:bg-indigo-50'
+        }`}
     >
       <div className="flex items-center justify-center">
         {icon && (
           <span className="text-primary-500 h-6 w-6">
             <FontAwesomeIcon icon={icon} />
+            sds
           </span>
         )}
         <span className="text-primary-500 ml-3 w-28 text-start">{text}</span>
@@ -75,11 +75,10 @@ export default function SidebarItem({
     <div className={`mt-[0.4rem] flex flex-col`}>
       <div>
         <button
-          className={`group relative flex w-full cursor-pointer items-center rounded-md px-3 py-2 transition-colors ${
-            isActive && !subMenu
-              ? `bg-${isClickable ? bg_color : ''} text-${isClickable ? text_color : '[#71717A]'}`
-              : `bg-${bg_color} text-${text_color} hover:bg-secondary-color`
-          } ${!expanded && 'hidden sm:flex'} `}
+          className={`group relative flex w-full cursor-pointer items-center rounded-md px-3 py-2 transition-colors ${isActive && !subMenu
+            ? `bg-${isClickable ? bg_color : ''} text-${isClickable ? text_color : '[#71717A]'}`
+            : `bg-${bg_color} text-${text_color} hover:bg-secondary-color`
+            } ${!expanded && 'hidden sm:flex'} `}
           onClick={() => {
             if (!isParent || isClickable) {
               router.push(route ?? '');
@@ -95,9 +94,8 @@ export default function SidebarItem({
           )}
 
           <span
-            className={`card-h2 text-${isParent ? 'md' : 'sm'} overflow-hidden text-start transition-all ${
-              expanded ? 'ml-3 w-44' : 'w-0'
-            }`}
+            className={`card-h2 text-${isParent ? 'md' : 'sm'} overflow-hidden text-start transition-all ${expanded ? 'ml-3 w-44' : 'w-0'
+              }`}
           >
             {text}
           </span>
@@ -116,13 +114,13 @@ export default function SidebarItem({
               {!subMenu
                 ? text
                 : subMenu.map((item, index) => (
-                    <HoveredSubMenuItem
-                      key={index}
-                      text={item.text}
-                      icon={item.icon}
-                      active={isActive}
-                    />
-                  ))}
+                  <HoveredSubMenuItem
+                    key={index}
+                    text={item.text}
+                    icon={item.icon}
+                    active={isActive}
+                  />
+                ))}
             </div>
           )}
         </button>

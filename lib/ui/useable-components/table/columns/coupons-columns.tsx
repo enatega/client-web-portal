@@ -64,7 +64,6 @@ export const COUPONS_TABLE_COLUMNS = ({
 
   // Handlers
   async function handleEnableField(rowData: ICoupon) {
-    console.log({ rowData });
     setEditCouponLoading({
       bool: true,
       _id: rowData._id,

@@ -49,8 +49,8 @@ export default function StaffAddForm({
     confirmPassword: staff ? staff.plainPassword : '',
     permissions: staff
       ? staff.permissions?.map((p) => {
-          return { label: p, code: p };
-        })
+        return { label: p, code: p };
+      })
       : [],
   };
 
@@ -145,7 +145,6 @@ export default function StaffAddForm({
                 }) => {
                   return (
                     <Form
-                      onClick={() => console.log(errors)}
                       onSubmit={handleSubmit}
                     >
                       <div className="space-y-4">
