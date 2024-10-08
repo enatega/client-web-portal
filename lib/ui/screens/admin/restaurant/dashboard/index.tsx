@@ -1,10 +1,11 @@
 'use client';
 
-import DashboardDateFilter from '@/lib/ui/screen-components/protected/restaurant/dashboard/date-filter';
+
 // Component
 import GrowthOverView from '@/lib/ui/screen-components/protected/restaurant/dashboard/growth-overview';
 import OrderStats from '@/lib/ui/screen-components/protected/restaurant/dashboard/order-stats';
 import RestaurantStatesTable from '@/lib/ui/screen-components/protected/restaurant/dashboard/restaurant-stats-table';
+import DashboardDateFilter from '@/lib/ui/useable-components/date-filter';
 import { useState } from 'react';
 
 export default function AdminRestaurantDashboard() {

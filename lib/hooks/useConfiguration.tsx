@@ -12,8 +12,6 @@ import { ConfigurationContext } from '@/lib/context/global/configuration.context
 import { BACKEND_URL } from '@/lib/utils/constants';
 import { Libraries } from '@react-google-maps/api';
 
-// Third-Party
-//import { Libraries } from '@react-google-maps/api';
 
 export const useConfiguration = () => {
   const configuration: IConfiguration | undefined =
