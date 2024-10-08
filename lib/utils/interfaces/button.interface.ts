@@ -1,9 +1,10 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { IGlobalComponentProps } from './global.interface';
+import { MouseEventHandler } from 'react';
 
 export interface ICustomButtonProps extends IGlobalComponentProps {
   label: string;
-  onClick?: () => Promise<void>;
+  onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   rounded?: boolean;
   outlined?: boolean;
   icon?: string;
