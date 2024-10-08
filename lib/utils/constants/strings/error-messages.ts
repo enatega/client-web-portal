@@ -17,6 +17,7 @@ import { IStaffErrors } from '../../interfaces/forms/staff.form.interface';
 import { ICuisineErrors } from '../../interfaces/forms/cuisine.form.interface';
 import { ICouponErrors } from '../../interfaces/forms/coupon.form.interface';
 import { IFoodErrors } from '../../interfaces/forms/food.form.interface';
+import { INoticiationErrors } from '../../interfaces/forms/notification.form.interface';
 
 export const PasswordErrors = [
   'At least 6 characters',
@@ -155,6 +156,10 @@ export const CouponErrors: ICouponErrors = {
   title: ['Required', 'Name cannot be only spaces'],
   discount: ['Required'],
   enabled: ['Required'],
+};
+export const NotificationErrors: INoticiationErrors = {
+  title: ['Required'],
+  body: ['Required'],
 };
 
 export const FoodErrors: IFoodErrors = {

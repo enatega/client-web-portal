@@ -89,7 +89,7 @@ export default function OptionMain({
   };
 
   // Complete and Error
-  function onFetchCategoriesByRestaurantCompleted() { }
+  function onFetchCategoriesByRestaurantCompleted() {}
   function onErrorFetchCategoriesByRestaurant() {
     showToast({
       type: 'error',

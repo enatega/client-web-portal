@@ -105,7 +105,7 @@ export default function CuisineForm({
       visible={visible}
       onHide={() => setVisible(false)}
       position="right"
-      className="w-full sm:w-[600px]"
+      className="w-full sm:w-[450px]"
     >
       <div className="flex flex-col gap-4">
         <h2 className="mb-3 text-xl font-bold">
@@ -251,8 +251,8 @@ export default function CuisineForm({
                     type="submit"
                   >
                     {isSubmitting ||
-                      createCuisineLoading ||
-                      editCuisineLoading ? (
+                    createCuisineLoading ||
+                    editCuisineLoading ? (
                       <ProgressSpinner
                         className="m-0 h-6 w-6 items-center self-center p-0"
                         strokeWidth="5"

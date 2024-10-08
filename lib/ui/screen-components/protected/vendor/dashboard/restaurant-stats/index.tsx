@@ -8,37 +8,52 @@ import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import { useConfiguration } from '@/lib/hooks/useConfiguration';
 
 // Interface & Types
-import { IDashboardOrderStatsComponentsProps, IQueryResult, IVendorDashboardStatsCardDetailsResponseGraphQL } from '@/lib/utils/interfaces';
+import {
+  IDashboardOrderStatsComponentsProps,
+  IQueryResult,
+  IVendorDashboardStatsCardDetailsResponseGraphQL,
+} from '@/lib/utils/interfaces';
 
 // Icons
-import { faCashRegister, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCashRegister,
+  faShoppingCart,
+} from '@fortawesome/free-solid-svg-icons';
 
 // Context
 import { VendorLayoutContext } from '@/lib/context/vendor/layout-vendor.context';
 
-export default function RestaurantStats({ dateFilter }: IDashboardOrderStatsComponentsProps) {
-
-
+export default function RestaurantStats({
+  dateFilter,
+}: IDashboardOrderStatsComponentsProps) {
   // Context
-  const { vendorLayoutContextData: { vendorId } } = useContext(VendorLayoutContext);
+  const {
+    vendorLayoutContextData: { vendorId },
+  } = useContext(VendorLayoutContext);
   // COntext
-  const { CURRENCY_CODE } = useConfiguration()
+  const { CURRENCY_CODE } = useConfiguration();
 
-
-
-  const { data, loading } = useQueryGQL(GET_VENDOR_DASHBOARD_STATS_CARD_DETAILS, {
-    vendorId,
-    starting_date: dateFilter?.startDate,
-    ending_date: dateFilter?.endDate,
-  }, {
-    fetchPolicy: "network-only",
-    debounceMs: 300,
-  }) as IQueryResult<IVendorDashboardStatsCardDetailsResponseGraphQL | undefined, undefined>;
+  const { data, loading } = useQueryGQL(
+    GET_VENDOR_DASHBOARD_STATS_CARD_DETAILS,
+    {
+      vendorId,
+      starting_date: dateFilter?.startDate,
+      ending_date: dateFilter?.endDate,
+    },
+    {
+      fetchPolicy: 'network-only',
+      debounceMs: 300,
+    }
+  ) as IQueryResult<
+    IVendorDashboardStatsCardDetailsResponseGraphQL | undefined,
+    undefined
+  >;
 
   const dashboardStats = useMemo(() => {
     if (!data) return null;
     return {
-      totalRestaurants: data?.getVendorDashboardStatsCardDetails?.totalRestaurants ?? 0,
+      totalRestaurants:
+        data?.getVendorDashboardStatsCardDetails?.totalRestaurants ?? 0,
       totalOrders: data?.getVendorDashboardStatsCardDetails?.totalOrders ?? 0,
       totalSales: data?.getVendorDashboardStatsCardDetails?.totalSales ?? 0,
     };
@@ -57,7 +72,6 @@ export default function RestaurantStats({ dateFilter }: IDashboardOrderStatsComp
         amountConfig={{ format: 'number', currency: 'USD' }}
       />
 
-
       <StatsCard
         label="Total Orders"
         total={dashboardStats?.totalOrders ?? 0}
@@ -67,7 +81,6 @@ export default function RestaurantStats({ dateFilter }: IDashboardOrderStatsComp
         amountConfig={{ format: 'number', currency: 'USD' }}
       />
 
-
       <StatsCard
         label="Total Sales"
         total={dashboardStats?.totalSales ?? 0}
@@ -76,7 +89,6 @@ export default function RestaurantStats({ dateFilter }: IDashboardOrderStatsComp
         loading={loading}
         amountConfig={{ format: 'currency', currency: CURRENCY_CODE ?? 'USD' }}
       />
-
     </div>
   );
 }

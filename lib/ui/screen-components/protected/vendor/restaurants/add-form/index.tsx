@@ -3,7 +3,6 @@
 // Core imports
 import { useContext, useRef } from 'react';
 
-
 // Interfaces
 import {
   IRestaurantContextData,

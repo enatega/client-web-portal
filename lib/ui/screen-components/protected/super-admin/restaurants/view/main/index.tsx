@@ -139,9 +139,6 @@ export default function RestaurantsMain() {
     }
   );
 
-
-
-
   const handleDelete = async (id: string) => {
     try {
       hardDeleteRestaurant({ variables: { id: id } });
@@ -154,8 +151,6 @@ export default function RestaurantsMain() {
       setDeleteId('');
     }
   };
-
-
 
   // Constants
   const menuItems: IActionMenuItem<IRestaurantResponse>[] = [
@@ -189,7 +184,6 @@ export default function RestaurantsMain() {
   const _restaurants =
     currentTab === 'Actual' ? data?.restaurants : data?.getClonedRestaurants;
 
-
   return (
     <div className="p-3">
       <Table
@@ -221,7 +215,6 @@ export default function RestaurantsMain() {
         message="Are you sure you want to delete this restaurant?"
       />
 
-
       <RestaurantDuplicateDialog
         restaurantId={duplicateId}
         visible={!!duplicateId}
@@ -229,7 +222,6 @@ export default function RestaurantsMain() {
           setDuplicateId('');
         }}
       />
-
     </div>
   );
 }

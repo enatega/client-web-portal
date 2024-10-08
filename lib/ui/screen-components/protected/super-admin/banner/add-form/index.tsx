@@ -32,7 +32,6 @@ const BannersAddForm = ({
   banner,
   position = 'right',
 }: IBannersAddFormComponentProps) => {
-
   const { data, loading } = useQueryGQL(GET_RESTAURANTS, {
     fetchPolicy: 'cache-and-network',
   }) as IQueryResult<IRestaurantsResponseGraphQL | undefined, undefined>;
@@ -48,21 +47,21 @@ const BannersAddForm = ({
     description: banner?.description || '',
     action: banner
       ? {
-        label: getLabelByCode(ACTION_TYPES, banner.action),
-        code: banner.action,
-      }
+          label: getLabelByCode(ACTION_TYPES, banner.action),
+          code: banner.action,
+        }
       : null,
     screen: banner
       ? banner.action === 'Navigate Specific Page'
         ? {
-          label: getLabelByCode(SCREEN_NAMES, banner.screen),
-          code: banner.screen,
-        }
-        : banner.action === 'Navigate Specific Store'
-          ? {
-            label: banner.screen,
+            label: getLabelByCode(SCREEN_NAMES, banner.screen),
             code: banner.screen,
           }
+        : banner.action === 'Navigate Specific Store'
+          ? {
+              label: banner.screen,
+              code: banner.screen,
+            }
           : null
       : null,
     file: banner?.file || '',
@@ -126,7 +125,7 @@ const BannersAddForm = ({
       visible={isAddBannerVisible}
       position={position}
       onHide={onHide}
-      className="w-full sm:w-[600px]"
+      className="w-full sm:w-[450px]"
     >
       <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">
@@ -150,9 +149,7 @@ const BannersAddForm = ({
                   setFieldValue,
                 }) => {
                   return (
-                    <Form
-                      onSubmit={handleSubmit}
-                    >
+                    <Form onSubmit={handleSubmit}>
                       <div className="space-y-4">
                         <div>
                           <CustomTextField
@@ -223,13 +220,13 @@ const BannersAddForm = ({
                               values.action?.code === 'Navigate Specific Store'
                                 ? RESTAURANT_NAMES
                                 : values.action?.code ===
-                                  'Navigate Specific Page'
+                                    'Navigate Specific Page'
                                   ? SCREEN_NAMES
                                   : []
                             }
                             showLabel={true}
                             name="screen"
-                            isLoading={loading}
+                            loading={loading}
                             selectedItem={values.screen}
                             setSelectedItem={setFieldValue}
                             style={{
@@ -245,10 +242,11 @@ const BannersAddForm = ({
                         </div>
 
                         <div
-                          className={`${errors.file && !values.file
-                            ? 'border-red-500'
-                            : 'border-gray-200'
-                            } rounded-lg border p-4`}
+                          className={`${
+                            errors.file && !values.file
+                              ? 'border-red-500'
+                              : 'border-gray-200'
+                          } rounded-lg border p-4`}
                         >
                           <CustomUploadImageComponent
                             key={'file'}

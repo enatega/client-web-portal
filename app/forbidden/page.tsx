@@ -14,9 +14,7 @@ const Forbidden = () => {
         Forbidden
       </div>
       <CustomButton
-        onClick={() => {
-          router.back();
-        }}
+        onClick={() => router.back()}
         label="Go Back"
         className="bg-black text-white px-5 py-2"
       />

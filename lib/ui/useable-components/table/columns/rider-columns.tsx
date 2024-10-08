@@ -31,8 +31,12 @@ export const RIDER_TABLE_COLUMNS = ({
     refetchQueries: [{ query: GET_RIDERS }],
     awaitRefetchQueries: true,
     onError: () => {
-      showToast({ type: 'error', title: 'Banner Status', message: 'Status Change Failed' })
-    }
+      showToast({
+        type: 'error',
+        title: 'Banner Status',
+        message: 'Status Change Failed',
+      });
+    },
   });
 
   // Handle availability toggle
@@ -41,7 +45,11 @@ export const RIDER_TABLE_COLUMNS = ({
       setSelectedRider({ id, isActive });
       await mutateToggle({ variables: { id } });
     } catch (error) {
-      showToast({ type: 'error', title: 'Banner Status', message: 'Something went wrong' })
+      showToast({
+        type: 'error',
+        title: 'Banner Status',
+        message: 'Something went wrong',
+      });
     } finally {
       setSelectedRider({ id: '', isActive: false });
     }

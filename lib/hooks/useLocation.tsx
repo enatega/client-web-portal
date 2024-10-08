@@ -10,7 +10,6 @@ import { ToastContext } from '@/lib/context/global/toast.context';
 type LocationCallback = (error: string | null, location?: ILocation) => void;
 
 export default function useLocation() {
-
   // Toast Context
   const { showToast } = useContext(ToastContext);
 
@@ -51,7 +50,11 @@ export default function useLocation() {
       },
       (error: GeolocationPositionError) => {
         callback(error.message);
-        showToast({ type: 'error', title: "Current Location", message: error.message })
+        showToast({
+          type: 'error',
+          title: 'Current Location',
+          message: error.message,
+        });
       }
     );
   };

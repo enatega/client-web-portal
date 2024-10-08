@@ -51,7 +51,7 @@ export default function CouponTableHeader({
 
   return (
     <div className="mb-4 flex flex-col gap-6">
-      <div className="flex-colm:flex-row flex w-fit items-center gap-2">
+      <div className="flex-colm:flex-row ml-4 mt-4 flex w-fit items-center gap-2">
         <div className="w-60">
           <CustomTextField
             type="text"
@@ -91,8 +91,8 @@ export default function CouponTableHeader({
                       <div className="flex">
                         <Checkbox
                           inputId={`action-${item.value}`}
-                          checked={selectedActions.includes(item.value)}
-                          onChange={() => toggleAction(item.value)}
+                          checked={selectedActions.includes(item?.value)}
+                          onChange={() => toggleAction(item?.value)}
                           className={`${classes.checkbox}`}
                         />
                         <label
@@ -106,7 +106,7 @@ export default function CouponTableHeader({
                   ))}
               </div>
               <p
-                className="mt-3 text-center text-sm"
+                className="mt-3 text-center text-sm cursor-pointer"
                 onClick={() => setSelectedActions([])}
               >
                 Clear filters

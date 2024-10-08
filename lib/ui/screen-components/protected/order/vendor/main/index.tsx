@@ -33,8 +33,6 @@ export default function OrderVendorMain() {
     }
   ) as IQueryResult<IOrdersData | undefined, undefined>;
 
-  console.log('🚀 ~ OrderVendorMain ~ data:', data);
-
   const handleSearch = (newSearchTerm: string) => {
     setSearchTerm(newSearchTerm);
   };

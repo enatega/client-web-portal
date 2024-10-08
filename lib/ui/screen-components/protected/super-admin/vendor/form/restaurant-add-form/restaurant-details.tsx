@@ -74,7 +74,7 @@ export default function RestaurantDetails({
   stepperProps,
 }: IAddRestaurantComponentProps) {
   const { onStepChange, order } = stepperProps ?? {
-    onStepChange: () => { },
+    onStepChange: () => {},
     type: '',
     order: -1,
   };

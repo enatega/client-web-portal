@@ -10,7 +10,7 @@ export default function RestaurantPage() {
 
   // Effects
   useEffect(() => {
-    router.push('/admin/restaurant/dashboard');// vendor or restaurant based on user type
+    router.push('/admin/vendor/dashboard'); // vendor or restaurant based on user type
   }, []);
 
   return <></>;

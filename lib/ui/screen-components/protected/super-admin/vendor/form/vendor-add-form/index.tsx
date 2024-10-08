@@ -165,7 +165,7 @@ export default function VendorAddForm({
       visible={vendorFormVisible}
       position={position}
       onHide={() => onSetVendorFormVisible(false, false)}
-      className="w-full sm:w-[600px]"
+      className="w-full sm:w-[450px]"
     >
       <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">
@@ -193,8 +193,6 @@ export default function VendorAddForm({
                   handleSubmit,
                   isSubmitting,
                 }) => {
-
-
                   return (
                     <Form onSubmit={handleSubmit}>
                       <div className="space-y-3">

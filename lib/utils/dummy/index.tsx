@@ -378,7 +378,7 @@ export const generateDummyNotifications = (count: number = 10) => {
       _id: `notification_${i + 1}`,
       title: `notification_${i + 1}`,
       createdAt: new Date().toDateString(),
-      description: `notification_${i + 1}`,
+      body: `notification_${i + 1}`,
     });
   }
   return notifications;
@@ -449,7 +449,7 @@ export const generateDummyFoods = (count: number = 10): IFoodGridItem[] => {
       description: `Description for Food ${i + 1}`,
       image: '',
       category: { label: `food_category_${i + 1}`, code: `${i + 1}` },
-      isActive: false
+      isActive: false,
     });
   }
 

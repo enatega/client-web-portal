@@ -25,6 +25,7 @@ function HoveredSubMenuItem({ icon, text, active }: SubMenuItemProps) {
         {icon && (
           <span className="text-primary-500 h-6 w-6">
             <FontAwesomeIcon icon={icon} />
+            sds
           </span>
         )}
         <span className="text-primary-500 ml-3 w-28 text-start">{text}</span>

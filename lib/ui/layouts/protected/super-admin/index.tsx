@@ -15,7 +15,8 @@ import SuperAdminSidebar from '@/lib/ui/screen-components/protected/layout/super
 import { IProvider, LayoutContextProps } from '@/lib/utils/interfaces';
 
 const Layout = ({ children }: IProvider) => {
-  const { isSuperAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
+  const { isSuperAdminSidebarVisible } =
+    useContext<LayoutContextProps>(LayoutContext);
 
   return (
     <div className="layout-main">

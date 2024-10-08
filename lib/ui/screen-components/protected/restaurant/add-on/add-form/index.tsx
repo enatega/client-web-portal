@@ -145,7 +145,7 @@ export default function AddonAddForm({
 
   // Handlers
   // Complete and Error
-  function onFetchAddonsByRestaurantCompleted() { }
+  function onFetchAddonsByRestaurantCompleted() {}
   function onErrorFetchAddonsByRestaurant() {
     showToast({
       type: 'error',
@@ -171,8 +171,8 @@ export default function AddonAddForm({
           restaurant: restaurantId,
           addons: addon
             ? mapOptions([
-              omitExtraAttributes(addons[0], initialEditFormValuesTemplate),
-            ])[0]
+                omitExtraAttributes(addons[0], initialEditFormValuesTemplate),
+              ])[0]
             : mapOptions(addons),
         },
       },
@@ -216,7 +216,7 @@ export default function AddonAddForm({
       visible={isAddAddonVisible}
       position={position}
       onHide={onHide}
-      className="w-full sm:w-[600px]"
+      className="w-full sm:w-[450px]"
     >
       <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">

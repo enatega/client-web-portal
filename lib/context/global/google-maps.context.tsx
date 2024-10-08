@@ -22,7 +22,6 @@ export const GoogleMapsProvider: React.FC<IGoogleMapsProviderProps> = ({
   libraries,
   children,
 }) => {
-
   const { showToast } = useContext(ToastContext);
 
   const { isLoaded } = useJsApiLoader({
@@ -60,8 +59,14 @@ export const GoogleMapsProvider: React.FC<IGoogleMapsProviderProps> = ({
     if (apiKey) {
       unloadGoogleMapsScript(); // Unload the previous script if any
       loadGoogleMapsScript(apiKey)
-        .then(() => { })
-        .catch(() => showToast({ type: 'error', title: "Google Maps", message: 'Failed to load Google Maps script.' }));
+        .then(() => {})
+        .catch(() =>
+          showToast({
+            type: 'error',
+            title: 'Google Maps',
+            message: 'Failed to load Google Maps script.',
+          })
+        );
     }
   }, [apiKey]);
 

@@ -12,10 +12,7 @@ import {
 } from '@/lib/utils/interfaces';
 
 // Icons
-import {
-  faHome,
-  faUser,
-} from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUser } from '@fortawesome/free-solid-svg-icons';
 
 // Components
 import SidebarItem from './side-bar-item';
@@ -88,7 +85,6 @@ export default function MakeVendorSidebar() {
       icon: faUser,
       isClickable: true,
     },
-
   ];
 
   return (

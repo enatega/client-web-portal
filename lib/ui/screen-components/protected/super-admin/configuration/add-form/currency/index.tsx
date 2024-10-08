@@ -90,7 +90,7 @@ const CurrencyAddForm = () => {
       >
         {({ values, errors, touched, handleSubmit, setFieldValue }) => {
           return (
-            <Form onClick={() => console.log(errors)} onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <ConfigCard
                 cardTitle={'Currency'}
                 buttonLoading={mutationLoading}

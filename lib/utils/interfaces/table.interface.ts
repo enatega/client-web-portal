@@ -3,7 +3,7 @@ import { IGlobalComponentProps } from './global.interface';
 
 export interface IFilterType {
   [key: string]: {
-    value: string | string[] | null;
+    value: string | string[] | null | boolean | boolean[];
     matchMode: FilterMatchMode;
   };
 }

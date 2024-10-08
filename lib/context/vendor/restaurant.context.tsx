@@ -19,13 +19,14 @@ import { VendorLayoutContext } from './layout-vendor.context';
 
 // Types
 
-export const VendorLayoutRestaurantContext = createContext<IRestaurantContextProps>(
-  {} as IRestaurantContextProps
-);
+export const VendorLayoutRestaurantContext =
+  createContext<IRestaurantContextProps>({} as IRestaurantContextProps);
 
 export const VendorLayoutRestaurantProvider = ({ children }: IProvider) => {
   // Context
-  const { vendorLayoutContextData: { vendorId } } = useContext(VendorLayoutContext);
+  const {
+    vendorLayoutContextData: { vendorId },
+  } = useContext(VendorLayoutContext);
   // States
   const [restaurantContextData, setRestaurantContextData] =
     useState<IRestaurantContextData>({

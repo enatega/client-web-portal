@@ -1,20 +1,21 @@
-import { gql } from "@apollo/client"
-export const GET_REVIEWS = gql`query Reviews($restaurant:String!){
-    reviews(restaurant:$restaurant){
+import { gql } from '@apollo/client';
+export const GET_REVIEWS = gql`
+  query Reviews($restaurant: String!) {
+    reviews(restaurant: $restaurant) {
       _id
-      order{
+      order {
         _id
         orderId
-        items{
+        items {
           title
         }
-        user{
+        user {
           _id
           name
           email
         }
       }
-      restaurant{
+      restaurant {
         _id
         name
         image
@@ -24,4 +25,4 @@ export const GET_REVIEWS = gql`query Reviews($restaurant:String!){
       createdAt
     }
   }
-`
+`;

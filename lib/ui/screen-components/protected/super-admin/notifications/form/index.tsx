@@ -1,5 +1,5 @@
 // GraphQL
-import { SEND_NOTIFICATION_USER } from '@/lib/api/graphql';
+import { GET_NOTIFICATIONS, SEND_NOTIFICATION_USER } from '@/lib/api/graphql';
 
 // Contexts
 import { ToastContext } from '@/lib/context/global/toast.context';
@@ -7,15 +7,17 @@ import { ToastContext } from '@/lib/context/global/toast.context';
 //Components
 import CustomTextAreaField from '@/lib/ui/useable-components/custom-text-area-field';
 import CustomTextField from '@/lib/ui/useable-components/input-field';
+import { NotificationErrors } from '@/lib/utils/constants';
 
 // Hooks & react interfaces
 import { INotificationFormProps } from '@/lib/utils/interfaces/notification.interface';
+import { onErrorMessageMatcher } from '@/lib/utils/methods';
 import { NotificationSchema } from '@/lib/utils/schema/notification';
 import { useMutation } from '@apollo/client';
-import { ErrorMessage, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Sidebar } from 'primereact/sidebar';
-import { useContext } from 'react';
+import { ChangeEvent, useContext } from 'react';
 
 export default function NotificationForm({
   setVisible,
@@ -31,85 +33,98 @@ export default function NotificationForm({
   };
 
   //Mutation
-  const [sendNotificationUser] = useMutation(SEND_NOTIFICATION_USER);
+  const [sendNotificationUser] = useMutation(SEND_NOTIFICATION_USER, {
+    refetchQueries: [{ query: GET_NOTIFICATIONS }],
+    onCompleted: () => {
+      showToast({
+        title: 'New Notification',
+        type: 'success',
+        message: 'Notification has been sent successfully',
+        duration: 2500,
+      });
+    },
+    onError: (err) => {
+      showToast({
+        title: 'Error Notification',
+        type: 'error',
+        message: err.cause?.message || 'Something went wrong',
+        duration: 2500,
+      });
+    },
+  });
 
   return (
     <Sidebar
       visible={visible}
       onHide={() => setVisible(false)}
       position="right"
-      className="w-full sm:w-[600px]"
+      className="w-full sm:w-[450px]"
     >
       <Formik
         initialValues={initialValues}
         validationSchema={NotificationSchema}
         onSubmit={async (values, { setSubmitting }) => {
           setSubmitting(true);
-          try {
-            await sendNotificationUser({
-              variables: {
-                notificationTitle: values.title,
-                notificationBody: values.body,
-              },
-            });
-            showToast({
-              title: 'New Notification',
-              type: 'success',
-              message: 'Notification has been sent successfully',
-              duration: 2500,
-            });
-            setSubmitting(false);
-          } catch (err) {
-            setVisible(true);
-            showToast({
-              title: 'New Notification',
-              type: 'error',
-              message: 'Something went wrong',
-              duration: 2500,
-            });
+          await sendNotificationUser({
+            variables: {
+              notificationTitle: values.title,
+              notificationBody: values.body,
+            },
+          });
 
-          }
+          setSubmitting(false);
+          setVisible(false);
         }}
         validateOnChange={true}
       >
-        {({ handleSubmit, handleChange, values, isSubmitting }) => {
+        {({ handleSubmit, setFieldValue, values, isSubmitting, errors }) => {
           return (
             <Form onSubmit={handleSubmit}>
               <div className="mb-2 flex flex-col">
-                <span className="text-lg">Send Notification</span>
+                <h2 className='className="mb-3 text-xl font-bold'>
+                  Send Notification
+                </h2>
               </div>
               <div className="space-y-4">
                 <CustomTextField
                   value={values.title}
-                  onChange={handleChange}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setFieldValue('title', e.target.value)
+                  }
                   name="title"
-                  className="w-full px-1 py-2 text-sm"
                   showLabel={true}
                   placeholder="Title"
                   type="text"
-                />
-
-                <ErrorMessage
-                  name="title"
-                  component="span"
-                  className="text-red-600"
+                  className={`${
+                    onErrorMessageMatcher(
+                      'title',
+                      errors.title,
+                      NotificationErrors
+                    )
+                      ? 'border border-red-500'
+                      : ''
+                  }`}
                 />
                 <CustomTextAreaField
                   value={values.body}
-                  onChange={handleChange}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                    setFieldValue('body', e.target.value)
+                  }
                   showLabel={true}
                   label="Description"
                   name="body"
                   placeholder="Add description here"
-                  className="w-full text-sm"
+                  className={`${
+                    onErrorMessageMatcher(
+                      'body',
+                      errors.body,
+                      NotificationErrors
+                    )
+                      ? 'border border-red-500'
+                      : ''
+                  }`}
                   rows={5}
                 />
-                <ErrorMessage
-                  name="body"
-                  component="span"
-                  className="text-red-600"
-                />
-
                 <button
                   className="float-end my-2 block rounded-md bg-black px-12 py-2 text-white"
                   disabled={isSubmitting}

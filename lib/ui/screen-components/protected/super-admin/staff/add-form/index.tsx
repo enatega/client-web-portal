@@ -97,13 +97,20 @@ export default function StaffAddForm({
           showToast({
             type: 'error',
             title: `Staff ${staff ? 'Update' : 'Add'}`,
-            message: error.graphQLErrors[0].message ?? error.networkError?.message ?? `Failed to ${staff ? 'update' : 'add'} staff`,
+            message:
+              error.graphQLErrors[0].message ??
+              error.networkError?.message ??
+              `Failed to ${staff ? 'update' : 'add'} staff`,
             duration: 3000,
           });
         },
       });
     } catch (e) {
-      showToast({ type: 'error', title: `Staff ${staff ? 'Update' : 'Add'}`, message: 'Something went wrong' })
+      showToast({
+        type: 'error',
+        title: `Staff ${staff ? 'Update' : 'Add'}`,
+        message: 'Something went wrong',
+      });
     }
   };
 
@@ -112,7 +119,7 @@ export default function StaffAddForm({
       visible={isAddStaffVisible}
       position={position}
       onHide={onHide}
-      className="w-full sm:w-[600px]"
+      className="w-full sm:w-[450px]"
     >
       <div className="flex h-full w-full items-center justify-start">
         <div className="h-full w-full">
@@ -138,7 +145,6 @@ export default function StaffAddForm({
                 }) => {
                   return (
                     <Form
-                      onClick={() => console.log(errors)}
                       onSubmit={handleSubmit}
                     >
                       <div className="space-y-4">

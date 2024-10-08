@@ -43,7 +43,11 @@ export const VendorProvider = ({ children }: IProvider) => {
       onCompleted: (data: unknown) => {
         const _data = data as IVendorResponseGraphQL;
         setVendorId(_data?.vendors[0]?._id ?? '');
-        onUseLocalStorage('save', SELECTED_VENDOR_EMAIL, _data?.vendors[0]?.email);
+        onUseLocalStorage(
+          'save',
+          SELECTED_VENDOR_EMAIL,
+          _data?.vendors[0]?.email
+        );
       },
     }
   ) as IQueryResult<IVendorResponseGraphQL | undefined, undefined>;

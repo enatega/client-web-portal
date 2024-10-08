@@ -92,7 +92,7 @@ export default function CategoryMain({
   };
 
   // Restaurant Profile Complete
-  function onFetchCategoriesByRestaurantCompleted() { }
+  function onFetchCategoriesByRestaurantCompleted() {}
   // Restaurant Zone Info Error
   function onErrorFetchCategoriesByRestaurant() {
     showToast({

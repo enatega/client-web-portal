@@ -50,7 +50,7 @@ export default function VendorDetails({
 }: IRestaurantsVendorDetailsComponentProps) {
   // Props
   const { onStepChange, order } = stepperProps ?? {
-    onStepChange: () => { },
+    onStepChange: () => {},
     type: '',
     order: -1,
   };
