@@ -11,6 +11,8 @@ import { ISidebarMenuItem, SubMenuItemProps } from '@/lib/utils/interfaces';
 
 // Styles
 import classes from './side-bar.module.css';
+import { onUseLocalStorage } from '@/lib/utils/methods';
+import { SELECTED_SIDEBAR_MENU } from '@/lib/utils/constants';
 
 // This component is used to render the sub-menu items when hovered
 function HoveredSubMenuItem({ icon, text, active }: SubMenuItemProps) {
@@ -42,6 +44,7 @@ export default function SidebarItem({
   isParent,
   isClickable,
 }: ISidebarMenuItem) {
+
   // States
   const [expandSubMenu, setExpandSubMenu] = useState(false);
 
@@ -54,6 +57,7 @@ export default function SidebarItem({
     if (!expanded) {
       setExpandSubMenu(false);
     }
+
   }, [expanded]);
 
   // Calculate the height of the sub-menu assuming each item is 40px tall
@@ -71,6 +75,7 @@ export default function SidebarItem({
   const text_color = pathname.includes(route ?? '') ? 'white' : '[#71717A]';
   const isActive = pathname.includes(route ?? '');
 
+
   return (
     <div className={`mt-[0.4rem] flex flex-col`}>
       <div>
@@ -84,7 +89,9 @@ export default function SidebarItem({
               router.push(route ?? '');
               return;
             }
+
             setExpandSubMenu((curr) => expanded && !curr);
+            onUseLocalStorage("save", SELECTED_SIDEBAR_MENU, text)
           }}
         >
           {icon && (
@@ -131,7 +138,7 @@ export default function SidebarItem({
       >
         <div className="absolute bottom-0 left-6 top-0 w-px bg-gray-300"></div>
 
-        {expanded &&
+        {(expanded || onUseLocalStorage("get", SELECTED_SIDEBAR_MENU) === text) &&
           subMenu?.map((item, index) => {
             const isActive = pathname.includes(item.route ?? '');
 

@@ -201,6 +201,41 @@ export const generateDummyCommissionRates = (
   return dummyCommissionRates;
 };
 
+export const generateDummyOrderVendor = (
+  count: number = 10
+): IRestaurantResponse[] => {
+  const dummyOrderVendor: IRestaurantResponse[] = [];
+
+  for (let i = 0; i < count; i++) {
+    dummyOrderVendor.push({
+      _id: `restaurant_${i + 1}`,
+      name: `Restaurant ${i + 1}`,
+      commissionRate: Math.floor(Math.random() * 10) + 5, // Random commission rate between 5 and 15
+      isActive: Math.random() > 0.2, // 80% chance of being active
+      __typename: 'Restaurant',
+      image: '',
+      orderPrefix: '',
+      slug: '',
+      address: '',
+      deliveryTime: Math.floor(Math.random() * 60) + 15, // Random delivery time between 15 and 75 minutes
+      minimumOrder: Math.floor(Math.random() * 20) + 5, // Random minimum order between $5 and $25
+      tax: Math.floor(Math.random() * 10) + 5, // Random tax between 5% and 15%
+      username: `restaurant${i + 1}`,
+      owner: {
+        _id: `owner_${i + 1}`,
+        email: `owner${i + 1}@example.com`,
+        isActive: true,
+        __typename: 'Owner',
+      },
+      shopType: ['Fast Food', 'Casual Dining', 'Fine Dining'][
+        Math.floor(Math.random() * 3)
+      ],
+    });
+  }
+
+  return dummyOrderVendor;
+};
+
 export const generateDummyCategories = (count: number = 10): ICategory[] => {
   const categories: ICategory[] = [];
 

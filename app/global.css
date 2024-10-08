@@ -162,6 +162,7 @@ body {
 /* Scroll Bar  */
 ::-webkit-scrollbar {
   width: 7px;
+  height: 7px; /* Added height for horizontal scrollbars */
   background: rgba(
     255,
     255,
@@ -556,4 +557,8 @@ body {
 .p-dataview-header .p-component {
   font-size: 14px; /* Adjust the font size as needed */
   font-weight: lighter;
+}
+
+.row-assigned {
+  background-color: lightyellow !important;
 }

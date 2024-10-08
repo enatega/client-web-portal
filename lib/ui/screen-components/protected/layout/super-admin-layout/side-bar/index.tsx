@@ -50,7 +50,8 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showSuperAdminSidebar]);
+
+  }, []);
 
   return (
     <div className="relative">
@@ -175,6 +176,9 @@ export default function MakeSidebar() {
           isParent: false,
         },
       ]),
+      shouldShow: function () {
+        return this.subMenu ? this.subMenu.length > 0 : false;
+      },
     },
   ];
 
