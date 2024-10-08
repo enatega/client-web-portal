@@ -21,7 +21,13 @@ import CustomIconTextField from '@/lib/ui/useable-components/input-icon-field';
 import CustomPasswordTextField from '@/lib/ui/useable-components/password-input-field';
 
 // Constants
-import { APP_NAME, SignInErrors } from '@/lib/utils/constants';
+import {
+  APP_NAME,
+  SELECTED_RESTAURANT,
+  SELECTED_VENDOR,
+  SELECTED_VENDOR_EMAIL,
+  SignInErrors,
+} from '@/lib/utils/constants';
 
 // Methods
 import { onErrorMessageMatcher } from '@/lib/utils/methods/error';
@@ -39,6 +45,7 @@ import { onUseLocalStorage } from '@/lib/utils/methods';
 import { SignInSchema } from '@/lib/utils/schema';
 import { useRouter } from 'next/navigation';
 import { useUserContext } from '@/lib/hooks/useUser';
+import { DEFAULT_ROUTES } from '@/lib/utils/constants/routes';
 
 const initialValues: ISignInForm = {
   email: '',
@@ -63,17 +70,18 @@ export default function LoginEmailPasswordMain() {
   function onCompleted({ ownerLogin }: IOwnerLoginDataResponse) {
     onUseLocalStorage('save', `user-${APP_NAME}`, JSON.stringify(ownerLogin));
     setUser(ownerLogin);
-    let redirect_url = '/general/vendors';
+    let redirect_url = DEFAULT_ROUTES[ownerLogin.userType];
 
     if (ownerLogin?.userType === 'VENDOR') {
-      redirect_url = '/general/restaurants';
+      onUseLocalStorage('save', SELECTED_VENDOR, ownerLogin.userId);
+      onUseLocalStorage('save', SELECTED_VENDOR_EMAIL, ownerLogin.email);
     }
 
-    if (ownerLogin?.userType === 'STAFF') {
-      redirect_url = '/home';
+    if (ownerLogin?.userType === 'RESTAURANT') {
+      onUseLocalStorage('save', SELECTED_RESTAURANT, ownerLogin.userId);
     }
 
-    router.replace(redirect_url);
+    router.push(redirect_url);
 
     showToast({
       type: 'success',

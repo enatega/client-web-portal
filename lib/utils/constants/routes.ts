@@ -52,3 +52,10 @@ export const ROUTES = [
     route: '/general/staff',
   },
 ];
+
+export const DEFAULT_ROUTES = {
+  ADMIN: '/home',
+  STAFF: '/home',
+  VENDOR: '/admin/vendor/dashboard',
+  RESTAURANT: '/admin/restaurant/dashboard',
+};
