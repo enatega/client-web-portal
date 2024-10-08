@@ -33,6 +33,7 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
 
   // Detect clicks outside the sidebar
   useEffect(() => {
+    console.log('SuperAdminSidebar rendering....');
     const handleClickOutside = (event: MouseEvent) => {
       const sidebar = document.getElementById('app-sidebar');
       const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
@@ -50,7 +51,8 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showSuperAdminSidebar]);
+
+  }, []);
 
   return (
     <div className="relative">
@@ -69,7 +71,8 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
 }
 
 export default function MakeSidebar() {
-  const { isSuperAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
+  const { isSuperAdminSidebarVisible } =
+    useContext<LayoutContextProps>(LayoutContext);
 
   const navBarItems: ISidebarMenuItem[] = [
     {
@@ -180,13 +183,21 @@ export default function MakeSidebar() {
     },
   ];
 
+  useEffect(() => {
+    console.log('MakeSide rendering....');
+  }, []);
+
   return (
     <>
       <SuperAdminSidebar>
         <div className="h-[92vh] overflow-y-auto overflow-x-hidden pr-2">
           {navBarItems.map((item, index) =>
             item.shouldShow && !item.shouldShow() ? null : (
-              <SidebarItem key={index} expanded={isSuperAdminSidebarVisible} {...item} />
+              <SidebarItem
+                key={index}
+                expanded={isSuperAdminSidebarVisible}
+                {...item}
+              />
             )
           )}
         </div>
