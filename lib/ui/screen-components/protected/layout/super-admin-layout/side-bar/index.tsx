@@ -71,6 +71,8 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
 export default function MakeSidebar() {
   const { isSuperAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
 
+  console.log({ MakeSidebar: isSuperAdminSidebarVisible })
+
   const navBarItems: ISidebarMenuItem[] = [
     {
       text: 'My Website',

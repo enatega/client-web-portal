@@ -1,6 +1,6 @@
 // Core
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Icons
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -41,6 +41,9 @@ export default function SidebarItem({
   isParent,
   isClickable,
 }: ISidebarMenuItem) {
+
+  console.log({ [text]: expanded })
+
   // States
   const [expandSubMenu, setExpandSubMenu] = useState(false);
 
@@ -49,11 +52,11 @@ export default function SidebarItem({
   const router = useRouter();
 
   // use Effect
-  // useEffect(() => {
-  //   if (!expanded) {
-  //     setExpandSubMenu(false);
-  //   }
-  // }, [expanded]);
+  useEffect(() => {
+    if (!expanded) {
+      setExpandSubMenu(false);
+    }
+  }, [expanded]);
 
   // Calculate the height of the sub-menu assuming each item is 40px tall
   const subMenuHeight = expandSubMenu
