@@ -162,6 +162,7 @@ body {
 /* Scroll Bar  */
 ::-webkit-scrollbar {
   width: 7px;
+  height: 7px; /* Added height for horizontal scrollbars */
   background: rgba(
     255,
     255,
@@ -542,7 +543,7 @@ body {
 }
 
 /* Data View */
-.p-dataview-header{
+.p-dataview-header {
   background-color: transparent;
   padding: 0;
 }
