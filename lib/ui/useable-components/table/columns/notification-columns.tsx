@@ -45,12 +45,12 @@ export const NOTIFICATIONS_TABLE_COLUMNS = () => {
   );
   // Handlers
   async function handleResendNotification(rowData: INotification) {
-    // await sendNotificationUser({
-    //   variables: {
-    //     notificationTitle: rowData.title,
-    //     notificationBody: rowData.body,
-    //   },
-    // });
+    await sendNotificationUser({
+      variables: {
+        notificationTitle: rowData.title,
+        notificationBody: rowData.body,
+      },
+    });
     console.log({rowData})
     setLoadingId(rowData._id)
   }
