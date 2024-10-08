@@ -41,7 +41,7 @@ export const GET_DASHBOARD_SALES_BY_TYPE = gql`
   }
 `;
 
-// Restaurant & Vendor
+// Restaurant
 export const GET_DASHBOARD_RESTAURANT_ORDERS = gql`
   query GetRestaurantDashboardOrdersSalesStats(
     $restaurant: String!
@@ -114,6 +114,25 @@ export const GET_DASHBOARD_ORDER_SALES_DETAILS_BY_PAYMENT_METHOD = gql`
           total_delivery_fee
         }
       }
+    }
+  }
+`;
+
+// Vendor
+export const GET_VENDOR_DASHBOARD_STATS_CARD_DETAILS = gql`
+  query GetVendorDashboardStatsCardDetails(
+    $vendorId: String!
+    $starting_date: String!
+    $ending_date: String!
+  ) {
+    getVendorDashboardStatsCardDetails(
+      vendorId: $vendorId
+      starting_date: $starting_date
+      ending_date: $ending_date
+    ) {
+      totalRestaurants
+      totalOrders
+      totalSales
     }
   }
 `;

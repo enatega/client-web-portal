@@ -51,8 +51,8 @@ export default function DashboardDateFilter({ dateFilter, setDateFilter }: IDash
                             <FontAwesomeIcon icon={faCalendarAlt} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                         </div>
                     </div>
-                    <div className="flex flex-col w-full">
-                        {isLoading ? <div className='flex justify-center items-center  mt-8'><CustomLoader /></div> : <button className="bg-secondary-color text-white font-semibold py-2 px-6 rounded-full w-full mt-8" onClick={onApply}>APPLY</button>}
+                    <div className="flex flex-col w-4rem">
+                        {isLoading ? <div className='flex justify-center items-center  mt-8'><CustomLoader /></div> : <button className="bg-black text-white font-semibold py-2 px-6 rounded-full w-full mt-8" onClick={onApply}>APPLY</button>}
                     </div>
                 </div>
             </div>
