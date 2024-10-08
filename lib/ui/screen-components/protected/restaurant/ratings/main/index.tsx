@@ -3,11 +3,7 @@ import { useQuery } from '@apollo/client';
 import { GET_REVIEWS } from '@/lib/api/graphql/queries/ratings';
 import CustomDataView from '@/lib/ui/useable-components/data-view';
 import RatingsHeaderDataView from '../header/table-header';
-<<<<<<< HEAD:lib/ui/screen-components/protected/restaurant/ratings/main/index.tsx
 import { RestaurantLayoutContext } from '@/lib/context/restaurant/layout-restaurant.context';
-=======
-import { RestaurantLayoutContext } from '@/lib/context/layout-restaurant.context';
->>>>>>> 6b25c7e89c5a0002f082a391dcbbc51dbd9daaba:lib/ui/screen-components/protected/ratings/main/index.tsx
 import RatingSkeleton from '@/lib/ui/useable-components/custom-skeletons/rating.card.skeleton';
 import { IItem, IReview } from '@/lib/utils/interfaces';
 
