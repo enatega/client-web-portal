@@ -64,26 +64,24 @@ export const NOTIFICATIONS_TABLE_COLUMNS = () => {
       {
         headerName: 'Date',
         propertyName: 'createdAt',
-        body:(rowData:INotification)=>{
-          const seconds = parseInt(rowData.createdAt)/1000;
+        body: (rowData: INotification) => {
+          const seconds = parseInt(rowData.createdAt) / 1000;
           const newDate = new Date(seconds).toDateString();
-          return (
-            <span>{newDate}</span>
-          )
-        }
+          return <span>{newDate}</span>;
+        },
       },
       {
         headerName: 'Change Status',
         propertyName: 'status',
         body: (rowData: INotification) => (
-            <CustomButton
-              onClick={() => handleResendNotification(rowData)}
-              label="Resend"
-              loading={loading}
-              type="button"
-              className="block self-end"
-            />
-          )
+          <CustomButton
+            onClick={() => handleResendNotification(rowData)}
+            label="Resend"
+            loading={loading}
+            type="button"
+            className="block self-end"
+          />
+        ),
       },
     ],
     []

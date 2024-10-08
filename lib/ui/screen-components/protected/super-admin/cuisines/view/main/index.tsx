@@ -72,7 +72,11 @@ export default function CuisinesMain({
   const filters = {
     global: { value: globalFilterValue, matchMode: FilterMatchMode.CONTAINS },
     shopType: {
-      value: selectedActions.includes('shop')&&selectedActions.includes('restaurant')?"":selectedActions,
+      value:
+        selectedActions.includes('shop') &&
+        selectedActions.includes('restaurant')
+          ? ''
+          : selectedActions,
       matchMode: FilterMatchMode.CONTAINS,
     },
   };
