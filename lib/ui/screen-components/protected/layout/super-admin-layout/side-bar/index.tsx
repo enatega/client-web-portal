@@ -33,7 +33,6 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
 
   // Detect clicks outside the sidebar
   useEffect(() => {
-    console.log('SuperAdminSidebar rendering....');
     const handleClickOutside = (event: MouseEvent) => {
       const sidebar = document.getElementById('app-sidebar');
       const iconContainer = document.getElementById('sidebar-opening-icon'); // Assuming this is the ID of the icon container
@@ -182,10 +181,6 @@ export default function MakeSidebar() {
       },
     },
   ];
-
-  useEffect(() => {
-    console.log('MakeSide rendering....');
-  }, []);
 
   return (
     <>
