@@ -47,6 +47,7 @@ export interface IExtendedOrder extends IOrder {
   
   export interface IOrdersData extends IGlobalComponentProps {
     ordersByRestId: IOrder[];
+    ordersByRestIdWithoutPagination: IOrder[];
   }
   
   export interface ITableOrder extends IOrder {

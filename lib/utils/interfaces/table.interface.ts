@@ -24,7 +24,6 @@ export interface IDataTableProps<T> extends IGlobalComponentProps {
   filters?: IFilterType;
   size?: 'small' | 'normal' | 'large';
   loading?: boolean;
-  onPageChange?: (page: number, rows: number) => void;
   useServerPagination?: boolean;
   rowsPerPage?:number
 }

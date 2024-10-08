@@ -4,12 +4,11 @@ import { useQueryGQL } from '@/lib/hooks/useQueryQL';
 import OrderTableHeader from '../header/table-header';
 import { IQueryResult } from '@/lib/utils/interfaces';
 import { RestaurantLayoutContext } from '@/lib/context/restaurant/layout-restaurant.context';
-import { GET_ORDER_BY_RESTAURANT } from '@/lib/api/graphql';
+import { GET_ORDER_BY_RESTAURANT_WITHOUT_PAGINATION } from '@/lib/api/graphql';
 import { ORDER_COLUMNS } from '@/lib/ui/useable-components/table/columns/order-vendor-columns';
 import OrderTableSkeleton from '@/lib/ui/useable-components/custom-skeletons/orders.vendor.row.skeleton';
 import { IOrder, IOrdersData, IExtendedOrder } from '@/lib/utils/interfaces';
 import { TOrderRowData } from '@/lib/utils/types';
-
 
 export default function OrderVendorMain() {
   const [selectedData, setSelectedData] = useState<IExtendedOrder[]>([]);
@@ -18,16 +17,15 @@ export default function OrderVendorMain() {
   const { restaurantLayoutContextData } = useContext(RestaurantLayoutContext);
   const { restaurantId } = restaurantLayoutContextData;
 
-  const [page, setPage] = useState(0);
-  const [rows, setRows] = useState(10);
+  // Remove page and rows state
+  // const [page, setPage] = useState(0);
+  // const [rows, setRows] = useState(10);
 
   const { data, error, loading } = useQueryGQL(
-    GET_ORDER_BY_RESTAURANT,
+    GET_ORDER_BY_RESTAURANT_WITHOUT_PAGINATION,
     {
       restaurant: restaurantId,
-      page: page,
-      rows: rows,
-      search: searchTerm,
+      search: searchTerm, // Only pass restaurant and search
     },
     {
       fetchPolicy: 'network-only',
@@ -37,22 +35,14 @@ export default function OrderVendorMain() {
 
   console.log('🚀 ~ OrderVendorMain ~ data:', data);
 
-  // Handle page and row change
-  const handlePageChange = (newPage: number, newRows: number) => {
-    console.log("🚀 ~ handlePageChange ~ newPage:", newPage)
-    setPage(newPage);
-    setRows(newRows);
-  };
-
   const handleSearch = (newSearchTerm: string) => {
     setSearchTerm(newSearchTerm);
-    // setPage(0);
   };
 
   const tableData = useMemo(() => {
-    if (!data?.ordersByRestId) return [];
+    if (!data?.ordersByRestIdWithoutPagination) return [];
 
-    return data.ordersByRestId.map(
+    return data.ordersByRestIdWithoutPagination.map(
       (order: IOrder): IExtendedOrder => ({
         ...order,
         itemsTitle:
@@ -78,10 +68,10 @@ export default function OrderVendorMain() {
 
   const displayData: TOrderRowData[] = useMemo(() => {
     if (loading) {
-      return OrderTableSkeleton({ rowCount: rows });
+      return OrderTableSkeleton({ rowCount: 10 }); // Change as per your need, no rows state now
     }
     return filteredData;
-  }, [loading, rows, filteredData]);
+  }, [loading, filteredData]);
 
   if (!restaurantId) {
     return null;
@@ -100,9 +90,7 @@ export default function OrderVendorMain() {
         selectedData={selectedData}
         columns={ORDER_COLUMNS}
         loading={loading}
-        onPageChange={handlePageChange} // Use server-side pagination
-        useServerPagination={true}
-        rowsPerPage={rows}
+        useServerPagination={true} // No server-side pagination
       />
       {error && <p className="text-red-500">Error: {error.message}</p>}
     </div>

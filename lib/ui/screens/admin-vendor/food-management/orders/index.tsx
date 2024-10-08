@@ -3,7 +3,7 @@ import OrderVendorMain from "@/lib/ui/screen-components/protected/order/vendor/m
 
 const OrderVendorScreen = () => {
   return (
-    <div className="screen-container">
+  <div className="screen-container">
       <OrdersVendorHeader/>
       <OrderVendorMain/>
     </div>

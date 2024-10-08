@@ -12,7 +12,6 @@ import {
   DataTableSelectionMultipleChangeEvent,
 } from 'primereact/datatable';
 import DataTableColumnSkeleton from '../custom-skeletons/datatable.column.skeleton';
-import { DataTablePageEvent } from 'primereact/datatable';
 import { useState } from 'react';
 import OrderDetailModal from '../popup-menu/order-details-modal';
 import { IExtendedOrder } from '@/lib/utils/interfaces';
@@ -27,7 +26,6 @@ const Table = <T extends ITableExtends>({
   size = 'small',
   loading,
   isSelectable = false,
-  onPageChange,
   useServerPagination = false,
   rowsPerPage=10
 }: IDataTableProps<T>) => {
@@ -45,17 +43,10 @@ const Table = <T extends ITableExtends>({
     setIsModalOpen(true);
   };
 
-  const handlePageChange = (event: DataTablePageEvent) => {
-   
-    if (onPageChange) {
-      const currentPage = event.page !== undefined ? event.page : 0; 
-      const rowsPerPage = event.rows !== undefined ? event.rows : 10
-      onPageChange(currentPage, rowsPerPage);
-    }
-  };
 
    const rowClassName = (data: T) => {
     return data?.orderStatus === 'ASSIGNED' ? 'row-assigned' : '';
+    
   };
 
   console.log("🚀 ~ rowClassName ~ data:", data)
@@ -82,9 +73,6 @@ const Table = <T extends ITableExtends>({
       scrollable={true}
       scrollHeight="480px"
       removableSort
-      lazy={useServerPagination}
-      onPage={useServerPagination ? handlePageChange : ()=>{}} 
-      totalRecords={useServerPagination ? data.length : undefined} 
       rowClassName={rowClassName}
       onRowClick={useServerPagination ? handleRowClick : ()=>{}}
     >
