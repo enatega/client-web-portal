@@ -6,7 +6,10 @@ import { IWithDrawRequest } from '@/lib/utils/interfaces/withdraw-request.interf
 import { Dropdown, DropdownProps } from 'primereact/dropdown';
 
 // GraphQL
-import { UPDATE_WITHDRAW_REQUEST } from '@/lib/api/graphql';
+import {
+  GET_ALL_WITHDRAW_REQUESTS,
+  UPDATE_WITHDRAW_REQUEST,
+} from '@/lib/api/graphql';
 
 // Hooks
 import { useMutation } from '@apollo/client';
@@ -60,6 +63,7 @@ export const WITHDRAW_REQUESTS_TABLE_COLUMNS = () => {
           bool: false,
         });
       },
+      refetchQueries: [{ query: GET_ALL_WITHDRAW_REQUESTS }],
     });
 
   // Handle drop down change
@@ -162,9 +166,12 @@ export const WITHDRAW_REQUESTS_TABLE_COLUMNS = () => {
       {
         headerName: 'Date',
         propertyName: 'requestTime',
-        body: (rowData: IWithDrawRequest) => (
-          <span>{new Date(rowData.requestTime).toLocaleDateString()}</span>
-        ),
+        body: (rowData: IWithDrawRequest) => {
+          console.log({ status: rowData.status });
+          return (
+            <span>{new Date(rowData.requestTime).toLocaleDateString()}</span>
+          );
+        },
       },
       {
         headerName: 'Status',
@@ -181,6 +188,7 @@ export const WITHDRAW_REQUESTS_TABLE_COLUMNS = () => {
               status_change_loading &&
               isChangingStatus._id === rowData._id
             }
+            className="border border-gray-200"
           />
         ),
       },

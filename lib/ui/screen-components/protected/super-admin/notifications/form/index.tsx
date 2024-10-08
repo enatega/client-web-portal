@@ -81,7 +81,9 @@ export default function NotificationForm({
           return (
             <Form onSubmit={handleSubmit}>
               <div className="mb-2 flex flex-col">
-                <span className="text-lg">Send Notification</span>
+                <h2 className='className="mb-3 text-xl font-bold'>
+                  Send Notification
+                </h2>
               </div>
               <div className="space-y-4">
                 <CustomTextField

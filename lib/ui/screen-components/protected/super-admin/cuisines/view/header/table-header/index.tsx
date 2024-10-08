@@ -102,7 +102,7 @@ export default function CuisineTableHeader({
                   ))}
               </div>
               <p
-                className="mt-3 text-center text-sm"
+                className="mt-3 text-center text-sm cursor-pointer"
                 onClick={() => setSelectedActions([])}
               >
                 Clear filters

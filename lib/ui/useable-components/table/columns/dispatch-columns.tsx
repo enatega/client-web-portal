@@ -1,63 +1,67 @@
 // Interfaces
 import {
   IActiveOrders,
-  IGetRidersByZone,
-  IGetRidersByZoneVariables,
-  IRidersByZone,
+  // IGetRidersByZone,
+  // IGetRidersByZoneVariables,
+  // IRidersByZone,
 } from '@/lib/utils/interfaces/dispatch.interface';
 import { IDropdownSelectItem } from '@/lib/utils/interfaces';
 
 // Icons
-import {
-  faDashboard,
-  faTrash,
-  faTruck,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons/faCircleCheck';
+// import {
+//   faDashboard,
+//   faTrash,
+//   faTruck,
+// } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faCircleCheck } from '@fortawesome/free-solid-svg-icons/faCircleCheck';
 
 // Prime React
 import { Tag } from 'primereact/tag';
-import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+// import { DropdownChangeEvent } from 'primereact/dropdown';
 
 // GraphQL
 import {
-  ASSIGN_RIDER,
-  GET_ACTIVE_ORDERS,
-  GET_RIDERS_BY_ZONE,
+  // ASSIGN_RIDER,
+  // GET_ACTIVE_ORDERS,
+  // GET_RIDERS_BY_ZONE,
+  // UPDATE_STATUS,
   SUBSCRIPTION_ORDER,
-  UPDATE_STATUS,
 } from '@/lib/api/graphql';
 
 // Hooks
-import { useContext, useMemo, useState } from 'react';
 import {
-  LazyQueryResultTuple,
-  useLazyQuery,
-  useMutation,
+  useMemo,
+  // useContext,
+  //  useState
+} from 'react';
+import {
+  // LazyQueryResultTuple,
+  // useLazyQuery,
+  // useMutation,
   useSubscription,
 } from '@apollo/client';
 
 // Contexts
-import { ToastContext } from '@/lib/context/global/toast.context';
+// import { ToastContext } from '@/lib/context/global/toast.context';
 
 // CSS
-import classes from '@/lib/ui/screen-components/protected/super-admin/dispatch/view/main/index.module.css';
+// import classes from '@/lib/ui/screen-components/protected/super-admin/dispatch/view/main/index.module.css';
 
 export const DISPATCH_TABLE_COLUMNS = () => {
   // Toast
-  const { showToast } = useContext(ToastContext);
+  // const { showToast } = useContext(ToastContext);
 
   // States
-  const [riderOptions, setRiderOptions] = useState<IDropdownSelectItem[]>([]);
-  const [isRiderLoading, setIsRiderLoading] = useState({
-    _id: '',
-    bool: false,
-  });
-  const [isStatusUpdating, setIsStatusUpdating] = useState({
-    _id: '',
-    bool: false,
-  });
+  // const [riderOptions, setRiderOptions] = useState<IDropdownSelectItem[]>([]);
+  // const [isRiderLoading, setIsRiderLoading] = useState({
+  //   _id: '',
+  //   bool: false,
+  // });
+  // const [isStatusUpdating, setIsStatusUpdating] = useState({
+  //   _id: '',
+  //   bool: false,
+  // });
 
   // Order Subscription
   const useOrderSubscription = (rowData: IActiveOrders) => {
@@ -74,115 +78,115 @@ export const DISPATCH_TABLE_COLUMNS = () => {
   };
 
   // Queries
-  const [fetch] = useLazyQuery(GET_RIDERS_BY_ZONE) as LazyQueryResultTuple<
-    IGetRidersByZone | undefined,
-    IGetRidersByZoneVariables
-  >;
+  // const [fetch] = useLazyQuery(GET_RIDERS_BY_ZONE) as LazyQueryResultTuple<
+  //   IGetRidersByZone | undefined,
+  //   IGetRidersByZoneVariables
+  // >;
 
   // Mutations
-  const [assignRider] = useMutation(ASSIGN_RIDER, {
-    onError: (error) => {
-      showToast({
-        type: 'error',
-        title: 'Assign Rider',
-        message:
-          error.cause?.message ||
-          'An error occured while assigning the job to rider',
-      });
-    },
-    refetchQueries: [{ query: GET_ACTIVE_ORDERS }],
-  });
-  const [updateStatus] = useMutation(UPDATE_STATUS, {
-    onError: (err) =>
-      showToast({
-        type: 'error',
-        message:
-          err.cause?.message || 'An error occured while updating the status',
-        title: 'Edit Order Status',
-      }),
-    onCompleted: () => {
-      showToast({
-        type: 'success',
-        title: 'Order Status',
-        message: 'Order status has been updated successfully',
-      });
-    },
-    refetchQueries: [{ query: GET_ACTIVE_ORDERS }],
-  });
+  // const [assignRider] = useMutation(ASSIGN_RIDER, {
+  //   onError: (error) => {
+  //     showToast({
+  //       type: 'error',
+  //       title: 'Assign Rider',
+  //       message:
+  //         error.cause?.message ||
+  //         'An error occured while assigning the job to rider',
+  //     });
+  //   },
+  //   refetchQueries: [{ query: GET_ACTIVE_ORDERS }],
+  // });
+  // const [updateStatus] = useMutation(UPDATE_STATUS, {
+  //   onError: (err) =>
+  //     showToast({
+  //       type: 'error',
+  //       message:
+  //         err.cause?.message || 'An error occured while updating the status',
+  //       title: 'Edit Order Status',
+  //     }),
+  //   onCompleted: () => {
+  //     showToast({
+  //       type: 'success',
+  //       title: 'Order Status',
+  //       message: 'Order status has been updated successfully',
+  //     });
+  //   },
+  //   refetchQueries: [{ query: GET_ACTIVE_ORDERS }],
+  // });
 
   // Handlers
-  const handleRiderClick = async (
-    rowData: IActiveOrders
-  ): Promise<{ data?: IRidersByZone[]; loading: boolean }> => {
-    const res = await fetch({
-      variables: {
-        id: rowData.zone._id,
-      },
-    });
-    return {
-      data: res.data?.ridersByZone,
-      loading: res.loading,
-    };
-  };
+  // const handleRiderClick = async (
+  //   rowData: IActiveOrders
+  // ): Promise<{ data?: IRidersByZone[]; loading: boolean }> => {
+  //   const res = await fetch({
+  //     variables: {
+  //       id: rowData.zone._id,
+  //     },
+  //   });
+  //   return {
+  //     data: res.data?.ridersByZone,
+  //     loading: res.loading,
+  //   };
+  // };
 
-  const handleAssignRider = async (
-    item: IDropdownSelectItem,
-    rowData: IActiveOrders
-  ) => {
-    if (item._id) {
-      setIsRiderLoading({
-        _id: item._id,
-        bool: true,
-      });
+  // const handleAssignRider = async (
+  //   item: IDropdownSelectItem,
+  //   rowData: IActiveOrders
+  // ) => {
+  //   if (item._id) {
+  //     setIsRiderLoading({
+  //       _id: item._id,
+  //       bool: true,
+  //     });
 
-      const { data } = await assignRider({
-        variables: {
-          id: rowData._id,
-          riderId: item._id,
-        },
-      });
-      if (data) {
-        showToast({
-          type: 'success',
-          title: 'Assign Rider',
-          message: `The order ${rowData.orderId} has been successfully assigned to rider ${item.label}`,
-        });
-      }
-    }
-    setIsRiderLoading({
-      _id: '',
-      bool: false,
-    });
-  };
+  //     const { data } = await assignRider({
+  //       variables: {
+  //         id: rowData._id,
+  //         riderId: item._id,
+  //       },
+  //     });
+  //     if (data) {
+  //       showToast({
+  //         type: 'success',
+  //         title: 'Assign Rider',
+  //         message: `The order ${rowData.orderId} has been successfully assigned to rider ${item.label}`,
+  //       });
+  //     }
+  //   }
+  //   setIsRiderLoading({
+  //     _id: '',
+  //     bool: false,
+  //   });
+  // };
 
-  const handleStatusDropDownChange = async (
-    e: DropdownChangeEvent,
-    rowData: IActiveOrders
-  ) => {
-    setIsStatusUpdating({
-      _id: rowData._id,
-      bool: true,
-    });
-    try {
-      await updateStatus({
-        variables: {
-          id: rowData._id,
-          orderStatus: e.value.code,
-        },
-      });
-    } catch (error) {
-      showToast({
-        type: 'error',
-        title: 'Order Status',
-        message: 'Something went wrong',
-      });
-    } finally {
-      setIsStatusUpdating({
-        _id: rowData._id,
-        bool: false,
-      });
-    }
-  };
+  // const handleStatusDropDownChange = async (
+  //   e: DropdownChangeEvent,
+  //   rowData: IActiveOrders
+  // ) => {
+  //   setIsStatusUpdating({
+  //     _id: rowData._id,
+  //     bool: true,
+  //   });
+  //   try {
+  //     await updateStatus({
+  //       variables: {
+  //         id: rowData._id,
+  //         orderStatus: e.value.code,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     showToast({
+  //       type: 'error',
+  //       title: 'Order Status',
+  //       message: 'Something went wrong',
+  //     });
+  //   } finally {
+  //     setIsStatusUpdating({
+  //       _id: rowData._id,
+  //       bool: false,
+  //     });
+  //   }
+  // };
 
   // Status options
   const actionStatusOptions = useMemo(
@@ -217,46 +221,46 @@ export const DISPATCH_TABLE_COLUMNS = () => {
   );
 
   // Status templates
-  const valueTemplate = (option: IDropdownSelectItem) => (
-    <div className="flex items-center justify-start gap-2">
-      <Tag
-        severity={severityChecker(option?.code)}
-        value={option?.label}
-        rounded
-      />
-    </div>
-  );
+  // const valueTemplate = (option: IDropdownSelectItem) => (
+  //   <div className="flex items-center justify-start gap-2">
+  //     <Tag
+  //       severity={severityChecker(option?.code)}
+  //       value={option?.label}
+  //       rounded
+  //     />
+  //   </div>
+  // );
 
-  const itemTemplate = (option: IDropdownSelectItem) => {
-    if (option.code === 'PENDING' || option.code === 'ASSIGNED') return;
-    return (
-      <div
-        className={`flex flex-row-reverse items-center justify-start gap-2 ${option.code === 'PENDING' || option.code === 'ASSIGNED' ? 'hidden' : 'visible'} ${classes.dropDownItem}`}
-      >
-        <span>
-          {option.code === 'CANCELLED'
-            ? 'Reject'
-            : option.code === 'ACCEPTED'
-              ? 'Accept'
-              : option.code === 'DELIVERED'
-                ? 'Delivered'
-                : ''}
-        </span>
-        <FontAwesomeIcon
-          icon={
-            option.code === 'CANCELLED'
-              ? faTrash
-              : option.code === 'ACCEPTED'
-                ? faCircleCheck
-                : option.code === 'DELIVERED'
-                  ? faTruck
-                  : faDashboard
-          }
-          color={option.code === 'CANCELLED' ? 'red' : 'black'}
-        />
-      </div>
-    );
-  };
+  // const itemTemplate = (option: IDropdownSelectItem) => {
+  //   if (option.code === 'PENDING' || option.code === 'ASSIGNED') return;
+  //   return (
+  //     <div
+  //       className={`flex flex-row-reverse items-center justify-start gap-2 ${option.code === 'PENDING' || option.code === 'ASSIGNED' ? 'hidden' : 'visible'} ${classes.dropDownItem}`}
+  //     >
+  //       <span>
+  //         {option.code === 'CANCELLED'
+  //           ? 'Reject'
+  //           : option.code === 'ACCEPTED'
+  //             ? 'Accept'
+  //             : option.code === 'DELIVERED'
+  //               ? 'Delivered'
+  //               : ''}
+  //       </span>
+  //       <FontAwesomeIcon
+  //         icon={
+  //           option.code === 'CANCELLED'
+  //             ? faTrash
+  //             : option.code === 'ACCEPTED'
+  //               ? faCircleCheck
+  //               : option.code === 'DELIVERED'
+  //                 ? faTruck
+  //                 : faDashboard
+  //         }
+  //         color={option.code === 'CANCELLED' ? 'red' : 'black'}
+  //       />
+  //     </div>
+  //   );
+  // };
 
   // Severity checker
   function severityChecker(status: string | undefined) {
@@ -292,27 +296,27 @@ export const DISPATCH_TABLE_COLUMNS = () => {
         propertyName: 'rider.name',
         headerName: 'Rider',
         body: (rowData: IActiveOrders) => {
-          async function handleClick(rowData: IActiveOrders) {
-            setIsRiderLoading({
-              _id: rowData._id,
-              bool: true,
-            });
-            const { data } = await handleRiderClick(rowData);
-            data?.forEach((rider) => {
-              setRiderOptions((prev) => [
-                ...prev,
-                {
-                  label: rider.name,
-                  code: rider.name.toUpperCase(),
-                  _id: rider._id,
-                },
-              ]);
-            });
-            setIsRiderLoading({
-              _id: rowData._id,
-              bool: false,
-            });
-          }
+          // async function handleClick(rowData: IActiveOrders) {
+          //   setIsRiderLoading({
+          //     _id: rowData._id,
+          //     bool: true,
+          //   });
+          //   const { data } = await handleRiderClick(rowData);
+          //   data?.forEach((rider) => {
+          //     setRiderOptions((prev) => [
+          //       ...prev,
+          //       {
+          //         label: rider.name,
+          //         code: rider.name.toUpperCase(),
+          //         _id: rider._id,
+          //       },
+          //     ]);
+          //   });
+          //   setIsRiderLoading({
+          //     _id: rowData._id,
+          //     bool: false,
+          //   });
+          // }
 
           // Selected rider
           const selectedRider: IDropdownSelectItem = {
@@ -322,8 +326,9 @@ export const DISPATCH_TABLE_COLUMNS = () => {
             _id: rowData?.rider?._id.toString() ?? '',
           };
           return (
-            <div onClick={() => handleClick(rowData)}>
-              <Dropdown
+            // <div onClick={() => handleClick(rowData)}> TO BE REPLACED WITH THE LOWER DIV
+            <div>
+              {/* <Dropdown
                 options={
                   isRiderLoading._id === rowData._id && riderOptions
                     ? riderOptions
@@ -338,7 +343,8 @@ export const DISPATCH_TABLE_COLUMNS = () => {
                 }
                 filter={true}
                 className="outline outline-1 outline-gray-300"
-              />
+              /> */}
+              {selectedRider.label ?? 'Select Rider'}
             </div>
           );
         },
@@ -364,7 +370,8 @@ export const DISPATCH_TABLE_COLUMNS = () => {
               status.code === rowData?.orderStatus
           );
           return (
-            <Dropdown
+            <>
+              {/* <Dropdown
               value={currentStatus}
               onChange={(e) => handleStatusDropDownChange(e, rowData)}
               options={actionStatusOptions}
@@ -374,7 +381,12 @@ export const DISPATCH_TABLE_COLUMNS = () => {
                 isStatusUpdating.bool && isStatusUpdating._id === rowData._id
               }
               className="outline outline-1 outline-gray-300"
-            />
+            /> */}
+              <Tag
+                severity={severityChecker(currentStatus?.code)}
+                value={currentStatus?.label}
+              />
+            </>
           );
         },
       },

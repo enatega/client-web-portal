@@ -200,7 +200,9 @@ export default function CouponForm({
             <Form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div className="flex gap-4">
-                  <h2>{isEditing.bool ? 'Edit' : 'Add'} Coupon</h2>
+                  <h2 className='className="mb-3 text-xl font-bold'>
+                    {isEditing.bool ? 'Edit' : 'Add'} Coupon
+                  </h2>
                   <div className="flex items-center gap-x-1">
                     {values.enabled ? 'Enabled' : 'Disabled'}
                     <CustomInputSwitch
