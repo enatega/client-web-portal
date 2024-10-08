@@ -71,8 +71,6 @@ function SuperAdminSidebar({ children }: IGlobalComponentProps) {
 export default function MakeSidebar() {
   const { isSuperAdminSidebarVisible } = useContext<LayoutContextProps>(LayoutContext);
 
-  console.log({ MakeSidebar: isSuperAdminSidebarVisible })
-
   const navBarItems: ISidebarMenuItem[] = [
     {
       text: 'My Website',
@@ -175,7 +173,10 @@ export default function MakeSidebar() {
           route: '/management/notifications',
           isParent: false,
         },
-      ])
+      ]),
+      shouldShow: function () {
+        return this.subMenu ? this.subMenu.length > 0 : false;
+      },
     },
   ];
 

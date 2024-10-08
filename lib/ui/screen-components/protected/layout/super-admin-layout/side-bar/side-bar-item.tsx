@@ -42,8 +42,6 @@ export default function SidebarItem({
   isClickable,
 }: ISidebarMenuItem) {
 
-  console.log({ [text]: expanded })
-
   // States
   const [expandSubMenu, setExpandSubMenu] = useState(false);
 
@@ -72,6 +70,10 @@ export default function SidebarItem({
 
   const text_color = pathname.includes(route ?? '') ? 'white' : '[#71717A]';
   const isActive = pathname.includes(route ?? '');
+
+
+
+  console.log({ [text]: expandSubMenu })
 
   return (
     <div className={`mt-[0.4rem] flex flex-col`}>
