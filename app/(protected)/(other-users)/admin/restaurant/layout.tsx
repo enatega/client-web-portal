@@ -1,7 +1,8 @@
 'use client';
-
-import { RestaurantLayoutProvider } from '@/lib/context/restaurant/layout-restaurant.context';
+// HOC
+import RESTAURANT_GUARD from '@/lib/api/hoc/RESTAURANT_GUARD';
 // Layout
+import { RestaurantLayoutProvider } from '@/lib/context/restaurant/layout-restaurant.context';
 import RestaurantLayout from '@/lib/ui/layouts/protected/restaurant';
 
 export default function RootLayout({
@@ -9,9 +10,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const ProtectedLayout = RESTAURANT_GUARD(
+    ({ children }: { children: React.ReactNode }) => {
+      return <RestaurantLayout>{children}</RestaurantLayout>;
+    }
+  );
+
   return (
     <RestaurantLayoutProvider>
-      <RestaurantLayout>{children}</RestaurantLayout>
+      <ProtectedLayout>{children}</ProtectedLayout>
     </RestaurantLayoutProvider>
   );
 }

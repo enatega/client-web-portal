@@ -1,5 +1,8 @@
 'use client';
 
+// HOC
+import VENDOR_GUARD from '@/lib/api/hoc/VENDOR_GUARD';
+// CONTEXT
 import { VendorLayoutProvider } from '@/lib/context/vendor/layout-vendor.context';
 import VendorLayout from '@/lib/ui/layouts/protected/vendor';
 
@@ -8,11 +11,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const ProtectedLayout = VENDOR_GUARD(
+    ({ children }: { children: React.ReactNode }) => {
+      return <VendorLayout>{children}</VendorLayout>;
+    }
+  );
+
   return (
     <VendorLayoutProvider>
-      {' '}
       {/* VendorLayoutProvider for context */}
-      <VendorLayout>{children}</VendorLayout> {/* UI Layout for Vendor */}
+      <ProtectedLayout>{children}</ProtectedLayout> {/* UI Layout for Vendor */}
     </VendorLayoutProvider>
   );
 }
