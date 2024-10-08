@@ -1,20 +1,18 @@
-'use client';
-
 // Components
 import { INotification } from '@/lib/utils/interfaces/notification.interface';
 import CustomButton from '../../button';
 
 // Hooks
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useMemo } from 'react';
 import { useMutation } from '@apollo/client';
+
+// GrahpQL
 import { GET_NOTIFICATIONS, SEND_NOTIFICATION_USER } from '@/lib/api/graphql';
+
+// Contexts
 import { ToastContext } from '@/lib/context/global/toast.context';
-import CustomLoader from '../../custom-progress-indicator';
 
 export const NOTIFICATIONS_TABLE_COLUMNS = () => {
-  // States
-  const [loadingId, setLoadingId] = useState('');
-
   // Toast
   const { showToast } = useContext(ToastContext);
 
@@ -28,7 +26,6 @@ export const NOTIFICATIONS_TABLE_COLUMNS = () => {
           title: 'Resend Notification',
           message: 'The notification has been resent successfully',
         });
-        setLoadingId('')
       },
       onError: (err) => {
         showToast({
@@ -38,11 +35,11 @@ export const NOTIFICATIONS_TABLE_COLUMNS = () => {
             err?.cause?.message ||
             'An error occured while resending the notification',
         });
-        setLoadingId('')
       },
       refetchQueries: [{ query: GET_NOTIFICATIONS }],
     }
   );
+
   // Handlers
   async function handleResendNotification(rowData: INotification) {
     await sendNotificationUser({
@@ -51,10 +48,9 @@ export const NOTIFICATIONS_TABLE_COLUMNS = () => {
         notificationBody: rowData.body,
       },
     });
-    console.log({rowData})
-    setLoadingId(rowData._id)
   }
-  console.log({loadingId, loading})
+
+  // Columns
   const notification_columns = useMemo(
     () => [
       {
@@ -68,27 +64,26 @@ export const NOTIFICATIONS_TABLE_COLUMNS = () => {
       {
         headerName: 'Date',
         propertyName: 'createdAt',
+        body:(rowData:INotification)=>{
+          const seconds = parseInt(rowData.createdAt)/1000;
+          const newDate = new Date(seconds).toDateString();
+          return (
+            <span>{newDate}</span>
+          )
+        }
       },
       {
         headerName: 'Change Status',
         propertyName: 'status',
-        body: (rowData: INotification) => {
-          return (
-            <>
-              {loading && loadingId === rowData._id ? (
-                <CustomLoader />
-              ) : (
-                <CustomButton
-                  onClick={() => handleResendNotification(rowData)}
-                  label="Resend"
-                  loading={loading}
-                  type="button"
-                  className="block self-end"
-                />
-              )}
-            </>
-          );
-        },
+        body: (rowData: INotification) => (
+            <CustomButton
+              onClick={() => handleResendNotification(rowData)}
+              label="Resend"
+              loading={loading}
+              type="button"
+              className="block self-end"
+            />
+          )
       },
     ],
     []
