@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useUserContext } from '@/lib/hooks/useUser';
 
 // Constants and Utils
-import { APP_NAME, ROUTES } from '@/lib/utils/constants';
+import { APP_NAME } from '@/lib/utils/constants';
 import { onUseLocalStorage } from '@/lib/utils/methods';
 
 const VENDOR_GUARD = <T extends object>(Component: React.ComponentType<T>) => {
