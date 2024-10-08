@@ -25,6 +25,7 @@ import HeaderText from '@/lib/ui/useable-components/header-text';
 import { onUseLocalStorage } from '@/lib/utils/methods';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { Chip } from 'primereact/chip';
+import NoData from '@/lib/ui/useable-components/no-data';
 
 export default function VendorMain({
   activeTab,
@@ -98,7 +99,7 @@ export default function VendorMain({
             new Array(10)
               .fill(0)
               .map((_, i: number) => <CustomVendorSkeleton key={i} />)
-          ) : vendors ? (
+          ) : (vendors?.length ?? 0) > 0 ? (
             vendors?.map((vendor) => (
               <VendorCard
                 key={vendor._id}
@@ -109,11 +110,7 @@ export default function VendorMain({
               />
             ))
           ) : (
-            <div className="flex h-64 items-center justify-center px-4">
-              <div className="text-center text-base font-semibold text-gray-500 sm:text-lg">
-                No Vendors Found.
-              </div>
-            </div>
+            <NoData />
           )}
         </div>
       </div>
@@ -168,23 +165,21 @@ export default function VendorMain({
           </div>
         </div>
 
-        <div className="pt- grid grid-cols-1 gap-6 pb-16 sm:grid-cols-2">
-          {restaurantByOwnerResponse?.loading ? (
-            new Array(10)
+        {restaurantByOwnerResponse?.loading ? (
+          <div className="pt-2 grid grid-cols-1 gap-6 pb-16 sm:grid-cols-2">
+            {new Array(10)
               .fill(0)
-              .map((_, i: number) => <CustomRestaurantCardSkeleton key={i} />)
-          ) : restaurants ? (
-            restaurants.map((restaurant) => (
+              .map((_, i: number) => <CustomRestaurantCardSkeleton key={i} />)}
+          </div>
+        ) : (restaurants?.length ?? 0) != 0 ? (
+          <div className="pt-2 grid grid-cols-1 gap-6 pb-16 sm:grid-cols-2">
+            {restaurants?.map((restaurant) => (
               <RestaurantCard key={restaurant._id} restaurant={restaurant} />
-            ))
-          ) : (
-            <div className="col-span-full flex h-64 items-center justify-center px-4">
-              <div className="text-center text-base font-semibold text-gray-500 sm:text-lg">
-                No Restaurants Found.
-              </div>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <NoData />
+        )}
       </div>
     </div>
   );

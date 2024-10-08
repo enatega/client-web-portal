@@ -3,7 +3,11 @@ import { PasswordErrors } from '../constants';
 import { IDropdownSelectItem } from '../interfaces';
 
 export const RestaurantSchema = Yup.object().shape({
-  name: Yup.string().min(2).max(35).required('Required'),
+  name: Yup.string()
+    .max(35)
+    .trim()
+    .matches(/\S/, 'Name cannot be only spaces')
+    .required('Required'),
   username: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string()
     .min(6, PasswordErrors[0])
@@ -41,7 +45,11 @@ export const RestaurantSchema = Yup.object().shape({
     .oneOf([Yup.ref('password'), null], 'Password must match')
     .required('Required'),
 
-  address: Yup.string().min(2).max(100).required('Required'),
+  address: Yup.string()
+    .max(100)
+    .trim()
+    .matches(/\S/, 'Name cannot be only spaces')
+    .required('Required'),
   deliveryTime: Yup.number().required('Required'),
   minOrder: Yup.number().required('Required'),
   salesTax: Yup.number().required('Required'),
