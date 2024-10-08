@@ -1,7 +1,7 @@
 'use client';
 
-import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+import OrderVendorScreen from "@/lib/ui/screens/admin-vendor/food-management/orders";
 
 export default function OrdersPage() {
-  return <ComingSoon />
+  return <OrderVendorScreen />
 }

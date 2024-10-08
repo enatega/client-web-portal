@@ -1,7 +1,7 @@
 'use client';
 
-import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+import OrderSuperAdminScreen from "@/lib/ui/screens/super-admin/management/orders";
 
 export default function OrdersPage() {
-  return <ComingSoon />
+  return <OrderSuperAdminScreen />
 }
