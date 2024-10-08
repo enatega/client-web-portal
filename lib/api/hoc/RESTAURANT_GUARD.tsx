@@ -1,7 +1,9 @@
 'use client';
 import { useUserContext } from '@/lib/hooks/useUser';
+import { APP_NAME } from '@/lib/utils/constants';
+import { onUseLocalStorage } from '@/lib/utils/methods';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import { useEffect } from 'react';
 
 const RESTAURANT_GUARD = <T extends object>(
   Component: React.ComponentType<T>
@@ -10,20 +12,27 @@ const RESTAURANT_GUARD = <T extends object>(
     const router = useRouter();
     const { user } = useUserContext();
 
-    // For Staff => Check if VENDOR permission is given to staff
-    if (user && user.userType === 'STAFF') {
-      const allowed = user?.permissions?.includes('Restaurants');
-
-      if (!allowed) {
-        router.replace('/forbidden');
-        return null;
+    useEffect(() => {
+      // Check if logged in
+      const isLoggedIn = !!onUseLocalStorage('get', `user-${APP_NAME}`);
+      if (!isLoggedIn) {
+        router.replace('/authentication/login');
       }
-    }
 
-    // For Restaurant
-    if (user?.userType === 'VENDOR') {
-      router.replace('/forbidden');
-    }
+      // For STAFF => Check if VENDOR permission is given to STAFF
+      if (user && user.userType === 'STAFF') {
+        const allowed = user?.permissions?.includes('Restaurants');
+
+        if (!allowed) {
+          router.replace('/forbidden');
+        }
+      }
+
+      // For VENDOR
+      if (user?.userType === 'VENDOR') {
+        router.replace('/forbidden');
+      }
+    }, []);
 
     // ADMIN/RESTAURANT is always allowed
     return <Component {...props} />;
