@@ -45,7 +45,6 @@ export interface IFoodMainComponentsProps extends IGlobalComponentProps {}
 // Components
 export interface IFoodDetailsComponentProps extends IGlobalComponentProps {
   stepperProps?: IStepperFormProps;
-  categoryDropdown: IDropdownSelectItem[];
 }
 export interface IFoodVariationsAddRestaurantComponentProps
   extends IGlobalComponentProps {
