@@ -1,9 +1,12 @@
 import * as Yup from 'yup';
 import { PasswordErrors } from '../constants';
 import { IDropdownSelectItem } from '../interfaces';
-
 export const VendorSchema = Yup.object().shape({
-  name: Yup.string().min(2).max(35).required('Required'),
+  name: Yup.string()
+    .max(35)
+    .trim()
+    .matches(/\S/, 'Name cannot be only spaces')
+    .required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string()
     .min(6, PasswordErrors[0])
@@ -42,7 +45,7 @@ export const VendorSchema = Yup.object().shape({
     .required('Required'),
 });
 export const VendorEditSchema = Yup.object().shape({
-  name: Yup.string(),
+  name: Yup.string().trim().matches(/\S/, 'Name cannot be only spaces'),
   email: Yup.string().email('Invalid email').required('Required'),
   password: Yup.string(),
   confirmPassword: Yup.string(),

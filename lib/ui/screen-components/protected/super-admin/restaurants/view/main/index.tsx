@@ -189,7 +189,6 @@ export default function RestaurantsMain() {
   const _restaurants =
     currentTab === 'Actual' ? data?.restaurants : data?.getClonedRestaurants;
 
-  console.log({ data })
 
   return (
     <div className="p-3">

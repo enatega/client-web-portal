@@ -78,7 +78,7 @@ export interface IDashboardSalesByTypeResponseGraphQL {
   }[];
 }
 
-// Restaurant & Vendor
+// Restaurant
 
 export interface IDashboardRestaurantOrdersSalesStatsResponseGraphQL {
   getRestaurantDashboardOrdersSalesStats: {
@@ -113,5 +113,14 @@ export interface IDashboardOrderSalesDetailsByPaymentMethodResponseGraphQL {
     all: IDashboardOrderSalesDetailsByPaymentMethodData[];
     cod: IDashboardOrderSalesDetailsByPaymentMethodData[];
     card: IDashboardOrderSalesDetailsByPaymentMethodData[];
+  };
+}
+
+//  Vendor
+export interface IVendorDashboardStatsCardDetailsResponseGraphQL {
+  getVendorDashboardStatsCardDetails: {
+    totalRestaurants: number;
+    totalOrders: number;
+    totalSales: number;
   };
 }

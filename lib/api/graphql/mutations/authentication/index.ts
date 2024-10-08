@@ -15,6 +15,7 @@ export const OWNER_LOGIN = gql`
         address
       }
       permissions
+      userTypeId
     }
   }
 `;
