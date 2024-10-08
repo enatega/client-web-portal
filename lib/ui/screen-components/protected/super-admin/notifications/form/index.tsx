@@ -35,6 +35,22 @@ export default function NotificationForm({
   //Mutation
   const [sendNotificationUser] = useMutation(SEND_NOTIFICATION_USER, {
     refetchQueries: [{ query: GET_NOTIFICATIONS }],
+    onCompleted:()=>{
+      showToast({
+        title: 'New Notification',
+        type: 'success',
+        message: 'Notification has been sent successfully',
+        duration: 2500,
+      });
+    },
+    onError:(err)=>{
+      showToast({
+        title: 'Error Notification',
+        type: 'error',
+        message:err.cause?.message || 'Something went wrong',
+        duration: 2500,
+      });
+    }
   });
 
   return (
@@ -49,30 +65,15 @@ export default function NotificationForm({
         validationSchema={NotificationSchema}
         onSubmit={async (values, { setSubmitting }) => {
           setSubmitting(true);
-          try {
             await sendNotificationUser({
               variables: {
                 notificationTitle: values.title,
                 notificationBody: values.body,
               },
             });
-            showToast({
-              title: 'New Notification',
-              type: 'success',
-              message: 'Notification has been sent successfully',
-              duration: 2500,
-            });
+           
             setSubmitting(false);
             setVisible(false);
-          } catch (err) {
-            setVisible(true);
-            showToast({
-              title: 'New Notification',
-              type: 'error',
-              message: 'Something went wrong',
-              duration: 2500,
-            });
-          }
         }}
         validateOnChange={true}
       >
@@ -92,15 +93,11 @@ export default function NotificationForm({
                   showLabel={true}
                   placeholder="Title"
                   type="text"
-                  style={{
-                    border: onErrorMessageMatcher(
-                      'title',
-                      errors.title,
-                      NotificationErrors
-                    )
-                      ? '1px solid red'
-                      : '',
-                  }}
+                  className={`${
+                       onErrorMessageMatcher('title', errors.title, NotificationErrors)
+                         ? 'border border-red-500'
+                         : ''
+                     }`}
                 />
                 <CustomTextAreaField
                   value={values.body}
@@ -111,15 +108,11 @@ export default function NotificationForm({
                   label="Description"
                   name="body"
                   placeholder="Add description here"
-                  style={{
-                    border: onErrorMessageMatcher(
-                      'body',
-                      errors.body,
-                      NotificationErrors
-                    )
-                      ? '1px solid red'
-                      : '',
-                  }}
+                  className={`${
+                    onErrorMessageMatcher('body', errors.body, NotificationErrors)
+                      ? 'border border-red-500'
+                      : ''
+                  }`}
                   rows={5}
                 />
                 <button
