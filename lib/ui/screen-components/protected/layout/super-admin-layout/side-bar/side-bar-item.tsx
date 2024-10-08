@@ -1,6 +1,6 @@
 // Core
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Icons
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -49,11 +49,11 @@ export default function SidebarItem({
   const router = useRouter();
 
   // use Effect
-  useEffect(() => {
-    if (!expanded) {
-      setExpandSubMenu(false);
-    }
-  }, [expanded]);
+  // useEffect(() => {
+  //   if (!expanded) {
+  //     setExpandSubMenu(false);
+  //   }
+  // }, [expanded]);
 
   // Calculate the height of the sub-menu assuming each item is 40px tall
   const subMenuHeight = expandSubMenu
@@ -75,8 +75,8 @@ export default function SidebarItem({
       <div>
         <button
           className={`group relative flex w-full cursor-pointer items-center rounded-md px-3 py-2 transition-colors ${isActive && !subMenu
-              ? `bg-${isClickable ? bg_color : ''} text-${isClickable ? text_color : '[#71717A]'}`
-              : `bg-${bg_color} text-${text_color} hover:bg-secondary-color`
+            ? `bg-${isClickable ? bg_color : ''} text-${isClickable ? text_color : '[#71717A]'}`
+            : `bg-${bg_color} text-${text_color} hover:bg-secondary-color`
             } ${!expanded && 'hidden sm:flex'} `}
           onClick={() => {
             if (!isParent || isClickable) {
