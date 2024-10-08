@@ -72,7 +72,7 @@ export interface IVariation {
   price: number;
   discounted: number;
   addons: string[];
-  __typename: string;
+  __typename?: string;
 }
 
 export interface IFood {
