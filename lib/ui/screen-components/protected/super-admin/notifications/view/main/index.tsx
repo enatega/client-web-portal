@@ -18,14 +18,17 @@ import { GET_NOTIFICATIONS } from '@/lib/api/graphql';
 
 // Interfaces
 import { ILazyQueryResult } from '@/lib/utils/interfaces';
-import {  IGetNotifications } from '@/lib/utils/interfaces/notification.interface';
+import { IGetNotifications } from '@/lib/utils/interfaces/notification.interface';
 
 export default function NotificationMain() {
   // Query
-  const { data: notificationData, loading: notificationLoading, fetch:fetchNotifications } =
-    useLazyQueryQL(GET_NOTIFICATIONS, {
-      fetchPolicy: 'cache-and-network',
-    }) as ILazyQueryResult<IGetNotifications | undefined, undefined>;
+  const {
+    data: notificationData,
+    loading: notificationLoading,
+    fetch: fetchNotifications,
+  } = useLazyQueryQL(GET_NOTIFICATIONS, {
+    fetchPolicy: 'cache-and-network',
+  }) as ILazyQueryResult<IGetNotifications | undefined, undefined>;
 
   // States
   const [selectedActions, setSelectedActions] = useState<string[]>([]);
@@ -49,14 +52,14 @@ export default function NotificationMain() {
   };
 
   // UseEffects
-  useEffect(()=>{
+  useEffect(() => {
     fetchNotifications();
-  },[])
+  }, []);
   return (
     <div className="p-3">
       <Table
         columns={NOTIFICATIONS_TABLE_COLUMNS()}
-        data={ notificationData?.notifications??generateDummyNotifications()}
+        data={notificationData?.notifications ?? generateDummyNotifications()}
         selectedData={[]}
         setSelectedData={() => {}}
         header={

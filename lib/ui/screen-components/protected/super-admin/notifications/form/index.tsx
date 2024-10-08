@@ -63,7 +63,7 @@ export default function NotificationForm({
               duration: 2500,
             });
             setSubmitting(false);
-            setVisible(false)
+            setVisible(false);
           } catch (err) {
             setVisible(true);
             showToast({
