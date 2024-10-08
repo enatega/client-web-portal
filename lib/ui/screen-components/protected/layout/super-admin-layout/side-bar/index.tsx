@@ -173,10 +173,7 @@ export default function MakeSidebar() {
           route: '/management/notifications',
           isParent: false,
         },
-      ]),
-      shouldShow: function () {
-        return this.subMenu ? this.subMenu.length > 0 : false;
-      },
+      ])
     },
   ];
 

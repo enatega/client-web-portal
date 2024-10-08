@@ -2,7 +2,11 @@ import * as Yup from 'yup';
 import { PasswordErrors } from '../constants';
 
 export const RiderSchema = Yup.object().shape({
-  name: Yup.string().min(2).max(35).required('Required'),
+  name: Yup.string()
+    .max(35)
+    .trim()
+    .matches(/\S/, 'Name cannot be only spaces')
+    .required('Required'),
   username: Yup.string().min(2).max(35).required('Required'),
   password: Yup.string()
     .min(6, PasswordErrors[0])
