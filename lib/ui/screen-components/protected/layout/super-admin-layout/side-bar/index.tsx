@@ -175,9 +175,6 @@ export default function MakeSidebar() {
           isParent: false,
         },
       ]),
-      shouldShow: function () {
-        return this.subMenu ? this.subMenu.length > 0 : false;
-      },
     },
   ];
 

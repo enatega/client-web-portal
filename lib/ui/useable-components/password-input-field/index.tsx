@@ -2,6 +2,7 @@ import { IPasswordTextFieldProps } from '@/lib/utils/interfaces';
 import { Password } from 'primereact/password';
 import { twMerge } from 'tailwind-merge';
 import InputSkeleton from '../custom-skeletons/inputfield.skeleton';
+import PasswordFeedback from './password-feedback';
 
 export default function CustomPasswordTextField({
   className,
@@ -25,7 +26,9 @@ export default function CustomPasswordTextField({
         )}
         placeholder={placeholder}
         toggleMask
+        strongRegex="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$"
         feedback={feedback}
+        footer={feedback ? <PasswordFeedback /> : null}
         {...props}
       />
     </div>

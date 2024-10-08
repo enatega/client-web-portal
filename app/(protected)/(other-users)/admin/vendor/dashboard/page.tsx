@@ -1,8 +1,8 @@
 'use client';
-// Screens
 
-import ComingSoon from '@/lib/ui/useable-components/coming-soon';
+// Screens
+import VendorDashboardScreen from '@/lib/ui/screens/admin/vendor/dashboard';
 
 export default function DashboardPage() {
-  return <ComingSoon />;
+  return <VendorDashboardScreen />;
 }

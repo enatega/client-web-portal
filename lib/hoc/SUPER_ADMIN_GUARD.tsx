@@ -1,9 +1,14 @@
 'use client';
+// Core
+import { useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+
+// Hooks
 import { useUserContext } from '@/lib/hooks/useUser';
-import { ROUTES } from '@/lib/utils/constants/routes';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+
+// Constants and Utils
+import { APP_NAME, ROUTES } from '@/lib/utils/constants';
+import { onUseLocalStorage } from '@/lib/utils/methods';
 
 const SUPER_ADMIN_GUARD = <T extends object>(
   Component: React.ComponentType<T>
@@ -14,10 +19,16 @@ const SUPER_ADMIN_GUARD = <T extends object>(
     const { user } = useUserContext();
 
     useEffect(() => {
+      // Check if logged in
+      const isLoggedIn = !!onUseLocalStorage('get', `user-${APP_NAME}`);
+      if (!isLoggedIn) {
+        router.replace('/authentication/login');
+      }
+
       // To find the name of path as per saved in db i.e /management/commission-rates => Commision Rates
       const findRouteName = ROUTES.find((v) => v.route === pathname);
 
-      // For Staff
+      // For STAFF permissions
       if (
         user &&
         user.userType === 'STAFF' &&

@@ -69,14 +69,14 @@ export default function DashboardDateFilter({
               />
             </div>
           </div>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-4rem">
             {isLoading ? (
               <div className="flex justify-center items-center  mt-8">
                 <CustomLoader />
               </div>
             ) : (
               <button
-                className="bg-secondary-color text-white font-semibold py-2 px-6 rounded-full w-full mt-8"
+                className="bg-black text-white font-semibold py-2 px-6 rounded-full w-full mt-8"
                 onClick={onApply}
               >
                 APPLY

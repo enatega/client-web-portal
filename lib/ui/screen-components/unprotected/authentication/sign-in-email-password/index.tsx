@@ -78,7 +78,7 @@ export default function LoginEmailPasswordMain() {
     }
 
     if (ownerLogin?.userType === 'RESTAURANT') {
-      onUseLocalStorage('save', SELECTED_RESTAURANT, ownerLogin.userId);
+      onUseLocalStorage('save', SELECTED_RESTAURANT, ownerLogin.userTypeId);
     }
 
     router.push(redirect_url);
