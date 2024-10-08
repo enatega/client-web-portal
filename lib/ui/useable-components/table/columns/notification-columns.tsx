@@ -33,7 +33,6 @@ export const NOTIFICATIONS_TABLE_COLUMNS = () => {
   })
   // Handlers
   async function handleResendNotification(rowData: INotification) {
-    console.log(rowData)
    await sendNotificationUser({
       variables:{
         notificationTitle:rowData.title,
