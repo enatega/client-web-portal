@@ -156,7 +156,7 @@ export default function MakeSidebar() {
       isClickable: true,
       isLastItem: true,
       shouldShow: () => {
-        return !Boolean(user?.userType === 'RESTAURANT');
+        return !(user?.userType === 'RESTAURANT');
       },
     },
   ];
