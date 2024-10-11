@@ -59,7 +59,7 @@ export default function CustomShape({
               ? 'bg-black text-white'
               : 'bg-[#F4F4F5] text-black'
               } w-30 h-30 transform rounded-lg shadow transition duration-300 ease-in-out hover:scale-105 focus:outline-none active:bg-gray-800`}
-            typeof="button"
+            type='button'
             onClick={() => onClick(item.value)}
           >
             {item.child}
